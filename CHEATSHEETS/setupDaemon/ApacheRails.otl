@@ -1,0 +1,1138 @@
+[-tmp-]
+[-ecolinux-config-steps-]
+[-vim-]
+	[-vimScript-]
+	[-vimWindowTab-]
+[-RubyMainOTL-]
+	[-hpricot-]
+[-RailsApache-]
+	[-railsDBapi-]
+	[-rails_activescafhold-]
+	[-hpricot-]#test
+sudo /usr/local/apache2/bin/httpd& start
+#mod_rails-passenger RailsMaxPoolSize =2でもlinode360で不安: mongrel cluster N=3 で50K/dayこえたら検討
+#-----------------------------------------------------------------------------
+you@ecolnux:~/RoRapps/2chnrg$ vmstat -S M
+	you@ecolnux:~/RoRapps/2chnrg$ passenger Node=1 below
+	procs -----------memory---------- ---swap-- -----io---- -system-- ----cpu----
+	 r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa
+	 3  0    196      8      1     27    0    0    27    19  144   98  9 14 75  2
+	you@ecolnux:~/RoRapps/2chnrg$ mongrel_cluster Node=1 below
+	procs -----------memory---------- ---swap-- -----io---- -system-- ----cpu----
+	 r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa
+	 2  0    126     13      4     41    0    0    27    19  144   98  9 14 75  2
+	you@ecolnux:~/RoRapps/2chnrg$ mongrel_cluster Node=2 below
+	procs -----------memory---------- ---swap-- -----io---- -system-- ----cpu----
+	 r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa
+	 4  0    126      6      3     32    0    0    27    19  144   99  9 14 75  2
+	-------------------------------------------------------------------------------
+##Mongrel
+	mongrelはスレッド起動などが無いため、1ポート1プロセス。後述するmongrel_cluster+Apache mod_proxyと併用します。
+	# mongrel & mongrel_clusterのインストール。
+		sudo gem install mongrel mongrel_cluster --include-dependencies
+		cd RAILS_ROOT
+		mongrel_rails stop
+	#Apache2 状況確認
+		/usr/local/apache2/bin/httpd -l
+	#Apache2 rebuild
+		wget http://example.com/path/to/httpd-2.2.3.tar.bz2
+		tar jxf httpd-2.2.3.tar.bz2
+		cd httpd-2.2.3
+		#sudo ./configure --enable-proxy --enable-proxy-balancer
+		sudo ./configure --enable-proxy --enable-proxy-balancer --enable-so --enable-ssl --with-ssl=/usr/bin/openssl --enable-modules=most
+		sudo make
+		sudo make install
+	#case of DSO installable module
+		apache2 mod_rewriteを後から追加（インストール）
+		PHPをインストール済みの場合、あとからapacheを再インストールは大変です。*DSOでインストールされているか？を確認。されていればOK。
+		/usr/local/apache2/bin/httpd -lを実行
+			Compiled-in modules:
+			http_core.c
+			mod_so.c 　これがあれば makeをしないで追加できる
+
+		*mod_rewriteをインストール
+		ソースをDLした場所（例）に/home//source/httpd-2.2./modules/mappers/mod_xxx.cがあるか確認
+			find -name * ./ |grep xxx
+
+		cd /home//source/httpd-2.2./xxx/XXX/
+		$ /usr/local/apache2/bin/apxs -i -a -c ./mod_xxx.c
+
+		apacheの再起動で有効
+
+	#一度設定ファイル(config/mongrel_cluster.yml)を作るようです。
+		#Linode: mongrel_rails cluster::configure -a 127.0.0.1 -e production -p 3000 -N 3 -n10
+			Writing configuration file to config/mongrel_cluster.yml.
+			you@ecolnux:~/RoRapps/2chnrg$ cat config/mongrel_cluster.yml
+			--- 
+			address: 127.0.0.1
+			log_file: log/mongrel.log
+			port: "3000"
+			num_procs: "10"
+			environment: production
+			pid_file: tmp/pids/mongrel.pid
+			servers: 3
+		#mongrel_cluster startでは、単に複数ポートでmongrelが起動しているだけ
+		mongrel_rails cluster::start -v --clean
+			mongrel_rails cluster::stop
+		#手動起動	-Bを付けるとデバッグモードです。これつけるとかなり遅い。-n10で10個のスレッド起動ができる。
+		mongrel_rails start -a 127.0.0.1 -d production -p 3000 -B
+		#ロードバランスさせる必要があります。それはapacheのmod_proxyで実現。
+		conf/httpd-proxy.conf & httpd.conf
+
+
+		you@ecolnux:/usr/local/apache2/conf$ mongrel_rails start -h
+			Usage: mongrel_rails <command> [options]
+				-e, --environment ENV            Rails environment to run as
+				-d, --daemonize                  Run daemonized in the background
+				-p, --port PORT                  Which port to bind to
+				-a, --address ADDR               Address to bind to
+				-l, --log FILE                   Where to write log messages
+				-P, --pid FILE                   Where to write the PID
+				-n, --num-processors INT         Number of processors active before clients denied
+				-o, --timeout TIME               Time to wait (in seconds) before killing a stalled thread
+				-t, --throttle TIME              Time to pause (in hundredths of a second) between accepting clients
+				-m, --mime PATH                  A YAML file that lists additional MIME types
+				-c, --chdir PATH                 Change to dir before starting (will be expanded)
+				-r, --root PATH                  Set the document root (default 'public')
+				-B, --debug                      Enable debugging mode
+				-C, --config PATH                Use a config file
+				-S, --script PATH                Load the given file as an extra config script
+				-G, --generate PATH              Generate a config file for use with -C
+					--user USER
+												 User to run as
+					--group GROUP
+												 Group to run as
+					--prefix PATH
+												 URL prefix for Rails app
+				-h, --help                       Show this message
+					--version                    Show version
+
+		you@ecolnux:/usr/local/apache2/conf$ mongrel_rails cluster::configure -h
+			Usage: mongrel_rails <command> [options]
+				-e, --environment ENV            Rails environment to run as
+				-p, --port PORT                  Starting port to bind to
+				-a, --address ADDR               Address to bind to
+				-l, --log FILE                   Where to write log messages
+				-P, --pid FILE                   Where to write the PID
+				-c, --chdir PATH                 Change to dir before starting (will be expanded)
+				-o, --timeout TIME               Time to wait (in seconds) before killing a stalled thread
+				-t, --throttle TIME              Time to pause (in hundredths of a second) between accepting clients
+				-m, --mime PATH                  A YAML file that lists additional MIME types
+				-r, --root PATH                  Set the document root (default 'public')
+				-n, --num-procs INT              Number of processor threads to use
+				-B, --debug                      Enable debugging mode
+				-S, --script PATH                Load the given file as an extra config script.
+				-N, --num-servers INT            Number of Mongrel servers
+				-C, --config PATH                Path to cluster configuration file
+					--user USER
+												 User to run as
+					--group GROUP
+												 Group to run as
+					--prefix PREFIX
+												 Rails prefix to use
+				-h, --help                       Show this message
+					--version                    Show version
+
+	■トラブルシューティング
+
+	Railsはデフォルトのままでルートにアクセスするとdispacherがpublic/index.htmlに読み替えてWelcome Abord画面を表示するんだけど、これが不要だったからpublic/index.htmlを削除していた。これが直接的な原因っぽい。
+	空ファイルでも良いのでindex.htmlを置いておけばエラーは出なくなるはず、という事でやってみた結果、エラーは出なくなった。
+
+
+	$ mongrel_rails ?prefix /yuki
+	こうすることで、link_toなどのHelperが正しいURLを作成できる
+
+	Publicがおかしいので
+
+	$ cd public
+	$ ln -s . yuki
+	自身へリンク、これでPublic内のImagesなども見れた
+
+	script/serverコマンドは以下のように起動するサーバを指定できる。
+
+	# ruby script/server webrick
+
+	サーバを指定しない場合は、以下の優先順位を元に起動するサーバを決定する。
+
+	   1. Mongrel
+		  2. Lighttpd
+			 3. WEBrick
+
+			 よってMongrelをインストール後もscript/serverスクリプトを使えるが、
+
+			 Mongrel専用の起動スクリプトを使うとscript/serverスクリプトには無いオプションを使うことが出来る。
+
+			 # mongrel_rails start --prefix /myapp
+
+			 のようにprefixオプションを使うと、http://localhost:3000/myappがアプリケーションルートになる。
+
+			 アプリケーションごとに異なるprefixをつければ、ドメインが一つしかない場合でも手軽に複数のRailsアプリケーションを公開することが出来る。
+
+	ProxyRequests Off
+	<Proxy *>
+	  Order deny,allow
+		Allow from all
+	</Proxy>
+	ProxyPass / http://localhost:3000/
+
+	以下の内容についてはapacheのmod_proxy、mod_proxy_balancerが有効になっていることが前提です。またパスは環境によって異なると思いますので参考までに。
+
+	備忘録兼ねてますので途中の冗長な作業も書いてますがあしからず、です。
+
+	■apacheのリバースプロキシの設定
+
+	/etc/httpd/conf.d/のproxy.confの内容を以下のように変更します（ファイルがなければ作成）。
+
+		# cd /etc/httpd/conf.d/
+		# vi proxy.conf 
+
+		ProxyRequests Off
+		<proxy *>
+		Order deny,allow
+		Allow from all
+		</proxy>
+
+		ProxyPass /myapp1 balancer://mycluster1 lbmethod=byrequests
+		ProxyPassReverse /myapp1 balancer://mycluster1
+		<proxy balancer://mycluster1>
+		BalancerMember http://127.0.0.1:3000/myapp1 loadfactor=10
+		BalancerMember http://127.0.0.1:3001/myapp1 loadfactor=10
+		BalancerMember http://127.0.0.1:3002/myapp1 loadfactor=10
+		</proxy>
+
+		ProxyPass /myapp2 balancer://mycluster2 lbmethod=byrequests
+		ProxyPassReverse /myapp2 balancer://mycluster2
+		<proxy balancer://mycluster2>
+		BalancerMember http://127.0.0.1:4000/myapp2 loadfactor=10
+		BalancerMember http://127.0.0.1:4001/myapp2 loadfactor=10
+		BalancerMember http://127.0.0.1:4002/myapp2 loadfactor=10
+		</proxy>
+
+		#ロードバランス管理画面の設定
+		<location /balancer-manager>
+		SetHandler balancer-manager
+		Order Deny,Allow
+		Deny from all
+		Allow from *.*. #管理画面を使用するクライアントやネットワークを指定
+		</location> 
+
+	これでmyapp1とmyapp2という二つのRailsアプリをそれぞれクラスタリングした状態でたてられます。
+
+	ポート80で入った要求を、/myapp1ならポート3000?3002に /myapp2ならポート4000?4002に振り分けてやる訳です。
+
+	※上の設定の場合、ロードバランサーの管理画面のURLは http://hoge/balancer-manager となります。
+
+	proxy.confを修正したら設定を反映するためにapacheを再起動します。
+
+		# cd /etc/rc.d/init.d
+		# ./httpd restart 
+
+	■mongrelのクラスター起動
+
+		# cd hoge/myapp1
+		# mongrel_rails cluster::configure -e production -p 3000 -N 3 ?prefix /myapp1
+		# mongrel_rails cluster::start
+
+		# cd hoge/myapp2
+		# mongrel_rails cluster::configure -e production -p 4000 -N 3 ?prefix /myapp2
+		# mongrel_rails cluster::start 
+
+	※停止の時は mongrel_rails cluster::stop
+
+	?rabbitonigiri
+	(posted in the Ruby on Rails category)
+	このエントリをdel.icio.usに追加このエントリをはてなブックマークに追加
+
+	Find this post interesting? Besides commenting below, you can follow responses with the RSS 2.0 feed or trackback from your own site.
+	2 Responses to “【Rails】mongrel cluster＆apacheのリバースプロキシで複数のアプリ共存”
+
+	   1. maru says:
+		  2月 29, 2008, 3:33:08
+
+		  あん。
+		  ?prefix /myapp1
+		  じゃん
+		  -prefix /myapp1
+		  じゃなくて。
+
+		  バージョン違いのせいかなー？
+
+
+
+
+-------------------------------------------------------------------------------
+#netbeans
+	sudo gem install ruby-debug-ide 
+	+
+	plugin "jVi" install
+#eclipse+radrails
+	manually ownload last year's eclipse release.
+	+
+	install plugin "Vwrapper" 
+	*back-upはeclipse & ~/.eclipse/
+
+-------------------------------------------------------------------------------
+##Passenger(mod_rails) by Lai HongLi & Ninh Bui
+	■使ってみて
+		なぜかNewsサイトではスタイルシートが有効化されない。
+		あと速度がめちゃくちゃ遅かった。
+		設定の問題かもしれないのでもう少しいじってみる。
+	■参考リンク
+		公式サイト　http://www.modrails.com/install.html
+		マニュアル　http://www.modrails.com/documentation/Users%20guide.html
+		http://rails20.jp/2008/04/passenger/
+
+	■Prep
+		passengerはmod_rewriteとmod_aliasと衝突する。
+		mod_rewriteを使いたい場合、RailsAllowModRewriteを使えばよい。ただし、先述の問題を回避するために、.htaccessを削除するかリライトルールを書き換える必要がある。
+
+
+		mod_rails(passenger)で起動すると、143Mほど確保		Linode 360 =360MB
+		cf.　mongrelで動かしてみると、44Mほどメモリ確保
+	　･passengerはrootでは動かないので、かならずrailsのディレクトリ以下の所有ユーザーはroot以外(apacheなど)にしておく
+	   error ":nonexistence がでる。
+		Railsアプリケーションが動作するユーザーは$RAILS_ROOT/config/environment.rbのオーナーとなりますが、 environment.rbがrootの場合はnobodyユーザーで動作します。このとき、オーナーがrootである$RAILS_ROOT/log ディレクトリや$RAILS_ROOT/tmpディレクトリに書き込みができず、アプリケーションが動作しないことがあります。
+		useradd you
+		passwd you
+		chown -R you:you /root/2chnrg
+		mkdir /home/you
+	　* apache MPW(multi-process-worker)
+
+	■ざっと手順だけ
+	   1. Railsアプリを適当な場所にUP
+	   2. DocumentRoot以下に[RAILSROOT]/publicへのシンボリックリンクを作成
+	   3. httpd.confに設定を追加
+	   4. Apache再起動
+
+	■passengerをインストールsudo su /rootで全行程
+		sudo su
+		#Apacheはソースから入れたので環境変数を定義しておく。
+		export APXS2=/usr/local/apache2/bin/apxs;export PATH=/usr/local/apache2/bin/:$PATH
+		sudo gem install fastthread passenger
+		passenger-install-apache2-module
+		passengerのインストールが完成したら、apacheに組み込む。
+			* GNU C++ compiler... not found
+			* Ruby development headers... found
+			* OpenSSL support for Ruby... found
+			* RubyGems... found
+			* Rake... found at /usr/bin/rake
+			* Apache 2... found at /usr/sbin/apache2
+			* Apache 2 development headers... not found
+			* Apache Portable Runtime (APR) development headers... not found
+			* fastthread... found
+		not found(赤字）がある場合は、それぞれインストールをする。
+		今回のケースだと次のとおり
+			% sudo apt-get install build-essential
+			% sudo apt-get  install apache2-threaded-dev 
+	  
+
+
+		$ sudo apt-get install apache2-prefork-dev
+	　色々ないけど、教えてやるよーという親切インストーラー教えてくれた結果が以下
+			Installation instructions for required software
+			* To install Apache 2 development headers:
+			Please run yum install httpd-devel as root.
+		   * To install Apache Portable Runtime (APR) development headers:
+			Please run yum install apr-devel as root.
+			* To install Apache Portable Runtime Utility (APU) development headers:
+			Please download it from http://httpd.apache.org/
+			(APR Utility is an integrated part of Apache.)
+
+	　自分の場合、yum install httpd-develでapr-develもインストールされた。
+	　インストール終了。その後もhttpd.confに追記する箇所や、バーチャル設定の書き方を教えてくれるのでメモ。
+
+			The Apache 2 module was successfully installed.
+		
+			Please edit your Apache configuration file, and add these lines:
+		
+			LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
+			PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2
+			PassengerRuby /usr/bin/ruby
+		
+			Deploying a Ruby on Rails application: an example
+		
+			Suppose you have a Ruby on Rails application in /somewhere. Add a virtual host
+			to your Apache configuration file, and set its DocumentRoot to
+			/somewhere/public, like this:
+
+	■ append to httpd.conf
+	   LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.2.4/ext/apache2/mod_passenger.so
+	   PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.2.4
+		PassengerRuby /usr/bin/ruby1.8
+
+	■Virtualhost設定例：
+			<VirtualHost *:80>
+			ServerName www.yourhost.com
+			DocumentRoot /somewhere/public # <-- be sure to point to 'public'!
+			</VirtualHost>
+	■Virtualhost設定例a2：http://hogerails/redmine
+		<VirtualHost *:80>
+		 ServerName hogerails
+		 DocumentRoot /var/hoge/rails
+		 RailsBaseURI /redmine
+		 RailsBaseURI /hogesys
+		</VirtualHost>
+		この設定の場合、/var/hoge/rails/redmineとしてシンボリックリンクを作ればOKです
+
+		# モジュールとサイトを有効にする
+		$ sudo a2enmod rails
+		% sudo a2ensite [virtual-host-name]
+		Apacheの再起動
+		% sudo /etc/init.d/apache2 restart
+	■トラブルシューティング
+	　･下記のようなエラーがhttpdのエラーログに出ていたら
+		 *** Passenger ERROR (ext/common/ApplicationPoolServer.h:602):
+		Cannot execute /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/ApplicationPoolServerExecutable: 許可がありません (13)
+		[Wed May 13 11:22:46 2009] [notice] SELinux policy enabled; httpd running as context root:system_r:httpd_t:s0
+		[Wed May 13 11:22:46 2009] [notice] suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+	　以下のように対応
+		#setenforce 0
+		
+	   *undefined method `cache_template_loading=' for ActionView::Base:Class
+		config/environments/production.rbの以下の記述をコメントアウト
+		# config.action_view.cache_template_loading = true
+
+	   *CGI::Session::CookieStore::TamperedWithCookie ?
+		ブラウザのクッキーをクリア
+
+	   *no such file to load -- application
+		config/environments以下の設定ファイル
+		#config.cache_classes = true	#"require"でモジュールをロード
+		config.cache_classes = false	#falseにすると"load"を使う everytime
+
+	   *route missing	500
+		# in config/environments/production.rb
+		（略）
+		config.action_controller.relative_url_root='/hogesys'
+
+	## Passengerのチューニング
+	いずれもhttpd.conf中で設定します。なお、これらはApache全体に対する設定であり、バーチャルホストごとの指定はできません。
+		RailsMaxPoolSize Apacheサーバ上で生成するRailsのインスタンス数を設定します。
+		デフォルト値は20ですが、メモリが少ない環境では減らすことを検討してください。アクセスが集中した際にメモリが不足して極端にレスポンスが悪化する恐れがあります。"Passenger Users Guide":http://www.modrails.com/documentation/Users%20guide.html では、メモリ256MBのVPS環境では2、2GBのメモリを搭載したサーバでは30が推奨されています。
+		RailsPoolIdleTime Railsインスタンスへのリクエストがこの設定値以上の時間無かった場合に、インスタンスを終了させます。
+		デフォルト値は120(秒)です。この値が小さすぎると、インスタンスの生成・終了が頻繁に行われることになりレスポンスが悪化します。逆に大きすぎると必要以上に長時間メモリを占有されてしまいます。Passenger Users Guideでは、ユーザーのwebサイト上の平均滞在時間の2倍を推奨しています。例えば1回のRedmine上での平均的な作業時間が5分の場合、推奨設定値は600(秒)です。
+	Passenger 2.0.6以降でGlobal Queuingを有効にするには、Apacheの設定ファイルで以下の設定を行います。
+		PassengerUseGlobalQueue on
+	passenger-statusコマンド
+	autoindex: Aliasを切ったディレクトリに対して PassengerEnabled off
+
+i#passenger高速化
+	RailsアプリをPassengerを使ってApacheでホストしてる場合、リクエストがあるとアプリがインスタンス化されます。次回リクエストがあったときにア
+	プリのインスタンスが存在すれば、レスポンスが速くなります。
+
+
+	デフォルトでは、300秒でインスタンスは削除されます。ということは、インスタンスをずっと保持しておけば、レスポンスは最速なわけです。その設
+	定が、これ。httpd.confに書きます。
+
+	PassengerPoolIdleTime 0
+
+	Railsの表示高速化にて動的なイメージやCSSをキャッシュファイルとする作戦¶
+	イメージやCSSなどを、管理者が更新したりする場合で、イメージやCSSはpublicなところにおいてもよい場合
+	イメージやCSSを動的に生成するためのコントローラを作成し、キャッシュ保存先を本来のpublic内部に設定する
+	管理者がイメージを登録した際に、publicにキャッシュファイルが作成され、観覧時には常にそれを見るようになる
+	管理者がイメージを削除した際には、publicからキャッシュファイルが削除されるので、観覧する人はイメージがみられなくなる
+
+
+-------------------------------------------------------------------------------
+#サーバー機能飽和したらアパッチ再構成 a2dismod asis alias status log_config auth_basic authn_file authz_groupfile authz_hosts
+	#" rails passenger 不要 a2dismod " disable needless apache modules to speed up
+	初期ロード　*] core *] mod_env
+	ACCEPTヘッダ認識用途 *] mod_negotiation
+	#perlなどCGI *] mod_cgi *] mod_actions
+		DIR~ 処理 *] mod_dir *] mod_userdir *] mod_autoindex
+		SSI	*] mod_include
+	#PASSENGER	*] prefork
+	#多分永久に使わない
+		HTTP-response-headerかきかえ　*] mod_asis
+		URL変換とリダイレクト用途 *] mod_alias
+		送信状況表示用 *] mod_status
+	#Land.toと統合後再組み込み
+		*] mod_log_config
+		*] mod_auth_basic
+		*] mod_authn_file
+		*] mod_authz_groupfile
+		*] mod_authz_host
+
+#prod config/environments/*** loglevel=:error 
+
+-------------------------------------------------------------------------------
+#ActiveScafFold
+	  rails/plugin/ActiveScaffold
+	  <http://a01.biz/wiki/index.php?plugin=related&page=rails%2Fplugin%2FActiveScaffold>
+
+
+	rails <http://a01.biz/wiki/index.php?rails>
+
+
+		ActiveScaffold? <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#pad09b43>
+
+		* ActiveScaffold <#pad09b43>
+		* 説明 <#r5efc1c0>
+		* Rails2.0対応について <#tdf140e2>
+		* インストール <#f5945e80>
+		* 使い方 <#z0bcefa8>
+			  o 単純な使いかた <#l8e6567c>
+			  o ActiveScaffoldの設定 <#f9d88981>
+					+ 基本的な内容 <#tb58f8ce>
+					+ ページあたりの表示数を指定 <#k568981c>
+					+ listの並び順を設定 <#hfc102c7>
+					+ 表示するカラムと順番を指定する <#u8058cd7>
+					+ カラムのタイトルを日本語にしたい <#v39cab5e>
+			  o 2008-03-25 ActiveScaffoldメニューの日本語化 <#u3d32f28>
+			  o （旧）ActiveScaffoldメニューの日本語化【2008-03-25 プラグイ
+				ン化されているので必要無し】 <#y923029c>
+			  o 表示方法を変更するには? <#l7158af5>
+			  o 共通の設定をするには? <#rfe3e821>
+			  o 不要なメニューを消すには? <#s0686d65>
+		* 公式サイト翻訳 <#jab9de3b>
+			  o API:Core <#s357815c>
+					+ actions (global local) <#n70189f0>
+					+ action_links (global local) <#yf541d11>
+					+ columns <#p74d1ff1>
+		* リンク <#e070a68c>
+
+	説明 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#r5efc1c0>
+	そのままではまともに使えないScaffoldに変わり、そのままでもかなり使える Viewを動的に作成してくれます。 Viewの開発を劇的に楽にします。
+		Rails2.0対応について † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#tdf140e2>
+	基本的な部分は問題なく使えるが、ソートをしようとするとエラーになる。 もしかしたらpostgresql特有の問題かも・・・
+	インストール † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#f5945e80>
+		Rails2.0～ 2007/1/9 時点
+			$ script/plugin install http://activescaffold.googlecode.com/svn/tags/1.1.0_rc1
+			$ mv vendor/plugins/1.1.0_rc1/ vendor/plugins/active_scaffold
+		Rails1.～
+			$ script/plugin install http://activescaffold.googlecode.com/svn/tags/active_scaffold
+	単純な使いかた † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#l8e6567c>
+	コントローラに宣言を追加する
+		$ vi app/controllers/admin_controller.rb 
+		class AdminController < ApplicationController
+		  active_scaffold :user
+		  layout "activescaffold"
+		end
+
+	ActiveScaffold? 用のレイアウトを追加 <http://a01.biz/wiki/index.php?cmd=edit&page=ActiveScaffold& refer=rails%2Fplugin%2FActiveScaffold>
+		Rails2 $ vi app/views/layouts/activescaffold.erb
+		Rails1 $ vi app/views/layouts/activescaffold.rhtml
+			ファイル内容
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+			<html>
+			  <head>
+				<title>My Application</title>
+				<%= javascript_include_tag :defaults %>
+				<%= active_scaffold_includes %>
+			  </head>
+			  <body>
+				<%= yield %>
+			  </body>
+			</html>
+
+	ActiveScaffoldの設定 †
+	基本的な内容 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#tb58f8ce>
+	設定をしたい場合はブロックで囲む
+	config.xxx=は全体の設定 config.listやconfig.showなどはlist、show個別の設定になる。
+
+		active_scaffold :product do |config|
+		  config.label = "商品"
+		  config.list.per_page = 2 
+		  config.list.sorting ={:name => :asc }
+		end 
+
+
+		ページあたりの表示数を指定 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#k568981c>
+			config.list.per_page = 20
+					listの並び順を設定 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#hfc102c7>
+			config.list.sorting = {:name => :asc}
+
+		表示するカラムと順番を指定する † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#u8058cd7>
+			columnsを書くと表示する順番を指定できる。
+			config.columns = [:name, :note, :items]
+			表示順は書いた順番になる。 全体設定なのでlistだけでなく、showもeditも同じ順番になる。 itemsの様に親子関係の場合も指定可能
+
+		カラムのタイトルを日本語にしたい † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#v39cab5e>
+			config.columns[:name].label = "商品名"
+			config.columns[:note].label = "メモ"
+
+		カラム関係のメソッド
+			label	カラム名	String
+			description	補足説明(編集時)	String
+			required	必須項目	true|false
+			ui_type	関連の選択設定	:crud|:select
+			search_sql	SQLの条件節	true|String
+
+	2008-03-25 ActiveScaffold? メニューの日本語化 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#u3d32f28>
+		$ script/plugin install http://svn2.assembla.com/svn/activescaffold_japanese_l10n
+			  【2008-03-25 プラグイン化されているので必要無し】 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#y923029c>
+		urekatのスカンク日記３ <http://d.hatena.ne.jp/urekat/20071110/>さんのと ころの通りでOK
+
+		libにactive_scaffold_localization.rbを作成
+		$ vi lib/active_scaffold_localization.rb
+			# http://activescaffold.com/docs/localization-reference
+			class Object
+			  AS_JP_MAP = {
+				"Replace With New" => "新しい値に置き換える",
+				"Edit"             => "編集",
+				"Show"             => "表示",
+				"Update"           => "更新",
+				"Delete"           => "削除",
+				"Search"           => "検索",
+				"Create New"       => "新規作成",
+				"Reset"            => "リセット",
+				"hide"             => "隠す",
+				"show"             => "表示",
+				"Cancel"           => "キャンセル",
+				"Found"            => "件見つかりました。",
+				"Create"           => "作成",
+				"Close"            => "閉じる",
+				"No Entries"       => "データがありません",
+				"Live Search"      => "リアルタイム検索",
+				"Search Terms"     => "検索ワード",
+				"Create %s"        => "%sの新規作成",
+				'Create Another'   => "追加",
+				'Add From Existing'=> "既にあるものを追加(Add From Existing)",
+				'- select -'       => "-- 選択 --",
+				'Remove'           => "除外",
+				'Previous'         => "前",
+				'Next'             => "次",
+				'%s for %s'        => "%2$s の %1$s (%1$s for %2$s)",
+				'Update %s'        => "%sの編集",
+				'Are you sure?'    => "本当によろしいですか？",
+				'Request Failed (code 500, Internal Error)' => "エラーが発生しました。",
+				'Created %s'       => "%s を作成しました。",
+				'Deleted %s'       => "%s を削除しました。",
+				'Updated %s'       => "%s を更新しました。",
+				"Version inconsistency - this record has been modified since you started editing it." => "更新が衝突しました。",
+				'Show %s'          => "%s の表示"
+			  }
+			  alias_method :as__without_jp, :as_
+			  def as__with_jp(*args)
+				pars = args.dup
+				fmt = pars.shift
+				text = AS_JP_MAP[fmt]
+				if text
+				  text = text % pars unless pars.empty?
+				  return text
+				end
+				return as__without_jp(*args)
+			  end
+			  alias_method :as_, :as__with_jp
+			end
+
+		ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS[:default] = "%Y/%m/%d %H:%M"
+		ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default] = "%Y/%m/%d %H:%M"
+
+		environment.rbの最後に追加
+			$ vi config/environment.rb
+			require "active_scaffold_localization"
+
+		サーバ再起動
+		$ script/server
+
+
+	表示方法を変更するには? † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#l7158af5>
+	表示方法を変更するには、ヘルパーを利用する。
+	|カラムの表示方法|(カラム名)_column(record)
+	|Formの表示方法|(カラム名)_form_column(record, name)
+		module AdminHelper
+		  def release_date_column(record)
+			record[:release_date].strftime("%Y-%m-%d")
+		  end
+
+		  def release_date_form_column(record,name)
+			input(:record, :release_date, :name => name, :order => [:year, :month, :day], :use_month_numbers => true, :start_year => 1970)
+		  end
+		end
+
+		  共通の設定をするには? † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#rfe3e821>
+	applicationControllerでAjaxScaffold? .set_defaultsを指定すると全体の共 通設定が可能。 <http://a01.biz/wiki/index.php?cmd=edit&page=AjaxScaffold& refer=rails%2Fplugin%2FActiveScaffold>
+
+		  不要なメニューを消すには? † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#s0686d65>
+
+	conf.actions.exclude :delete, :show, :create, :update, :search
+
+	:editではなく:updateなので注意
+
+	公式サイト翻訳 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#jab9de3b>
+
+	  API:Core † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#s357815c>
+
+		actions (global local) † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#n70189f0>
+
+	使用するアクションを指定する(指定しないばあいは全部使う)
+
+	conf.actions = [:create, :update, :show]
+
+	使わないアクションを指定する
+
+	conf.actions.exclude :create
+
+	配列で渡せばまとめて指定できる
+
+	conf.action.exclude = [:create, :delete]
+
+	アクションを使える様にする
+
+	conf.actions.add :delete
+
+	アクションを変更する(:search専用?)
+
+	conf.actions.swap :search, :live_search
+
+			action_links (global local) † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#yf541d11>
+
+	アクションを追加する
+
+	conf.action_links.add 'get_pdf', :label => 'Download PDF'
+
+	アクションの名称を変更
+
+	conf.action_links['get_pdf'].label = "Save PDF"
+
+	アクションを追加(簡易版)
+
+	conf.action_links << 'print_pdf'
+
+	標準のアクション名を変更する
+
+	conf.show.link.label = "Display Record"
+
+	列毎にMenuを表示する
+
+	conf.action_links.add 'GetRss', :type => :record, :action => 'get_rss'
+
+	アクションの説明
+
+	:action	'action_name'	指定したアクションを実行する
+	:controller	'controller_name'	コントローラを指定する
+	:parameters		その他のパラメータを指定
+	:method	:get :post :put :delete	メソッドを指定する
+	:type	:table :record	全体かレコードかを指定
+	:label	'label_name'	表示用ラベルを指定
+
+	:confirm		確認? The confirmation message for the link	if any.
+
+	:security_method		
+	:crud_type		:create :read :update :destroy
+	:inline	true false	ActiveScaffold? で表示するか?
+	:page	true false	
+
+			columns † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#p74d1ff1>
+	カラムの追加
+
+	conf.columns.add :name
+	conf.columns << :sort_no
+
+	まとめて追加
+
+	conf.columns = [:name, :sort_no]
+
+	listに対する編集
+
+	conf.list.columns = [:name, :sort_no]
+
+		リンク † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#e070a68c>
+		ActiveScaffold公式サイト(英語) <http://www.activescaffold.com/>
+		ActiveScaffold を使って Ruby on Rails を機能アップする <http://www.ibm.com/developerworks/jp/linux/library/l-activescaffold/>
+		2007-11-10 優しいRailsの育て方 <http://wota.jp/ac/?date=20071110>
+
+	 新規
+		<http://a01.biz/wiki/index.php?plugin=newpage&refer=rails%2Fplugin%2FActiveScaffold>
+		http://a01.biz/wiki/index.php?cmd=rss&ver=1.0>
+		Last-modified: 2009-01-04 (日) 19:17:31 (118d)
+		Link: rails <http://a01.biz/wiki/index.php?rails>(118d)
+		Site admin: anonymous <http://a01.biz/wiki/>
+
+-------------------------------------------------------------------------------
+#Version1.2.x and 2.x-----------------------------------
+		minorio のプログラミング・メモ
+		RSS2
+		<[OSX][Ruby on Rails][WEB制作] ... | [Ruby on Rails][Rails 2.0] Rai...>
+		2008-04-26
+		■[OSX][Rails 2.0][RadRails][Ruby on Rails] Aptana RadRails を使った Scaffold の作成（RAILS 2.0 の場合） 14:12
+
+	どうも『RailsによるアジャイルWebアプリケーション開発 第2版』の6.1章の通りにやっても Scaffold がうまく作成されないようなので、Rails 2.0 流のやり方をメモしておく。
+
+		* phpMyAdmin で depot_development という名のデータベースを作っておき、RadRails で新規 Rails プロジェクトとして depot を作成
+		* depot/config/database.yml ファイルを開いてデータベースのユーザー名、パスワード、ソケットなどを適切に設定
+
+	本ではこのあと、モデルの作成（データベースマイグレーション）、コントローラーの作成、Scaffold の作成と進むことになっているのだけど、
+	Rails 2.0 の場合、ここを scaffold 一発でやってしまえばいいみたい。
+	Ruby エクスプローラーで depot プロジェクトが選択されていることを確認した上で、「ジェネレーター」タブから scaffold を選択、パラメーターに
+	product title:string description:text image_url:string
+
+	と入れて実行。
+	これでマイグレーションファイル（db/migrate/20080427053115_create_products.rb）、
+	コントローラーファイル（app/controllers/products_controller.rb）も一気に生成される。
+	Rails 2.0のscaffoldを使ってみた
+	教科書の例では admin コントローラーから product というモデルを操作するという構造になっているのだけど、2.0 の scaffold を使うとコントローラー名とモデル名も自動的に関連づけられるみたいだ（この場合はモデル名 product に対して、コントローラー名、View名が products と複数形になる）。
+	scaffold のあと、「Rake タスク」タブから db:migrate を実行すると、データベースにテーブルが作成される。
+	サーバー（WEBrick サーバー）を起動してブラウザーから http://127.0.0.1:3000/products にアクセスすると、空の Product リストが表示され、レコードの追加、修正、削除などのページが自動生成されていることが確認できた。
+	教科書も Rails 2.0 対応だったらよかったんだけど・・。けっこういろいろ変わっているようなので、もう１冊そういう本を買っておいてもいいかも。
+
+	Rails 2.0 - 初心者がすべきことは？
+
+		作者 Rick DeNatale, 翻訳者 岡田 英久 投稿日 2008年1月8日 午前6時24分
+		Rails 2.0.0、2.0.1、そして 2.0.2 という最近の矢継ぎ早なリリースに伴い、Rails サポートディスカッショングループには新しい Rails ユーザからの多くの問い合わせ(source)が届いている。彼らは Dave Tomas 氏と David Heinemeier Hansson 氏が執筆した書籍『 Agile Web Development with Rails 』（訳書のタイトルは『 Rails によるアジャイル Web アプリケーション開発』）のような有名なチュートリアルに従うことに疑問を感じている。書名の頭文字をとって一般に AWDR と呼ばれている Tomas 氏と Hansson 氏のその書籍は、すでに第二版が出版されているが、それも一年前のことで、 Rails 1.2 しかカバーしていない。
+		Rails 2.0 と前バージョンである Rails 1.2 との違いは、Rails 1.2 と Rails 1.1 との間の違いに比べれば微々たるものだが、そこには疑うことを知らない新規ユーザをつまずかせるのに十分な大きさの落とし穴がある。
+		Rails 2.0 のテーマのひとつはフレームワークのスリム化である。それにより、これまでは標準だったいくつかの機能がコア部分から削除され、プラグインとして提供されるようになった。
+		1.2 をベースにしたチュートリアルに従っている人はそこでつまずく可能性がある。次に二つの例を挙げる。
+
+		   1. 多くのチュートリアルではデータベースに MySQL を使っている。それは MySQL が Rails のデフォルトだったからだが、Rails 2.0.3 ではデフォルトが SQLite3 に変更(source)された。AWDR は後ろのほうで SQLite3 の使い方について説明しているが、チュートリアルを辿っている新規ユーザにとっては、問題にぶつかった時点でそれを自力で解決するための備えにはならないかもしれない。
+		   2. AWDR の最初のほうで Rails のダイナミックな scaffold 機能を使用するが、現在のバージョンでは scaffold は次のようにプラグインをインストールした後でないと使用することができない。
+						script/plugin install scaffolding 
+
+			  このように Rails 2.0 で削除された機能には他に、AJAX を使ったインプレイスエディタやオートコンプリート、そして有名な act as モデル拡張のいくつかが含まれる。
+			  削除された機能を提供していると思われるものを利用可能なプラグインの中から探したければ、記のコマンドを実行するとよい。
+						script/plugin list 
+
+					you@ecolnux:~/RoRapps/2chnrg$ ruby script/plugin list
+					account_location              http://dev.rubyonrails.com/svn/rails/plugins/account_location/
+					acts_as_list                  http://dev.rubyonrails.com/svn/rails/plugins/acts_as_list/
+					acts_as_nested_set            http://dev.rubyonrails.com/svn/rails/plugins/acts_as_nested_set/
+					acts_as_tree                  http://dev.rubyonrails.com/svn/rails/plugins/acts_as_tree/
+					atom_feed_helper              http://dev.rubyonrails.com/svn/rails/plugins/atom_feed_helper/
+					auto_complete                 http://dev.rubyonrails.com/svn/rails/plugins/auto_complete/
+					continuous_builder            http://dev.rubyonrails.com/svn/rails/plugins/continuous_builder/
+					deadlock_retry                http://dev.rubyonrails.com/svn/rails/plugins/deadlock_retry/
+					exception_notification        http://dev.rubyonrails.com/svn/rails/plugins/exception_notification/
+					http_authentication           http://dev.rubyonrails.com/svn/rails/plugins/http_authentication/
+					in_place_editing              http://dev.rubyonrails.com/svn/rails/plugins/in_place_editing/
+					javascript_test               http://dev.rubyonrails.com/svn/rails/plugins/javascript_test/
+					legacy                        http://dev.rubyonrails.com/svn/rails/plugins/legacy/
+					localization                  http://dev.rubyonrails.com/svn/rails/plugins/localization/
+					open_id_authentication        http://dev.rubyonrails.com/svn/rails/plugins/open_id_authentication/
+					scaffolding                   http://dev.rubyonrails.com/svn/rails/plugins/scaffolding/
+					scriptaculous_slider          http://dev.rubyonrails.com/svn/rails/plugins/scriptaculous_slider/
+					ssl_requirement               http://dev.rubyonrails.com/svn/rails/plugins/ssl_requirement/
+					token_generator               http://dev.rubyonrails.com/svn/rails/plugins/token_generator/
+					tzinfo_timezone               http://dev.rubyonrails.com/svn/rails/plugins/tzinfo_timezone/
+					tztime                        http://dev.rubyonrails.com/svn/rails/plugins/tztime/
+					upload_progress               http://dev.rubyonrails.com/svn/rails/plugins/upload_progress/
+					lib                           svn://rubyforge.org/var/svn/betternestedset/trunk/lib/
+					test                          svn://rubyforge.org/var/svn/betternestedset/trunk/test/
+					lib                           svn://rubyforge.org/var/svn/betternestedset/trunk/lib/
+					test                          svn://rubyforge.org/var/svn/betternestedset/trunk/test/
+					comatose                      http://mattmccray.com/svn/rails/plugins/comatose/
+					doozer                        http://mattmccray.com/svn/rails/plugins/doozer/
+					encrypted_column              http://mattmccray.com/svn/rails/plugins/encrypted_column/
+					gravatar_helper               http://mattmccray.com/svn/rails/plugins/gravatar_helper/
+					labeled_form_builder          http://mattmccray.com/svn/rails/plugins/labeled_form_builder/
+					radiant_behavior_filters      http://mattmccray.com/svn/rails/plugins/radiant_behavior_filters/
+					radiant_mailer_behavior       http://mattmccray.com/svn/rails/plugins/radiant_mailer_behavior/
+					radiant_password_protected_behaviorhttp://mattmccray.com/svn/rails/plugins/radiant_password_protected_behavior/
+					rendered_column               http://mattmccray.com/svn/rails/plugins/rendered_column/
+					tags                          http://mattmccray.com/svn/rails/plugins/tags/
+					theme_support                 http://mattmccray.com/svn/rails/plugins/theme_support/
+					comatose                      http://mattmccray.com/svn/rails/plugins/comatose/
+					doozer                        http://mattmccray.com/svn/rails/plugins/doozer/
+					encrypted_column              http://mattmccray.com/svn/rails/plugins/encrypted_column/
+					gravatar_helper               http://mattmccray.com/svn/rails/plugins/gravatar_helper/
+					labeled_form_builder          http://mattmccray.com/svn/rails/plugins/labeled_form_builder/
+					radiant_behavior_filters      http://mattmccray.com/svn/rails/plugins/radiant_behavior_filters/
+					radiant_mailer_behavior       http://mattmccray.com/svn/rails/plugins/radiant_mailer_behavior/
+					radiant_password_protected_behaviorhttp://mattmccray.com/svn/rails/plugins/radiant_password_protected_behavior/
+					rendered_column               http://mattmccray.com/svn/rails/plugins/rendered_column/
+					tags                          http://mattmccray.com/svn/rails/plugins/tags/
+					theme_support                 http://mattmccray.com/svn/rails/plugins/theme_support/
+
+		別の選択肢は Rails 1.2.6 を使ってチュートリアルを一通り終え、その後で 2.0 への移行を検討することだ。
+		まずは次のコマンドを実行して Rails 1.2.6 をインストールしよう。
+			gem install rails --version 1.2.6 
+
+	次に、すでにインストール済の Rails 2.0.x 用 gems パッケージを削除するか、もしくはプロジェクトを作成する際の Rails コマンドで次のようにバージョン番号を指定すればよい。
+		gems を使ってインストールしたほとんどのコマンドは gem 内のコードを実行するラッパーである。
+	それらのコマンドでは、左右にアンダースコアを付加したバージョン番号を最初の引数として与えて実行することにより、gem のバージョンを指定することができる。
+		rails _1.2.6_ my_rails_project 
+
+		Obie Fernandez 氏(source)が書いた『 The Rails Way (source)』のように、現時点で入手可能な Rails 2.0 対応書籍もすでにいくつか存在する。
+		しかし、今までのところ、それらは全て多少 Rails に触れた経験をもっているユーザのための情報源を目指しているように思える。
+		古い Rails 文献のいくつかは、時が経てば必ず更新されて、新しいチュートリアルが盛り込まれることになるだろう。
+		さしあたり Rails の新規ユーザに与えられている選択肢は二つだ。前バージョンからの変更点にぶつかったらひたすら苦労して切り抜けるか、
+		あるいは恐らくより賢明な方法として、ある程度のレベルに達するまではチュートリアルに合わせたバージョンの Rails を利用するかである。
+		原文はこちらです：http://www.infoq.com/news/2007/12/rails-20-docs
+
+	Old vs. New
+
+	work$ rails exchange
+	work$ rails -d mysql exchange
+	exchange$ ruby script/generate scaffold Movie title:string description:text one_sheet_url:string
+	  * Installed Rails
+		#gem install rails --include-dependencies
+
+	  * Created an aplication with the rails command
+		$rails exchange
+
+	  * Created the databases for the application with the rake command
+		$ rake db:create:all
+
+	  * Used the script/generate command to create the scaffolding for the application
+		$ ruby script/generate scaffold Movie title:string description:text one_sheet_url:string
+
+	  * Created the database table using the generated migration file
+		$ rake db:migrate
+
+	  * Started the webserver with the script/server command
+		$ ruby script/server
+
+	  * Pointed our web browser to the application and started entering and editing data
+		http://localhost:3000/movies
+
+
+
+
+
+-------------------------------------------------------------------------------
+Railsでデバッグをする７つの方法
+	------------------
+
+	記事の引越しから漏れていたのでサルベージ。
+
+	secondlifeさんの記事 に反応して後で書こうかなあと思っていたら、大分時間がたってしまいましたが、めげずに書いてみます。
+
+	1. p/pp
+		  こちらはRailsに限らず良く使われている方法ですが、RailsではWebサーバをフォアグラウンドプロセスとして立ち上げた状態で使う感じになります。
+
+	  ???1? $ ./script/server
+
+	p/ppに慣れている人にはわかりやすくて良いと思います。
+
+	2. logger.deb ug
+		  さて、続いてlogger.deb ugを使う方法です。
+			???1? logger.debug "something interesting information"
+
+		  p/ppの代わりにlogger.deb ugを呼ぶ事で、結果がlog/develo pment.logなどのlog/$RAILS_ENV. logファイルに書き出されます。 書き出されたファイルを、
+			???1? $ tail -f log/development.log
+
+		  しておくと、p/ppでデバッグする時と同じような感じでデバッグ出力を見る事が出来ます。また、出力結果はlogファイルとして残っているので、後で参照する事もできます。
+
+	3. script/con sole
+		  script/con soleは、実行時にデータベースの中身がどうなっているかを知りたい時に非常に便利です。script/con soleコマンドを実行すると、Railsの環境を読み込んだ状態でirbが立ち上がるので、ActiveRecordを使ってfindしたりcreateしたりdestroy_al lしたり、好きなようにDBをいじる事ができます。本当に素晴らしい機能ですね。
+
+	4. script/bre akpointer
+		  script/con soleはとても素晴らしいのですが、アクション実行中のsessionの状態を調べたりするのには使えません。そんな時は、script/bre akpointerを使う事ができます。
+			???1? $ ./script/breakpointer
+
+		  まず、あらかじめbreakpoint erを立ち上げておきます。続いて、状態を確認したい場所にbreakpoint を仕込みます。
+			???1? class FooController &lt; ApplicationController
+			???2?   def bar
+			???3?     # something
+			???4?     breakpoint
+			???5?     # something
+			???6?   end
+
+		  あとは、ブラウザからアクセスしてbarアクションを実行すると、待ち受けていたbreakpoint erでirbが立ち上がるので、必要な情報を自由に閲覧・操作する事ができます。
+
+	5. better rails debugger
+		  script/bre akpointerはとても便利ですが、ステップ実行が出来ないという問題があります。 実際にステップ実行がどうしても必要という場面はあまり無いのですが、あればあったほうが便利ですね。そんな時は、ruby-debug というGemを使います。
+		  これは前回のRails勉強会のときにyuguiさんから教えていただいた方法なのですが、まずはruby-debug をインストールします。
+			???1? # gem install ruby-debug
+
+		  次に、ブレークポイントを仕込みます。
+			???1? class FooController &lt; ApplicationController
+			???2?   def bar
+			???3?     # something
+			???4?     debugger
+			???5?     # something
+			???6?   end
+
+		  あとは、p/ppデバッグをするときのようにWebrickやMongrel等のWebサーバをフォアグラウンドで立ち上げ、目的のコードが実行されるようにブラウザからアクセスします。
+		  すると、Webサーバのプロセス上でdebug.rb（と似たような感じのもの）が立ち上がるので、通常のrubyスクリプトを デバッグする時と同じ要領でデバッグを行う事ができます。
+
+	6. test/autot est
+		  Ruby on Railsでは、テスト用のフレームワークがはじめから使える状態になっています。
+		  テスト駆動開発では、テストを書いてから実装を書きますが、適当な動作検証用のコードをテストとして書くことで、デバッグに使う事もできます。この際、毎回テストをrakeコマンドから実行するのは時間が掛かるので、ZenTestのautotestを使うのがお勧めです。
+		  autotestを使うと、編集されたファイルに関連するテストだけを実行してくれるので、rakeコマンドを実行するよりも軽快なレスポンスが得られます。さらにredgreenを併用すると気分良くデバッグを行う事ができるのでお勧め。
+
+	7. tail -f log/develo pment.log&; autotest
+
+		  最後に、僕が今使っている方法を紹介します。 開発用とは別に一つターミナルを立ち上げて、RAILS_ROOT で以下のコマンドを実行。
+			???1? $ tail -f log/development.log&amp;; autotest
+
+		  こうしておくと、プログラムやテストコードを編集した時はautotestの出力が表示され、ブラウザからアクセスした時にはロガーの出力が表示されます。 基本的に両者が同時に行われる事は無いので、一つのターミナルを有効利用する事ができておすすめ。
+
+	というわけで、Railsでデバッグを行う方法の紹介でした。
+
+	posted by {Png} genki on Wed 21 Nov 2007 at 12:38
+
+	Similar Articles:
+	+++++++++++++++++
+
+	  1. FireBug for IE? by {Png} genki
+
+	  2. Seven Debugging Tools of Rails by {Png} genki
+
+	  3. Rails 2.0でデバッグをする新しいやり方 by {Png} genki
+
+	  4. Railsのドキュメントが要らなくなる（事もある）方法 by {Png} genki
+
+	  5. XcodeのgdbでObjective-Cのメソッドを呼び出す by {Png} genki
+
+
+
+
+
+	January 2008 December February
+
+	  * 31
+
+	11th Fri
+
+
+
+	Rails 2.0でデバッグをする新しいやり方
+	-----------------------
+
+	比嘉さんからciteされたみたいなので、取り急ぎ新しい情報を吐き出しておこうと思います。
+
+	そろろろRailsについて本音を書いてみるか
+
+	  後、デバッグの環境は、Javaに比べて貧弱だと思う。Railsでデバッグをする７つの方法を見てほしい。IDEでソースにブレークポイントを設定(ソースコードを書き換えるのではなく)して、ステップイン、ステップオーバー、メモリの状態を見たりなんてのに慣れているJavaから比べると、すっごく大変に見える。
+
+	喜ばしいことに、Rails 2.0ではruby-debug を使ったdebuggerが正式に採用されました。 これの使い方は非常に簡単です。
+	まずは、以下のようにブレークポイントをコード中に書き込みます。
+	  ???1? def some_method
+	  ???2?   debugger # breakpoint
+	  ???3? end
+
+	続いて、Webサーバをデバッグモードで実行します。
+	  ???1? % ./script/server -u
+
+	これだけです。あとは、実際にブレークポイントを仕掛けた 場所が実行されるようにすれば、gdbライクなruby-debug の セッションが開始されます。 ruby-debug は、gdbと同じように、ステップ実行、ステップオーバー等の逐次実行を行うインターフェイスがあるので、
+	コードの動作を確認しながらデバッグを行うことができます。
+
+	gdbになれていない人には、irbコマンドを実行することで、 その場でirbを立ち上げることができます。これは非常に便利ですね。
+
+	参考までに、debuggerから実行できるコマンドのリストを 載せておきます。
+	  ???1? backtrace break catch cont delete display down eval exit finish frame help irb list method next p pp quit reload restart save script set step thread trace undisplay up var where
+
+	See Also
+
+	  *  MOONGIFT: ? Railsのデバッグのお供に「ruby-debug」:オープンソースを毎日紹介
+
+	更新履歴
+
+	  * 2008/01/21 See Alsoに1点追加
+
+	posted by {Png} genki on Fri 11 Jan 2008 at 22:21
+
+	Similar Articles:
+	+++++++++++++++++
+
+	  1. FireBug for IE? by {Png} genki
+
+	  2. Railsでデバッグをする７つの方法 by {Png} genki
+
+	  3. Railsのドキュメントが要らなくなる（事もある）方法 by {Png} genki
+
+	  4. Adobe AIRでfdbコマンドラインデバッガを利用する by {Png} satoko
+
+	  5. merbでデバッグする方法 by {Png} genki
+
+-------------------------------------------------------------------------------
+Apache
+moduleの全コンパイルを実行
+enable-mod-shared=allでも外部ライブラリに依存するものはコンパイルされないため、全モジュール込みのコンパイルには以下を利用
+	# sudo ./configure --enable-so --enable-modules=all  (下の指定しないときこのmostを利用) 
+	# sudo ./configure --enable-so --enable-ssl --with-ssl=/usr/local/ssl --enable-modules=most  (下の指定しないときこのmostを利用) 
+				 --enable-mods-shared="all ssl cache proxy authn_alias mem_cache file_cache charset_lite dav_lock disk_cache"
+	# sudo make
+	# sudo make install
+
+その他のサンプル
+	# sudo ./configure --enable-so --enable-mods-shared=all --enable-ssl
+			   --enable-proxy --enable-proxy-connect --enable-proxy-ftp
+			   --enable-proxy-http --enable-proxy-ajp --enable-proxy-balancer
+
+※mod_SSL をインストールするには、予めOpenSSLをインストールしておき、./configureに追加で「--with-ssl=/usr/local/ssl」の設定が必要です。す
+※configureで下記のエラーがでる場合場
+configure: error: ... Error, SSL/TLS libraries were missing or unusable
+この場合には、「--with-ssl=/usr/local/src/openssl-0.9.8l」などと、インストール元をしている場合が多い。
+	注意）一部のmoduleの名前がバージョンによって、変更されていたりします。
+	mod_access.so  廃止    ->   mod_authz_host.so  など
+できあがったhttpdに何のmodが同梱されているかを確認してみる。
+	/usr/local/apache2/bin/httpd -l
+
+
+
+
+
+#Heroku
+https://devcenter.heroku.com/articles/getting-started-with-rails3
+Prepare for Heroku
+	 gem install heroku
+	 heroku login
+	 heroku keys:add /root/.ssh/id_rsa.pub
+	 git clone git@heroku.com:tkt-redmine.git
+
+Create application on the Heroku:
+	 heroku create tkt-redmine
+	 git clone git@heroku.com:tkt-redmine.git
+Git add/commit/push to heroku
+Migrate and populate database in Heroku:
+	 heroku run rake db:migrate
+	 heroku run rake redmine:load_default_data
+Restart your Redmine server on Heroku:
+	 heroku ps:restart
+Herokuにアップロードしているssh鍵は以下で確認できる
+	$ heroku keys
+		  === miamitaka@gmail.com Keys
+		  ssh-rsa AAAAB3NzaC...YlRW8P+w== root@localhost.localdomain
+		  ssh-rsa AAAAB3NzaC...bqm63tbN3h unicorn@ubuntu
+追加していない場合は、以下で追加しておく。公開鍵の方はherokuにアップロードされる。
+	$ heroku keys:add
+Heroku account を切り替える
+	$ heroku accounts:set private
+使用中のHeroku accountを確認
+	$ heroku accounts
+すでにherokuにリポジトリがあり、そこをリモートリポジトリとして追加する場合、Heroku accountを利用している人は、git@heroku.com:hogehoge.gitと指定してはダメで、以下のように指定しなければならない。
+	$ git remote add heroku git@heroku.private:hogehoge.git
+アカウント追加後、切り替えたアカウントの認証がうまくいかない場合は、
+	$ heroku login
+
+ 
+    
+HerokuアプリのDBをバックアップ 無料のBasicタイプでは、バックアップできるファイル数の上限は2個。
+	#準備
+		$ gem update heroku
+		$ heroku addons:add pgbackups:basic --app heroku-hello-world
+	#実行
+		$ heroku pgbackups:capture --app heroku-hello-world
+	#一覧を見る
+		$ heroku pgbackups --app heroku-hello-world
+	#古いarchiveを捨てて新しいファイルでバックアップをする。その場合は、以下のように--expireオプションを付ける。
+		$ heroku pgbackups:capture --expire --app heroku-hello-world
+	#手動で削除/restore  destroy|restore [archive#Dnumber] を使う。
+		$ heroku pgbackups:destroy b003 --app heroku-hello-worldHeroku上でバックアップしたデータを、ローカルにダウンロードするには以下のように実行する。
+
+	Heroku上でバックアップデータを、(1) URL取得 (2)ローカルにダウンロードするには
+		$ heroku pgbackups:url b004 --app heroku-hello-world
+			[http://s3.amazonaws.com/hkpgbackups/...](http://s3.amazonaws.com/hkpgbackups/...)
+		$ curl "http://s3.amazonaws.com/hkpgbackups/..." -o b004.dump
+		ブラウザを使って直接アクセスしてもダウンロード可能。
+
+	ダウンロードしたダンプファイルをローカルのPostgreSQLにリストアする。
+		$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U ruedap -d mydb b004.dump
+		-hでホスト名、-Uでユーザー名、-dでDB名を指定して、最後にリストアしたいダンプファイルを指定する。
+		Railsアプリであれば、config/database.ymlにユーザー名やDB名は指定してあるはず。
+
+Herokuでのprivate環境変数利用
+	heroku config:add SOME_VAR_NAME1=somevalue SOME_VAR_NAME2=someothervalue
+	.bashrc or .bash_profie:
+		export SOME_VAR_NAME1=somevalue ; export SOME_VAR_NAME2=someothervalue
+	Ruby code
+		ENV['SOME_VAR_NAME1'] ;ENV['SOME_VAR_NAME2']
+
+
+Herokuアプリ アクセス拒否方法
+   　application_controller.rb
+		USERS = { "user" => "secret" }
+		before_filter :authenticate
+		def authenticate
+		  authenticate_or_request_with_http_digest("Application") do |name|
+			USERS[name]
+		  end
+		end
+	そのほか　heroku_user objectというのもある｡
+		https://blog.heroku.com/archives/2008/1/14/heroku_user
+		
+
+
+	

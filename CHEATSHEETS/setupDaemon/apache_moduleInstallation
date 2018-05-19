@@ -1,0 +1,145 @@
+
+第3回　Apacheの基本インストール
+
+一志達也<ichishi@pochi.tis.co.jp>
+TIS株式会社
+2001/3/9
+
+--quiet                 画面上にメッセージを表示しない
+--silent                quietと同じ
+--verbose               画面上に詳細なメッセージを表示
+--shadow[=DIR]          コンパイルに必要なファイルを指定したディレクトリ以下に作成
+--help                  画面上にヘルプを表示
+--show-layout           画面上にApacheがインストールされるディレクトリを表示
+--with-layout=[F:]ID    指定したファイルの内容のとおりにApacheのファイルを配置する
+--target=TARGET         設定ファイルなどの名前を変更（httpd.conf→ichishi.confなど）
+--prefix=PREFIX         Apacheがインストールされるディレクトリを変更する
+--exec-prefix=EPREFIX   ファイルの種類別にディレクトリを指定する。変更後、どこにインストールされるかはshow-layoutで確認
+--bindir=DIR
+--sbindir=DIR
+--libexecdir=DIR
+--mandir=DIR
+--sysconfdir=DIR
+--datadir=DIR
+--iconsdir=DIR
+--htdocsdir=DIR
+--cgidir=DIR
+--includedir=DIR
+--localstatedir=DIR
+--runtimedir=DIR
+--logfiledir=DIR
+--proxycachedir=DIR
+--add-module=FILE       Apacheの標準以外のモジュールファイルを追加する
+--activate-module=FILE
+--permute-module=N1:N2  モジュールを組み込む順序を指定する
+--enable-module=NAME    指定したApacheの標準付属モジュールを組み込む
+--disable-module=NAME   指定したApacheの標準付属モジュールを組み込まない
+--enable-shared=NAME    指定したApacheの標準付属モジュールをDSO（補足3）で組み込む
+--disable-shared=NAME   指定したApacheの標準付属モジュールをDSOで組み込まない
+表1　これらのオプションは、./configureに続いて指定する。これ以外にもオプションは存在するが、それらは使うことが考えにくい
+か、インストール後でも変更可能なものである。DSOについては補足3を参照
+モジュール             機能                                                              デフォルト
+mod_access             ホストに基づいたアクセス制御                                           Yes
+mod_actions            ファイル種別／メソッドに基づいたスクリプトの実行                       Yes
+mod_alias              Aliases and redirects.                                                 Yes
+mod_asis               .asis ファイルハンドラー                                               Yes
+mod_auth               テキストファイルを用いたユーザ認証                                     Yes
+mod_auth_anon          FTPスタイルの匿名（Anonymous）ユーザー認証                             No
+mod_auth_db            バークレイDBファイルを用いたユーザー認証                               No
+mod_auth_dbm           DBMファイルを用いたユーザー認証                                        No
+mod_autoindex          自動ディレクトリリスト表示                                             Yes
+mod_cern_meta          HTTPハンドラメタファイルのサポート                                     No
+mod_cgi                CGIスクリプトの実行                                                    Yes
+mod_digest             MD5ユーザー認証                                                        No
+mod_dir                基本的なディレクトリハンドリング                                       Yes
+mod_env                CGIスクリプトへの環境変数の継承                                        Yes
+mod_example            Apache APIの実証                                                       No
+mod_expires            割り当ての終了：リソースへのヘッダ                                     No
+mod_headers            リソースに任意のHTTPヘッダを加える                                     No
+mod_imap               イメージマップファイルのハンドラ                                       Yes
+mod_include            サーバで解析するドキュメント                                           Yes
+mod_info               サーバの設定情報                                                       No
+mod_log_agent          ユーザーエージェントのログ蓄積                                         No
+mod_log_config         ユーザー定義ログ                                                       Yes
+mod_log_referer        ドキュメントリファレンスのログ蓄積                                     No
+mod_mime               ファイル拡張子を使ったドキュメントタイプの決定                         Yes
+mod_mime-magic         magic numbers を使ったドキュメントタイプの決定                         No
+mod_negotiation        コンテンツのネゴシエーション                                           Yes
+mod_proxy              キャッシングプロキシ機能                                               No
+mod_rewrite            通常表記を使った強力なURI-to-filenameマッピング                        No
+mod_setenvif           クライアント情報を基にした環境変数の設定                               Yes
+mod_spelling           URLでのminor typosの自動訂正                                           No
+mod_status             サーバステータスを表示                                                 Yes
+mod_unique-id          あらゆるリクエストのためのユニークなリクエスト識別の生成               No
+mod_userdir            ユーザーのホーム・ディレクトリ                                         Yes
+mod_usertrack          cookieを用いたユーザー追跡（mod_cookies.cと置き換え）                  No
+表2　ここに挙げたモジュールはLinux用Apache 1.3.*のもの。Windows用や古いバージョンのApacheでは、ここに
+挙げていないモジュールが含まれていることがある。各モジュールの詳細などは、http://
+japache.infoscience.co.jp/japanese_1_3/manual/mod/index.htmlを参照
+
+補足１　Apacheのインストールに必要なツール
+　tarやgzipだけでなく、Apacheをインストールするためには以下のようなツールも必要となる。このほか、インストール要件
+を確認していただくため、そのための情報も掲載しておくので参考にしていただきたい。Linuxであれば、たいていの場合は問
+題ないと思うが、あえてツールをインストールしていないこともあるので注意していただきたい。
+
+gcc
+　Apacheをコンパイルするには「gcc」（GNU C Compiler）が必要になる。それ以外のCコンパイラではうまくいかない可能性が
+高い。また、バージョンが古すぎるのもよくない。Apacheのコンパイルに必要なのは、少なくともバージョン2.7.2以上とされ
+ているが、現時点での最新版は2.96である。gccがインストールされていれば、「gcc -v」と入力することでバージョンを確認
+できる。
+
+make
+　gccと同じく、makeもアプリケーションのコンパイルに欠かせない。「make -v」と入力すればバージョンに関する応答がある
+はずなので、応答がないようならインストールするようにしてほしい。
+
+　現在の一般的なLinuxディストリビューションであれば、これらのツールはApacheのインストールに支障のないバージョンが
+収録されている。ただし、商用UNIXの場合は、makeもGNUのmakeを使わなければならない点に注意すること。ともかく、なんで
+もかんでもGNUから最新版を入手してしまえるなら、その方が近道かもしれない。
+
+補足2　モジュールとは
+　Apacheを利用するうえでモジュールは欠かせない。なぜなら、Apacheからすべてのモジュールを外したら、ごく単純な機能し
+か持たないWebサーバになってしまうからだ（CGIプログラムさえも実行できなくなってしまう！）。
+
+
+[zu02]
+
+図2　Apacheとモジュールのイメージ
+
+　そのApacheにさまざまな機能を付け加え、高度なWebサーバに仕立て上げるのが、モジュールに課せられた役割である（図2）
+。ちょうど、宇宙ステーションのごとく、モジュールを追加することでApacheの機能はどんどん拡張されていくわけだ。こうし
+た構造のおかげで、新しい技術や特殊なニーズが登場しても、モジュールさえ作成すれば容易にApacheの機能を拡張できるので
+ある。
+
+　本文中でも説明しているとおり、Apacheには初めから幾つかのモジュールが組み込まれている（表2）が、これら以外にも数
+多くのモジュールがインターネットなどで公開されている。その中には、暗号化されたHTTP（HTTPS）を利用するためのSSLモジ
+ュール（mod_ssl）や、PHPのようにプログラム言語を実行するエンジンも含まれる。こうしたポピュラーなモジュールから、マ
+イナーなモジュールまで用意されているから、何か困ったことがあればモジュールで機能を拡張できないか調べてみるといいだ
+ろう。
+
+補足3　DSOとapxs
+　補足2で「モジュールを使えばApacheをどんどん拡張できる」と説明した。だとすれば、なぜ初めからすべてのモジュールを
+組み込んでおかないのだろうか？どうしてわざわざ組み込みを宣言しなくてはならないのだろうか？その答えは単純なもので、
+必要もないモジュールを組み込んでしまえば、バイナリが肥大化するし動作が遅くなるかもしれないからである。
+
+　では、インストール時には何も組み込まなかったとして、後から必要になったらどうなるのだろうか。その場合、通常のモジ
+ュールとしてApacheに組み込むのならば、Apacheを再コンパイルしなければならない。しかし、それではサーバを停止しなくて
+はならないし、なにより面倒だと思われるだろう。
+
+　そのような面倒と運用上の問題を回避するため、Apache 1.3から「DSO」（Dynamic Shared Object）と呼ばれる機能が組み込
+まれた。この機能を有効にしておくと、あらかじめApacheにモジュールを組み込まなくても、モジュールのファイルさえ用意す
+れば必要なときだけ組み込めるようになる。ただし、DSOを有効にするには、Apacheをインストールする際に「SOモジュール」
+（mod_so）を組み込んでおかなくてはならない。
+
+　SOモジュールを組み込むには、configureを実行する際に「--enable-module=so」を指定すればいいのだが、場合によっては
+うまくいかないかもしれない。その場合は、さらに「--enable-rule=SHARED_CORE」も指定する。心配ならば、最初から2つとも
+指定しておけば、ほとんどの場合問題なくDSOを有効にできるはずだ。詳しく知りたい方はApacheのマニュアル（ソースディレ
+クトリの中のhtdocs/manual/dso.html）などを参照してほしい。
+
+　DSOを有効にすればモジュールの追加は容易になるが、モジュール側でもDSOへの対応が必要となるから注意しなくてはならな
+い。
+
+　その方法はモジュールごとに異なるから、各モジュールの解説を参考にしていただきたいのだが、たいていは「apxs」と呼ば
+れるApacheのツールを使って行われる。ただし、Apacheにあらかじめ添付されているモジュールは、configureを実行する際に
+「--enable-shared=NAME」（NAMEはモジュールの名前）と指定するだけでDSOに対応できる。
+
+　いずれにしても、DSOは便利な機能だから有効に活用していただきたい。

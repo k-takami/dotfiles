@@ -1,0 +1,18 @@
+インストール済みフリーウェアは、列挙すると以下の通りです:
+定型文よびだし:EasyClip
+ファイルマネージャー:GSFinder-W03
+Zip展開:ExPanda
+コモンダイアログウィンドウでファイルシステムをツリー表示: なにか
+WindowsMobile環境設定:極窓Mobile
+窓の手WindowsMobile版:PocketHand2
+タスク管理とランチャー:WkTASK
+学習用単語帳:HiMem
+正規表現もつかえるテキストエディター:jot
+画像動画音声プレイヤーTCPMPとRealPlayer、そしてコーデックいろいろ
+インターネトラジオ:PocketLadio_0_47
+端末エミュレーター:PocketPuTTY
+シャッター音消音:es_silencer
+フレッツ・スポット接続ツール[Windows Mobile用]
+
+これだけ入れてますね。繰り返しますが、Operaはアンインストールしました。
+

@@ -1,0 +1,139 @@
+システム環境設定パネル
+	//(keyboard: 
+		修飾キー→ disable caps-lock key, 
+		shortcut tab--> Tabキーによるフォーカス移動
+		「フルキーボードアクセス」の項目で「すべてのコントロール」を選択
+キーボードメニューが開くので、
+「キーボードショートカット」の「フルキーボードアクセス」の項目を、
+「すべてのコントロール」を選択します。　
+Command+Wを押して、システム環境設定ダイアログを閉じれば、OKです。
+
+    アクセシビリティ」    「ディスプレイ」「カーソルのサイズ」
+Tip:   ポインタを一時的に大きくするには、トラックパッド上で指をさっと動かすか、マウスをさっと動かします。この機能を切にするには、「アクセシビリティ」環境設定の「ディスプレイ」パネルで「マウスポインタをシェイクして見つける」を選択解除します。
+
+	User & Group--> 既存ユーザーにパスワード設定
+	一般-->システムブラウザー ※OSX 10.9以降
+	display: non-mirroring　画面を拡大
+	mouse --> right click enabling
+	Bluetooth: menubarにひょうじする、にチェック
+	CONDITIONAL
+		Dock --> hide automatically
+//バッテリー使用時にsleepを休眠に sudo pmset -b hibernatemode 25
+Finderで「初期表示は~/Download」「全拡張子表示＆リスト表示」にして端末で以下コマンドでdotfiles表示；
+	defaults write com.apple.finder AppleShowAllFiles TRUE
+		*FALSE ならば非表示
+		TRUE FALSEでダメならばYES/NO引数
+	killall Finder
+DOCK
+	メモ帳削除：'-の文字化けをおこすし、クラッシュでリカバリーできない。
+#$HOME
+	 ~/.bash_profile
+		[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile`
+		if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+	 ~/.bashrc
+		    export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
+#SVN環境のためにxcodeインストール：　$svn でインストール画面ポップアップしてくれる。
+SSH-mounted-drive
+$ brew install sshfs
+$ sshfs [user]@[hostname]:[absolute_path_to_dir]  
+$ sshfs vagrant@192.168.33.10:/home/vagrant/Publus_Server /Users/appirits_1020380/Downloads/src/Publus_Server
+
+#確認
+$ mount
+/dev/disk0s2 on / (hfs, local, journaled)
+devfs on /dev (devfs, local, nobrowse)
+map -hosts on /net (autofs, nosuid, automounted, nobrowse)
+map auto_home on /home (autofs, automounted, nobrowse)
+vagrant@192.168.33.10:/home/vagrant/Publus_Server on /Users/appirits_1020380/Downloads/src/Publus_Server (osxfuse, nodev, nosuid, synchronous, mounted by appirits_1020380)
+
+
+
+
+#OSX ruby環境 #sidekiq はruby 2.2.0で動作不調
+	//u環境は　ruby -v: ruby-2.1.2 [ x86_64 ], rails --version: 4.2.0
+	bin path : = /usr/local/Cellar/ruby/2.*.0
+	gem path: = /Library/Ruby/Gems/2.*.0/
+	// /Library/Ruby/Gems/2.*.0/
+	//how to downgrade ruby (managing brew package)
+		 brew tap homebrew/versions
+		 brew search ruby
+		 brew uninstall rubyのbrewパッケージ名　例 ruby homebrew/versions/ruby22
+		     brew uninstall homebrew/versions/ruby22
+		 brew unlink ruby
+		 brew unlink ruby22
+		  brew uninstall --force ruby
+		  brew cleanup --force -s ruby
+		  brew prune
+		  brew install homebrew/versions/ruby22
+		  /usr/local/Cellar/ruby22/2.2.4/bin/irb
+		  ruby -v
+		  brew link ruby22
+		  sudo mv /Library/Ruby/Gems/2.2.0/ /Library/Ruby/Gems/2.2.4/
+#iTunes-applestore: some_body@gmail.com / Jbc*    #skype: some_body / JBC   # ORACLE: belltkakami / Jbc*
+#OSX CRASH
+	//bootup with vervous mode:　powerON-> cmd+v
+		バーバスモードでの起動メッセージは以下のとおり；
+		checking catalog file.
+		invalid recourd count
+		syncing...
+		(その後自動的に電源OFF)
+	//bootup with single-user mode:　powerON-> cmd+s
+	//power+cmd+r until Apple logo --> OS X再インストール画面　→ Untitledえらんで再インストール　　→apple ID でログイン
+	//data salvage: powerON -> command+S until Apple logo ->single user mode withe 'read-only' volume
+		//NOTE: US-ASCII keyboard uses shift+(8|;|]) standing for (*|:¥|)
+		$ mount -uw /
+		$ mkdir -p /tmp/usbdrive2
+		//insert usb stick
+		$ mount -t /dev/disk2s1 /tmp/usbdrive2
+		$ ls -alt /tmp/usbdrive2
+		// tar zcvf ****.tar.gz /Users/takami/***
+		$ cp -p ~/.bash* /tmp/usbdrive2
+		$ cp -p ~/Downloads/src/selenium* /tmp/usbdrive2
+		cp -p /Volumes/Untitled/Volumes/UNTITLED\ 1/.bash* ~/ ; source ~/.bashrc
+		//copy .bashrc & .bash_profile, .ssh/*, .subbersion/* , ~/.hg* 勤務表、*.epf , selenium* to new OS X
+	#AppleCare 相談受付番号：1028828869
+		相談概要：OX X が起動しない。
+			single-user modeでは起動できるが、safe-modeでは起動できない。
+			「Apple Hardware Test」ではハードディスク診断結果に警告が出る
+			「ディスクユーティリティ」では警告が出る。「ディスク診断」後に「ディスクの修復」ボタンがグレイアウト表示され、押せない。
+			OS X再インストール画面で次へと進んでいくと
+			「インストールの準備中にエラーが起きました。このアプリケーションをもう一度実行してください。」
+			と表示されで処理中止。
+		//まだやってないこと
+			「ディスクユーティリティ」でパーティションの「消去」や「再フォーマット」をしてからのOS X再インストール
+		//その他、不調箇所：左側commandボタンの接触不良。長時間押さないと打鍵が認識されない。右側commandボタンは問題無し。
+[#Safari](https://dynalist.io/d/hJ6a7BOnTYGbRJ6q5NqzxuMH#z=cSWoPfklcS4uG7G3iOqchA0U) 
+#Aptana 3.x , vwrapper ,  DBeaver, session
+	#DL java6 for Mac
+		http://supportdownload.apple.com/download.info.apple.com/Apple_Support_Area/Apple_Software_Updates/Mac_OS_X/downloads/031-28873-20150722-e716fb32-3085-11e5-8509-c38ce7f678b6/javaforosx.dmg
+
+	vi /Applications/Aptana\ Studio\ 3/AptanaStudio3.app/Contents/MacOS/AptanaStudio3.ini
+	   -vm  /Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/java
+  めぬばrはタスク切り替えしないとでない
+
+	vi ~/.bashrc
+	export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.6"`
+	#plugins :OS X のセキュリティービットのためjar展開できない
+		$ cd /Applications/Aptana\ Studio\ 3/plugins/
+OSX tune up : http://gori.me/mac/mac-tips/64719
+
+#TimeMachine backup/
+	*古いJDKはバックアップ＆リストア後に手作業で復旧
+	$ sudo cp -p phantomjs /bin/phantomjs
+  # メニューバーのTime Machineアイコンの「Time Machineに入る」を選択しても入ることができます。*/
+  # 右側のタイムラインをドラッグして、復元したい時間まで戻ります。*/
+  #                                                                                                                復元したいファイルを選択し、右下の「復元」ボタンを押すか、ツールバーの「アクション」ボタンを押し「〜を復元」コマンド実行します。ファイルは元にあった場所に復元されます。*/
+  # ファイル以外にもフォルダやハードディスク単位で復元することもできます。*/
+
+
+
+
+mysql
+	$ ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+	$ vi ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist 
+		<key>KeepAlive</key>
+		<false/>
+		#trueからfalseに変更。stopできなくなるから
+	$ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist 
+	$ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+

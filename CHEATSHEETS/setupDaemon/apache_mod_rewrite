@@ -1,0 +1,117 @@
+dawgsdk.org
+
+Rewriteモジュール(mod_rewrite)はApache Webサーバーにおいて、クライントからリクエストのあったURLの内部書き換えや、さまざまな環境変数等に応
+じたリダイレクトを可能とするモジュール。正規表現を使用した柔軟なマッチングを行うことができ、これを使用することで実際のディレクトリ構成に
+関係なく自由にサイトURLのパス部分を構成することが出来る。ここでは.htaccessファイルに必要なディレクティブを記述するだけで使用可能な、よく
+用いられるディレクティブを紹介する。
+
+関連項目:.htaccessリファレンス
+
+Rewriteモジュールの使用(.htaccess)
+
+Rewriteモジュールを有効化するには.htaccessに以下のように記述する。
+
+# .htaccessでRewriteを有効化する
+RewriteEngine On
+RewriteBase /
+
+Rewriteモジュールを有効化したら、あとは次に述べるRewriteRuleおよびRewriteCondを使用してURL書き換えの条件・ルールを記述することで、実際の
+URL書き換え等が行われる。なお、RewriteEngine Offとすると他に記述した全てのRewrite関連ディレクティブが無効となる(無視される)。RewriteBase
+は書き換えのベースとなるパスを指定するディレクティブで、ベースパスが自明である場合は記述しなくても良い。
+
+RewriteRule(URL書き換え＆リダイレクト)
+
+URL書き換えを行うルールを記述する。これがRewriteモジュールのメインのディレクティブである。リクエストされたURLのパスが条件に一致した場合、
+指定したURLの書き換えを行う。
+
+RewriteEngine On
+RewriteBase /
+
+# 書式：RewriteRule パターン 置換対象 オプション
+
+# /virtualpath/* へのリクエストがあった場合 /realpath/*の内容を返す
+RewriteRule virtualpath/(.*) realpath/$1
+
+# /images/* へのリクエストがあった場合
+# http://www.dawgsdk.org/images/*にリダイレクト
+RewriteRule images/(.*) http://www.dawgsdk.org/images/$1 [R,L]
+
+# 特定のサブディレクトリへのリクエストを
+# 全てindex.phpにPATH_INFOとして渡して処理する
+RewriteRule (test|read)(.*) index.php/$1$2
+
+パターンは通常の正規表現を用いて記述し、置換対象の記述では後方参照を使用することができる。RewriteRuleの末尾に[ ]でオプションを付加するこ
+とでルールの適用条件やマッチした場合に行う処理を変更することができる。設定可能なオプションには以下のようなものがある。
+
+オプション                                                    機能
+   [R]     "302 Moved Temporaily"のレスポンスを返しクライアントをリダイレクトする
+   [L]     条件にマッチした場合そこで判定を終了する(以下に続くRewriteRuleを評価しない)
+   [NS]    一次的なURLリクエストの場合のみ条件を評価(サーバー内部で発せられるサブリクエストの場合は判定をスキップする)
+   [N]     書き換えが済んだURLを新たなリクエストとして書き換え処理を再度最初のルールから繰り返す
+   [C]     次のRewriteRuleと条件を結合する(置換禁止文字列"-"を用いて複数の条件をANDで複合適用する場合に用いる)
+   [F]     マッチしたURLへのアクセスを禁止する(クライアントには"403 Forbidden"のレスポンスが返される)
+   [P]     PROXYモジュールを使用して他のサーバー(URL)にあるコンテンツを取得しその内容をクライントに返す
+
+RewriteによるURL書き換えは[R]オプションを指定してリダイレクトする場合を除き、すべてサーバー内部で処理されるため、表にその痕跡は一切現れず
+、クライント側からは書き換えが行われたことを知ることは出来ない。
+
+RewriteCond(環境変数などに応じた条件付加)
+
+環境変数やその他の条件に応じた判定を付加する。これを記述すると条件にマッチした場合のみ次に現れるRewriteRuleが評価される。
+
+RewriteEngine On
+RewriteBase /
+
+# 書式：RewriteCond テスト文字列 条件パターン オプション
+
+# ---- 例1：携帯端末からのアクセスを振り分ける(DoCoMo,J-Phone,ezweb)
+RewriteCond %{HTTP_USER_AGENT} DoCoMo [OR]
+RewriteCond %{HTTP_USER_AGENT} J-PHONE [OR]
+RewriteCond %{HTTP_USER_AGENT} UP\.Browser
+RewriteRule ^/$ i/index.html [L]
+
+# ---- 例2：同一ルートに割り当てられたバーチャルサブドメインの振り分け
+RewriteCond %{HTTP_HOST} domain1\.dawgsdk\.org
+RewriteCond %{REQUEST_URI} !^domain1/.*
+RewriteRule /(.*) domain1/$1 [L]
+
+RewriteCond %{HTTP_HOST} domain2\.dawgsdk\.org
+RewriteCond %{REQUEST_URI} !^domain2/.*
+RewriteRule /(.*) domain2/$1 [L]
+
+# ---- 例3：ファイルが存在する場合にはURL書き換え
+RewriteCond /~user/next.html -f
+RewriteRule index.html next.html [L]
+
+上記の例1,2にあるようにテスト文字列で環境変数等を用いるには %{変数名}と記述する。利用可能な変数には下記のようなものがある。
+
+         種類                                                                  
+ヘッダ環境変数         HTTP_USER_AGENT HTTP_REFERER HTTP_COOKIE HTTP_FORWARDED HTTP_HOST HTTP_PROXY_CONNECTION HTTP_ACCEPT
+リクエスト環境変数     REMOTE_ADDR REMOTE_HOST REMOTE_USER REMOTE_IDENT REQUEST_METHOD SCRIPT_FILENAME PATH_INFO QUERY_STRING AUTH_TYPE
+サーバー環境変数       DOCUMENT_ROOT SERVER_ADMIN SERVER_NAME SERVER_ADDR SERVER_PORT SERVER_PROTOCOL SERVER_SOFTWARE
+システム日付・時刻変数 TIME_YEAR TIME_MON TIME_DAY TIME_HOUR TIME_MIN TIME_SEC TIME_WDAY TIME
+その他                 API_VERSION THE_REQUEST REQUEST_URI REQUEST_FILENAME IS_SUBREQ
+
+条件パターンの記述では通常の拡張正規表現のほか、上記の例3のように特殊なパターンが使用可能。特殊パターンは下記の通り。
+
+特殊なパターン                                            
+      !        文字列の前につけることで、マッチしないパターンを指定
+
+      <        文字列比較
+      >        文字列比較
+
+      =        文字列比較
+      -d       指定したディレクトリが存在すればtrue
+      -f       指定したファイルが存在すればtrue
+      -s       ファイルが存在し、有限のサイズを持っていればtrue
+      -F       アクセス可能な有効なパスを指している場合にtrue(内部サブリクエストを用いてcheckされる)
+      -U       アクセス可能な有効なURLとなっている場合にtrue(内部サブリクエストを用いてcheckされる)
+
+オプションには次の二つがある。
+
+オプション                                           機能
+   [OR]    次に続くRewriteCondの判定条件をOR関係で結ぶ(ORオプションをつけない場合はANDの関係になる)
+
+   [NC]    判定パターンで大文字・小文字の区別をしない
+
+Copyright©2005-2009 dawgsdk.org, All rights reserved.

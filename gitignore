@@ -1,4 +1,45 @@
-.DS_Store
-.svn
 *~
-.*.swp
+.*.sw*
+.DS_Store
+.bundle
+.dbeaver-data-sources.xml
+.gitignore
+.pem/
+.project
+.pryrc
+.svn
+.yardoc
+/.bundle
+/config/application.yml
+/config/config_override.yml
+/config/database.yml
+/config/newrelic.yml
+/config/secrets.yml
+/coverage
+/doc
+
+/public/assets/*
+# /public/javascripts/translations.js
+# /public/system
+
+log
+/log/*
+!/log/.keep
+tmp
+/tmp
+db/*.sqlite3
+*.properties
+*.config
+rerun.txt
+capybara-*.html
+env
+spec/examples.txt
+/spec/tmp/*
+/vendor/*
+# Gemfile.*
+# db/schema.rb
+# pickle-email-*.html
+# public/js/application.js
+
+vim/.VimballRecord
+vim/.netrwhist

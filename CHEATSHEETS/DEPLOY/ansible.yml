@@ -1,0 +1,107 @@
+#PREP
+  #ERROR 'Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host's fingerprint to your known_hosts file to manage this host'
+  #answer===> 
+    $ sudo vim /etc/ansible/ansible.cfg
+      #rewrite as below for avoiding 
+        [ssh_connection]
+        ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+
+#step実行
+        $ ansible-playbook playbook.yml --step
+
+
+
+### $ansible
+call a shell command:
+    -a "$command"
+call with sudo rights:
+    --sudo
+test if machine responses:
+    -m ping
+call an arbitrary module:
+    -m $module -a "$argument"
+gather specific facts:
+    -m setup -a "filter=*distri*"
+$ansible-playbook
+call a book:
+    $host some/playbook.yaml
+run in parallel:
+    -f 10
+list affected hosts:
+    --list-hosts"
+
+### inventory
+general inventory:
+    /etc/ansible/hosts
+shell variable:
+    $ANSIBLE_HOSTS
+normal entry:
+    www.example.com
+multi-definition:
+    db[0-9].example.com
+custom ip:
+    ansible_ssh_host
+grouping:
+    [group]
+specific user:
+    ansible_ssh_user
+specific port:
+    ansible_ssh_port
+
+### basic playbook.yaml
+YAML format:
+    ---
+    - hosts:all
+launch task:
+    - name: check avail 
+      ping:
+variables:
+    vars:
+      rack: green
+include tasks:
+    tasks:
+      - { include: tasks/my.yml, user=alice }
+include handlers:
+    handlers:
+      - { include: handlers/my.yml }
+call depedency:
+    tasks:
+      - name: copy file
+        copy: src=a dest=b 
+        notify:
+          - restart sshd 
+    handlers:
+      - name: restart ssh
+
+### complex playbook.yaml
+loop over items:
+    - name: copy file
+      copy: src={{item.src}} \
+                dest={{item.dst}} 
+      with_items:
+           - {src: a, dst: b}
+           - {src: k, dst: l}
+conditionals:
+    - name: reboot Debian 
+      command: shutdown -r now 
+      when: ansible_os_family == "Debian"
+Roles:
+    - hosts: webserver 
+       roles:
+          - common
+          - dbservers 
+       roles/
+           common/ 
+                files/
+                templates/ 
+                tasks/main.yml 
+                handlers/main.yml 
+                vars/main.yml 
+                meta/main.yml
+        webservers/ 
+        ...
+
+
+Content by Roland Wolters - liquidat.wordpress.com
+Designed by Wall-Skills.com - Knowledgable 1-Pagers 
+

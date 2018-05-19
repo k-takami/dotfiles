@@ -1,0 +1,6 @@
+database.yml.sample を元に database.yml を作成(postgresql用に書き換える必要がある)
+
+RAILS_ENV=test rake db:migrate:reset
+RAILS_ENV=test rake redmine:plugins:migrate
+RAILS_ENV=test rake redmine:load_default_data
+RAILS_ENV=test rake db:seed

@@ -1,0 +1,472 @@
+■Redmineインストール
+Redmine 2.1.2
+	2012/10/01 リリース ※2012/10/05(金)時点で最新
+
+＃http://blog.redmine.jp/articles/redmine-2_1-installation_centos/
+
+▼SELinuxを無効
+[root@dev_local ‾]# getenforce
+Enforcing
+[root@dev_local ‾]# vi /etc/sysconfig/selinux
+
+SELINUX=enforcing
+↓
+SELINUX=disabled
+
+[root@dev_local ‾]# reboot
+
+[root@dev_local ‾]# getenforce
+Disabled
+
+
+▼iptablesでHTTP(80)を許可
+
+[root@dev_local sysconfig]# vi /etc/sysconfig/iptables
+
+# Firewall configuration written by system-config-firewall
+# Manual customization of this file is not recommended.
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT
+
+↓22許可の下に追加
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+
+[root@dev_local ‾]# service iptables status
+テーブル: filter
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+2    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+4    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
+5    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination
+1    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+[root@dev_local ‾]# service iptables restart
+iptables: ファイアウォールルールを消去中:                  [  OK  ]
+iptables: チェインをポリシー ACCEPT へ設定中filter         [  OK  ]
+iptables: モジュールを取り外し中:                          [  OK  ]
+iptables: ファイアウォールルールを適用中:                  [  OK  ]
+[root@dev_local ‾]# service iptables status
+テーブル: filter
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+2    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+4    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
+5    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:80
+6    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination
+1    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+[root@dev_local ‾]#
+
+▼yumリポジトリにEPELを追加
+[root@localhost ‾]# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-7.noarch.rpm
+
+▼開発ツール(Cコンパイラ等)
+[root@localhost ‾]# yum groupinstall "Development Tools"
+
+▼RubyとPassengerのビルドに必要なヘッダファイルなど
+[root@localhost ‾]# yum install openssl-devel readline-devel zlib-devel curl-devel libyaml-devel
+
+▼MySQLとヘッダファイル
+[root@localhost ‾]# yum install mysql-server mysql-devel
+
+▼Apacheとヘッダファイル
+[root@localhost ‾]# yum install httpd httpd-devel
+
+▼ImageMagickとヘッダファイル
+[root@localhost ‾]# yum install ImageMagick ImageMagick-devel
+
+
+▼Rubyのインストール
+ソースコードをダウンロード
+http://www.ruby-lang.org/ja/downloads/
+
+[root@localhost work]# ls
+ruby-1.9.3-p194.tar.gz
+[root@localhost work]# tar zxvf ruby-1.9.3-p194.tar.gz
+[root@localhost work]# cd ruby-1.9.3-p194
+[root@localhost ruby-1.9.3-p194]# ./configure
+
+[root@localhost ruby-1.9.3-p194]# make
+[root@localhost ruby-1.9.3-p194]# make install
+[root@localhost ruby-1.9.3-p194]# make clean
+
+＃確認
+[root@localhost ruby-1.9.3-p194]# ruby -v
+ruby 1.9.3p194 (2012-04-20 revision 35410) [i686-linux]
+[root@localhost ruby-1.9.3-p194]#
+
+[root@localhost ruby-1.9.3-p194]# gem install bundler --no-rdoc --no-ri
+
+
+▼MySQLの設定
+[root@localhost etc]# cp -p /etc/my.cnf /etc/my.cnf.org
+[root@localhost etc]# ls /etc/my*
+/etc/my.cnf  /etc/my.cnf.org
+[root@localhost etc]# vi /etc/my.cnf
+
+[mysqld] セクションに character-set-server=utf8 を、 [mysql] セクションに default-character-set=utf8 を追加
+
+[root@localhost etc]# 
+
+
+[root@localhost etc]# diff /etc/my*
+8,9d7
+< character-set-server=utf8
+<
+13,15d10
+<
+< [mysql]
+< default-character-set=utf8
+[root@localhost etc]#
+
+
+
+[root@localhost etc]# service mysqld start
+MySQL データベースを初期化中:  Installing MySQL system tables...
+OK
+Filling help tables...
+OK
+
+To start mysqld at boot time you have to copy
+support-files/mysql.server to the right place for your system
+
+PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
+To do so, start the server, then issue the following commands:
+
+/usr/bin/mysqladmin -u root password 'new-password'
+/usr/bin/mysqladmin -u root -h localhost.localdomain password 'new-password'
+
+Alternatively you can run:
+/usr/bin/mysql_secure_installation
+
+which will also give you the option of removing the test
+databases and anonymous user created by default.  This is
+strongly recommended for production servers.
+
+See the manual for more instructions.
+
+You can start the MySQL daemon with:
+cd /usr ; /usr/bin/mysqld_safe &
+
+You can test the MySQL daemon with mysql-test-run.pl
+cd /usr/mysql-test ; perl mysql-test-run.pl
+
+Please report any problems with the /usr/bin/mysqlbug script!
+
+                                                           [  OK  ]
+mysqld を起動中:                                           [  OK  ]
+[root@localhost etc]# chkconfig mysqld on
+
+
+＃設定の確認
+
+[root@localhost ‾]# mysql -uroot
+Welcome to the MySQL monitor.  Commands end with ; or ¥g.
+Your MySQL connection id is 2
+Server version: 5.1.61 Source distribution
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '¥h' for help. Type '¥c' to clear the current input statement.
+
+mysql> show variables like 'character_set%';
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8                       |
+| character_set_connection | utf8                       |
+| character_set_database   | utf8                       |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8                       |
+| character_set_server     | utf8                       |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+8 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+[root@localhost ‾]#
+
+
+▼MySQLユーザの設定
+?@rootユーザーのパスワード変更・匿名ユーザー削除
+root/rootroot
+
+[root@localhost ‾]# mysql -uroot
+Welcome to the MySQL monitor.  Commands end with ; or ¥g.
+Your MySQL connection id is 3
+Server version: 5.1.61 Source distribution
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '¥h' for help. Type '¥c' to clear the current input statement.
+
+mysql> use mysql
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> update user set password=password('rootroot') where user = 'root';
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> delete from user where user = '';
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit;
+Bye
+[root@localhost ‾]#
+
+
+?ARedmine用データベースとユーザーの作成
+redmine_dev
+dev/devdev
+
+[root@localhost ‾]# mysql -uroot -prootroot
+Welcome to the MySQL monitor.  Commands end with ; or ¥g.
+Your MySQL connection id is 4
+Server version: 5.1.61 Source distribution
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '¥h' for help. Type '¥c' to clear the current input statement.
+
+mysql> create database redmine_dev default character set utf8;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> grant all on redmine_dev.* to dev identified by 'devdev';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit;
+Bye
+[root@localhost ‾]#
+
+
+
+▼Redmineのインストール
+Redmineのダウンロード
+http://rubyforge.org/frs/?group_id=1850
+
+
+[root@localhost work]# ls red*
+redmine-2.1.2.tar.gz
+[root@localhost work]# tar zxvf redmine-2.1.2.tar.gz
+[root@localhost work]# mv redmine-2.1.2 /opt/.
+[root@localhost work]# ls /opt
+redmine-2.1.2
+
+
+
+?@データベースへの接続設定
+
+[root@localhost redmine-2.1.2]# pwd
+/opt/redmine-2.1.2
+[root@localhost redmine-2.1.2]# ls config/
+additional_environment.rb.example  configuration.yml.example  environments  preinitializer.rb
+application.rb                     database.yml.example       initializers  routes.rb
+boot.rb                            environment.rb             locales       settings.yml
+[root@localhost redmine-2.1.2]# cp -p config/database.yml.example config/database.yml
+[root@localhost redmine-2.1.2]# vi config/database.yml
+
+production:
+  adapter: mysql2
+  database: redmine_dev
+  host: localhost
+  username: dev
+  password: devdev
+  encoding: utf8
+
+development:
+  adapter: mysql2
+  database: redmine_dev
+  host: localhost
+  username: dev
+  password: devdev
+  encoding: utf8
+
+
+
+?Aメールサーバへの接続設定
+
+config/configuration.yml
+
+# specific configuration options for production environment
+# that overrides the default ones
+production:
+  email_delivery:
+    delivery_method: :smtp
+    smtp_settings:
+      address: localhost
+      port: 25
+      domain: localhost.localdomain
+
+# specific configuration options for development environment
+# that overrides the default ones
+development:
+  email_delivery:
+    delivery_method: :smtp
+    smtp_settings:
+      address: localhost
+      port: 25
+      domain: localhost.localdomain
+
+
+?BGemパッケージのインストール
+[root@localhost redmine-2.1.2]# bundle install --without postgresql sqlite
+
+
+
+▼Redmineの初期設定とデータベースのテーブル作成
+rake generate_secret_token
+rake db:migrate
+
+▼Passengerのインストール
+gem install passenger --no-rdoc --no-ri
+
+▼PassengerのApache用モジュールのインストール
+passenger-install-apache2-module
+
+The Apache 2 module was successfully installed.
+
+Please edit your Apache configuration file, and add these lines:
+
+   LoadModule passenger_module /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.17/ext/apache2/mod_passenger.so
+   PassengerRoot /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.17
+   PassengerRuby /usr/local/bin/ruby
+
+After you restart Apache, you are ready to deploy any number of Ruby on Rails
+applications on Apache, without any further Ruby on Rails-specific
+configuration!
+
+Press ENTER to continue.
+
+
+--------------------------------------------
+Deploying a Ruby on Rails application: an example
+
+Suppose you have a Rails application in /somewhere. Add a virtual host to your
+Apache configuration file and set its DocumentRoot to /somewhere/public:
+
+   <VirtualHost *:80>
+      ServerName www.yourhost.com
+      # !!! Be sure to point DocumentRoot to 'public'!
+      DocumentRoot /somewhere/public
+      <Directory /somewhere/public>
+         # This relaxes Apache security settings.
+         AllowOverride all
+         # MultiViews must be turned off.
+         Options -MultiViews
+      </Directory>
+   </VirtualHost>
+
+And that's it! You may also want to check the Users Guide for security and
+optimization tips, troubleshooting and other useful information:
+
+  /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.17/doc/Users guide Apache.html
+
+Enjoy Phusion Passenger, a product of Phusion (www.phusion.nl) :-)
+https://www.phusionpassenger.com
+
+Phusion Passenger is a trademark of Hongli Lai & Ninh Bui.
+
+
+▼Apacheの設定
+?@Passengerの設定を追加
+vi /etc/httpd/conf.d/passenger.conf
+
+# Passengerの基本設定。
+# passenger-install-apache2-module --snippet を実行して表示される設定を使用。
+#
+LoadModule passenger_module /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.17/ext/apache2/mod_passenger.so
+PassengerRoot /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.17
+PassengerRuby /usr/local/bin/ruby
+
+# Passengerが追加するHTTPヘッダを削除するための設定（任意）。
+#
+Header always unset "X-Powered-By"
+Header always unset "X-Rack-Cache"
+Header always unset "X-Content-Digest"
+Header always unset "X-Runtime"
+
+# 必要に応じてPassengerのチューニングのための設定を追加（任意）。
+# 詳しくはPhusion Passenger users guide(http://www.modrails.com/documentation/Users%20guide%20Apache.html)をご覧ください。
+PassengerMaxPoolSize 20
+PassengerMaxInstancesPerApp 4
+PassengerPoolIdleTime 3600
+PassengerUseGlobalQueue on
+PassengerHighPerformance on
+PassengerStatThrottleRate 10
+RailsSpawnMethod smart
+RailsAppSpawnerIdleTime 86400
+RailsFrameworkSpawnerIdleTime 0
+
+
+?AApacheの起動および自動起動の設定
+service httpd start
+chkconfig httpd on
+
+
+▼Apache上のPassengerでRedmineを実行するための設定
+
+ln -s /opt/redmine-2.1.2 /opt/redmine
+chown -R apache:apache /opt/redmine-2.1.2
+chown -R apache:apache /opt/redmine
+
+?@シンボリックリンクの作成
+ln -s /opt/redmine/public /var/www/html/redmine
+
+?AApacheへの設定追加
+/etc/httpd/conf.d/passenger.conf
+
+RailsBaseURI /redmine
+RailsEnv development
+
+
+
+
+http://localdev/redmine
+admin/admin

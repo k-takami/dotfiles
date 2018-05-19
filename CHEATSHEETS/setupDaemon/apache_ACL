@@ -1,0 +1,486 @@
+設定例と制限事項
+
+  • ≫ミケネコの htaccess リファレンス
+  • ≫公式マニュアル─ .htaccessでアクセス制御する
+  • ≫.htaccess質問コーナー＠Web製作板
+
+よくある失敗
+
+.htaccessを入れたら500 internal server errorが出る。
+
+考えられる原因：
+
+  • .htaccessの記述が間違っている。2004/11のWebサーバー更新のApache1.3.33から正規表現の判定が厳しくなってるので注意。
+  • さくらでは使えない命令（Optionsなど）が含まれている。
+  • 最終行の後に改行が入っていない。
+  • WinやMacからバイナリモードでFTPしたために、改行コードが違う。
+
+.htaccessが反映されません＞＜
+
+  • .htaccessの内容の最後に改行が入っていない（上記500エラー時も要確認）
+      □ 最後は改行する
+  • FTPで転送時にバイナリモードで転送した
+      □ アスキーモードで転送してみる
+  • マルチドメイン設定をしている
+      □ .htaccessの場所は本当にそこでいいのか確認する
+
+WindowsやMacOSXで.htaccessというファイルを作れない
+
+  • 別の名前（htaccess.txtなど）でファイルを作り、アップロード後にサーバ上で名前を変更する。
+  • あるいは、テキストエディターで保存するとき、別名で保存のダイアログに ".htaccess" のように"（ダブルクォーテーション）で括ると保存でき
+    る。
+
+さくらのレンタルサーバーの.htaccessの制限
+
+mod_layout使える？
+
+  • 使えません。
+
+mod_rewrite使える？
+
+  • 2005年4月6日からすべてのサーバで使えるようになりました。
+
+注意事項と参考サイト
+
+  • 無限ループさせないように注意すること！
+  • ⇒Apache URL Rewriting Guide の日本語訳
+  • ⇒Apache mod_rewrite モジュールの和訳
+  • ⇒mod_rewriteについて語るスレ＠WebProg板
+  • ⇒mod_rewrite RewriteRule Generator
+
+Options使える？
+
+  • 使えません。Optionsでの設定に慣れてるからとそれだけに執着せず、代替の手段を探すのも重要。
+  • Options+MultiViewsは最初から指定されてるようで、コンテントネゴシエーションは普通に出来るみたい。（確認済み）ただし、ディレクトリのパ
+    ーミッションによっては出来ない。
+
+Header使える？
+
+  • たぶん使えない。ヘッダを追加したい場合はCGIやPHPで出力するか、他の代替手段を考えてみる。
+
+やらないほうがいいこと
+
+  • .htaccess に AddHandler server-parsed .html などと書いてすべてのHTMLファイルでSSI解析処理をさせないこと。無駄にサーバ資源を消費するよ
+    。
+  • SSIは .shtml ファイルに記述すべし……すべてのHTMLにSSI命令入れてるわけじゃないだろ？(サーバーに置いてるのがほとんど .shtml なうちみた
+    いなのもいるが)
+
+.htaccessを直接記述する
+
+ディレクトリ内容一覧を非表示にする
+
+サンプル
+
+DirectoryIndex index.html .ht
+
+  • DirectoryIndex の末尾に .ht を付加する(ファイルマネージャーのウェブアクセスの設定にある「デフォルトファイル - ファイルが存在しない場
+    合の動作」の「アクセスを拒否する」はこの設定をしてくれる)
+  • Options は使用できない。
+
+サンプルをそのまま使用するとindex.shtml等に反応しなくなるので注意。オンラインマニュアル＞レンタルサーバー＞設定ガイド＞.htaccessでアクセ
+ス制御する:インデックスファイル名を変更したいにある初期状態で登録されているインデックスファイル一覧の中の全てか必要なものを希望する検索順
+に記述すること。
+
+ちなみにうちは独自にエラーメッセージを各種追加しているのでDirectoryIndexの最後は .ht の追加ではなく404エラー表示にしている(人間以外が404
+と認識するかは不明)。こうしておくとURLで公開されていないフォルダを探して見つけられて、リスト表示禁止にしていると403エラーでフォルダ自体の
+存在がバレるを防止できて便利だったり。
+
+┌────────────────────────────────────────────────┐
+│初期状態登録済インデックスファイル一覧(検索順？)│
+├────────────────────────────────────────────────┤
+│index.html                                      │
+├────────────────────────────────────────────────┤
+│index.htm                                       │
+├────────────────────────────────────────────────┤
+│index.shtml                                     │
+├────────────────────────────────────────────────┤
+│index.cgi                                       │
+├────────────────────────────────────────────────┤
+│index.php                                       │
+├────────────────────────────────────────────────┤
+│index.hdml                                      │
+└────────────────────────────────────────────────┘
+
+検索エンジン等による過剰アクセスを禁止する
+
+サンプル（百度のクローラー「Baiduspider」）
+
+  • 下記(1)(2)どちらでもアクセス禁止出来ます、他に.htaccessでdenyしてるホストがある場合や、robots.txtだけでも読ませたい人は(2)を使った方
+    がいいかも。
+
+(1)
+
+DirectoryIndex index.html index.htm .ht
+
+ErrorDocument 403 http://www.baidu.com/
+
+SetEnvIf User-Agent "Baiduspider" deny_bot
+SetEnvIf User-Agent "sogou spider" deny_bot
+
+order allow,deny
+allow from all
+
+deny from env=deny_bot
+
+# Baiduspider_ip
+deny from 60.24.0.0/13
+deny from 220.181.0.0/16
+deny from 61.135.0.0/16
+deny from 122.152.128.0/17
+
+(2)
+
+RewriteEngine on
+RewriteCond %{Http_USER_AGENT} spider [NC,OR]
+RewriteCond %{REMOTE_ADDR} ^60\.2[4-9]\. [OR]
+RewriteCond %{REMOTE_ADDR} ^60\.3[0-1]\. [OR]
+RewriteCond %{REMOTE_ADDR} ^61\.135\. [OR]
+RewriteCond %{REMOTE_ADDR} ^220\.181\. [OR]
+RewriteCond %{REMOTE_ADDR} ^122\.152\.12[8-9]\.
+RewriteCond %{REQUEST_URI} !/robots\.txt$
+RewriteRule ^.*$ http://www.baidu.com/ [R,L]
+
+画像への直リンクを防ぐ
+
+サンプル
+
+SetEnvIf Referer "^http://example\.sakura\.ne\.jp/" ref_ok
+SetEnvIf Referer "^$" ref_ok
+<Files ~ "\.(gif|jpe?g|png|cgi|php|lzh|zip)$">
+order deny,allow
+deny from all
+allow from env=ref_ok
+</Files>
+
+サンプルは .gif .jp(e)g .png .cgi .php .lzh .zip への直リンを出来ないようにしてある。
+
+それらのファイルにアクセスできるのは、http://example.sakura.ne.jp/からのアクセスと、リファラがない場合（ブックマークなど）に限られる。
+
+※Refererという文字列はそのまま先頭大文字で残りは小文字で記述すること。REFERERやrefererはエラーにはならない代わりに本来の意味も成さない。
+
+サンプルその2
+
+order allow,deny
+allow from all
+
+系のアクセス禁止と組み合わせる場合は、以下のサンプルが好ましい。
+
+#SetEnv ref_ng 1
+SetEnvIf Host "example\.sakura\.ne\.jp" ref_ng
+SetEnvIf Referer "^http://example\.sakura\.ne\.jp/" !ref_ng
+SetEnvIf Referer "^$" !ref_ng
+
+order allow,deny
+allow from all
+<Files ~ "\.(gif|jpe?g|png|cgi|php|lzh|zip)$">
+deny from env=ref_ng
+</Files>
+deny from example.com
+deny from example.net
+……
+…
+
+さくらのレンタルサーバーでは SetEnv で設定した環境変数は利用出来ないようなので、2行目で絶対に真になる式を書いて ref_ng を 1 に設定してい
+る。
+
+SetEnvIf Referer に記述するURLは正規表現なので . は \. になるのを忘れるな。2004/11のWebサーバー更新のApache1.3.33から正規表現の判定が厳し
+くなってるので注意。
+
+エラーページを自作したい
+
+サンプル
+
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+サンプルの解説
+
+  • ルートディレクトリの.htaccessに書き加える。
+  • 403エラーが出た場合、ルートディレクトリにある403.htmlを表示する。
+  • 404エラーが出た場合、ルートディレクトリにある404.htmlを表示する。
+  • 500エラーが出た場合、ルートディレクトリにある500.htmlを表示する。
+
+備考
+
+  • マルチドメインとは相性悪いかも？
+      □ マルチドメインの先で設定したらそうでもなかったよ。ルートで設定してると被って妙になりそうだけど。
+  • エラーページが512バイト以下の場合、IEでは表示されない。512バイト以上にしましょう(←はIEでツール→インターネットオプション→詳細設定タ
+    ブの「ブラウズ - HTTPエラーメッセージを簡易表示する」がONになっている場合(デフォルト)。OFFにしてあれば512バイト以下でも表示される)
+  • ErrorDocumentにphp(cgi版)のページを指定するとIEでは512バイト以上でも表示されない場合がある。
+      □ ErrorDocument 403 /403.php 表示されるほうが多い。
+      □ ErrorDocument 404 /404.php 表示されない。
+      □ ErrorDocument 500 /500.php 表示されないほうが多い。
+  • 誤った設定にすると無限ループになるので、よく注意して設定しろ！
+      □ 403エラーに指定したページにアクセスできない（403）と無限ループ(いや、確かうちのとこでは通常の403エラーメッセージに合わせて、指定
+        されているエラーページをアクセスできない旨のエラーが表示された)
+          ☆ /403.htmlの部分をhttp://から記述した場合、無限ループ。それ以外はApacehのエラーメッセージ。404、500も同じ。
+      □ 404エラーに指定したページが存在しない（404）と無限ループ
+      □ 500エラーにcgiやphpのページを指定してそれらが動かない（500）と無限ループ
+  • 503のエラーページは自作できません。
+      □ 他のサーバへリダイレクトすることは、503でも有効です。
+
+ErrorDocument 503 http://www.example.com/directory/file.html
+
+      □ CGIの同時起動数が503の原因である場合、エラーページが静的ページなら表示できる場合もあります。
+  • 旧プランなどで~アカウント名を使用の場合は、 ErrorDocument 403 /~アカウント名/403.html のように記述する。
+
+特定のドメインでしかアクセスできないようにする
+
+サンプル
+
+SetEnvIf Host "^example\.sakura\.ne\.jp$" hos_ok
+order deny,allow
+deny from all
+allow from env=hos_ok
+
+  • マルチドメイン運用時などで、特定のドメインでしかアクセスできないようにしたいときに使う。
+  • サンプルはexample.sakura.ne.jpでしかアクセスできない。
+  • SSIでのINCLUDEでのテキストファイルなどの挿入や、EXEC CGIの実行に失敗する可能性があるのでlocalhostもhos_okにする行を足したほうがいいか
+    も？
+  • SetEnvIf Host に記述するURLは正規表現なので . は \. になるのを忘れるな。
+  • 正規表現するとうまく動かないのであれば、正規表現をしないのも試してみるといいかも。2004/11のWebサーバー更新のApache1.3.33から正規表現
+    の判定が厳しくなってるので注意。
+
+SetEnvIf Host "example.sakura.ne.jp" hos_ok
+（後略）
+
+  • Example.sakura.ne.JPとか大文字小文字混ぜてもアクセスできるようにしたければ、SetEnvIfのかわりにSetEnvIfNoCaseを使おう。
+
+  • 複数のドメインでアクセスするには、それだけSetEnvIfを並べる。
+
+SetEnvIf Host "^example\.sakura\.ne\.jp$" hos_ok
+SetEnvIf Host "^example\.dojin\.com$" hos_ok
+order deny,allow
+deny from all
+allow from env=hos_ok
+
+  • 逆に、特定のドメインでだけアクセスできなくすることも可能だか、安全性の点からオススメできない。
+
+SetEnvIf Host "^example\.sakura\.ne\.jp$" hos_ng
+order allow,deny
+allow from all
+deny from env=hos_ng
+
+  • mod_rewriteを使ってexample.sakura.ne.jpへのアクセスはwww.example.comにリダイレクトする
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} example\.sakura\.ne\.jp [NC]
+RewriteRule .* http://www.example.com%{REQUEST_URI} [L,R=301]
+
+3行目を
+
+RewriteRule .* - [F]
+
+にすると、リダイレクトの代わりにアクセス禁止(403)になる
+
+mod_rewriteで特定閲覧者を複合条件でアクセス制限する。
+
+サンプル:example.ne.jpで接続していて、USER_AGENTとHTTP_REFERERが空白なヤツには403で見せない。
+
+RewriteEngine on
+RewriteCond %{REMOTE_HOST} ^.*.example\.ne\.jp$ [NC]
+RewriteCond %{HTTP_REFERER} ^$
+RewriteCond %{HTTP_USER_AGENT} ^$
+RewriteRule ^.*$ - [F]
+
+特定のブラウザ(User-Agent)での閲覧を禁止する
+
+サンプル
+
+SetEnvIf User-Agent "WWWC/" deny_ua
+Order allow,deny
+allow from all
+deny from env=deny_ua
+
+……独自アクセス解析に残るWWWCのが邪魔＆監視されたくない部分だったので……
+
+  • 最近流行している「1.0」のみのUser-Agentを規制する場合は "^1\.0$" な。"1.0"だと1(何か1文字)0"を含むものすべて拒否だぞ。
+
+特定の言語使用者を弾きたい
+
+サンプル
+
+SetEnvIf Accept-Language it Lilith
+Order Allow,Deny
+Allow from all
+Deny from env=Lilith
+
+  • サンプルはイタリア語(it)を設定していると弾く。
+  • 優先順位が低くても、その言語を設定してあれば弾かれる。
+  • 日本語はja、韓国語はko、中国語はzh。「zh」と指定すれば「zh-tw」とかも一括で弾ける。
+
+.plをCGIとして実行したい。
+
+サンプル
+
+AddHandler cgi-script .pl
+
+mod_rewriteを使わずに動的なページを静的なページに見せかけたい
+
+サンプル(1)
+
+Action text/html /diary/index.cgi
+
+サンプル(1)解説
+
+  • リクエストされたもののMIMEがtext/htmlの場合（.htmlや.htmなど）、/dairy/index.cgiが実行されます。
+  • cgiはPATH_INFOやPATH_TRANSLATEDで何がリクエストされたか判断してください。
+
+サンプル(2)
+
+<Files ~ "^([0-9]{4}|[0-9]{6}|[0-9]{8})\.html$">
+Action text/html /dairy/index.cgi
+</Files>
+
+サンプル(2)解説
+
+  • Filesで静的に見せかけるファイルを絞ることができます。
+  • ""で囲まれた部分は正規表現であることに注意。
+
+参考→「Landscape - エンジニアのメモ」-2004/9/13「Action を利用した mod_rewrite の代替」
+
+RSS/RDFファイルがダウンロードになる
+
+  • さくら標準のMIMEでは、.xmlはapplication/xmlで送られてきますが、.rssはtext/plainで、.rdfはMIMEが付かなくて送られてきます。
+  • そのため、.rssや.rdfという拡張子を持った静的なRSS/RDFファイルをxmlファイルとして受けることができずにダウンロードになる場合があります
+    。
+  • 拡張子が.rdfの場合は以下の２行のうちどちらか１行だけを.htaccessに付け加えてください。
+      □ AddType text/xml .rdf
+      □ AddType application/xml .rdf
+  • 拡張子が.rssの場合は以下の２行のうちどちらか１行だけを.htaccessに付け加えてください。
+      □ AddType text/xml .rss
+      □ AddType application/xml .rss
+
+datファイルにブラウザからアクセスできないようにしたい
+
+サンプル
+
+<FilesMatch "\.dat$">
+order deny,allow
+deny from all
+</FilesMatch>
+
+  • パスワードなどの重要なファイルをダウンロードされたくない時に使用します。
+  • CGIなどからはアクセスできるままです。
+
+mod_rewriteでマルチドメイン運用したいけど、何か問題ある？
+
+  • エラーページを自作しないと、403や404などのエラーが出たときに本アカウントがバレます。
+  • エラーページを自作できない503エラーが出ると、本アカウントがバレます。
+  • 素直にコントロールパネルからマルチドメイン設定しとけ。
+
+マルチドメインの設定を行うとmod_rewriteがうまく動かない
+
+  • マルチドメインのパス名が /hoge の場合、RewriteBase /hoge と加えると幸せになれるかもしれません。
+  • コンパネのドメイン設定も正しくしないと動作しません。/hoge/ のように後ろに / 入ってるとうまくいきません。公式のマニュアルにも出てます
+    が /hoge が正しいパスの入れ方です。（マルチドメイン直下ならば RewriteBase / としておくことで動作はしますが、サブディレクトリに設定す
+    る場合は確実に失敗します。）
+
+パスワードによるユーザ認証を使うには？
+
+ユーザ認証をかけたいディレクトリに次のような.htaccessを作成します。
+
+AuthUserFile /home/hoge/ ... /.htpasswd
+AuthGroupFile /dev/null
+AuthName "Please enter username and password"
+AuthType Basic
+
+require valid-user
+
+  • AuthUserFileには、ユーザと暗号化されたパスワードが記録されている .htpasswd ファイル(次で作成します)へのパスを記述します。
+
+次に、telnet等の端末からAuthUserFileで指定した.htpasswdまでのパスへ移動し、次のようなコマンドを実行します。
+
+htpasswd -c .htpasswd guest
+
+  • すると応答がありますので、ユーザ名とパスワードを入力します。
+  • パスワードは二回入力するよう要求されるので間違えないようにしましょう。
+  • 入力したパスワードは画面上にはセキュリティ上表示されません。
+  • あとでユーザを削除したくなったときは、テキストエディタなどでそのユーザの行ごと削除しましょう。
+
+Adding user ユーザ名
+New password:パスワード                   （←実際には表示されません）
+Re-type new password:パスワードを再入力   （←実際には表示されません）
+
+パスワードファイルを隠す
+
+  • .htpasswdファイルをドキュメントツリー（~/www)下に置かない
+  • .htaccess ファイルへ、<Files> を使って .htpasswd ファイルの閲覧を拒否させる。
+  • .htaccess ファイルに、「AddHandler? cgi-script htpasswd」の一行を記述する。のどれかをしておこう。ドキュメントツリー下に置かないのが王
+    道。
+
+telnet/ssh以外でベーシック認証を設定できませんか？
+
+  • 「コントロールパネル」から「ファイルマネージャー」を開き、右下フレームの上のほうにある「>> ウェブアクセスの設定」に入って、「パスワー
+    ドによる制限」で設定汁
+
+"?"を含まないURLでCGIにQUERY_STRINGを渡す
+
+  • www.hoge.com/w/wiki.cgi?frontpage のような形でCGIスクリプト(この場合 wiki.cgi)に引数を渡せる状態で、.htaccess ファイルに、以下のよう
+    に追記。
+
+RewriteEngine On
+RewriteRule ^wiki/(.*)$ /w/?$1 [L,QSA]
+
+  • www.hoge.com/wiki/frontpage というURLでも、同じページが表示できるようになる。(リダイレクトではないので、ブラウザのアドレスバーには、/
+    wiki/frontpage のほうが表示されたまま)
+
+.htaccessをファイルマネージャーで変更する
+
+フォルダの一覧表示を禁止したらURLの/以降省略時のindex.shtmlなどが表示されない
+
+ファイルマネージャーの「>> ウェブアクセスの設定」の「デフォルトファイル」での「ファイルが存在しない場合の動作：」で「アクセスを拒否する」
+に変更すると、
+
+DirectoryIndex index.html .ht
+
+のみの.htaccessが作成されて、ファイル一覧の表示を禁止するだけではなく、index.html以外のindex.shtmlなどにも反応しなくなる。
+
+オンラインマニュアル＞レンタルサーバー＞設定ガイド＞.htaccessでアクセス制御する:インデックスファイル名を変更したいにある初期状態で登録さ
+れているインデックスファイル一覧の中の全てか必要なものを「デフォルトファイルの名前：」入力欄に希望する検索順に登録すること。
+
+┌────────────────────────────────────────────────┐
+│初期状態登録済インデックスファイル一覧(検索順？)│
+├────────────────────────────────────────────────┤
+│index.html                                      │
+├────────────────────────────────────────────────┤
+│index.htm                                       │
+├────────────────────────────────────────────────┤
+│index.shtml                                     │
+├────────────────────────────────────────────────┤
+│index.cgi                                       │
+├────────────────────────────────────────────────┤
+│index.php                                       │
+├────────────────────────────────────────────────┤
+│index.hdml                                      │
+└────────────────────────────────────────────────┘
+
+特定の国のユーザーをアク禁にするにはどうすればいいの？
+
+　簡単な方法としては、「拒否するアクセスリスト」で「ドメイン」と選択して制限したい国のドメインを入れるだけ。
+
+  • 国別ドメイン一覧はこちら→ http://www.benri.com/domain/
+
+  • 例えば、韓国を制限したい場合は「.kr」と入力すれば韓国ユーザーがアクセスしても 403 Forbiddenとなり閲覧することができなくなる。使用言語
+    別で振り分けるより効果はあるが、「～.net」などの国際ドメインやプロキシを使っている場合などは効果が無いので気をつけるように
+
+　ドメインやホスト名で指定するとサーバに余計な負担がかかるし、前述のようにカントリードメイン以外のもの（.netなど）やホストを名乗らないも
+の（IPからホスト名を逆引きできないもの）を防げないため、IPによる制限の方が効果的。ただしIPは1つの国で数百以上あるので、何ヶ国分も記述する
+と.htaccessファイルの容量がすごいことになる…。それが嫌な場合は特定の国のIPを拒否するのではなく、日本IPのみを許可するといい。
+
+  • 国別IPリスト（日本のIPならJP.txt）
+      □ deny from付き　http://akionweb.com/myobjects/adl/apache/
+      □ allow from付き　http://akionweb.com/myobjects/aal/apache/
+
+ファイルマネージャーで.htaccessを編集しようとすると画面が真っ白になって編集できません。
+
+ファイヤーウォールソフトやGoogleツールバー、Firefoxなど一部のブラウザに搭載されている「ポップアップブロック機能」がＯＮになっていると正常
+に動かない場合があります。作業時は一時的にポップアップブロック機能を切るか、secure.sakura.ad.jpを見るときにポップアップブロックが効かない
+様に各ソフトの設定をしましょう。
+
+関連
+    ファイルマネージャーでアップロードしようとすると画面が真っ白になってアップロードできません。
+
+Modified by hosting@2ch.
+

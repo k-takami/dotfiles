@@ -1,0 +1,8 @@
+#iDisplay wii tethering
+	1. invoke iDisplay Server on PC
+	2. invoke TetheringChanger on Android deve#1
+	3. establish tethering ad-hoc connetion between PC and Android device#1
+	4. turn on iDisplay on Adroid device#1, and configure IPaddress that points
+	to iDisply Server#1 on PC
+#xperia
+	Safe-mode:  reboot phone, Sony Ericsson or Sony appears, keep tapping menu key (volume down ).

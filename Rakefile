@@ -1,22 +1,54 @@
+# coding: utf-8
+# ruby 1.9.x # require 'debugger'
+# ruby 1.8.x # require 'rdebug'
+
+# $ sudo gem install rake -v 0.8.4
 require 'rake'
 require 'erb'
+# USAGE: rake install
 
 desc "install the dot files into user's home directory"
+
+task :uninstall do
+  command = "
+    sudo rm -r /.VM_HOST /.RAILS_ROOT /.tigrc /.README.md /.BACKUP /.*rc /.SCRIPTS /.SUPPLEMENTS /.gvimrc /.gitignore /git.tgz /.my_rails_root /.oh-my-zsh
+    cd ~                                                                          ;
+    sudo rm -i  session*  *.diff .sw* .*rc                                        ;
+    sudo rm -i  .bash_history .rdebug_hist .irb_history .lesshst .psql_history    ;
+    sudo rm -ir .gitignore .gitconfig .rubocop.yml                                ;
+    sudo rm -ir .vim* .vim_mru_files .ve_favorite .vt_locations .NERDTreeBookmarks .vim-fuf-cache ;
+    sudo rm -ir .dotfiles .SCRIPTS .SI .BACKUP                                    ;
+  "
+  system command
+end
+
 task :install do
-  install_oh_my_zsh
-  switch_to_zsh
+  if os.to_s =~ /x$/ || os == :windows
+    $PWD = Dir.pwd
+    $HOME = ENV['HOME']
+  end
+  puts "#{$PWD}  ____   #{$HOME}  ____    #{ENV['HOME']} _____   #{os} ______________________"
+
+  unless os == :windows
+    install_oh_my_zsh
+    switch_to_zsh
+  end
+
   replace_all = false
   files = Dir['*'] - %w[Rakefile README.rdoc LICENSE oh-my-zsh]
-  files << "oh-my-zsh/custom/plugins/rbates"
-  files << "oh-my-zsh/custom/rbates.zsh-theme"
+  unless os == :windows
+    files << "oh-my-zsh/custom/plugins/rbates"
+    files << "oh-my-zsh/custom/rbates.zsh-theme"
+  end
   files.each do |file|
-    system %Q{mkdir -p "$HOME/.#{File.dirname(file)}"} if file =~ /\//
+    system %Q{mkdir -p "#{$HOME}/.#{File.dirname(file)}"} if file =~ /\//
     if File.exist?(File.join(ENV['HOME'], ".#{file.sub(/\.erb$/, '')}"))
       if File.identical? file, File.join(ENV['HOME'], ".#{file.sub(/\.erb$/, '')}")
         puts "identical ~/.#{file.sub(/\.erb$/, '')}"
       elsif replace_all
         replace_file(file)
       else
+
         print "overwrite ~/.#{file.sub(/\.erb$/, '')}? [ynaq] "
         case $stdin.gets.chomp
         when 'a'
@@ -29,11 +61,14 @@ task :install do
         else
           puts "skipping ~/.#{file.sub(/\.erb$/, '')}"
         end
+
       end
     else
       link_file(file)
     end
   end
+  system "source ~/.bashrc;"
+  puts "#############\n vim を起動して :NeoBundleInstall を実行してください \n #############\n"
 end
 
 def replace_file(file)
@@ -42,6 +77,7 @@ def replace_file(file)
 end
 
 def link_file(file)
+  #TODO: be admin/root before linking/coping
   if file =~ /.erb$/
     puts "generating ~/.#{file.sub(/\.erb$/, '')}"
     File.open(File.join(ENV['HOME'], ".#{file.sub(/\.erb$/, '')}"), 'w') do |new_file|
@@ -49,10 +85,16 @@ def link_file(file)
     end
   elsif file =~ /zshrc$/ # copy zshrc instead of link
     puts "copying ~/.#{file}"
-    system %Q{cp "$PWD/#{file}" "$HOME/.#{file}"}
+    system %Q{cp "#{$PWD}/#{file}" "#{$HOME}/.#{file}"}
+  elsif os == :windows
+    puts "coping ~/.#{file}"
+    system %Q{ cp -pr "#{$PWD}/#{file}" "/.#{file}"}
   else
     puts "linking ~/.#{file}"
-    system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file}"}
+    # copy files if OS is windows. otherwise perform 'ln -S' .
+    command =  %Q{ln -fs "#{$PWD}/#{file}" "#{$HOME}/.#{file}"}
+    # puts "######### command= #{command} ### ENV[HOME]= #{ENV['HOME']} #####"
+    system command
   end
 end
 
@@ -81,7 +123,7 @@ def install_oh_my_zsh
     case $stdin.gets.chomp
     when 'y'
       puts "installing oh-my-zsh"
-      system %Q{git clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"}
+      system %Q{git clone https://github.com/robbyrussell/oh-my-zsh.git "#{$HOME}/.oh-my-zsh"}
     when 'q'
       exit
     else
@@ -89,3 +131,36 @@ def install_oh_my_zsh
     end
   end
 end
+
+
+def os
+  require 'rbconfig'
+  @os ||= (
+    host_os = RbConfig::CONFIG['host_os']
+    case host_os
+    when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+      :windows
+    when /darwin|mac os/
+      :macosx
+    when /linux/
+      :linux
+    when /solaris|bsd/
+      :unix
+    else
+      raise Error::WebDriverError, "unknown os: #{host_os.inspect}"
+    end
+  )
+end
+
+#rm -rf ~/.dotfiles/vim/bundle/**/.git
+# su root
+# # rm /var/www/.*rc
+# ln -s  /var/www/.dotfiles/bashrc  /var/www/.bashrc
+# ln -s  /var/www/.dotfiles/vim  /var/www/.vim
+# ln -s  /var/www/.dotfiles/vimrc  /var/www/.vimrc
+# ln -s  /var/www/.dotfiles/SCRIPTS/  /var/www/.SCRIPTS
+# ln -s  /var/www/.dotfiles/irbrc  /var/www/.irbrc
+# ln -s  /var/www/.dotfiles/pryrc  /var/www/.pryrc
+# ln -s  /var/www/.dotfiles/rdebugrc  /var/www/.rdebugrc
+# ln -s  /var/www/.dotfiles/tigrc  /var/www/.tigrc
+

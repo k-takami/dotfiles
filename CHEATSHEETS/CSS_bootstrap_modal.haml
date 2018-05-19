@@ -1,0 +1,205 @@
+= form_for @product, url: @product.new_record? ? products_path : product_path, html: {class: 'form-horizontal', role: 'form'} do |f|
+  - if @product.errors.any?
+    #error_explanation.alert.alert-danger
+      %ul
+        - @product.errors.full_messages.each do |msg|
+          %li= msg
+  .box
+    .box-header.blue-background
+      .title 商品情報
+    .box-content.box-padding
+      .form-group
+        = f.label :code, class: 'control-label col-sm-3' do
+          = Product.human_attribute_name :code
+          %span.required_mark *
+        .col-sm-8
+          = f.text_field :code, class: 'form-control'
+      
+      .form-group
+        = f.label :name, class: 'control-label col-sm-3' do
+          = Product.human_attribute_name :name
+          %span.required_mark *
+        .col-sm-8
+          = f.text_field :name, class: 'form-control'
+
+      .form-group
+        = f.label :short_name, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :short_name, class: 'form-control'
+
+      .form-group
+        = f.label :kana, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :kana, class: 'form-control'
+
+      .form-group
+        = f.label :product_group_id, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :product_group_id, class: 'form-control'
+
+      .form-group
+        = f.label :price, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :price, class: 'form-control'
+
+      .form-group
+        = f.label :cost_price, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :cost_price, class: 'form-control'
+
+      .form-group
+        = f.label :tax_type, class: 'control-label col-sm-3'
+        .col-sm-8
+          = text_field_tag :tax_type,'',:size=>5
+          = f.radio_button :tax_type,1
+          = label :tax_type, '外税'  
+          = f.radio_button :tax_type,2
+          = label :tax_type, '内税' 
+
+      .form-group
+        = f.label :tax_class_id, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :tax_class_id, class: 'form-control'
+
+      .form-group
+        = f.label :district, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :district, class: 'form-control'
+
+      .form-group
+        = f.label :supplire_id, class: 'control-label col-sm-3'
+        .col-sm-8#supplire_id
+          = text_field_tag "supplire_name", "#{Supplire.find(@product.supplire_id).name if @product.supplire_id.present?}", class: 'form-control'
+          = f.text_field :supplire_id, class: 'form-control',type: 'hidden'
+          %span.input-group-addon
+            %a{"data-toggle" => "modal", href: "#modal1"}
+              %i.icon-search
+         
+      .form-group
+        = f.label :unit_id, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :unit_id, class: 'form-control'
+
+      .form-group
+        = f.label :qty_per_box, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :qty_per_box, class: 'form-control'
+
+      .form-group
+        = f.label :constant_price, class: 'control-label col-sm-3'
+        .col-sm-8
+          %label.checkbox
+            = check_box_tag 'product[constant_price]', true, @product.constant_price
+            固定
+
+      .form-group
+        = f.label :price_type, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :price_type, class: 'form-control'
+
+      .form-group
+        = f.label :item_of_matrixlist, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field :item_of_matrixlist, class: 'form-control'
+
+      .form-group
+        = f.label :valid_from, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.date_select:valid_from, class: 'form-control'
+
+      .form-group
+        = f.label :valid_until, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.date_select :valid_until, class: 'form-control'
+
+      .form-group
+        = f.label :■日付選択UI例, class: 'control-label col-sm-3'
+        .col-sm-8
+          = f.text_field  :valid_until, class: 'form-control' , id: 'datepicker', format: 'yyyy/mm/dd'
+          %i.icon-calendar
+          -# HTMLでうまくうごくコードでもHAML変換をかませるとFlatty-Bootstrap + IEでうまくうごかない｡鬼門｡ 
+
+
+    .form-actions
+      .row
+        .col-sm-8.col-sm-offset-3
+          = f.submit '保存', class: 'btn btn-primary', :confirm=>"この内容で更新します｡いいですか｡ "
+          = link_to '戻る', products_path, class: 'btn btn-defalut'
+  :css
+    .ui-datepicker {
+       background: #E0E0E0;
+       # border: 1px solid #555;
+       # color: #EEE;
+     }
+     -# ui-datepicker-header {
+      -# # background: url('../img/dark_leather.png') repeat 0 0 #000;
+      -# color: #e0e0e0;
+      -# font-weight: bold;
+      -# -webkit-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, 2);
+      -# -moz-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
+      -# box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
+      -# text-shadow: 1px -1px 0px #000;
+      -# filter: dropshadow(color=#000, offx=1, offy=-1);
+      -# line-height: 30px;
+      -# border-width: 1px 0 0 0;
+      -# border-style: solid;
+      -# border-color: #111;
+    -# }
+    .ui-datepicker-prev {
+      background-image: none
+    }
+    .ui-datepicker-next {
+      background-image: none
+    }
+
+#modal1.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog", tabindex: "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header{style: "background-color: #00acec;"}
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %h4.modal-title{style: "color: #ffffff;"} 仕入先検索
+      .modal-body
+        %label.control-label 表示順&nbsp
+        %label.radio-inline
+        %input{id: "supplire_id_asc", type: "radio", value: "id_asc",name: "order"}>/
+        コード順  昇順
+        %label.radio-inline
+        %input{id: "supplire_id_desc",type: "radio", value: "id_desc",name: "order"}>/
+        コード順  降順 
+        %label.radio-inline
+        %input{id: "supplire_id_kana_asc",type: "radio", value: "kana_asc",name: "order"}>/
+        カナ名称順  昇順 
+        %label.radio-inline
+        %input{id: "supplire_id_kana_desc",type: "radio", value: "kana_desc",name: "order"}>/
+        カナ名称順  降順 
+        %hr
+        = render 'supplire_search_form'
+      .modal-body#search_supplire
+        %table.table.table-bordered.table-hover{style: "margin-bottom:0;"}
+          %thead
+          %tr
+            %th コード
+            %th 名称
+        .modal-footer
+          %button.btn.btn-primary{type: "button"} 選択|Select
+          %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} キャンセル|Cancel
+:javascript
+  $(function(){
+        $("input[name=order]").change(function(){
+    $.ajax({
+        url: "/products/supplire_search?order="+ $('input[name=order]:checked').val(),
+        type: "POST",
+    });
+  });
+  });
+
+  $("#datepicker").datepicker({
+    dateFormat: 'yy/mm/dd', dayNamesMin: ['日','月','火','水','木','金','土'],
+    monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+    showMonthAfterYear: true, changeYear: true, changeMonth: true, showOtherMonths: true, selectOtherMonths: true,
+    showWeek: true, weekHeader: '週', firstDay: 1,
+    minDate: null, axDate: null,
+    prevText: '←前月', nextText: '次月→'
+  });
+  $('.ui-datepicker-trigger').addClass('btn btn-default').html('<i class="glyphicon glyphicon-calendar"></i>').wrap('<span class="input-group-btn"></span>');
+/ $('.ui-datepicker-next').removeClass('ui-icon ui-icon-circle-triangle-e')

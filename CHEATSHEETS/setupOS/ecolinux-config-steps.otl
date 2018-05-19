@@ -1,0 +1,674 @@
+[-ecolinux-config-steps-]
+[-vim-]
+	[-vimScript-]
+	[-vimWindowTab-]
+[-RubyMainOTL-]
+	[-hpricot-]
+[-RailsApache-]
+	[-railsDBapi-]
+	[-rails_activescafhold-]
+	[-hpricot-]#test
+	漢字
+ecoinux
+	sudo link /usr/bin/perl /usr/local/bin/perl 
+	sudo apt-get gcc make vim gnome-terminal 
+	#vim config
+		# ~/.vimrc
+			set number
+			set tabstop=2
+			# set nocompatible
+			syntax on
+			...etc
+	#transpantation of Windows file
+		/user/bin/perl --
+		or
+		chang to \n= LF
+
+	#FereFox3 -prifile config & transplantation
+	#uninstall gnome pre-installed apps
+		-rwxr-xr-x 1 root root 151396 2008-05-24 05:07 /usr/bin/xfce4-terminal
+		xterm
+
+	#customize ,desktop, Iterface, (mousepad,Thuanr) 
+
+	#ctrlpanel-->add system-source 
+		deb http://cz.archive.ubuntu.com/ubuntu dapper-backports main universe
+		deb http://packages.mediaubuntu.org/gutsy free non-free
+	ctrlpanel-->add "gthumb clamAV"
+	ctrlpanel-->権限add?
+	sudo apt-get install adobereader-jpn realplayer sysv-rc-conf ntfs-config  
+	sudo apt-get install streamtuner streamripper
+
+	sudo sysv-rc-conf
+		stop : anacron, apmd, atd, bloetooth, cupsys, hotkey-setup, rsync
+		#case non-Gforce, also stop nvidia-kernel
+	start-menu---> adobereader install
+
+	日本語環境問題
+		Javaアプリへのキー入力の問題 はどうやらUbuntu特有のものらしい。UIMに変更すればもちっと安定するらしいので変更してみる。
+			sudo apt-get install uim uim-anthy uim-qt
+			sudo update-alternatives --config xinput-ja_JP で、/etc/X11/xinit/xinput.d/uim-systrayを選択。 （ここで一旦ログアウト…/etc/X11/xinit/xinput.d/uim-toolbarだとJavaアプリに日本語入力できなかった）
+			そのままでは日本語入力できなかったので、システムトレイに追加されたUIMの設定ボタンをクリックし、グループ（全体設定）の『使用可能にする入力方式』『標準の入力方式』をAnthyにすれば,日本語入力できるようになる。はず。
+Apache2.0----------------------------------------------
+	$ ./configure --prefix=[path:default=/usr/local/apache2]
+	$ sudo make
+	$ sudo make install
+	$ PREFIX/bin/apachectl start
+	#compiling instll webmin
+		sh setup.sh
+		sudo /usr/local/apache2/bin/apachectl start
+		sudo /usr/local/apache2/bin/httpd start
+		/usr/local/apache2/htdocs/takami/
+
+	premature end of script headers
+		--> /usr/bin/perl --
+		--> change \n into LF
+	attempt to invoke directory as script: /.../htdocs/hogehoge/cgi-bin/
+
+	Apache2.0では、 SetHandler server-parsedの命令文を入れると、DirectoryIndex命令が効かなくなるよ
+	うです。Turbo Desktop 10に、Apacheの2.0をソースコードからコンパイルすると、ブ
+	ラウザは同じように「ファイル未検出（404）」のエラーを返します。Apacheが起動す
+	る時に、「SetHandler server-parsed文があると、DirectoryIndex命令は無効になりま
+	すよ」といったメッセージを出してくれれば、話は分かるのですが・・・。
+
+	-----------------------------------------------------------------
+	■変更後
+	<Directory "/home/aaa/cgi-bin/">
+	　　AddHandler perl-script .cgi
+	　　PerlResponseHandler ModPerl::Registry
+	　　PerlOptions +ParseHeaders
+	　　Options ExecCGI +MultiViews
+	</Directory>
+
+	■設定3で追記した通常のCGIで動作させるDirecitoryディレクティブは削除
+	------------------------------------------------
+		 mod_userdir
+			 CustmeLog /log/acess/log SetEnvIf
+
+
+			 --------------------------------
+			 http://wiki.apache.org/httpd/Errors/DirectoryAsScript
+
+			 For example, replace this:
+
+			 ScriptAlias /cgi-bin /var/www/cgi-bin
+
+			 with this:
+
+			 Alias /cgi-bin /var/www/cgi-bin
+			 <Directory /var/www/cgi-bin>
+			  AddHandler cgi-script cgi pl
+			   Options ExecCGI
+			   </Directory>
+
+
+
+			   ---------
+			   f all your CGI scripts end in .py, you can fix the problem by replacing
+			   SetHandler cgi-script
+			   with
+			   AddHandler cgi-script py 
+			   -----------------------------
+
+			   /var/www
+			   ├ / (/var/www/html)
+			   │　└ index.html　
+			   └ cgi-bin/
+			   　　└ test/
+			   　　　　└ index.cgi
+
+			   /home/username/public_html
+			   ├ / (/home/username/public_html/html)
+			   │　└ index.html
+			   └ cgi-bin/
+			   　　└ test/
+			   　　　　└ index.cgi
+
+			   ScriptAliasMatch /~(..*)/cgi-bin/(.*) /home/$1/public_html/cgi-bin/$2
+
+
+			   を設定し、
+
+			   http://192.168.*.*/cgi-bin/test/index.cgi
+			   http://192.168.*.*/~username/cbi-bin/test/index.cgi
+
+
+			   と、ファイルネームまで指定して CGI を動作させることまでは出来ました。
+
+			   が、次のようにディレクトリの URL でアクセスして index.cgi を動作させることが出来ません。
+
+			   http://192.168.*.*/cgi-bin/test/
+			   http://192.168.*.*/~username/cbi-bin/test/
+			   ・この際、（考えにくいことですが）ScirptAlias 内では希望の動作は出来ないものと仮定して、
+			   　ScriptAlias はコメントアウト、ScriptAliasMatch は削除。
+			   ・Alias, AliasMatch 両ディレクティブを追加して CGI 用ディレクトリを新たに設定。
+			   ・<Directory "/var/www/html"> Options +ExecCGI </Directory>
+			   ・<Directory ~ "^/home/.*/public_html/cgi-bin(ユーザ CGI ディレクトリの正規表現)"> Options +ExecCGI </Directory>
+
+			   DirectoryIndex index.cgi
+
+			   #ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
+			   Alias /cgi-bin/ "/var/www/cgi-bin/"
+			   AliasMatch /~(..*)/cgi-bin/(.*) /home/$1/public_html/cgi-bin/$2
+
+			   <Directory "/var/www/html">
+				   Options +ExecCGI
+				   </Directory>
+
+				   <Directory ~ "^/home/.*/public_html/cgi-bin">
+					   Options +ExecCGI
+					   </Directory>
+
+					   AddHandler cgi-script .cgi
+
+
+
+					   結果、これで希望の動作をさせることが出来ました。
+
+					   ただ、この状態はセキュリティ的に何か問題は無いのでしょうか。
+					   結局、このような解決策を採るドキュメントは検索にヒットしませんでしたし、
+					   このままだと、CGI 用ディレクトリに収めた .html や画像など、何でも表示してしまいます。
+					   大丈夫でしょうか？
+					   返信 014 miz [UA] 	2007-03-15 18:30
+					   ＞このままだと、CGI 用ディレクトリに収めた .html や画像など、何でも表示してしまいます。
+					   ＞大丈夫でしょうか？
+
+					   ご心配の通り、大丈夫ではありません。
+					   大事なパスワード用ファイルや個人情報ファイルなどもファイル名さえ知られてしまえば、だだ漏れです。
+
+					   FilesMatchセクションを使って、cgi用(拡張子.cgi,.pl)以外は全部拒否の設定をしてみては？
+					   実際のコードは、私には検証出来る環境がないので、下記サイトをじっくり読んで設定を試みて下さい。
+					   http://httpd.apache.org/docs/2.0/sections.html
+					   --------------------------------------
+						.htaccessが使用可能であればindex.cgiをドキュメントディレクトリ直下におき.htaccessを下記のように編集して
+						Options +ExecCGI
+						http://hogehoge/でアクセスしてみてください。
+
+
+								
+								-----------------------------
+								UNIXやCygWinのシェルをつかえるひとがWindowsをつかいつづける浪費の比較
+
+								LINUX					
+								大半のファイル操作コマンドにRecursive1探索オプションとワイルドカード（正規表現）オプションがある
+								Windows
+								なにかしようとすると再起探索処理する専用ソフト
+								ワイルドカード（正規表現）オプションについても有無を調査しないとだめ
+
+								-----------------------------
+								WindowsをつかったひとがLINUXをつかう浪費
+
+								LINUX
+								zipコマンドがWindows改行コードのファイルを圧縮できない
+								しかtなくgzipをつかう
+								Windows
+								どの圧縮ソフトもそうではない。
+
+								LINUX
+								シェルexplorerのundoができない
+								Windows
+								できる
+
+
+								LINUX
+								実行中のプログラムをroot権限でchmodするとdirectory破損する
+								Windows
+								警告が事前に出る
+
+
+
+	#password CGI
+		unzip password
+		chmod -R 777 /usr/local/apache2/cgi-bin/*
+		DrectoryIndexãã¼ã¼ï¼ãindex.cgi index.html index.html.var
+		index　ーー＞　index.cgi index.html index.html.var
+
+		#ftp://some_body.vs.land.to/
+		http://some_body.vs.land.to/view.cgi?href=0&id=takami&pass=vlml8877
+
+	#module-check
+		sudo  /usr/local/apache2/bin/httpd -l
+#WiFi@triplet-gate
+	(WiFiよりダイアルが優先するのを止める)：
+		#コントロールパネルのダイアルアップで既定接続のチェックをはずす。IE接続プロパティーでダイヤルしない設定にする。
+	#OS-Windows-zero-configi(Wifi-ctrl-panel) & Wired-autoconfigi(IEEE802.1auth)が起動していて利用可能なネットワークがWindowsで検出、コントロールパネルのアダプタプロパティーにタブ表示されることが基本。これ以外は不正常。
+		範囲内で接続するにチェック、FLETSならばIEEE802.1認証にチェック	
+	*BWsvcなど3rdPratyのサービスは制御をよこどりするので止める。
+	*ツールでの接続障害時には、まずOSレベルで疎通確立する。
+		WindowsタスクトレイのアイコンはSSID&WEP-keyでの疎通レベルまでしか表示しない。認証は別物。
+
+#EC-suite-dependencies:
+	ec-rider0.8.2/ec_front/ Rails requires RubyGems >= 1.3.2 (you have 1.3.1). Please `gem update --system` and try again.
+	elecoma-2.0.3/ /usr/local/lib/site_ruby/1.8/rubygems/custom_require.rb:32:in `gem_original_require': no such file to load -- gettext (MissingSourceFile)	from /RoR/EC/elecoma-2.0.3/config/environment.rb:9
+	substruct_rel_1-3-1/ config.gem: Unpacked gem subexec-0.0.4 in vendor/gems has no specification file. Run 'rake gems:refresh_specs' to fix this. RubyGem version error: rack(1.0.1 not ~> 1.1.0) (Gem::LoadError)
+#ubuntu on VMware troubleshooting
+	#VMware converterのメリット
+		WS.SVとはちがい、複数の変換タスクを、WS/SVの作業をとめることなく実行できる。
+			これに比べ、WS/SVのインポート変換機能は 一個の変換作業でWS/SV全体を止めてしまう。
+		WS/SVとはちがい、snapshot削除や完全クローン作成,resizeを事前に準備しなくとも、直近状態だけを変換してくれる。
+	#version確認方法	cat /etc/lsb-release
+		DISTRIB_ID=Ubuntu
+		DISTRIB_RELEASE=8.10
+		DISTRIB_CODENAME=intrepid
+		DISTRIB_DESCRIPTION="Ubuntu 8.10"
+	#partitiona&swap拡張
+		VMware-WS/SV　>6.xで snapshot全部削除後、または完全クローンに対して　"HDDの拡張"(=vmware-cdiskmanager.exe)で拡張
+			-VMware WS/SVの"import"メニューも動作不審
+			-Vmware Converterは動作不審
+		GpartedのCD起動。/dev/*d*/ マウントパスは自動作成される
+	#拡張ずみswapのmount
+		/etc/fstab 内のuuidを/dev/disk/by-uuid で認識されたものにかきかえ
+		hybernate-error---> /etc/initramfs-tools/conf.d もかきかえ
+		sudo dpkg-reconfigure  initramfs-tools
+		sudo swapon -a; sudo swapon -s;
+	Tshoot1: case :loobackアドレス以外のNIC(lo only, no eth0..ethn) 
+		ipaddress missing ,DNS failure and boot message "SIOCSIFADDR no such device "
+			sudo mv /etc/udev/rules.d/70-persistent-net.rules /etc/udev/rules.d/70-persistent-net.rules.bak 
+			init 6 / shutodown -now
+	#TShoot2: vmware usb arbitration driver windows 7 do not run why fix
+		AMD-CPU, Huawei, Sony-ErriscsonのUSBドライバーなどはVMWRWS-7.x(筆者の場合は7.1)でもエラー続出。
+		MS標準のUSBドライバーにroll-backか削除でもどす。
+		These issues occur when unknown USB drivers are installed on a Windows machine hosting the VMware Workstation software.
+		To resolve these issues, roll back to the original Microsoft USB drivers on the host:
+		   1. Right-click (My) Computer and select Manage.
+		   2. In the left pane of the Computer Management window, select Device Manager.
+		   3. Expand Universal Serial Bus Controllers.
+		   4. Right-click USB Root Hub and select Properties.
+		   5. In the Driver tab, click Roll Back Driver.
+
+		For computers with AMD processors:
+		   1. Right-click (My) Computer and select Manage.
+		   2. In the left pane of the Computer Management window, select Device Manager.
+		   3. Expand Universal Serial Bus Controllers.
+		   4. Locate the AMD USB Filter Driver.
+		   5. Right-click it and select Uninstall.
+		   6. Select Uninstall the driver software for the device.
+		   7. Restart your computer.
+		if the above method fails, you can also uninstall the AMD USB driver manually. To do so:
+		   1. Open the Windows registry, and go to HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Class\{36FC9E60-C465-11CF-8056-444553540000}.
+		   2. Remove the usbfilter value from the UpperFilter string.
+		   3. Go to HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\.
+		   4. Delete the usbfilter string (=string value ).
+		   5. Delete this file: %system32%\drivers\usbfilter.sys.
+		   6. Reboot your computer
+
+		
+#VBadd-in How-TO
+	winMe.vm
+	win2KproEng.vm
+	winSVJP.vm
+	USB-X
+	VB6combo
+#Ubuntu-config 頓挫項目
+	#rdebug-config
+		2rdb:1) show commands
+		No readline suport
+
+	vim 
+		unix - 日本語charsetをステータスバーに表示
+		:Rtags	 Calls ctags -R on the current application root and writes the result to tmp/tags.  
+		Exuberant ctags must be installed.  Additional arguments can be passed to ctags with |g:rails_ctags_arguments|.
+			#Exuberant ctags 
+				sudo sh ./configure
+				sudo make clean
+				sudo make install
+				sudo make
+				cd ../
+				rm ctags-5.7.tar 
+				ctags -R --languages="-JavaScript"
+		fastri qri reference: 
+			let g:RCT_ri_cmd = 
+		rcodetools.vimを~/.vim/pluginにコピー。インストーラーは不完全
+			#RTC_completion失敗
+			/usr/lib/ruby/gems/1.8/gems/rcodetools-0.8.4.0/lib/rcodetools/completion.rb:166:in `runtime_data_with_class': -:24: can't convert Fixnum into String (TypeError) (Rcodetools::ProcessParticularLine::NewCodeError)
+		refe日本語環境
+			 sudo vi /usr/lib/ruby/gems/1.8/gems/refe-0.8.0.3/lib/refe/searcher.rb のshift-jis?ブロックをコメントアウト
+
+	#done
+		vim
+			helptag generation
+			omni-completion
+		OCR & scanner
+		gems local installation 	=>	sudo gem[ersion number] install --local
+		ebian local   installation	=>	sudo dpkg -i [packagename].deb
+		ebian local uninstallation	=>	sudo dpkg -r [package-nickname]
+		rails 1.2.x & 2.0.x
+		WiFi troubleshooting ---FLET-spot & 3rd vendor daemon
+		Yahoo auction automation
+		shareware publishing
+		Windows Mobile on smartphone
+		VMware on UMPC
+		mashup: greasemonkey & Yahoo pipes
+		将来に期待のbad know-how, bad-hack。
+			Foxitreader---- 起動は三秒、Adobe reader 9 の六倍ほど。しかし、linux版マニュアル自体がpdfでかかれていたり、ubuntuには*.bz2版ではなく、*.deb版をダウンロードしてdpkg- -iでローカルインストールする必要がある。さらに、550KBしかないPDFをよみこむとクラッシュ。そもそもubuntu公式レポジトリーに登録されておらず、ネットワークインストールできないアプリはさわるべからず、という悪例。
+			mplayer ---rm file 
+
+#narrow-obile-band compatible hosting
+	wikispases=initial oadig 27sec, @wiki=20sec   
+
+#bash commands
+	kick job in background	=>	[command]&
+##Linode	cd ~;rm vimhomeold.tar*;tar -cvf vimhomeold.tar .vim* *vim* .ve_* MyWiki/ .*rc  ;gzip vimhomeold.tar; cd -
+	cd ~/RoRapps/; tar -cvf 2chnrg-latest.tar  2chnrg ;gzip 2chnrg-latest.tar; cd -
+##Linode	cd ~/RoRapps/; tar -cvf 2chnrg-dev.tar 2chnrg/ ;gzip 2chnrg-dev.tar;cd -
+##Linode	cd ~/RoRapps/; tar -cvf dev232plain.best.tar dev232plain/ ;gzip dev232plain.best.tar; cd -
+##Linode	sftp xxx.xxx.xxx ;(su password & root password) --> mput *gz /root
+##LInode	gem install chronic packet
+			ruby script/plugin install http://svn.devjavu.com/backgroundrb/trunk
+			rake backgroundrb:setup; rake db:migrate
+##Linode	ruby script/server -p 80 -b 74.207.240.145 -e production
+			ruby lib/scraper.rb 2nn
+
+##Linode    Ubuntu Hardy に ImageMagick RMagick をインストールす
+	くどいくらいやる。リポジトリの場所の改廃が早いため-->    
+		% sudo aptitude update
+		% sudo aptitude install imagemagick libmagick9-dev
+	ヴァージョン合わせる。そしてローカルコンパイルに数十分かかる-->    
+		% sudo gem1.8 install rmagick -v 1.15.13
+	確認は，
+		$ irb
+		irb(main):001:0> require 'rubygems'
+		=> true
+		irb(main):002:0> require 'RMagick'
+		=> true
+##Linode   file_column plugin to rails app
+		"webからfile_column.tar.gz をダウンロード、展開、file_colmnにフォルダー名かきかえ
+		EDIT: /home/you/RoRapps/2chnrg/vendor/plugins/file-column/lib/file_column.rb
+			#org       my_options = FileColumn::init_options(options, Inflector.underscore(self.name).to_s, attr.to_s)
+			  my_options = FileColumn::init_options(options, self.name.to_s.underscore, attr.to_s)
+	grep -RI "1.2" ./MAN*/*htm*>tmpgrep.txt
+
+	#tar tvf xvf cvf zZ option is buggy.
+
+==============================================================================
+#wget
+	wget -o wgetlog.txt -S -x -r --level=2 -k -p -A --accept=htm,html,shtml,jpg,jpeg,gif,png
+		http://www.asahi-net.or.jp/~aa4t-nngk/ipttut/output/index.html
+	wget -O - -q ftp://ftp.apnic.net/pub/stats/apnic/delegated-apnic-latest | grep ipv4 | grep JP | grep -v grep | perl -a -F'/\|/' -n -l -e 'BEGIN{ print "order deny,allow\ndeny from all\n" } $mask = 32; $square = 0; $value = $F[4]; while($value != 1){ $value /= 2; $square++ } print "allow from $F[3]/" . ($mask - $square)' > /path/to/.htaccess
+
+#webmin-operaton
+	tail /root/2chnrg/log/backgroundrb_11006.log -n 50; vmstat -S M ;ps -ef|grep back;ps -ef|grep script/server
+#iptables-webmin-way
+		 #apt-get install iptables fwbuilder ssh-server
+		 sudo su
+		 iptables -F
+		 sh filter.sh
+		 iptables -L
+		 iptables-save > /etc/iptables.up.rules
+		 iptables-restore < /etc/iptables.up.rules
+		 #webmin set
+	http://sei.qee.jp/docs/program/hta/makeDeny/index.html
+	iptables  http://www.hakusan.tsg.ne.jp/tjkawa/lib/krfilter/index.jsp
+
+#SQLite3
+	1|some_body||some_body@gmail.com||||ba854c204ba2b82c32ffc8bdb54e3fa8427bca80|1147b878f81136cd10845c8d79789e42969811ab||||ee029d36aec513eb2e4c0ef2eccc8bc50f886fc5|||f|2009-04-25 19:27:24|2009-07-24 07:08:56|2009-04-25 19:27:22|
+	sqlite> select * from users;
+	1|some_body||some_body@gmail.com||||ba854c204ba2b82c32ffc8bdb54e3fa8427bca80|1147b878f81136cd10845c8d79789e42969811ab||||ee029d36aec513eb2e4c0ef2eccc8bc50f886fc5|||f|2009-04-25 19:27:24|2009-07-24 07:08:56|2009-04-25 19:27:22|
+	sqlite> select * from sections;
+	1|Page|1||1|2|home|home|Home|||--- {}
+	||-1||
+
+	//　まずは、データベースを指定してsqliteを起動
+	> sqlite3 database_name
+
+	//　デフォルトでは、セパレータが｜になっているので,csv形式のカンマ区切りに変更
+	//　これを忘れると次のimport処理ではまる。馬鹿らしい・・
+	sqlite> .separator ,
+
+	//　インポートのコマンドでcsvファイルとテーブルを指定する。別に.csvという拡張子でなくとも.txtでもかまわない。
+	sqlite> .import csv_file_name table_name
+
+	// 　エラーがでなかったらsqlコマンドでデータが入っているか確認
+	sqlite> select * from table_name
+
+	// 　もう一度取り込みなおしたいならdeleteでデータを消す
+	sqlite> delete from table_name
+
+	//おまけ・・・csvファイルを作成する
+	csvファイルを作成するのにMACだとexcelが使えない（正確には買うのがもったいない、OpenOfficeはちょっと重たいし、日本語がだめ）
+	なので、もっとも簡単なのがGoogle DocsでExportするのが便利。。
+	ただし、カラム名はインポートするファイルからは削除しておかないとエラーになるので要注意。
+	投稿者 ToolsCafe 時刻: 23:39
+
+
+OCRこつ
+	そもそも灰色網掛け背景に要点がかいてある本はえらぶな。
+	OCRがもっとも認識不得意とする。
+	白黒二色印刷、DTPレイアウトなしのワープロうちの本が一番よい。
+	
+	monocrome 600DPI, cuting page border & ページ中央の黒ずみ(黒棒一個は段組認識にOK)
+	
+	マニュアルでページ選択しつつ、傾き補正、ノイズ小除去、レイアウト認識、をやるのが結局早くしあがる。
+		1領域を文字以外に自動判別する
+		2領域認識連続失敗でハング
+	という問題を回避するためでもある
+	
+	認識結果はメモリ上でtxtにコピー。ファイル直は失敗する。
+	
+	txteditorでのごみ除去パターン
+			
+		\n\n*	\n
+		 +レ\n	\n
+		･･*	""
+		^ +	""
+		･･+	""
+		<.?.?十	""
+		 *＼＼* *	""
+		" +"	" "
+		([\w\s\t])9(\w?)	\1g\2
+		([\w\s\t])1(\w?)	\1l\2
+		「	r
+		[國圓圖]	■
+		VV	W
+		vv	w
+		g	\n
+	
+	
+	
+	ExcelでHimem用に11	in	out		0 形式に整形
+	
+	
+	3ｷｬﾘｱ対応USB充電+予備ｱﾀﾞﾌﾟﾀ白一式 美品
+	
+Mshaver改筆
+	an MS-Outlook
+	e-mail[s]	e-mail
+	accuracy	reliable acuracy
+	精度	正確性(確かさ)
+	
+	MailShaver is a MS-Outlook add-in software that recognizes OVERLAPPING OF E-MAIL CONTENTS, then automatically "squeezes(=condense)"/disposes your e-mail containing obsolete contents/context. this is difference from other tools that only sweeps duplicated copies of e-mail....
+	MailShaver also has following automatic functionality:
+	auto-cleaning of e-mail subject / auto-categorizing / auto-outdenting / timer-based cleaning / dumping or retrieving attachments
+	/ Listing e-mail addresses  / Show&reach a full-path of MS-Outlook Namespace / Peeking into e-mail without opening mail /disabling "sent items" box 
+	+ plus some more features...
+	
+	
+	
+	MailShaver also has following automatic functionality:
+	MailShaver can automatically "squeeze(=condense)"and disposes obsolete e-mail,  cleans e-mail subjects,  categorizes/outdents mail, dumps/retrieves attachments
+	,  generates mail addresses  in CSV, Shows full-path to a mail, peeking into e-mails,, disabling "sent items" box 
+	+ plus some more features...
+	
+	
+調査メモ
+	共有フォルダ VMware　-3.5h
+	無線LANアダプタかいかえとMACアドレス依存のHOT-SPOT接続トラブル　-3h
+	
+	vimrc
+	vimmacro
+	fletstool uninstall@wakou-eki
+	
+	　　Acer
+	　　　├A-open
+	　　　└BEN-Q
+	
+	ASUS
+	ASUStek
+	MSI
+	Kingston
+	Prinston technology
+	GreenHouse = Korea
+	
+	■yahoo pipe
+		hatena---> 大手小町、
+	Daijob http://www.daijob.com/jobs/search?pg=0&kw=ruby&kf[]=1&kf[]=2&ns=0&xs=0&la=&lb=&hs=0&hx=0&el[]=5&as[]=1&as[]=2&as[]=3&li=0&submit.x=51&submit.y=13&submit=%E5%86%8D%E6%A4%9C%E7%B4%A2
+	==================================＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	人民元箪笥預金=半年１００万円しかおろせない。
+	
+	
+	
+	野村−好配当日本株式オープン   
+	 国内株式
+	 6,573
+	-37 (-0.56%) 
+	 -34.31%
+	 -13.17%
+	 3
+	 14,726
+	 
+	日興−株ちょファンド日本（高配当株・割安株・成長株）毎月分配型   
+	 国内株式
+	 5,368
+	-5 (-0.09%) 
+	 -35.11%
+	 -18.31%
+	 3
+	 36,089
+	 
+	
+	
+	
+	(5726|5727|5541|5781|6868|6998|6998|4047|5781|6138|5707|5855|4092|4107|4080|5855|7456|3036)
+	Ti:チタン
+	5726 住友チタニウム
+	5727 東邦チタニウム
+	
+	Ni:ニッケル
+	5541 大平洋金属
+	
+	Mo:モリブデン
+	5781 東邦金属
+	6868 東京カソード研究所
+	6998 日本タングステン
+	W:タングステン
+	6998 日本タングステン
+	4047 関東電化工業
+	5781 東邦金属
+	6138 ダイジェット工業
+	In:インジウム
+	5707 東邦亜鉛
+	5855 アサヒプリテック
+	Co:コバルト
+	4092 日本化学工業
+	4107 伊勢化学工業
+	4080 田中化学研究所
+	U:ウラン
+	Pu:プルトニウム
+	その他
+	5855 アサヒプリテック [リサイクル企業]
+	7456 松田産業 [リサイクル企業]
+	3036　アルコニックス [ニッケル、チタン、タングステン、モリブデン]
+
+
+
+
+#linux-rehabilitaion menu
+	#3month-blank
+		 vi---set nowrap, set nonumber, set list
+		 w3m google.co.jp
+		 login to webmin with ID= "some_body"
+		 sudo ruby R2chnnInitfork.rb help
+		 sudo ruby R2chnnInitfork.rb start localdebug home
+#mySQL
+	#Linode	sudo apt-get install mysql-server mysql-client libmysqlclient15-dev libmysql-ruby1.8 -y
+		you@ecolnux:~/RoRapps/2chnrg/lib$ ps -ef |grep sql
+		root      3300     1  0 17:29 ?        00:00:00 /bin/sh /usr/bin/mysqld_safe
+		mysql     3446  3300  0 17:29 ?        00:00:01 /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --pid-file=/var/run/mysqld/mysqld.pid --skip-external-locking --port=3306 --socket=/var/run/mysqld/mysqld.sock
+		root      3447  3300  0 17:29 ?        00:00:00 logger -p daemon.err -t mysqld_safe -i -t mysqld
+	#Linode >	mysqladmin create r2chnn -u root -p 
+	#Linode >	
+		rake adva:install:core;rake adva:uninstall engines=blog
+		rake db:migrate
+	#cf.	rails -d mysql [pj-name]
+	#edit config/database.yml
+		development:
+			adapter: sqlite3
+			database: db/development.sqlite3
+			pool: 5
+			timeout: 5000
+		dev:
+			adapter: mysql
+			database: r2chnn
+			username: "root"
+			password: "alison"
+			timeout: 5000
+			socket: /var/run/mysqld/mysqld.sock
+			#encoding: utf8
+	cp config/environment/development.rb config/environment/dev.rb
+	>	mysql -u root -p
+		 show databases;
+		 use [DBname];
+		 show tables;
+		 describe [table-name];
+		\h	help
+		\q	quit
+		status
+
+	mysql> select * from users ;
+		+----+------------+-----------+----------------------+----------+-------+-----------+------------------------------------------+------------------------------------------+------+-------+---------+-------------+-----------+------------------+-----------+---------------------+---------------------+---------------------+------------+
+		| id | first_name | last_name | email                | homepage | about | signature | password_hash                            | password_salt                            | ip   | agent | referer | remember_me | token_key | token_expiration | anonymous | created_at          | updated_at          | verified_at         | deleted_at |
+		| +----+------------+-----------+----------------------+----------+-------+-----------+------------------------------------------+------------------------------------------+------+-------+---------+-------------+-----------+------------------+-----------+---------------------+---------------------+---------------------+------------+
+		| |  1 | some_body | NULL      | some_body@gmail.com | NULL     | NULL  | NULL      | d9e778c53529bcf488846230be0f6bf6f3a922d4 | 9ee11fa50003a673b6c783263a61770f37254b55 | NULL | NULL  | NULL    | NULL        | NULL      | NULL             |         0 | 2009-07-25 09:19:17 | 2009-07-25 09:19:17 | 2009-07-25 09:19:16 | NULL       | 
+		| +----+------------+-----------+----------------------+----------+-------+-----------+------------------------------------------+------------------------------------------+------+-------+---------+-------------+-----------+------------------+-----------+---------------------+---------------------+---------------------+------------+
+		| 1 row in set (0.00 sec)
+		|
+
+	 MySQL インポートとエクスポート（テキストデータ） Submitted by sasaki on 月曜, 2007-01-15 15:44
+		 #erace all existing rows
+			 mysql -u root -p
+			 use r2chnn;
+			 delete from kokuekis;
+		 ■テキストTAB形式でのエクスポート                                                       
+			  データベースmydbのempテーブルからタブ区切りのテキストデータでエクスポートする。        
+				 $ sudo mysql -B --skip-column-names -D mydb -e 'select * from emp;' -u tanaka -p > out.txt   
+				 $ sudo mysql -B --skip-column-names -D r2chnn -e 'select * from kokuekis;' -u root -p > test.txt   
+			  --skip-column-namesを削除して実行すれば、カラム名も出力されるので便利。                
+		 #vi replace mysq-export&import
+			%s/】\t\t/】\t\t2009\//gc
+			%s/】\t\t2009\/03/】\t\t2010\/03/gc
+			%s/】\t\t2009\/02/】\t\t2010\/02/gc
+			%s/】\t\t2009\/01/】\t\t2010\/01/gc
+				#置換もれがあるのでvi上でチェック
+		  #文字化け対策
+		  ■テキストデータのインポート mysqlimport編                                             
+			  データベースmydbのempテーブルにテキストデータをインポートする。                        
+				  tar cvf tbl.tar *tbl.*; #<----sftp with binmode
+				  SHOW VARIABLES LIKE 'character_set%';
+						SHOW VARIABLES LIKE 'character_set%';
+						+--------------------------+----------------------------+
+						| Variable_name            | Value                      |
+						| +--------------------------+----------------------------+
+						| | character_set_client     | latin1                     | 
+						| | character_set_connection | latin1                     | 
+						| | character_set_database   | utf8                       | 
+						| | character_set_filesystem | binary                     | 
+						| | character_set_results    | latin1                     | 
+						| | character_set_server     | latin1                     | 
+						| | character_set_system     | utf8                       | 
+						| | character_sets_dir       | /usr/share/mysql/charsets/ | 
+						| +--------------------------+----------------------------+
+						• 解決方法その3 root になれるなら MySQL のデフォルト文字コードを UTF-8 に変更する。 /etc/my.cnf か /etc/mysql/my.cnf を開き（ない場合は mysql が起動するときの設定ファイルを探す）、MySQLのデフォルト文字コードを UTF-8 に変更する。
+						# vi /etc/my.cnf
+						[mysqld]
+						default-character-set = utf8
+						[mysql]
+						default-character-set = utf8
+						[mysqldump]
+						default-character-set = utf8
+				  $ sudo mysqlimport --local mydb emp.txt -u root -p                                          
+				  $ sudo mysqlimport --local r2chnn kokuekis.tbl.tsv -u root -p                                          
+				 select * from kokuekis where sbm > 900;
+			 mydb：　データベース名                                                                  
+			 emp.sql：　テーブル名.sql（中身はテキストタブのデータ）
+			 テキストエディタやExcel等で、TEXT-TAB形式で書き出した後、「テーブル名.txt」へ変更する 
+			 --localを指定しないと、「Access denied」エラーが発生する。                              

@@ -1,0 +1,202 @@
+◎本プロジェクトでのRuby / Rails開発環境準備
+
+ ■基礎的ツール一式の標準インストール
+  <<¥¥172.18.200.144¥共有フォルダ¥FANET¥10_H25追加開発¥80_手順書¥tools¥RubyOnRails環境¥1_RubyOnRails基礎的ツール>>
+  を開いて、ファイル名の先頭数字の小さいものから順に開いて標準インストールしていくだけ。
+  インストーラーではなく手順紹介記事がひらくばあいは、まず概要を一読してから、後続のファイルを起動してください。
+
+  カスタマイズ版eclipse "Aptana Studio for Windows" を標準インストール
+    ※Workspaceのパスは各自決めること。
+    ※GUIの日本語化をしたい人は別途パッチをダウンロードしてください。
+
+  #sshをWindowsの仮想ドライブとしてマウントするソフトのインストール
+    ※SFTP Net Drive Free: 無料版は設定可能項目の制限、Up to 10 computers in a company のライセンス制限がある
+    1. インストール→起動後 [New Profile...]をクリック
+    2. Host name or IP addressに接続先IPを指定して[OK]押下。無料版はNew profile nameは設定できないので無視。
+    3．[Profile Settings...]をクリックし On drop try to reconnect [n] times と Send keep-alive every [n] minutes にチェックを入れておくとよい
+    4. Root folder on the ServerのSpecified folderにチェックを入れディレクトリを指定。パスワードも適宜設定した後に[OK]押下。
+       ※"/" を指定すると /root に接続されるため、これを指定したい場合は "/." などを指定する。
+    5. ドライブ名を指定してし[CONNECT]ボタン押下で接続。
+    
+    ※複数サーバをマウントする場合
+    上記手順で一度設定を行うと、それぞれの接続先に対応したプロファイルが作成される。
+    コマンドプロンプトからプロファイル名を指定して起動することで、多重起動が可能になる。
+    >cd C:¥Program Files¥SFTP Net Drive
+    >SftpNetDrive.exe start /profile:"172.18.200.131" /letter:J
+    >SftpNetDrive.exe start /profile:"172.18.200.132" /letter:K
+    またはショートカットを作成し、リンク先に上記を設定するとよい
+    （"C:¥Program Files¥SFTP Net Drive¥SftpNetDrive.exe" start /profile:"xxx.xxx.xxx.xxx"/letter:*）
+    ※/nocache オプションというのもある、
+
+
+  #VMware WorkStation(VMWare Player同梱)
+    ローカルPCにコピーして標準インストールすること。
+    インストーラー最後の画面の「ライセンスキー」入力画面は「スキップ」で対応。 
+    通常作業はVMware Toolで仮想OSをひらく。
+    仮想OSのバックアップ(snapshot)をとるばあいはVMware WorkStationをひらき、
+     「30日間評価版をつかう」をえらびダミーの email addressを入力すれば製品版の全機能が使える。
+      30日経過後もEscキーで逃げて起動すればsnapshot機能はつかえる(はず)
+    ※注意：VMWare Vierの設定で仮想HDDをexploreの仮想ドライブとしてマップすると、
+      仮想OS起動エラーを起こすかもしれないので自己責任で慎重に。
+
+ ■予備的ツール一式のインストール（※任意作業）
+  <<¥¥172.18.200.144¥共有フォルダ¥FANET¥10_H25追加開発¥80_手順書¥tools¥RubyOnRails環境¥2_Windows上にRubyOnRails>>
+  を開いて、ファイル名の先頭数字の小さいものから順に開いて標準インストールしていくだけ。
+  インストーラーではなく手順紹介記事がひらくばあいは、まず概要を一読してから、後続のファイルを起動してください。
+
+  #RailsInstaller for Windows (Rails 3.2とRuby1.9.3を軸にした標準的ツールのセット)のインストール：
+    ※インストーラー画面最後にでてくるgit関連のチェックボックスとDOSバッチ窓は、省略可能です。
+      本プロジェクトでは使用予定がありません。
+
+
+ ■配布式仮想OSイメージで提供される開発環境の起動手順
+   #PCのBIOS設定: 64bit機の仮想OSイメージを32bitPCで動作させる準備：
+      BIOS設定: PC起動時のThinkPad ロゴ表示画面ですかさずF1キーおす
+      →BIOS menu->Security->Virtualizationとすすむ
+      →Intel*****項目2箇所をenableにする。
+      →Exit Saving ChangesでBIOS設定保存とPC再起動
+    
+   #VMware仮想OSイメージをローカルPCにコピーする。(コピー元の場所は苗字が個別に指示します)
+
+   #VMware Viewerで開いて仮想 OS(RedHat Linux)を起動する。
+
+
+ ■リモートログイン式開発環境のマウント手順
+   前述SSHマウンターソフトで接続先サーバーをWindowsの仮想ネットワークドライブとしてマウントし、
+   それをeclipse/Aptanaのメニューで「File-Import」でインポートする。
+
+
+
+
+以上
+
+
+
+================================================================================================================
+環境ができてから いずれ役に立つ知識
+
+
+
+ ■コマンドラインでSVN操作するときの大まかなながれ（※厳密なものではありません。あくまでもイメージです。）
+  	TortoiseSVN ダウンロード
+    	http://tortoisesvn.net/downloads.html
+    	●
+  	#svn up/down
+	    svn list https://172.18.200.144/jalt_internal/J-ALERT-SOURCE/(sub-directory) [--username ]
+	    svn checkout https://172.18.200.144/jalt_internal/J-ALERT-SOURCE/(sub-directory) [checkout-name --username *** --password ***]
+	      例) svn checkout https://172.18.200.144/jalt_internal/J-ALERT-SOURCE/trunk/10_受信機設定管理ツール/SetupInfoManagement/lib
+
+	    svn update
+            (プログラム編集、ファイル追加など作業) 
+	    svn add [filename1] [filename2] ...
+	    svn commit -m "活動名 コミット備忘録" [filename1] [filename2] ...
+
+        #リポジトリー確認コマンド
+	    svn status
+            svn log
+            svn diff
+
+
+
+
+
+ ◆サーバー固有情報
+　 ■設定管理ツールサーバー
+　　　　受信機からのXMLおきば　/opt/jalt/system_configs/ か その下のbackup/*
+
+　 ■受信機(Rails2.xカスタム, Ruby1.8.x)でのコマンド操作
+　　  再起動　/opt/jalt/bin/daemon_control restart
+　　　　※現状確認は　/opt/jalt/bin/daemon_control stat
+  　　再起動後のマウントボリューム書き込み制限解除
+　　　　mount -n -o remount rw /opt
+　　　　※現状確認は　mount |grep /opt
+
+  　　ログ動的閲覧 tail -f /var/log/jalt/rails.log
+
+
+ 　■受信機での debug messageうめこみ例：
+    logger.error( params.to_hash);logger.error( response.header)
+    logger.error( "REQURL=" + request.url)
+　  logger.error( "params.class:#####" + params.class.to_s)
+
+
+  
+  ■余談：仮想guestOS準備作業：
+　　　# DHCP整備
+  　　　# RHEL系LinuxでDHCPによるIPアドレス取得がうまくいかないばあい
+　  　　$ vi /etc/sysconfig/network
+	  # 固定IP記述をコメントアウトする
+          例)
+            GATEWAY=172.19.100.1
+	    => #GATEWAY=172.19.100.1
+
+      #NFS 無効化
+        $ chkconfig --list netfs
+        $ chkconfig netfs off
+
+
+
+      # proxy経由でインターネット接続する作業環境でのproxy指定コマンド
+
+        <Linux>
+        export https_proxy=http://172.18.200.147:8080
+
+        <Windows>
+        set http_proxy=http://172.18.200.147:8080
+        
+        <Windows gem>
+        Gemfile冒頭に書いてあるhttp*://rubygems.orgがhttpかhttpsかに応じて以下2種類のコマンドをためす
+        gem install "Gemファイル名" -p http://j-alert:j-alert@172.18.200.147:8080
+        gem install "Gemファイル名" -p https://j-alert:j-alert@172.18.200.147:8080
+
+        <proxyやファイアウオールでなんらかの理由により通信の遮断や濾過や障害があるときののエラーメッセージ例>
+
+          <gem install [gemname]のエラー >
+            WARNING:  Error fetching data: Errno::ETIMEDOUT: A connection attempt failed because the connected party did not properly respond after a period of time, or est
+            ablished connection failed because connected host has failed to respond. - connect(2) (http://rubygems.org/latest_specs.4.8.gz)
+
+          <Rails 3.x系 bundle installのエラー >
+            Fetching source index from http://rubygems.org/
+            Resolving dependencies...
+            Network error while fetching
+            http://rubygems.org/quick/Marshal.4.8/mail-2.5.4.gemspec.rz
+
+
+　■余談：OS仮想化ソフトをつかうことにした理由
+
+    1) Rails 3.x系は構成要素のライブラリーを更新・追加する都度標準的にはインターネット接続が求められるが、
+    proxy経由でインターネット接続するWindows作業環境ではgem形式ライブラリー(Java言語のjarに相当)のインストールが煩雑になる。
+
+    2) 本プロジェクトでのサブシステム群はRails 3.x系と2.x系が混在しているが、
+    それぞれで求められるライブラリーの依存性管理ソフト(RVM,rbenv)のクロスプラットフォーム性が乏しい。
+       特にIP接続プロキシーソフトでポート制限をかけている環境では円滑に事が処理できない。
+
+    3) NFSマウントに依存したサーバー間ファイル伝送がある。こういうものを個別にWindowsで擬似的に表現して開発をするのは
+  　　本プロジェクトの手段が目的になり、本末転倒。
+
+
+
+  ■余談：Rails 3.x系でconfig/environments/[boot-mode-name].rb でAsset Pipeline処理緩和を指定する方法　※JavaScriptを可読状態にする方法
+    # Compress JavaScripts and CSS
+    #some_body switched from true to false below
+    config.assets.compress = false
+    #some_body transplanted line below from development.rb
+    # 必要に応じてproduction.rbにも以下を記述 Expands the lines which load the assets
+    config.assets.debug = true
+
+
+
+
+================================================================================================================
+
+
+  ■余談の余談:
+
+　　　RoR案件に限定されない LINUXコマンド　 (windows版もsourceForge.netからダウンロード可能)
+	◎ファイルツリー比較
+	　#LINUXコマンド (下記例では-xオプションで除外ファイル名パターン列記, 下記例から-qオプションをはずすと差分詳細表示)
+　	　 diff -wrtBbq  PATH1 PATH2 -x *‾ -x *.orig -x *.sw* -x *.rej -x *tem8 -x *.bak -x *.project  -x *コピー* -x *.xlsbak* 
+
+
+
+

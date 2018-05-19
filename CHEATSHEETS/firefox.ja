@@ -1,0 +1,21 @@
+#基本
+From about:config Menu
+  Type “about:config” in the address bar, then press “Enter“.
+  Search for the “app.update.auto” setting.
+  Double-click the “app.update.auto” option to toggle the setting. If set to “true“, automatic updates are enabled. If set to “false“, automatic updates are disabled.
+
+Via prefs.js file
+  Close Firefox.
+  Navigate to the following location based on your operating system.
+    Windows XP/Vista/7/8/10 – “%APPDATA%\Mozilla\“
+    Unix/Linux – “~/.mozilla/“
+    Mac OS X – “~/Library/Mozilla/” or “~/Library/Application Support/“
+  Open the “Profiles” folder.
+  Open the folder that represents the profile you would like to edit. The name of the folder will vary. It is usually a bunch of characters, followed by “.default”.
+  Open the prefs.js file with a text editor like Notepad.
+  Look for a line that contains app.update.enabled. If it doesn’t exist, add a line for it in the file and set it as desired using these examples:
+    user_pref("app.update.enabled", true); = Automatic updates enabled
+    user_pref("app.update.enabled", false); = Automatic updates disabled
+
+
+

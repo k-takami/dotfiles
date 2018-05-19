@@ -1,0 +1,47 @@
+■SOAP
+	rubyでsoapサーバを作る - hippos-lab::net
+		WSDLの作成
+		wsdl2rubyでスケルトンを生成
+		中身を実装
+	SOAPでは次のような事柄が規定されています。
+	● エンベロープ構成要素
+	├ メッセージ構成
+	└ 処理仕様
+	● エンコーディング規則
+	└ データのシリアライズメカニズム
+	● RPC表現規則
+	└ 要求と応答の規則
+	#server
+		wsdl2ruby.rb --wsdl a.wsdl --type server --force
+	#client
+		wsdl2ruby.rb --wsdl a.wsdl --type client --force
+	実行
+	ターミナル1
+		$ ruby -I. CalcServer.rb
+	ターミナル2
+		$ ruby -I. CalcServerClient.rb
+	・Rubyで実行
+	1.root権限で以下のコマンドを実行（soap4r-ruby1.9ライブラリのインストール）
+	gem install soap4r-ruby1.9
+	・Railsで実行
+	2.Gemfileに以下を追加
+	gem "soap4r-ruby1.9"
+	3.下記コマンドを実行
+	bundle install
+	参考URL
+	http://route477.net/w/?RubySOAPt（Route 477 - RubyでSOAP）
+	コモンズノードシステム上の SOAP 発信設定 は、
+	http://schemas.xmlsoap.org/soap/http
+		publish(msg:any)
+		返値
+			getCode():int
+			getResult():any
+	公共情報コモンズ　マスタ管理システムの認証IDとパスワードを
+	開発目的用につかいたいので､テスト用のIDとパスワードで十分です､
+	https://www.publiccommons.ne.jp/SAMLService/SSO?returnURL=http%3A%2F%2FOS-PBS01%2FAssertionConsumer%2FSAML
+	%2FArtifact&target=JJnDgAFi1PwDYjOs
+		nttcom0@ishinomaki-city
+		masasato@ishinomaki-city
+	■SOAPの問題点
+		getCode
+		X509

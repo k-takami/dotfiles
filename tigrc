@@ -1,0 +1,11 @@
+# Vim風に<C-f>,<C-b>でページ移動
+bind generic ^f scroll-page-down
+bind generic ^b scroll-page-up
+bind generic G none
+bind generic g move-first-line
+bind generic G move-last-line
+bind diff l scroll-right
+bind diff h scroll-left
+#https://www.google.co.jp/search?q=tigrc+key+(bind%7Cmap)+(vi%7Cvim)&rlz=1I7GGLD_ja&ie=UTF-8&oe=UTF-8&sourceid=ie7&gfe_rd=cr&ei=E6gMU_6uD8bU8gemoIHoDw#q=tigrc+key+(bind%7Cmap)+(vi%7Cvim)&safe=off&start=10
+#bind branch n !git checkout -b %(prompt) %(branch)
+set vertical-split = no

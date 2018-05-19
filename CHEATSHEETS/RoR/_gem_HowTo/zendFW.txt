@@ -1,0 +1,122 @@
+# php.ini の include_path に library の場所を追加する
+	sudo vi /etc/php5/cli/php.ini
+	sudo vi /etc/php5/apache2/php.ini
+
+# filezend-test.zip をダウンロードして、解凍する
+    * /home/shimizu/workspace/zend-test 以下に置かれることが前提になっています
+    * PDT (eclipse 版の PHP 開発環境）にそのままインポートできます
+
+# バーチャルホストの設定をする
+	cd /etc/apache2/sites-available$
+	sudo ln -s /home/shimizu/workspace/zend-test/zend-test .
+	sudo a2ensite zend-test
+	sudo /etc/init.d/apache2 restart
+
+# /etc/hosts ファイルに zend-test.homelinux.lc 用の設定を追加する
+		* 自宅なら 127.0.0.1 をとりあえず割り当てておく
+# http://zend-test.homelinux.lc にアクセスしてみましょう
+
+
+
+公式マニュアルに沿って作った一番単純なアプリケーションの構造はこのようになっています。
+    * zend-test/
+    * zend-test/application
+    * zend-test/application/controllers
+    * zend-test/application/controllers/ErrorController.php
+    * zend-test/application/controllers/IndexController.php
+    * zend-test/application/views
+    * zend-test/application/views/scripts
+    * zend-test/application/views/scripts/index
+    * zend-test/application/views/scripts/index/index.phtml
+    * zend-test/application/views/scripts/error
+    * zend-test/application/views/scripts/error/error.phtml
+    * zend-test/html
+    * zend-test/html/.htaccess
+    * zend-test/html/index.php
+
+
+
+
+
+
+Zend Framework公式サイトからアーカイブをダウンロードして展開していきます。
+
+mitsuki@ubuntu:~$ sudo su - <- スーパーユーザになる
+root@ubuntu:~# cd /usr/lib/php5 <- ディレクトリ移動
+root@ubuntu:/usr/lib/php5# wget http://framework.zend.com/releases/ZendFramework-1.8.0/ZendFramework-1.8.0.tar.gz <- ZFアーカイブをダウンロード
+--2009-05-11 22:29:42--  http://framework.zend.com/releases/ZendFramework-1.8.0/ZendFramework-1.8.0.tar.gz
+framework.zend.com をDNSに問いあわせています... 64.255.169.102
+framework.zend.com|64.255.169.102|:80 に接続しています... 接続しました。
+HTTP による接続要求を送信しました、応答を待っています... 200 OK
+長さ: 21724265 (21M) [application/x-gzip]
+`ZendFramework-1.8.0.tar.gz' に保存中
+
+100%[======================================>] 21,724,265   105K/s   時間 4m 49s
+
+2009-05-11 22:34:32 (73.3 KB/s) - `ZendFramework-1.8.0.tar.gz' へ保存完了 [21724265/21724265]
+root@ubuntu:/usr/lib/php5# tar zxvf ZendFramework-1.8.0.tar.gz <- ダウンロードしたファイルを解凍
+　　　・
+　　　・(中略)
+　　　・
+ZendFramework-1.8.0/tests/Zend/Translate/Adapter/_files/failed3.mo
+ZendFramework-1.8.0/tests/Zend/Translate/Adapter/_files/translation_en.tmx
+ZendFramework-1.8.0/tests/Zend/Translate/Adapter/_files/translation_en2.mo
+root@ubuntu:/usr/lib/php5# rm -f ZendFramework-1.8.0.tar.gz <- 解凍が済んだらアーカイブを削除
+root@ubuntu:/usr/lib/php5# mv ZendFramework-1.8.0 ZendFramework <- ディレクトリ名にバージョン番号が入っているのは不便なのでリネーム
+root@ubuntu:/usr/lib/php5# exit <- 一般ユーザに戻る
+logout
+
+
+続けてphp.iniにインクルードパスの設定を追加する。
+
+mitsuki@ubuntu:~$ gksudo gedit /etc/php5/apache2/php.ini
+
+
+include_path = ".:/usr/share/php:/usr/share/pear"
+   ↓↓↓
+include_path = ".:/usr/share/php:/usr/share/pear:/usr/lib/php5/ZendFramework/library"
+
+
+ModRewriteを有効にしてApache2を再起動。
+
+mitsuki@ubuntu:~$ sudo a2enmod rewrite <- mod_rewriteを有効にする
+Enabling module rewrite.
+Run '/etc/init.d/apache2 restart' to activate new configuration!
+mitsuki@ubuntu:~$ sudo /etc/init.d/apache2 restart <- Apache2再起動
+ * Restarting web server apache2                           [ OK ]
+
+
+ZendFrameworkが正常に動作するかを確認するためにテストスクリプト作成。
+
+mitsuki@ubuntu:~$ cd public_html <- 自分のドキュメントルートに移動
+mitsuki@ubuntu:~/public_html$ gedit .htaccess <- .htaccessファイル作成
+
+
+.htaccessファイルに以下のコードを記述して保存。2行目は各自の環境に合わせて変更する必要があります。例えば、このテストスクリプトをhttp://{サーバ}IP/~user/でアクセスできる環境に設置する場合にはRewriteBase /~user/と記述します。
+
+RewriteEngine on
+RewriteBase /~mitsuki/
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+
+
+フロントコントローラ(index.php)を作成。
+
+mitsuki@ubuntu:~/public_html$ gedit index.php
+
+
+index.phpファイルに以下のコードを記述して保存。Zend Frameworkのコーディングルールでは最後の?>は記述しないことになっているので注意しましょう。
+
+<?php
+require_once 'Zend/Version.php';
+echo Zend_Version::VERSION;
+
+
+ブラウザでhttp://{サーバIP}/~mitsuki/にアクセスしてZend Frameworkのバージョン(今回は1.8.0)が表示されればOKです。
+
+最後にテスト用スクリプトを削除しておきましょう。
+
+mitsuki@ubuntu:~/public_html$ rm -f index.php .htaccess
+
+
+
+

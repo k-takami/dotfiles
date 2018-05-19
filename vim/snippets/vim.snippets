@@ -12,6 +12,21 @@ snippet f
 	fun ${1:function_name}(${2})
 		${3:" code}
 	endf
+snippet t try ... catch statement
+	try
+		${1:${VISUAL}}
+	catch ${2}
+		${0}
+	endtry
+snippet for for ... in loop
+	for ${1} in ${2}
+		${0:${VISUAL}}
+	endfor
+snippet forkv for [key, value] in loop
+	for [${1},${2}] in items(${3})
+		${0}
+		unlet $1 $2
+	endfor
 snippet for
 	for ${1:needle} in ${2:haystack}
 		${3:" code}
@@ -30,3 +45,12 @@ snippet ife
 	else
 		${3}
 	endif
+snippet au augroup ... autocmd block
+	augroup ${1:AU_NAME}
+		" this one is which you're most likely to use?
+		autocmd ${2:BufRead,BufNewFile} ${3:*.ext,*.ext3|<buffer[=N]>} ${0}
+	augroup end
+snippet bun Vundle.vim Plugin definition
+	Plugin '${0}'
+snippet plug Vundle.vim Plugin definition
+	Plugin '${0}'

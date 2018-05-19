@@ -1,0 +1,8 @@
+#VIM
+ #from HTML into seleniumIDE
+   :%s/\(.quot\;\)*<.td>.*$/",/gc | %s/^.*<td>/"/gc    
+
+
+#RoR
+  JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
+

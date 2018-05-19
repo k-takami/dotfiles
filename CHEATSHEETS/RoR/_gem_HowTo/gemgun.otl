@@ -1,0 +1,348 @@
+
+#file upload, thumnail image presentation
+paperclip
+	config/environments/development.rb
+		Paperclip.options[:command_path] = "/usr/bin/" 
+	Gemfile
+		gem "paperclip", "~> 3.0"
+
+	$ bundle install
+	$ bundle exec rails generate paperclip model_name attachment_name
+	$ rails generate model att notification_id:integer
+	$ rails generate model banner notification_id:integer
+	$ rake db:migrate		
+
+	M
+		notification.rb
+			has_attached_file :att,
+			  :styles => { :medium => "300x300", :thumb => "100x100" },
+			  :default_url => "/images/:style/missing.png"	
+
+			attr_accessible :att, :att_file_name, :att_content_type, :att_file_size, :att_updated_at
+
+			validates_attachment_size :att,
+			  :in => 1..1.megabytes,
+			  :message => ": You must upload a file having more than 1 Byte and less than 1 MegaByte."
+			validates_attachment_presence :att, :message==>["You must complete uploading"]
+			
+			validates_attachment_content_type :att,
+			  :content_type => ['application/zip','text/plain', 'image/jpg', 'image/jpeg', 'image/pjpeg'],
+			  :message => ": You must upload a text file OR jpeg image OR zip compression file only."
+			# 拡張子の制限#upfile.rb  when "txt", "vbs", "bas", "cls", "Dsr", "frm", "tsv" then "text/plain"
+			#"テキストファイル、zipファイル、汎用的な画像形式のJPG/JPEGだけアップロードできます"
+
+			self.att = attrs[:att][0] if attrs[:att].present?
+			self.save
+		att.rb
+		banner.rb
+
+	V
+		form.html
+		<% form_for :ex_notification , :url=> { :action=> :upload, :html => {:multipart => true}} do |f2| +| %>
+			<%= form_for @post, :html => { :multipart => true } do |f| %>
+				<%#<small class="help-block">※32文字以内で入力してください。</small>%>
+				<%= f.file_field :att   %>
+				<%= f.submit 'ｱｯﾌﾟﾛｰﾄﾞ' %>
+			<% end %>
+			<%= image_tag @post.image.url(:medium) %>
+
+		edif.html
+			<%=image_tag modelname.att.url%>
+			<%=image_tag modelname.att.url(:medium) %>
+			<%=image_tag modelname.att.url(:thumb) %>
+
+	C
+	  def create
+		@modelname = Model.new
+		@modelname.set_attr(params)
+		if @modelname.save
+	  
+	  def upload
+		msgerr= "ERROR:UPLOAD A FILE WITH FOLLOWING CONDITIONS:\nfile size >= 1 Byte,\nfile size < 1 MegaByte,\n" +"file format = text / jpeg / zip ."
+		if params["convert"] != nil
+		  elAtt=params[:convert][:att];
+		  ret= validates_Tmpfile(elAtt)
+		  if ret != false
+
+			if ret =~/\.zip$/i then
+			  $zipFN =ret.to_s; 
+			  $zipNakami=[];
+			  if Convert.last.update_attributes(params[:convert])
+				#ファイル展開中身リスト
+				tgtzip="#{RAILS_ROOT}/public/system/atts/#{Convert.last.id}/original/#{$zipFN}"
+				begin
+				  Zip::ZipFile.open(tgtzip) { |zf| $zipNakami= zf.entries} #   dbg puts zf.methods.grep(/dir/i)
+				  $infile="" #Tmpfile処理せず、
+				  $hasZip =true;
+				  $txt_mae="["+$zipFN+"] was uploaded. As a next step, select a file name in your ["+$zipFN+"] file from box above, then it will be shown here."
+				rescue
+				  $hasZip=false;$zipFN="";$txt_mae= msgerr
+				end
+			  else
+				$hasZip=false;$zipFN="";$txt_mae= msgerr
+			  end           
+			   
+			else
+			  elAtt.pos=0; $infile=elAtt.read
+			  $hasZip=false;$zipFN=""
+			end
+		  end
+		 else #ファイル名なしか0バイトファイル
+		   $infile="";
+		   $hasZip=false;$zipFN=""
+		   $txt_mae="";
+		   return
+		 end
+		redirect_to "/converts/x2y/1"
+	  end
+
+	  def validates_Tmpfile(objAttachment)
+		if objAttachment.original_filename=="" then return false end
+		if objAttachment.count==0 then return false end
+		return objAttachment.original_filename
+	  end
+
+
+
+
+wrap_transaction
+
+TRANSPLANT-GUN
+	 :set fileencoding=utf-8 | %s/\(EUC-JP\|shift_jis\)/utf-8/igc |%s/\t/  /gc |%s/\n *\n *\n*/\r/gc | %s/\.php//gc |%s/http:..www.smaaash.jp//gc |w! 
+		 :set fileencoding=utf-8 | %s/\(EUC-JP\|shift_jis\)/utf-8/igc |%s/\t/  /gc |%s/\n *\n *\n*/\r/gc |w! 
+		 :%s/\.php//gc |%s/http:..www.smaaash.jp//gc |w! 
+		 :%s/\t/  /gc |%s/\n *\n *\n*/\r/gc |%s/\.php//gc |%s/http:..www.smaaash.jp//gc |w! 
+	 :%s/\.\/.*_files/\/assets\/stylesheets/gc
+		%s/\.\/.*_files/\/assets
+		%s/\.\/.*_files/\/assets\/stylesheets
+		%s/\.\/.*_files/\/assets\/stylesheets/gc
+		%s/\.\/.*_files/\/assets\/javascripts/gc
+		%s/\.\/.*_files/\/assets\/images/gc
+		%s/\.\/.*_files/\/admin\/ex_contents/gc 
+		%s/href=".*_files/href="\/assets\/stylesheets/gc
+		%s/href=".*_files/href="\/assets\/javascripts/gc
+		%s/href=".*_files/href="\/assets\/images/gc
+		%s/src=".*_files/src="\/assets\/images/gc
+		%s/src=".*_files/href="\/assets\/javascripts/gc
+		%s/src=".*_files/href="\/assets\/images/gc
+        %s/\(image\|javascript\|stylesheet\)s\//\1s\/smaaash\//gc | w!
+          :%s/"images/"\/assets/gc 
+           :%s/&#39;/'/gc
+		   :%s/javascript:goPageWith.*\w*('/location.href='\/admin\/ex_contents\//gc
+		   :M/(gopage|location)/i
+
+		#list -> methods
+		:%s/\n/\r\tend\r\tdef /gc
+
+		#list -> routes.rb resouce
+		:%s/\n\(.*\)/\r\t\tget "ex_contents\/\1", :to =>"ex_contents#\1"/gc
+		
+		   
+
+
+
+	 
+	  <form name="fList" method="get" action="ex_contents">
+	contents_l.php'		list
+  
+
+	grep -lnirE "contents_s.php" ./* --include=*rb*  --exclude=*.sw* --exclude=*~ --exclude=*spec* --exclude=*log  --exclude=*svn*  |xargs  ruby -p -e  '$_.gsub!(/issueorlift/, "issueorlift")' -i
+		:%s/contents_s.php/new/gc
+
+    コンテンツ価格一括アップロード
+コンテンツ価格一括アップロード<input onclick="        if(confirm('情報を削除します')==true){         if(confirm('処理は取消せません。本当によろしいですか？')==true){          javascript:goPageWithWork('contents_delete.php', 788);         }        }       " value="  このコンテンツを削除する  " type="button">
+
+
+migrationgun
+
+	View & routes
+		かきこみトークン不要なものは前ん部getメソッドにかきかえる
+
+		<form name="fList" method="post" action="ex_contents" enctype="multipart/form-data">
+		</form>
+		↓
+		index.html.erb
+			<%= form_for :contents, :url => edit_admin_ex_contents_path, :html => {:action => "edit", :method => :get} do |f| %>
+			  <%if @contents.present?%>
+			  <%end%>
+			<%end%>
+		edit.html.erb
+			<%= form_for :contents, :url => "/admin/ex_contents/detail_c/#{params[:id]}", :html => { :method => :post} do |f| %>
+			<%= form_for :contents, :url => edit_admin_ex_contents_path, :html => {:action => "edit", :method => :get} do |f| %>
+			  <%if @contents.present?%>
+				<% @contents.each do |el| %>
+				  <%=el.name%>
+				  <%=link_to detail%>
+				  <!-- 列名を勘で挿入 -->
+				<%end%>
+			  <%end%>
+			<%end%>
+		show.html.erb
+			  <%if @contents.present?%>
+				<%el = @contents%>
+				<tr><td>
+					<%=el.name%>
+				</td></tr>
+			  <%end%>
+
+
+
+		<input value="  確認画面へ  " onclick="javascript:goPageWithCD('detail', 788)" type="button">
+		↓
+ 		<%= submit_tag "  確認画面へ  ", :kind => "confirm", :confirm => "OK?" %>
+ 
+
+<%= submit_tag "  確認画面へ  ", :kind => "confirm", :confirm => "OK?" %>
+<%el = @contents if @contents.present?%>  
+<% hs_incentive_type = {"1"=>"ワンショットモデル","2"=>"継続課金モデル"}%>
+
+<% 
+  ary_tmp = el.compatible_carrier.to_s.gsub(/[\[\]\\\",]/,"").split
+  ary_tmp.each do |x| %>
+  <input name="rCarrier[]" value="<%=x%>" checked="checked" type="checkbox">
+  <%=hs_carrier[x] %>
+<%end%>
+<% ary_p = Prefecture.all
+  ary_tmp = el.compatible_carrier.to_s.gsub(/[\[\]\\\",]/,"").split
+  ary_tmp.each do |x| %>
+  <input name="rCarrier[]" value="<%=x%>" checked="checked" type="checkbox">
+  <%=ary_p[x.to_i].name + " /" if ary_p[x.to_i].present? %>
+<%end%>
+
+<td class="text-odd"><input name="sContents_Image1" type="file" value="<%= el.pic %>" >
+  <%= "設定済みファイル名:" + el.pic_banner if el.pic_banner.present? %>
+
+
+              <input value="  コンテンツ情報 一覧に戻る  " onclick="location.href='/admin/ex_contents/list'" type="button">
+<%#<%debugger+|%>
+<input value="  このコンテンツを編集する  " onclick="location.href='/admin/ex_contents/edit/<%=params[:id]%>'" type="button">
+
+              <!--<input type="button" value="法人個別インセンティブ管理へ" onclick="javascript:goPageWithCD('contents_incentive_l.php', 10)" />-->
+
+              <input value="  このコンテンツを削除する  " onclick="
+                if(confirm('情報を削除します')==true){
+                  if(confirm('処理は取消せません。本当によろしいですか？')==true){
+					location.href='/admin/ex_contents/destroy/<%=params[:id]%>'
+                  }
+                }
+              " type="button">
+
+
+
+
+
+
+		
+#vi list -> hash コマンド
+	:'<,'>s/\n/", \r"" => "/gc
+#vi option tag -> hash コマンド
+	:%s/>/=>"/gc | %s/,$/",/gc 
+#view 
+	<%= select "post", "code", hs_post_code.invert, :prompt => "選択してください" %>
+
+Excel2migration
+  int(11)	t.integer
+  varchar(255)	t.string
+
+migrationfile2xls
+	:%s/ *\(t\.\|:\|limit *=> *\)/\t/gc 
+
+mysqldesc2seed.csv:
+	:'<,'>s/  *.*\n/,/gc
+manual-merge
+	:<,'>s/^/db\/seeds\//gc |'<,'>s/^/db\/migrates\//gc  
+	:'<,'>s/^\(.*\)/cp -p \1 \/opt\/logilogi\/me\/realaf_admin\/\1/gc
+
+
+
+
+submit-technix
+	<%#= submit_tag l(:button_save), :kind => "save", :confirm => l(:button_curd_confirm) %>
+	<%= submit_tag l(:button_ticket), :kind => "ticket", :confirm => l(:button_ticket_confirm) %>
+	<%= javascript_tag do %>
+	  // Submitボタン切り替え
+	  $(document).ready(function() {
+		$(":submit").bind("click", function() {
+		  $("#commit_kind").val($(this).attr("kind"));
+		});
+	  });
+	<% end %>
+
+ファイルupdown
+	ベースは DB に保存で、キャッシュを使って高速化する
+G	複数アプリサーバにした場合のキャッシュ削除はキャッシュ削除用の API を用意して wget などする。
+	http://d.hatena.ne.jp/takihiro/20090225/1235571810
+		ファイル保存の利点
+		ファイルに保存の場合、速度重視で作りやすい（public 以下や Web サーバから見えるところに置くなど）
+		ファイル保存のマイナス点
+		複数アプリサーバにしづらい
+		バックアップなどの際に、ファイルも対象にしなければならない
+		DB 保存の利点
+		複数アプリサーバ、バックアップが楽
+		DB 保存のマイナス点
+		画像など頻繁にアクセスがあり、かつサイズも大きいデータの場合は遅い
+
+SEED
+	insert into reports values (1,1,'㈱CAﾓﾊﾞｲﾙ','ｶﾃｺﾞﾘｰ','20130610',1,1,1,1,100,NULL,10000,NULL,2,1,1,'remarks',now(),now(),NULL);
+	mysql> update contents set to_stop_newuser = '["1", "2"]'  where id > 0;
+	
+#repos merge
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mkdir /opt/logilogi/me/realaf_admin/app/assets/stylesheets/smaaash
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mkdir /opt/logilogi/me/realaf_admin/app/assets/javascripts/smaaash
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mkdir /opt/logilogi/me/realaf_admin/app/assets/images/smaaash
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mv *.css
+	common.css   details.css
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mv *.css /opt/logilogi/me/realaf_admin/app/assets/stylesheets/smaaash/
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mv *.js /opt/logilogi/me/realaf_admin/app/assets/javascripts/smaaash/
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mv *.jpg /opt/logilogi/me/realaf_admin/app/assets/images/smaaash/
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/2# mv *.png /opt/logilogi/me/realaf_admin/app/assets/images/smaaash/
+	root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents/1# mv *.gif /opt/logilogi/me/realaf_admin/app/assets/images/smaaash/
+
+
+	tar zcvf r01.tar.gz  r01/
+	cd r01
+	bundle install
+	cp -p /opt/logilogi/me/realaf_admin/config/database.yml config
+	diff -Nq  /opt/logilogi/me/realaf_admin/app/models/ /opt/logilogi/me/r01/app/models/
+
+
+	cd /opt/logilogi/me/r01
+	find . -name *.*rb* -mtime -2
+
+git diff -w -b -B --name-only 9e9ab93bb8d08b25b6629daaece4ed11910821b5 HEAD@{0} |xargs ls
+#目で除外ファイル群grouping
+#目で変化詳細確認ファイル群grouping
+git diff -w -b -B -Bbqrで片側しかないファイルを双方向ポピー
+ diff -wrtBbq /opt/logilogi/me/r02/db/ /opt/logilogi/me/realaf_admin/db/
+ diff -wrtBbq /opt/logilogi/me/r02/config /opt/logilogi/me/realaf_admin/config
+  #rsyncにしたい。上の行は。
+  vim -d A ../r02/A
+
+  diff --help|grep -niE "(時|付|刻|名|表示)"
+
+
+
+/opt/logilogi/me/mergetmp.sh 
+
+
+mysql> insert into stores values(1,NULL,NULL,'4701ＮＥＷ那覇店',735,47,'','','','','','','',1,1,NULL,'2010-11-30T14:59:00+09:00','2010-11-30T14:59:00+09:00',994701,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL);
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42333036-1', '192.168.85.130');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+#定番Gem 
+		 seeds.rb
+		gem  "migration_comments"
+	# a gem to load Constants from config/constants.yml
+		gem 'settingslogic'
+

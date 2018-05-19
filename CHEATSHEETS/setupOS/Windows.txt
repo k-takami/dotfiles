@@ -1,0 +1,71 @@
+Windows 10
+	Device Mgr-->Prop-->BlueTooth 電源管理OFF
+	disc image 書き込みツール　C:\Windows\System32\isoburn.exe
+	C:\Windows\System32\isoburn.exe
+Windows7 
+	hosts: C:\WINDOWS\system32\drivers\etc # BE ADMIN
+	
+//putty error
+	別サーバーからdsftpログイン→同一エラーならば
+	Fatal: unable to initialise SFTP: could not connect --> 　パスワード期限切れの数時間おこる。　サーバー経由SFTPがおすすめ。
+#MaxVista #MaxViwer
+	remoteでViewer起動､リモートのPCのマウスを直にさわって窓を横2000にする｡
+	remote viewerがわでブラウザー描画する場合は､ブラウザー枠がホスト側にはみでていないと､イベント細くされず描画更新されない｡
+short-cutkey
+	Ctrl+Esc-Esc-Tab: task bar gropsにフォーカス移動､あとは矢印キーで選択
+
+#OCRこつ
+	そもそも灰色網掛け背景に要点がかいてある本はえらぶな。
+	OCRがもっとも認識不得意とする。
+	白黒二色印刷、DTPレイアウトなしのワープロうちの本が一番よい。
+	monocrome 600DPI, cuting page border & ページ中央の黒ずみ(黒棒一個は段組認識にOK)
+	マニュアルでページ選択しつつ、傾き補正、ノイズ小除去、レイアウト認識、をやるのが結局早くしあがる。
+		1領域を文字以外に自動判別する
+		2領域認識連続失敗でハング
+		という問題を回避するためでもある
+	認識結果はメモリ上でtxtにコピー。ファイル直は失敗する。
+	txteditorでのごみ除去パターン
+	    \n\n*  \n
+     +レ\n  \n
+    ･･*  ""
+    ^ +  ""
+    ･･+  ""
+    <.?.?十  ""
+     *＼＼* *  ""
+    " +"  " "
+    ([\w\s\t])9(\w?)  \1g\2
+    ([\w\s\t])1(\w?)  \1l\2
+    「  r
+    [國圓圖]  ■
+    VV  W
+    vv  w
+    ^_g^_  \n
+
+
+Excelで#Himem用に11  in  out    0 形式に整形
+#Mshaver改筆
+	an MS-Outlook
+	e-mail[s]  e-mail
+	accuracy  reliable acuracy
+	精度  正確性(確かさ)
+		MailShaver is a MS-Outlook add-in software that recognizes OVERLAPPING OF E-MAIL CONTENTS, then automatically "squeezes(=condense)"/disposes your e-mail containing obsolete contents/context. this is difference from other tools that only sweeps duplicated copies of e-mail....
+		MailShaver also has following automatic functionality:
+		auto-cleaning of e-mail subject / auto-categorizing / auto-outdenting / timer-based cleaning / dumping or retrieving attachments
+		/ Listing e-mail addresses  / Show&reach a full-path of MS-Outlook Namespace / Peeking into e-mail without opening mail /disabling "sent items" box
+		+ plus some more features...
+		
+		MailShaver also has following automatic functionality:
+		MailShaver can automatically "squeeze(=condense)"and disposes obsolete e-mail,  cleans e-mail subjects,  categorizes/outdents mail, dumps/retrieves attachments
+		,  generates mail addresses  in CSV, Shows full-path to a mail, peeking into e-mails,, disabling "sent items" box
+		+ plus some more features...
+#triplet-gate
+	(WiFiよりダイアルが優先するのを止める)：
+		#コントロールパネルのダイアルアップで既定接続のチェックをはずす。IE接続プロパティーでダイヤルしない設定にする。
+	#OS-Windows-zero-configi(Wifi-ctrl-panel) & Wired-autoconfigi(IEEE802.1auth)が起動していて利用可能なネットワークがWindowsで検出、コントロールパネルのアダ
+プタプロパティーにタブ表示されることが基本。これ以外は不正常。
+	範囲内で接続するにチェック、FLETSならばIEEE802.1認証にチェック
+	*BWsvcなど3rdPratyのサービスは制御をよこどりするので止める。
+	*ツールでの接続障害時には、まずOSレベルで疎通確立する。
+		WindowsタスクトレイのアイコンはSSID&WEP-keyでの疎通レベルまでしか表示しない。認証は別
+画面セッション自動復帰機能 http://superuser.com/questions/94943/restoring-open-software-after-a-restart-event-in-windows
+

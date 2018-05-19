@@ -1,0 +1,135 @@
+#google-hangout on RHEL
+	wget http://chrome.richardlloyd.org.uk/install_chrome.sh
+	chmod +x install_chrome.sh
+	sh install_chrome.sh
+	google-chrome  --user-data-dir &
+date -s "03/13 19:13 2013"
+■エラーメッセージDevice eth0 does not seem to be present, delaying initialization
+	１．コマンド「/sbin/ifconfig -a」を実行してeth0が存在しない事を確認する 
+	２．「/etc/udev/rules.d/70-persistent-net.rules」ファイルを編集し、NAME="eth0"と記述されてる行を削除し、 
+	　　NAME="eth1"と記述されている箇所をNAME="eth0"に書き換えサーバーを再起動する 
+		★vmware環境では デフォルトゲートウェイ=VMnet8のIPを指定 
+		★windowsのipconfig結果ではなく、「Vmware仮想ネットワーク設定→NAT設定  ボタン」で表示されるIPアドレスを使う。通常既定値は最下位アドレスが2 
+
+	３．「/sbin/ifconfig -a」を実行してeth0のMACアドレスを取得する 
+	４．３で取得したMACアドレスを「/etc/sysconfig/network-scripts/ifcfg-eth0」ファイルのHWADDRの箇所にエディタで設定する
+	★VMwareをつかうときは、hostOSのVMware Network Adapter VMnet8のIPアドレスとマスクで通信しなければいけない。そのIPアドレスとサブネットクラス。サブネットマスクに注意。 
+	５．コマンド「ifup eth0」 を実行してeth0を起動（またはLinux自体を再起動） 
+	６．ネットワークに接続できることを確認する 
+		★/etc/sysconfig/network でGATEWAY=****が固定的に（staticに）かいてあると、 DHCP環境でのdefault gatewayがまずいIPになる。 
+	http://www.linuxmaster.jp/linux_blog/2011/09/vmwaredevice-eth0-does-not-seem-to-be-present-delaying-initialization.html
+	service network restart
+	apachectl stop
+#nfs-disable
+	chkconfig --list netfs
+	chkconfig netfs off
+chkconfig --list
+chkconfig --level 2345 httpd off
+...が停止していますが PID ファイルが残っていますmaster が停止していますが PID ファイルが残っています
+	--> ls -alt /var/run/*.pid ; rm /var/run/postmaster-9.2.pid
+	alternatives --display mta
+	rm /var/lock/subsys/postfix
+時刻問題: nptd, chrony
+#NTPD  http://www.server-memo.net/centos-settings/centos7/systemctl-enable.html
+#~centOS6
+ sudo chkconfig --list
+# centOS7~
+ systemctl list-unit-files -t service |grepe "(ntp|chron)"
+ # chrony と両立せず
+
+ sudo vi /etc/ntp.conf
+ sudo systemctl enable ntpdate.service
+ sudo systemctl enable ntpd.service
+キー配列
+	/etc/sysconfig/keyboard
+	KEYTABLE="jp106"
+MODEL="jp106"
+LAYOUT="jp"
+KEYBOARDTYPE="pc"
+
+#KEYTABLE="us"
+#MODEL="pc105+inet"
+#LAYOUT="us"
+KEYBOARDTYPE="pc"
+ほかライブラリー、iptablesなど  cf: http://blog.redmine.jp/articles/redmine-2_1-installation_centos/
+▼SELinuxを無効
+[root@dev_local ~]# getenforce
+Enforcing
+[root@dev_local ~]# vi /etc/sysconfig/selinux
+SELINUX=enforcing
+↓
+SELINUX=disabled
+[root@dev_local ~]# reboot
+[root@dev_local ~]# getenforce
+Disabled
+▼iptablesでHTTP(80)を許可
+[root@dev_local sysconfig]# vi /etc/sysconfig/iptables
+# Firewall configuration written by system-config-firewall
+# Manual customization of this file is not recommended.
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT
+
+↓22許可の下に追加
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+
+[root@dev_local ~]# service iptables status
+テーブル: filter
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+2    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+4    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
+5    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination
+1    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+[root@dev_local ~]# service iptables restart
+iptables: ファイアウォールルールを消去中:                  [  OK  ]
+iptables: チェインをポリシー ACCEPT へ設定中filter         [  OK  ]
+iptables: モジュールを取り外し中:                          [  OK  ]
+iptables: ファイアウォールルールを適用中:                  [  OK  ]
+[root@dev_local ~]# service iptables status
+テーブル: filter
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+2    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+4    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
+5    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:80
+6    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination
+1    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+▼yumリポジトリにEPELを追加
+[root@localhost ~]# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-7.noarch.rpm
+▼開発ツール(Cコンパイラ等)
+[root@localhost ~]# yum groupinstall "Development Tools"
+▼RubyとPassengerのビルドに必要なヘッダファイルなど
+[root@localhost ~]# yum install openssl-devel readline-devel zlib-devel curl-devel libyaml-devel
+▼MySQLとヘッダファイル
+[root@localhost ~]# yum install mysql-server mysql-devel
+▼Apacheとヘッダファイル
+[root@localhost ~]# yum install httpd httpd-devel
+▼ImageMagickとヘッダファイル
+[root@localhost ~]# yum install ImageMagick ImageMagick-devel
+

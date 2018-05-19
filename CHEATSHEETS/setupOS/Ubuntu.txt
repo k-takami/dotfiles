@@ -1,0 +1,214 @@
+Ubuntu
+	sudo対策
+		$ sudo -s caja &  sudo -s firefox &  vim ~/session-tmp +VE
+		~/Download/src/2.2.2@rails5001-tmp/blog $ rails s
+	画面セッション自動復帰機能ならばlubuntuじゃなくてUbuntu14.04 LTS+
+	**#Linuxmint 17**
+		Basic
+			cd ~/ ; mv ダウンロード Download; rm テンプレート ドキュメント ピクチャ 公開 ミュージック ビデオ
+			さもなくばviminfo, ve_favorites, などをあとでかきかえる。
+			#FIrefox
+				ppa:<user/ppaの名前>を「Adding this PPA to your system」のセクションでコピーした文字列で置き換え、<ソフトウェアの名前>をインストールしたいソフトの名前で置き換えて入力してく ださい。Firefoxのベータ版の場合は、以下のようになります。
+				sudo add-apt-repository ppa:mozillateam/firefox-next && sudo apt-get update
+				sudo apt-get install firefox
+			■デスクトップ　ワークスペース数削減：確認と設定
+				$ gsettings list-recursively org.mate.Marco.generalorg.mate.Marco.general application-based false
+				$ gsettings set org.mate.Marco.general num-workspaces 1
+			#HOBBY
+				#handbrake config
+					sudo add-apt-repository ppa:stebbins/handbrake-releases
+					sudo apt-get update
+					sudo apt-get install handbrake-gtk
+					sudo apt-get install ubuntu-restricted-extras
+					sudo /usr/share/doc/libdvdread4/install-css.sh
+				#VLC
+					sudo cp -p /usr/bin/vlc /usr/bin/vlc.org
+					sudo sed -i 's/geteuid/getppid/' /usr/bin/vlc
+					sudo vlc
+			#PostgreSQL
+				$ sudo apt-get install postgresql
+				$ sudo apt-get install libpq-dev
+			#MySQL
+				$ sudo apt-get install libmysqld-dev
+				$ gem install mysql2
+				$ su - root
+				$ mysqladmin -palison version
+				$ mysqladmin -palison variables
+				$ mysqladmin version
+				$ mysql -u root -palison
+				$ exit
+			#IME
+				synaptics-> install 
+					iBus , ibus-anthy
+					blueman (bluetooth manager GUI) 
+			#multi-monitor
+				sudo apt-get install arandr
+				arandr
+			#flash on debian
+				sudo apt-get install adobe-flashplugin
+			#kakurega
+				K13176 / jW5N69Eq / AUTH: MS-PEAP (=EAP-MSCHAPv2 TLS+CHAP)
+			#VirtualBox 4.3 on #LinuxMint17
+				sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" >> /etc/apt/sources.list'
+				wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+				sudo apt-get update
+				sudo apt-get install virtualbox-4.3 --fix-missing
+		sudo #apt-get 
+			install ruby-dev #otherwise  'mkmf (LoadError)' of RVM
+			bundle update debugger ; sudo apt-get remove nano #otherwise 'No source for ruby-1.9.3-p551 provided with debugger-ruby_core_source gem'
+		#RVM
+			
+		#oksales  2.2@rails4.2 with upgrading to Ruby 2.2:
+			// vi Gemfile %s/\~>/>=/gc
+			$ rvm gemset create rails4.2
+			// Gemfile.lock github revision削除
+			# 特定gemの利用可能なバージョン一覧（例えばrailsとか）
+				$ gem query -ban  "^<gem名>$"
+			$ gem install rails --no-ri --no-rdoc 
+		
+		other config
+		結局２０１４年時点で32bitPC上で軽快にうごき無線LAN再接続も快調なlubuntu系distroはない。
+mint, beanは100MBほどでうごくが、無線機能がわるい。本家ubuntu/lubuntuはunityGUIのためか、MS-win7よりもメモリーをくう。
+ubuntu系は全部「全消去インストール」しかできない。
+
+
+			#VMwareWS 10 on LinuxMint17
+				sudo su -c "apt-get install open-vm-tools open-vm-tools-dev open-vm-dkms open-vm-toolbox gcc build-essential"
+				cd <vmware-downloaded-path>/VMware*10*.bundle
+				sudo su
+				chmod +x ./VMware*10*.bundle
+				./VMware*10*.bundle
+	#ecoinux config
+		sudo link /usr/bin/perl /usr/local/bin/perl
+		sudo apt-get gcc make vim gnome-terminal adobereader-jpn realplayer sysv-rc-conf ntfs-config  streamtuner streamripper xterm
+		ctrlpanel-->add "gthumb clamAV"
+		start-menu---> adobereader install
+		#uninstall gnome pre-installed apps
+			-rwxr-xr-x 1 root root 151396 2008-05-24 05:07 /usr/bin/xfce4-terminal
+		//customize ,desktop, Iterface, (mousepad,Thuanr)
+		//ctrlpanel-->add system-source
+			deb http://cz.archive.ubuntu.com/ubuntu dapper-backports main universe
+			deb http://packages.mediaubuntu.org/gutsy free non-free
+			ctrlpanel-->権限add?
+		sudo sysv-rc-conf
+			stop : anacron, apmd, atd, bloetooth, cupsys, hotkey-setup, rsync
+			#case non-Gforce, also stop nvidia-kernel
+		日本語環境問題
+			Javaアプリへのキー入力の問題 はどうやらUbuntu特有のものらしい。UIMに変更すればもちっと安定するらしいので変更してみる。
+				sudo apt-get install uim uim-anthy uim-qt
+				sudo update-alternatives --config xinput-ja_JP で、/etc/X11/xinit/xinput.d/uim-systrayを選択。 （ここで一旦ログアウト…/etc/X11/xinit/xinput.d/uim-toolbarだとJavaアプリに日本語入力できなかった）
+				そのままでは日本語入力できなかったので、システムトレイに追加されたUIMの設定ボタンをクリックし、グループ（全体設定）の『使用可能にする入力方式』『標準の入力方式』をAnthyにすれば,日本語入力できるようになる。はず。
+			#anthy再設定方法
+				http://ore.saizensen.net/にしたがってAnthy再設定
+					以下をインストールするパッケージとしてマーク。インストール済みのは再インストール指定。
+					*  Synaptic Package Managerを起動
+					* “SCIM“|"kasumi"でパッケージを検索
+						scim-anthy
+						scim-bridge-agent
+						scim-bridge-agent-gtk
+						scim-bridge-agent-qt
+						scim-bridge-agent-qt4
+						scim-gtk2-immodule
+						scim-qtimm
+						kasumi
+				* 次に、Ubuntuの起動時にSCIMを標準の言語入力インターフェイスとして定義するためにファイル作成 or 編集
+					sudo vi gedit /etc/X11/Xsession.d/74custom-scim_startup
+					74custom-scim_startupa??a?￠a?≪a-?a?¨a??a??a?´a??a?￣a≫\a，?a?Re!?a??e??a??a<80>?a?aa??a?´a??a?￣a?°e|?a?≪a??a??a??a??a??a<80>?
+					export XMODIFIERS="@im=SCIM"
+					export GTK_IM_MODULE="scim"
+					export XIM_PROGRAM="scim -d"
+					export QT_IM_MODULE="scim"
+				* OS再起動。init 6
+					~/irbrc編集
+		#頓挫項目
+			#rdebug-config
+				2rdb:1) show commands
+				No readline suport
+			#vim
+				unix - 日本語charsetをステータスバーに表示
+				:Rtags   Calls ctags -R on the current application root and writes the result to tmp/tags.
+				Exuberant ctags must be installed.  Additional arguments can be passed to ctags with |g:rails_ctags_arguments|.
+					#Exuberant ctags
+						sudo sh ./configure
+						sudo make clean
+						sudo make install
+						sudo make
+						cd ../
+						rm ctags-5.7.tar
+						ctags -R --languages="-JavaScript"
+				fastri qri reference:
+					let g:RCT_ri_cmd =
+				rcodetools.vimを~/.vim/pluginにコピー。インストーラーは不完全
+					#RTC_completion失敗
+					/usr/lib/ruby/gems/1.8/gems/rcodetools-0.8.4.0/lib/rcodetools/completion.rb:166:in `runtime_data_with_class': -:24: can't convert Fixnum into String (TypeError) (Rcodetools::ProcessParticularLine::NewCodeError)
+				refe日本語環境
+					sudo vi /usr/lib/ruby/gems/1.8/gems/refe-0.8.0.3/lib/refe/searcher.rb のshift-jis?ブロックをコメントアウト
+			#done
+				vim
+					helptag generation
+					omni-completion
+				OCR & scanner
+				gems local installation   =>  sudo gem[ersion number] install --local
+				ebian local   installation  =>  sudo dpkg -i [packagename].deb
+				ebian local uninstallation  =>  sudo dpkg -r [package-nickname]
+				rails 1.2.x & 2.0.x
+				WiFi troubleshooting ---FLET-spot & 3rd vendor daemon
+				Yahoo auction automation
+				shareware publishing
+				Windows Mobile on smartphone
+				VMware on UMPC
+				mashup: greasemonkey & Yahoo pipes
+				将来に期待のbad know-how, bad-hack。
+					Foxitreader---- 起動は三秒、Adobe reader 9 の六倍ほど。しかし、linux版マニュアル自体がpdfでかかれていたり、ubuntuには*.bz2版ではなく、*.deb版をダウンロードしてdpkg- -iでローカルインストールする必要がある。さらに、550KBしかないPDFをよみこむとクラッシュ。そもそもubuntu公式レポジトリーに登録されておらず、>ネットワークインストールできないアプリはさわるべからず、という悪例。
+						mplayer ---rm file
+		
+
+
+
+
+
+
+
+結局２０１４年時点で32bitPC上で軽快にうごき無線LAN再接続も快調なlubuntu系distroはない。
+mint, beanは100MBほどでうごくが、無線機能がわるい。本家ubuntu/lubuntuはunityGUIのためか、MS-win7よりもメモリーをくう。
+ubuntu系は全部「全消去インストール」しかできない。
+
+
+#Debian config (LinuxMint17)
+  #IME
+   synaptics-> install 
+      iBus , ibus-anthy
+      blueman (bluetooth manager GUI) 
+      
+  #VMwareWS 10 on LinuxMint17
+    sudo su -c "apt-get install open-vm-tools open-vm-tools-dev open-vm-dkms open-vm-toolbox gcc build-essential"
+    cd <vmware-downloaded-path>/VMware*10*.bundle
+    sudo su
+    chmod +x ./VMware*10*.bundle
+    ./VMware*10*.bundle
+
+  #multi-monitor
+    sudo apt-get install arandr
+    arandr
+
+  #firifox on debian
+  #batch building of programming environment
+     #plugins = quickjava
+
+    #flash on debian
+     sudo apt-get install adobe-flashplugin
+    #kakurega
+     K13176 / jW5N69Eq / AUTH: MS-PEAP (=EAP-MSCHAPv2 TLS+CHAP)
+
+＃Extra======================================
+  #VirtualBox 4.3 on LinuxMint17
+    sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" >> /etc/apt/sources.list'
+    wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get install virtualbox-4.3 --fix-missing
+
+
+
+
+
+

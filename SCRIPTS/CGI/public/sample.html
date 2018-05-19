@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <form action='sample.cgi' method='POST'>
+      params表示CGI<br><br>
+      <input type="text"  name='post' > <br>
+      <input type="submit" name="実行" >
+    </form>
+    <form action='sample_upload.cgi' method='POST' encrypt="multipart/form-data" >
+      upload CGI<br><br>
+      <input type="FILE"  name='file' > <br>
+      <input type="submit" name="upload" >
+    </form>
+  </body>
+</html>

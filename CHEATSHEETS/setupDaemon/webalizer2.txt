@@ -1,0 +1,815 @@
+          ☆ Webalizerでアクセスログを解析する
+          ☆ Webalizerで検索語の文字化けを解消
+       
+        Webalizerでアクセスログを解析する
+        # apt-get update
+        # apt-get install webalizer
+        Apacheのhttpd.confでログやドキュメントのディレクトリを変更していないならそのまま動かせる。
+        　正常に動くとアクセスログを読み込んで、次のように「××レコードありました」とメッセージが表示される。
+				#apacheを軌道：mongrelでは不完全(routes.rbにひっかかる）
+        # webalizer
+					Webalizer V2.01-10 (Linux 2.4.27-0vl7) Japanese(EUC)
+					ログファイル ―  /var/log/httpd/access_log.1 (clf)
+					作成ディレクトリ: /home/httpd/html/webalizer
+					ホスト名 ―  'localhost.localdomain'
+					ヒストリファイルが見つかりません...
+					以前の実行データが見つかりません...
+					現在の実行データを保存しています... [02/06/2005 01:58:56]
+					月別レポート作成 ―  2005年 2月
+					総合レポートの作成
+					ヒストリ情報の保存...
+					67 レコードありました.  処理時間: 0.18 秒
+
+        Webalizerの解析結果を見る
+
+        　Webalizerの解析結果は「/home/httpd/html/webalizer」ディレクトリに出力される。つまり、httpdのドキュメントディレクトリの中にある「
+        webalizer」というディレクトリだ。ブラウザに「http://www.mydomain.com/webalizer/」のようにURLを打ち込むと解析結果を見られる。
+
+        [webalizer_01]
+
+        　項目の概要を見てみよう。ぱっと見ただけでは「ヒット」「ファイル」「ページ」の違いは分からないはず。それぞれの項目はこんな意味を持
+        っている。よく「ヒット数」という言葉を聞くけれども、実際の解析ではあまり意味を持った数字ではない。むしろ「ページ」「訪問」あたりが
+        重要になってくる。
+
+        ┌────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+        │ヒット  │サーバーに対するリクエストのすべて。存在しないファイルへの要求や、ユーザーのキャッシュに入っていて送信はしなかったファ │
+        │        │イルも含まれる。                                                                                                       │
+        ├────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+        │ファイル│ユーザーからの要求にこたえて実際に送信を行ったファイルの数。ヒットが入力の数とすれば、ファイルは出力の数になる。       │
+        ├────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+        │ページ  │ページの数。HTMLファイルのほか、CGIやPHPが生成したページもそれぞれカウントされる。画像などのファイルは含まない。       │
+        ├────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+        │訪問    │サイトを訪問したユーザーの数。同一IPアドレスからリクエストがあった場合、30分以内であればカウントされない。30分を超える │
+        │        │と新規訪問と見なされる。                                                                                               │
+        ├────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+        │サイト  │いくつのIPアドレスからリクエストを受け取ったか。異なるユーザーからのアクセスでも同一IPアドレスからであれば1つとしてカウ│
+        │        │ントされる。                                                                                                           │
+        ├────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+        │キロバイ│サイトが送信したデータの総量。ログの中に記録された各ファイルのサイズを合計したもの。                                   │
+        │ト      │                                                                                                                       │
+        └────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+        Webalizerを設定する
+
+        　標準のままでもWebalizerは動いてくれるが、ディレクトリを変更していたり、集計の方法を変更したいときは設定ファイルを編集する必要が
+        ある。Webalizerの設定ファイルは「/etc/webalizer.conf」だ。設定項目の数はとても多いので、その中から重要そうなものをピックアップしよ
+        う。
+
+        LogFile /var/log/httpd/access_log.1
+        　　ログファイルのディレクトリとファイル名を指定する。
+        　　最新のログを解析するならaccess_logを指定する。
+
+        OutputDir      /home/httpd/html/webalizer
+        　　Webalizerが出力するファイルの場所を指定する。
+        　　ブラウザで閲覧できる場所にすること。
+
+        Incremental     yes
+        　　古い情報を残したまま新しい情報を追加していく。
+        　　「No」にするとログが消えると解析結果も消えてしまう。
+
+        PageType        htm*
+        PageType        cgi
+        #PageType       phtml
+        #PageType       php3
+        #PageType       pl
+        　　上の表にある「ページ」として見なすファイルの拡張子。
+        　　PHPなどを使っているなら該当する拡張子を追加する。
+
+        #DNSCache       dns_cache.db
+        　　ログのIPアドレスからホスト名を逆引きするときに、
+        　　DNSデータをキャッシュすることで高速化する。
+        　　Vine LinuxのWebalizerでは逆引きはできない。
+
+        #TopSites        30
+        #TopKSites       10
+        #TopURLs         30
+        #TopKURLs        10
+        #TopReferrers    30
+        #TopAgents       15
+        #TopCountries    30
+        #TopEntry        10
+        #TopExit         10
+        #TopSearch       20
+        #TopUsers        20
+        　　月別ページでの集計結果を何位まで表示するか。
+        　　「0」にするとその項目は表示されなくなる。
+
+        #AllSites       no
+        #AllURLs        no
+        #AllReferrers   no
+        #AllAgents      no
+        #AllSearchStr   no
+        #AllUsers       no
+        　　各項目についてすべての記録を表示する。
+        　　「yes」にするとそこ項目についての別ページが作られる。
+
+        #HideSite       *mrunix.net
+        #HideSite       localhost
+        #HideReferrer   mrunix.net/
+        　　集計結果に含めたくないサイトを登録する。
+        　　自分のサイトを指定しておくと集計はされない。
+
+        HideURL         *.gif
+        HideURL         *.GIF
+        HideURL         *.jpg
+        HideURL         *.JPG
+        HideURL         *.png
+        HideURL         *.PNG
+        HideURL         *.ra
+        HideURL         *.zip
+        HideURL         *.gz
+        HideURL         *.Z
+        HideURL         *.tgz
+        HideURL         *.bz2
+        HideURL         *.lha
+        HideURL         *.patch
+        HideURL         *.diff
+        HideURL         *.rpm
+        HideURL         *.deb
+        　　集計結果に含めたくないファイルの拡張子を指定する。
+        　　標準では画像ファイルや書庫ファイルが指定されている。
+
+        #GroupReferrer  yahoo.com/      Yahoo!
+        #GroupReferrer  excite.com/     Excite
+        #GroupReferrer  infoseek.com/   InfoSeek
+        #GroupReferrer  webcrawler.com/ WebCrawler
+        　　リンク元のURLを1つのグループとして扱う。
+        　　どの検索エンジンから訪問があったかを見るときに便利。
+
+        SearchEngine    yahoo.com       p=
+        SearchEngine    altavista.com   q=
+        SearchEngine    google.com      q=
+        SearchEngine    eureka.com      q=
+        SearchEngine    lycos.com       query=
+        SearchEngine    hotbot.com      MT=
+        SearchEngine    msn.com         MT=
+        SearchEngine    infoseek.com    qt=
+        SearchEngine    webcrawler      searchText=
+        SearchEngine    excite          search=
+        SearchEngine    netscape.com    search=
+        SearchEngine    mamma.com       query=
+        SearchEngine    alltheweb.com   query=
+        SearchEngine    northernlight.com  qr=
+        SearchEngine    google.co.jp    q=
+        SearchEngine    yahoo.co.jp     p=
+        SearchEngine    yahoo.co.jp     q=
+        SearchEngine    infoseek.co.jp  qt=
+        SearchEngine    excite.co.jp    search=
+        SearchEngine    goo.ne.jp       MT=
+        SearchEngine    msn.co.jp       q=
+        SearchEngine    search.nifty.com Text=
+        SearchEngine    biglobe.ne.jp   q=
+        　　リンク元が検索エンジンなら何のキーワードを指定したか。
+        　　太字の部分も追加するといい。
+
+        　設定項目の中で「DNSCache」というのがあるが、コメントを外して有効にしてもエラーが出る。Webalizerにはアクセスログの中にあるIPアド
+        レスからホスト名を逆引きする機能があるが、Vine Linuxのapt-getでインストールされるWebalizerではこの機能が無効になっている。つまり、
+        IPアドレスのままでしか集計結果が表示されないわけだ。
+        　これを解決するには、httpd.confの中にある「HostnameLookups」の項目を「on」に変更し、ホスト名の形でアクセスログを記録すればいい。
+        アクセスが多いサイトではアクセスがあるたびに逆引きが行われるのでサーバーに負荷がかかるが、よほどの人気サイトでもない限り問題はない
+        と思う。
+        　また、Webalizerのソースを入手し、DNSの逆引きを有効にしてコンパイルするという手もある。configureにenable-dnsというオプションを追
+        加すればいい。こちらのサイトからWebalizerの最新のソースを入手し、次のようにしてコンパイルする。
+
+        $ tar zxfv webalizer-2.01-10-src.tgz
+        $ cd webaizer-2.01-10
+        $ ./configure --with-language=japanese --enable-dns
+        $ make
+        $ su -
+        # make install
+
+        過去のログをすべて解析する
+
+        　/etc/webalizer.confを編集したら、いったん/home/httpd/html/webalizerに出力された集計結果のファイルをすべて削除し、新たに集計をや
+        りなおす。そのとき、古いログも残っていたらそれもすべて解析にかけるといい。
+        　アクセスログは毎週新しいファイルが作成され、古いファイルは名前を変えて過去4週分が保存されている（1つのファイルに記録する期間と、
+        保存する古いファイルの個数は/etc/logrotate.confで変更できる）。lsコマンドでログのディレクトリ（/var/log/httpd）を確認してみよう。
+
+        $ ls -l /var/log/httpd
+        合計 13492
+        -rw-r--r--    1 root     root       509767 Feb 10 01:28 access_log
+        -rw-r--r--    1 root     root      1085700 Feb  6 03:59 access_log.1
+        -rw-r--r--    1 root     root       867948 Jan 30 03:57 access_log.2
+        -rw-r--r--    1 root     root       985214 Jan 23 03:22 access_log.3
+        -rw-r--r--    1 root     root      1400689 Jan 19 23:35 access_log.4
+        -rw-r--r--    1 root     root        29393 Feb 10 01:27 error_log
+        -rw-r--r--    1 root     root       115741 Feb  6 04:02 error_log.1
+        -rw-r--r--    1 root     root       220857 Jan 30 04:02 error_log.2
+        -rw-r--r--    1 root     root       100044 Jan 23 11:31 error_log.3
+        -rw-r--r--    1 root     root        89497 Jan 19 23:35 error_log.4
+        -rw-r--r--    1 root     root            0 Feb  6 04:02 ssl_request_log
+        -rw-r--r--    1 root     root         6526 Jan 30 23:09 ssl_request_log.1
+        -rw-r--r--    1 root     root            0 Jan 23 04:02 ssl_request_log.2
+        -rw-r--r--    1 root     root            0 Jan 19 23:35 ssl_request_log.3
+        -rw-r--r--    1 root     root            0 Jan 19 23:35 ssl_request_log.4
+        $
+
+        　access_logというのが最新のアクセスログで、××.1、××.2、××.3の順に古くなっていく。この過去のログをWebalizerへ古い方から順番
+        に読み込ませるといい。これでログに残っている分はすべて集計することができる。
+
+        # webalizer /var/log/httpd/access_log.4
+        # webalizer /var/log/httpd/access_log.3
+        # webalizer /var/log/httpd/access_log.2
+        # webalizer /var/log/httpd/access_log.1
+        # webalizer /var/log/httpd/access_log
+
+        　次に/etc/webalizer.confの「LogFile」の設定を「access_log」に変えておく。すると次からただ「webalizer」と打ち込むだけで、ログの新
+        しい部分だけが集計結果に追加されていく。手動で設定するのも面倒なのでcronで自動実行するようにしておけばいいだろう。
+        　cronで自動実行させるには「/etc/crontab」に記述を追加する。新しいログの作成は毎週日曜日の午前4時22分に行うように設定されているた
+        め、毎日実行する場合でも午前4時22分の直前にログ解析を行うように指定すべき。午前6時なんて時間を指定すると、毎週日曜日のデータがごっ
+        そり解析の対象から抜け落ちてしまう。下の例では毎日午前4時20分にWebalizerを実行するように指定している。
+
+        SHELL=/bin/bash
+        PATH=/sbin:/bin:/usr/sbin:/usr/bin
+        MAILTO=root
+        HOME=/
+
+        # run-parts
+        01 * * * * root run-parts /etc/cron.hourly
+        02 4 * * * root run-parts /etc/cron.daily
+        22 4 * * 0 root run-parts /etc/cron.weekly
+        42 4 1 * * root run-parts /etc/cron.monthly
+        20 4 * * * root run-parts /usr/bin/webalizer
+
+        複数サイトを運営しているときは
+
+        　一台のサーバーで複数のドメイン（もしくはサブドメイン）を動かしていて、それぞれ別にアクセスログをとっている場合は、それぞれのアク
+        セスログに対してWebalizerを実行すればいい。たとえば、「www.mydomain.com」のほかに「red.mydomain.com」「blue.mydomain.com」という2
+        つのドメインがあったと仮定しよう。
+
+         1. Webalizerの設定ファイルである/etc/webalizer.confをコピーして、/etc/webalizer_red.confと/etc/webalizer_blue.confといったファイ
+            ルを作成する。
+         2. それぞれの設定ファイルをviで開いて、アクセスログと集計結果出力先のディレクトリを指定する。
+         3. 新しく作った設定ファイルをWebalizerに読み込ませる。webalizer -c /etc/webalizer_red.conf、webalizer -c /etc/webalizer_blue.conf
+            のようにする。
+         4. 手動で実行するのは面倒なので、上のコマンドを/etc/crontabに追加する。同時に実行するとトラブルの元なので2～3分ずつずらして指定す
+            るといい。
+WebalizerによるWebアクセスログ解析
+
+ログ量が多いと解析時間がずれログ解析中にlogrotateされるとおかしくなることがあるらしいので、タイミングでの処理をやめ、logrotate後に
+logrotateしたファイルを解析するようにしました。(2003.09.23)
+検索文字列が文字化けするので、対策しました。(2003.12.06)
+ログ解析を Incremental モードで動作させていると、障害時にバックアップからログファイル等を戻したりすると、以後、解析が進まなくなることがあ
+ります。その場合の復旧方法を追記しました。(2004.01.29)
+
+
+■ Webalizerのダウンロードとインストール
+インストールは、任意の場所にソースを展開してコンパイルします。なお、Webalizerを動かすには、GDライブラリとlibpngが必要です。Redhat8の場合、
+パッケージ管理で、「Xの開発ツール」をインストールしておけば問題ありませんので、事前に確認しておきます。ここでは、グラフ表示を日本語表示(パ
+ッチをあてればグラフ内や表中も日本語できるようです、おやじはやっていません。）になるようconfigureオプションで指定します。また、おやじは
+Apacheでログを採るときに既にホスト名でログを採取しているので必要ありませんが（指定するとエラーになる）、IPアドレスでログは採っているが
+Webalizerではホスト名で表示したい場合は、configureでdnsオプションを指定します。
+
+    ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+    │ $ tar zxfv webalizer-2.01-10-src.tgz                                                                    │
+    │ $ cd webaizer-2.01-10                                                                                   │
+    │ $ ./configure --with-language=japanese --enable-dns                                                     │
+    │ $ make                                                                                                  │
+    │ $ su                                                                                                    │
+    │ # make install                                                                                          │
+    └─────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+■ Webalizerの設定
+
+Webalizerの設定は、インストール時に作成される/etc/webalizer.conf.sampleをベースに作成していきます。一般的には、このファイルを/etc/
+webalizer.confとしてコピーし設定していけばいいと思います。おやじの場合は、おやじと娘のサイトでログを分けていますので、それぞれについて/etc
+/webalizer_oyaji.confと/etc/webalizer_akirin.confを作成しました。
+
+
+    ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+    │ # cp /etc/webalizer.conf.sample /etc/webalizer_oyaji.conf                                               │
+    │ # cp /etc/webaiizer.conf.sample /ets/webalizer_akirin.conf                                              │
+    └─────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+以下、各設定項目を設定していきますが、かなりの項目が設定可能であり、ここではおやじが変更した項目を中心に示します。下記は、おやじの設定
+(webalizer_oyaji.conf)を基本とし、娘の設定(webalizer_akirin.conf)は、（　）で併記してあります。
+
+
+  • Apacheのログファイルへのパス指定
+
+    　おやじはApache2.0をソースからインストールしているので、下記のようになる。RedHat標準なら/var/log/httpd/access_log。
+    　logrotate後にrotateしたファイルを解析するように処理を変更。(2003.09.23)
+    　検索文字列が文字化けするので、文字コード変換後のファイルを解析するように変更。赤字に変更。(2003.12.06)
+
+    　　LogFile /usr/local/apache2/logs/access_log_jpn
+    　 (LogFile /usr/local/apache2/logs/akirin_log_jpn)
+
+  • ログの種類を指定
+
+    　今回は、Webのログ解析のみなのでデフォルトのままとする。WebalizerではFTPやSquidのログ解析も可能であり、その場合、「clf」をそれぞれ「
+    ftp」、「squid」とすればよい。
+
+    　　LogType clf
+
+  • 解析結果の出力先ディレクトリの指定（Apacheのドキュメントルート配下にしておくとブラウザでアクセスできる。必要ならディレクトリは別途作成
+    しておく。）
+
+    　　OutputDir /home/oyaji/public_html/webalizer
+    　 (OutputDir /home/akirin/public_html/webalizer)
+
+  • webalizerの履歴を記録するためのファイル名を指定
+
+    　一般的にはデフォルトのままでよい。今回は二つのサイトを解析するため、下記のようにした。
+
+    　　HistoryName /var/lib/webalizer/webalizer_oyaji.hist
+    　 (HistoryName /var/lib/webalizer/webalizer_akirin.hist)
+
+  • ログ解析の方法を指定
+
+    　デフォルトの設定(no)では、常に最新の状態で解析され、logrotateされると古いログの情報が消えていってしまう。これを「yes」に変更すること
+    で、古いログ解析情報はそのままに、新しく変更があったログのみを追加解析するようになる。
+
+    　　Incremental yes
+
+  • 上記項目をyesとしたときのログの追加情報に関するデータを格納するファイル名を指定
+
+    　一般的にはデフォルトのままでよい。今回は二つのサイトを解析するため、下記のようにした。
+
+    　　IncrementalName /var/lib/webalizer/webalizer_oyaji.current
+    　 (IncrementalName /var/lib/webalizer/webalizer_akirin.current)
+
+  • 解析結果レポートのタイトルを指定
+
+    　日本語化との関係がよく分からないが、とりあえずデフォルトのままで日本語化されるのでそのままとした。
+
+    　　ReportTitle Usage Statistics for
+
+  • 解析対象のホスト名を指定
+
+    　タイトルやレポート内のリンクに使用される。
+
+    　　HostName www.aconus.com
+
+  • Webalizerが生成するレポートのHTMLファイルの拡張子を指定
+
+    　一般的には、デフォルトのままで可。おやじは「htm」を基本にしているのでそれに合わせた。
+
+    　　HTMLExtension htm
+
+  • ログ解析時にページ（ドキュメント）として認識する拡張子を指定
+
+    　ドキュメントの構成に応じて設定すればよい。おやじは、いろいろCGIを動かしているので「htm*」のみとし、htm/htmlのみをカウントするように
+    した。
+
+    　　PageType htm*
+    　　#PageType cgi
+    　　#PageType phtml
+    　　#PageType php3
+    　　#PageType pl
+
+  • ログ解析時、IPアドレスで採られたログをホスト名で表示する場合の指定（configure時にdnsオプション指定要）
+
+    　ログ解析時、IPアドレスで採られたログをホスト名で表示する場合、毎回DNSの逆引きをしていると負荷・時間がかかる。そこで、Webalizerでは検
+    索結果をキャッシュしており、そのためのファイルの指定と、逆引き時に動作させるプロセス数を指定する。プロセス数は多ければ多いほど早く処理
+    されるが、負荷がかかるので5程度に留めたほうが良い。おやじは、こういう事態を避け負荷分散を図るためログ時にホスト名を引いている。従って
+    、本項目はコメントアウト。
+
+    　　#DNSCache dns_cache.db
+    　　#DNSChildren 5
+
+  • 各集計のTop xとして表示する数(x)を指定。
+
+    　各集計の上位何位までを表示するか指定する。表示したくない集計については、zeroとする。
+
+    　　TopSites 30
+    　　TopKSites 10
+    　　TopURLs 30
+    　　TopKURLs 10
+    　　TopReferrers zero
+    　　TopAgents 15
+    　　TopCountries 30
+    　　TopEntry 10
+    　　TopExit 10
+    　　TopSearch 20
+    　　TopUsers zero
+
+  • 集計から隠したいサイトを指定（カウントには含まれる。）
+
+    　自サイト内からのアクセスを隠すように設定。とは言うものの、おやじはApacheでのログ段階で家庭内からのアクセスは別のログファイルにしてい
+    るので、この設定は盲腸である。
+
+    　　HideSite *www.aconus.com
+    　　HideSite localhost
+
+  • 集計から隠したいリファラーを指定（カウントには含まれる。）
+
+    　自サイト内での移動を隠すようにwww.aconus.comを設定。
+
+    　　HideReferrer www.aconus.com
+
+  • 集計から隠したいURLを指定（カウントには含まれる。）
+
+    　集計から隠したいURLを指定する。おやじは、デフォルト設定にCGI等を追加した。
+
+    　　HideURL *.gif
+    　　HideURL *.GIF
+    　　HideURL *.jpg
+    　　HideURL *.JPG
+    　　HideURL *.png
+    　　HideURL *.PNG
+    　　HideURL *.ra
+    　　HideURL *.css
+    　　HideURL *.cgi
+    　　HideURL *.pl
+
+  • 集計したくないサイト/リファラー/URLを指定
+
+    　ログ解析時、集計したくないサイト/リファラー/URLを指定。集計したくないサイトやURL等を指定する。例えば、隠しディレクトリ等が考えられる
+    。
+
+    　　#IgnoreSite bad.site.net
+    　　#IgnoreURL /test*
+    　　#IgnoreReferrer file:/*
+    　　#IgnoreAgent RealPlayer
+    　　#IgnoreUser root
+
+
+■ Apacheの設定
+
+Webalizerでリファラーを採りたい場合、Apacheのデフォルト設定ではログにリファラーが採られないため、httpd.confを変更する必要があります。
+おやじのログ周りの設定を以下に示します。(先頭の数字は説明用です。)　リファラーを採るには、8/10行目のようにデフォルトの「common」から「
+combined」に変更します。
+
+
+ 1. SetEnvIf Remote_Addr 192.168.1. homelog nolog
+ 2. SetEnvIf Request_URI "~akirin" akirinlog nolog
+#virus
+ 3. SetEnvIf Request_URI "default.ida" wormlog nolog
+ 4. SetEnvIf Request_URI "root.exe" wormlog nolog
+ 5. SetEnvIf Request_URI "cmd.exe" wormlog nolog
+ 6. SetEnvIf Request_URI "Admin.dll" wormlog nolog
+
+ 7. CustomLog logs/home_log common env=homelog
+ 8. CustomLog logs/akirin_log combined env=akirinlog
+ 9. CustomLog logs/worm_log common env=wormlog
+10. CustomLog logs/access_log combined env=!nolog
+
+  • 1/7行目で、家庭内からのアクセスをhome_logに採取。
+  • 2/8行目で、娘のサイトへのアクセスをakirin_logに採取。
+  • 3行目でCodeRed、4～6行目でNimudaからアタックを識別し、9行目でworm_logに採取。,
+  • 10行目で残りのアクセスをaccess_logに採取。おやじのサイトへのアクセスは、ここに含まれる。
+
+
+■ Webalizerの起動
+
+まずは、手動でWebalizerを動かして、解析結果を見てみましょう。
+logrotateされた古いログ (accsess_log.1/2/3・・・）がある場合は、下記のように日付の古い順に処理します。
+
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+    │ # /usr/local/bin/webalizer -c /etc/webalizer_oyaji.conf /usr/local/apache2/logs/access_log.3                         │
+    │ # /usr/local/bin/webalizer -c /etc/webalizer_oyaji.conf /usr/local/apache2/logs/access_log.2                         │
+    │ # /usr/local/bin/webalizer -c /etc/webalizer_oyaji.conf /usr/local/apache2/logs/access_log.1                         │
+    │ # /usr/local/bin/webalizer -c /etc/webalizer_oyaji.conf /usr/local/apache2/logs/access_log                           │
+    └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+結果をブラウザで確認してみましょう。見せたくないものが見えてしまっている等、結果が思わしくない場合は、webalizer_oyaji.confファイルを変更し
+、HistoryName (webalizer_oyaji.hist)、IncrementalName (webalizer_oyaji.current)で指定したファイルを削除して初めからやり直せば大丈夫です。
+問題がなければ、cronに登録して自動的に集計するようにします。おやじは、下記のような簡単なスクリプトを書き /usr/local/bin/webalizer.shとして
+保存し、0:01に起動するようにしています。[S:
+:S]
+ログ量が多いと解析時間がずれログ解析中にlogrotateされるとおかしくなることがあるらしいので、タイミングでの処理をやめ、logrotate後に
+logrotateしたファイルを解析するようにしました。また、検索文字列が文字化けするので、対策しました。rotateしたファイルを解析するように
+Webalizer.confのLogfileの設定変更を忘れずに。
+
+ 1. Apacheのlogrotate設定ファイルの作成
+
+     設定は、毎日更新(daily)、一か月分のログを残し(rotate 31)、rotate後に新規のログファイルを作成(create)するようにした。
+
+        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
+        │ # vi /usr/local/apache2/logs/logrotate.conf                                                          │
+        │                                                                                                      │
+        │ # logrotate.conf                                                                                     │
+        │ daily                                                                                                │
+        │ rotate 31                                                                                            │
+        │ create                                                                                               │
+        │ /usr/local/apache2/logs/*_log {                                                                      │
+        │     missingok                                                                                        │
+        │     sharedscripts                                                                                    │
+        │     postrotate                                                                                       │
+        │     /bin/kill -HUP `cat /usr/local/apache2/logs/httpd.pid 2>/dev/null` 2> /dev/null || true          │
+        │     endscript                                                                                        │
+        │ }                                                                                                    │
+        │                                                                                                      │
+        │ [Esc],[:],[w],[q]で保存                                                                              │
+        └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+ 2. 日本語コードの変換
+
+    　コード変換用のスクリプトを作成し、/usr/local/bin/jconvとして保存、実行権を付与する。
+
+
+        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
+        │ # vi /usr/local/bin/jconv                                                                            │
+        │                                                                                                      │
+        │ #!/usr/bin/perl                                                                                      │
+        │ use Jcode;                                                                                           │
+        │ while(<>){                                                                                           │
+        │    $_ =~ s/(%|\\x)([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($2))/eg;                                    │
+        │    Jcode::convert(\$_,euc);                                                                          │
+        │    print;                                                                                            │
+        │ }                                                                                                    │
+        │                                                                                                      │
+        │ [Esc],[:],[w],[q]で保存                                                                              │
+        │                                                                                                      │
+        │ # chmod 755 /usr/local/bin/jconv                                                                     │
+        └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+    　なお、このスクリプトでは Jcodeを使用するので、インストールしてなければ、下記でCPANからインストールする。
+
+
+        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
+        │ # perl -MCPAN -e shell                                                                               │
+        │ cpan> install Jcode                                                                                  │
+        └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+ 3. 起動スクリプトの作成
+
+    　logrotate後に、日本語コードを変換しWebalizerで解析するスクリプトを作成する。(赤字は日本語コード変換での変更内容)
+
+
+        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
+        │ # vi /usr/local/bin/webalizer.sh                                                                     │
+        │                                                                                                      │
+        │ #!/bin/sh                                                                                            │
+        │ # webalizer.sh                                                                                       │
+        │ APACHELOG='/usr/local/apache2/logs'                                                                  │
+        │ /usr/sbin/logrotate $APACHELOG/logrotate.conf                                                        │
+        │ /bin/cat $APACHELOG/access_log.1 | perl /usr/local/bin/jconv > $APACHELOG/access_log_jpn             │
+        │ /bin/cat $APACHELOG/akirin_log.1 | perl /usr/local/bin/jconv > $APACHELOG/akirin_log_jpn             │
+        │ /usr/local/bin/webalizer -c /etc/webalizer_oyaji.conf                                                │
+        │ /usr/local/bin/webalizer -c /etc/webalizer_akirin.conf                                               │
+        │                                                                                                      │
+        │ [Esc],[:],[w],[q]で保存                                                                              │
+        └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+ 4. 既存のlogrotate.dからApacheのrotateデータを削除し、代わりにcronで0:01にwebalizer.shを起動する。
+
+
+        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
+        │ # rm -f /etc/logrotate.d/httpd2                                                                      │
+        │ # vi /etc/crontab                                                                                    │
+        │ 1 0 * * * root /usr/local/bin/webalizer.sh                                                           │
+        │                                                                                                      │
+        │ [Esc],[:],[w],[q]で保存                                                                              │
+        │                                                                                                      │
+        │ # /etc/rc.d/init.d/crond restart                                                                     │
+        └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+
+■ログ解析停止時の対処方法
+
+ログ解析を Incremental モードで動作させていると、障害時にバックアップからログファイル等を戻したりすると、以後、解析が進まなくなることがあ
+ります。その場合の復旧方法を以下に示します。完全に復旧するためには、以下の条件を満たしている必要があります。
+
+  • 前月までのWebalizerが生成したHTMLファイルがそのまま残っている。
+  • 当月の、Apacheのログファイルが残っている。
+  • webalizer.conf (おやじの場合は、webalizer_oyaji.confとwebalizer_akirin.conf) の HistoryName で指定したwebalizer.hist (おやじの場合は、
+    webalizer_oyaji.histとwebalizer_akirin.hist) が残っている。 
+
+上記の条件を満たしていれば、以下の手順で完全に復旧できます。以下は、おやじの環境を前提に示しているので、実際には各人の環境に読み替えて作業
+してください。なお、作業はWebalizerが自動実行される前までに完了する必要があるので、十分に余裕をもって作業するか、自動実行を止めて復元後に
+起動するようにしてください。復元作業が、自動実行の時間を絶対に跨がないようにしてください。
+
+
+ 1. まずは、Webalizerの動作環境及び設定、ApacheのログファイルやWebalizerが作成したHTMLファイルやログを復元する。
+
+ 2. webalizer.conf(おやじの場合は、webalizer_oyaji.confとwebalizer_akirin.conf)の IncrementalName で指定したwebalizer.current (おやじの場
+    合は、webalizer_oyaji.currentとwebalizer_akirin.current)ファイルを消去する。
+     
+ 3. 復旧作業を自動化するスクリプトを適当な名前で作成する。おやじは、/usr/local/bin 配下に remake.sh という名前で作成した。
+
+
+
+        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
+        │ # cd /usr/local/bin                                                                                  │
+        │ # vi remake.sh                                                                                       │
+        │                                                                                                      │
+        │ #!/bin/sh                                                                                            │
+        │ # remake.sh                                                                                          │
+        │ #                                                                                                    │
+        │ # Webalizer log remake.                                                                              │
+        │                                                                                                      │
+        │ APACHELOG='/usr/local/apache2/logs'                                                                  │
+        │                                                                                                      │
+        │ i=30                                                                                                 │
+        │ while [ $i -gt 0 ]                                                                                   │
+        │ do                                                                                                   │
+        │      /bin/cat $APACHELOG/access_log.${i} | perl /usr/local/bin/jconv > $APACHELOG/access_log_jpn     │
+        │      /bin/cat $APACHELOG/akirin_log.${i} | perl /usr/local/bin/jconv > $APACHELOG/akirin_log_jpn     │
+        │      /usr/local/bin/webalizer -c /etc/webalizer_oyaji.conf                                           │
+        │      /usr/local/bin/webalizer -c /etc/webalizer_akirin.conf                                          │
+        │      i=`expr $i - 1`                                                                                 │
+        │ done                                                                                                 │
+        │                                                                                                      │
+        │ [Esc],[:],[w],[q]で保存                                                                              │
+        │                                                                                                      │
+        │ # chmod 755 remake.sh                                                                                │
+        └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+    Apacheのログファイルを調査し、当月の一日のログファイルの追番 (access_log.xx の xxの部分) を上記スクリプトの i の初期値(赤字部分)に設定
+    する。
+
+ 4. 後は、上記スクリプトを実行して、ひたすら解析が終わるのを待つだけ。サーバの性能やログの量にも依存するが、おやじの場合は、月末にこの作業
+    をやると30分近くかかるので、じっくり待つしかない。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                                                               Top Pageへ *
+
+
+WebalizerとはWEBサーバーソフトapacheのログを解析し、高度な解析結果をHTMLで表示してくれるサーバー側のソフトです。なお、WebalizerはWEBサーバ
+ーのログを元に解析を行うのため、解析をしたいページにCGI用トリガーなどを組み込んだりする必要はありません。
+サーバーによって変わってきますが、AHREFサーバーでは、一日一回（早朝）に解析を行っています。
+
+Webalizerが見せてくれるもの
+
+         月の統計グラフ                    時間ごとの統計グラフ
+         月の統計グラフ                    時間ごとの統計グラフ
+
+       日ごとの統計グラフ                     国別統計グラフ
+       日ごとの統計グラフ                     国別統計グラフ
+
+サンプル
+月の統計
+日ごとの統計
+時間ごとの統計
+ヒット数ランキング/URL別、転送量別、Entry Pages別、Exit Pages別、サイト別、転送量
+リファラー（どのページからのやってきたか）
+検索文字列（Yahoo等の検索エンジンからどういう検索文字で検索されたか）
+ユーザエージェント（ブラウザ、OS）
+
+よくご覧になるのは「月ごとの統計」「日ごとの統計」「リファラー」「検索文字列」だと思います。
+「リファラー」はどのサイトからリンクされているのかがわかり、また「検索文字列」はyahooなどの検索エンジンで、検索時に打ち込まれた文字がわか
+ります。検索エンジンはyahoo,google,msnを始め約20サイトほどに対応しています。
+
+Hits Files Pages Visits Sitesとは？
+
+単にアクセスといっても、いろんな種類があります。
+例えば、 HTMLファイルへのアクセス、GIF画像へのアクセス、同一訪問者からのアクセス、アクセスしたがファイルがない、パーミッションがない、CGI
+の実行時にエラーになった、などありますが、WEBサーバーはそんなことはお構いなしにすべてログに記録していきます。そういったエラーをも含めたす
+べてのアクセスをHits（ヒット数）と言います。
+そして、そのHitsのうち、エラーがなく正常にユーザーのブラウザへ結果を返せたのがFiles（ファイル数）、またHitsのうち、画像やFlashファイルなど
+を除き、HTMLファイルだけの数をPages（ページ数）といい、一般的にこのPagesをアクセスの基準として使われる事が多いです。
+Vists（訪問者数）とSites（サイト）は、基本的に似ているのですが、Visitsは30分以内の同一IPを除いた訪問者数。Sitesは一年以内に同一IPからのア
+クセスのない訪問者の数となります。いわば、初めて訪れてくれた人の数です。
+
+Hits（ヒット数）    エラーをも含む、WEBサーバーのログに記録されたすべてのアクセス数。
+Files（ファイル数） Hitsのうち、正常アクセスの数
+Pages（ページ数）   Hitsのうち、HTMLページの数
+Vists（訪問者数）   訪問者数（30分以内で同一IPからはカウントしない）
+Sites（サイト）     訪問者数（一年間で同一IPからはカウントしない）
+KBytes              転送したデーター容量
+
+補足：VisitsはPagesを元に計算され、SitesはHitsを元に計算されます。
+
+一般的な見方
+
+ヒット数にだまされてはいけない！
+Pages（ページ数）とVisits（訪問者数）がいちばんわかりやすい！？
+
+一般にアクセス数とはどれをさすのでしょうか？
+よく「100万ヒット数達成」とかいいますが、実際ヒット数とは、「File not found」といったエラーもすべて含まれているためかなり曖昧です。かとい
+ってFilesでは、正常なアクセスとはいえ画像の極端に多いサイトだと、Filesの数も多くなってくるので、これもヒット数同様に曖昧です。ですので、一
+般的にHTMLページだけをカウントしたPages（ページ数）をアクセス数の基準とされるのが多いです。（ページビューといったりもします。）
+またPagesのうち、30分以内の同一IPからのアクセスを除いたものがVisits（訪問者数）となり、訪問者数単位で見たい場合はこのVisitsがよく使われま
+す。
+Sitesも訪問者数という意味ですがあまり基準にはされず、単に新規訪問者数の数として参考程度に使われます。
+
+ツウな見方
+
+これは、とくに裏をとっているわけではないですが、経験的にそうだろうという推測です。
+（これを書いていておもしろそうなので、引き続き調査します。）
+
+PagesとVisitsの関係
+PagesとVisits（訪問者数）の割合で、Pages数が多ければ多いほど、そのサイトはいろんなページにわたって閲覧されていることがわかります。
+
+平均ページ閲覧数 = 総Pages /総Visits
+
+例えば、Aというサイトの平均ページ閲覧数が「7」とすると、訪問者はそのサイトにきて6回ページ移動をしたことになります。この平均ページ閲覧数が
+多ければ多いほど、ユーザーを飽きさせず、興味を惹きつけているサイトとみていいのではないでしょうか。
+
+Sitesの波
+普通サイトを立ち上げ、右肩あがりにアクセスが伸びていきますが、ある時期にSitesが減っていくときがあります。それはつまり、そのサイトの属する
+カテゴリに興味のある人の多くがそのサイトの存在を知って一度は訪れてしまったからだと考えられます。
+しかし、それにもかかわらず、アクセス数が右肩であがりつづけるのは、リピーターがついているからだと思われます。
+（月の統計グラフの右上グラフでわかります。黄色がVisits、オレンジがSitesです。）
+
+
+                          ■　webalizerの見方
+                          webalizerはWebサーバーのログを高度にアクセス解析し、美しいWebページとして生成します。
+                          コントロールパネルにログインし、「利用状況」から「webalizer」を選択してください。
+                          ※ サーバーの種類によっては、webalizerが使用できないことがあります。
+                          ※ Webサーバーが作成するログを直接解析しますので、解析用のタグを各ぺージに組み込むな
+                             どの操作は一切不要です。
+                          ※ データは、毎朝更新されますが、サーバーによって時間がずれることがあります。
+                          ※ webalizerは、英語版でのご提供になります。
+                          *  ログ削除をしますと、webalizerでも削除したデータは分析できません。●　ログの設定
+                          　参考：●　Awstat
+                          ■1.月ごとのアクセスの概要　-　Summary by month
+                          毎月のアクセス状況の概要を示します。
+                                                                                           棒グラフの色と表の
+                                                                                           色わけは同じです。
+                                                                                           たとえば、緑色は、
+                                                                                           棒グラフ、表ともに
+                                                                                           、Hits数を表してい
+                          [webalizer001]                                                   ます。
+                                                                                           Monthの欄をクリック
+                                                                                           すると、指定月のア
+                                                                                           クセスの概要のペー
+                                                                                           ジに切り替わります
+                                                                                           。
+                          webalizerでは、表やグラフは、一貫した色分けがされていることで、わかりやすくなっていま
+                          す。
+                             Hits　緑     　Webサーバーに対する、全リクエスト(アクセス）数です。
+                           (ヒット数）    　*キャッシュが応答した場合や、ファイルなしのエラーなど、実際には
+                                          データ送信しないアクセスも含みます。
+                            Files　青     　実際に送信を行ったファイルの数です。
+                          (ファイル数）   　上記のヒット数が要求数とすれば、このファイル数は、実際にサーバー
+                                          がデータ送信した数です。
+                           Pages　水色    　表示されたページ数で、通称PageViewともいわれるものです。
+                          （ページビュー  　CGIやPHPが生成したページも、カウントされますが、画像などのファイ
+                                ）        ルは含まれません。
+                           Visits　黄色   　サイトを訪問したユーザーIP数です。
+                           （訪問者数）   　同一IPアドレスからのリクエストが30分以内にあった場合などは、カウ
+                                          ントされません。
+                           Sites　橙色    　サイトを訪問したIPアドレス数です。。
+                           （サイト数）   　一年以内にアクセスした訪問者の総数を、期間内にカウントします。
+                            KBytes 赤     　サイトが送信したデータの総量です。
+                            （転送量）    　Webアクセスログに記録された全ての送信ファイルのサイズを合計した
+                                          ものです。
+                          　*VisitsはPagesを元に、SitesはHitsを元に計算されます。
+                          ▲トップに戻る
+                                                                    *
+                          *
+                          
+                          ■2.指定月のアクセスの概要 -　Summery Period of Month
+                          webalizerで、Monthを指定すると、以下の画面になります。
+                           
+                          [webalizer01]                          webalizerによる、指定月のサマリー(概要）です。
+                          指定月アクセスのサブメニュー
+                          webalizerの画面の上部に見えるサブメニューをクリックスすることで、次のような詳細な解析
+                          結果がわかります。
+                          Daily Statistics(日ごとの解析） 　指定月の、毎日のアクセス状況です。
+                          Hourly Statistics(時間帯別の解  　指定月の、各時間帯ごとのアクセスの状況です
+                                       析）               。
+                                URLs（URL別の解析）       　どのＵＲＬがよくアクセスされているか確認で
+                                                          きます。
+                            Entry（エントリー・ページ）   　まず最初にアクセスされたURLが確認できます
+                                                          。
+                            Exit（エキジット・ページ）    　最後にアクセスされたURLが確認できます。
+                              Referrers（リファラー）     　どこからリンクされているか、リストアップさ
+                                                          れます。
+                             Serches（検索キーワード）    　サイトを訪問したIPアドレス数です。
+                               Agents（使用PC環境）       　ブラウザ、使用パソコンなどの情報です。
+                              Countries（国別の統計）     　どの国からアクセスされたかの情報です。
+                                                        Daily Statistics(日ごとの解析）
+                                                        指定月の、毎日のアクセス状況が棒グラフと、表でわかりま
+                                                        す。
+                          [webalizer-daily00]           Hitｓ, Files, Pages, Visits, Sites, KBytesが報告されま
+                          [webalizer-daily01]           す。
+                                                        表では、各日のアクセスの、全体に占めるパーセンテージも
+                                                        示されます。
+                                                        Hourly Statistics(時間帯別の解析）
+                                                        各時間帯ごとのアクセスの状況が表とグラフでわかります。
+                                                        Hitｓ, Files, Pages, Visits, Sites, KBytesが報告されま
+                          [webalizer-hourly00]          す。
+                          [webalizer-hourly01]          表では、各時間帯のアクセスの全体に占めるパーセンテージ
+                                                        も示されれます。
+                                                        URLs（URL別の解析）
+                                                        サイト内のどのＵＲＬがアクセスされているかを上位からラ
+                          [webalizer-url00]             ンク付けして確認できます。
+                                                        Hites数、KByte、URLが、パーセンテージとともに表示され
+                                                        ますので、転送量のチェックにも使えます。
+                                                        Entry（エントリー・ページ）
+                                                        訪問者が最初に訪れたページです。
+                          [webalizer-entry00]           評価が高いページですから、より改善をするのが良いかも知
+                                                        れません。
+                                                        Exit（エキジット・ページ）
+                          [webalizer-exit00]            訪問者が、このサイト内で最後にみたページです。
+                                                        そのページに問題があれば、改善の必要があります。
+                                                        Referrers（リファラー）
+                                                        どこからリンクされているか、ベスト30程度が表示されます
+                              [webalizer-refer00]       。
+                                                        アクセスアップの際などの重要な情報源となります。
+                                                        Serches（検索キーワード）
+                                                        検索エンジンでどのキーワードでこのサイトに来たかのリス
+                              [webalizer-serch00]       トです。
+                                                        日本語化されていないので、日本語のキーワードは確認でき
+                                                        ません。
+                                                        Agents（使用PC環境）
+                                                        訪問者の使用ブラウザ関連の情報が、パソコンの種類、OS、
+                              [webalizer-agent00]       などの情報がベスト15程度ほど報告されます。
+                                                        どの環境で見ている訪問者が何パーセントぐらいいるかなど
+                                                        がわかるので、Web作成の参考になります。
+                                                        Countries（国別の統計）
+                             [webalizer-contry00]       正確な国別情報を得られないことがります。参考の情報です
+                                                        。
+

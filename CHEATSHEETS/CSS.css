@@ -1,0 +1,106 @@
+#語呂合わせ
+  mabopako: margin/border/padding/contents
+  医者ｸラップ: .=> class, # =>ID
+`配色はオレンジとピンク中心、＋えだまめ色、背景は白`を心がける
+
+gradient gradation
+       // background: -moz-linear-gradient(top, #fff, #99f);
+       // filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#9999ff'); /* IE6 & IE7 */
+       // -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#9999ff')"; /* IE8 */
+
+getbase.org
+
+#alt text ---> </div title="..">
+<div title="ALT text here." id="CSS-class-with-background"></div>
+
+#SCROLLBAR
+  body { overflow:hidden; } //<---FireFox
+  #element::-webkit-scrollbar{ display: none; }
+
+
+
+#TRAVERSING
+  Nokogiri::HTML.parse(html_text).css("class_name[attr*^$='value']")
+
+#TOGGLING AND RESISING BY THRESHOLD
+  // bootstrap ver3+~ ではbtn-(lg|md|sm|xs)-blockがつかえるらしいが不安定な印象；
+  @media screen and (max-width: 720px) {
+    table.table.table-hover thead {
+      display:none;
+      /* visibility:hidden; */
+    }
+    #sendBtn {
+      width: 100%; display:block;
+    }
+  }
+  @media screen and (min-width: 720px) {
+    div.narrower_than_720px_witdh {
+      display:none;
+      /* visibility:hidden; */
+    }
+    div.footer br {
+      display:none;
+    }
+  }
+
+
+#即時関数styling
+  <script>
+    $(function() {
+      var aaa = $("div.footer p.copyright");
+      var new_line_fed = aaa.html().replace("All Right", "<br/>All Right"); var no_new_line = aaa.html().replace(/<br *\/?>/, "")
+      if (window.innerWidth < 480) { aaa.html(new_line_fed) } else { aaa.html(no_new_line) };
+    });
+  </script>
+
+#noscrollbal
+  <style>
+    body { overflow:hidden; }
+    #element::-webkit-scrollbar{ display: none; }
+  </style>
+
+
+#何番目系の便利なCSSまとめ"
+  種類  -child  -of-type
+  最初  :first-child  :first-of-type
+  最後  :last-child   :last-of-type
+  n番目   :nth-child(n)   :nth-of-type(n)
+  後ろからn番目   :nth-last-child(n)  :nth-last-of-type(n)
+  １個だけ  :only-child   :only-of-type
+
+  最初
+  :first-child 1個だけ子要素がある（親要素から見て、子要素が1個だけある）
+  :only-of-type 1個だけある子要素がある（親要素から見て、ある子要素が1個だけある）
+  X番目 :nth-child(X)
+  X番目 :nth-of-type(X)
+  :nth-child(Xn) Xの倍数
+  最後からX番目
+  :nth-last-child(X) 最後からX番目
+  :nth-last-of-type(X) ある要素の最後からX番目
+  X番目からYまで
+  :nth-child(n+X) X番目以降（X番目から最後まで）
+  :nth-of-type(n+X) ある要素のX番目以降
+  :nth-child(-n+X) X番目以前（最初からX番目まで）
+  :nth-of-type(-n+X) ある要素のX番目以前
+  最後からX個
+  :nth-last-child(-n+X) 最後からX個
+  :nth-last-of-type(-n+X) ある要素の最後からX個
+  最後からX番目以前
+  :nth-last-child(n+X) 最後からX番目以前
+  :nth-last-of-type(n+X) ある要素の最後からX番目以前
+  "
+
+
+# 擬似ｸﾗｽ :after
+    .elm:before {
+        content: '実は、\A';
+          white-space: pre;
+        }
+    <div class="elm">擬似要素のcontent内で改行できる</div>
+
+# 角丸め
+  border-radius: 8px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+  border-bottom-left-radius: 1px;
+  border-bottom-right-radius: 1px;

@@ -1,0 +1,297 @@
+= form_for @sale, url: @sale.new_record? ? confirm_create_sales_details_path : confirm_update_sales_detail_path, html: {class: 'form-horizontal', role: 'form'} do |f|
+  - if @errors.present?
+    #error_explanation.alert.alert-danger
+      %ul
+        - @errors.each do |msg|
+          %li= msg
+  .row
+    .col-sm-12
+      .box
+        .box-transparent
+          .col-sm-1
+            %label 売上区分
+            = f.select :sales_class, options_for_select([["売上","1"],["返品","2"]])
+          .col-sm-2
+            %label 得意先
+            .input-group
+              %input#customer_code.form-control{type: "text",value: "#{Customer.find(@sale.customer_id).code if @sale.customer_id.present?}"}/
+              %span.input-group-addon
+                %a{"data-toggle" => "modal", href: "#modal1"}
+                  %i.icon-search
+          .col-sm-3
+            %label &nbsp
+            %input#customer_name.form-control{disabled: "disabled", type: "text",value: "#{Customer.find(@sale.customer_id).name if @sale.customer_id.present?}"}/
+  .row
+    .col-sm-12
+      .box
+        .box-transparent
+          .col-sm-1
+            %label 店舗
+            %input#customer_shop_code.form-control{disabled: "disabled", type: "text",value: "#{Customer.find(@sale.customer_id).customer_shop_code if @sale.customer_id.present?}"}/
+            = f.text_field :customer_id, class: 'form-control',type: 'hidden'
+          .col-sm-1
+            %label 伝票番号
+            = f.text_field :number, class: 'form-control', :disabled => "true"
+            / PRODUCTION:
+            / = f.text_field :number,{value: "#{ @sale.number.blank? ? Number.where(':id=>%q(some_id')).current_number+1 : @sale.delivery_date }", class: 'form-control'}
+          .col-sm-2
+            %label 納品日
+            = f.text_field :delivery_date, class: 'form-control' #, :disabled => "true"
+
+            / PRODUCTION:
+            / - default_date = BasicInformation.find[:some_id].operative_date.tomorrow
+            / = f.text_field :delivery_date,{value: "#{default_date.present? && @sale.delivery_date.blank? ? default_date : @sale.delivery_date }", class: 'form-control', :disabled => "true" }
+          .col-sm-1
+            %label 発注№
+            = f.text_field :customer_order_number, class: 'form-control'
+  %br/
+  .row
+    .col-sm-12
+      .box.bordered-box.green-border{style: "margin-bottom:0;"}
+        .box-header.blue-background
+          .title 新しい売上データを登録
+        .box-content.box-no-padding
+          .responsive-table
+            %table.table.table-bordered.table-hover#sales_details{style: "margin-bottom:0;"}
+              %thead
+                %tr
+                  %th{style: "width:160px"} コード
+                  %th{style: "width:300px"} 商品
+                  %th{style: "width:300px"} 詳細
+                  %th{style: "width:80px"} 数量
+                  %th{style: "width:80px"} 集計
+                  %th{style: "width:80px"} 単位
+                  %th{style: "width:160px"} 売単価
+                  %th{style: "width:160px"} 売上金額
+                  %th{style: "width:200px"} 備考
+                  %th{style: "width:80px"} 区分
+                  %th{style: "width:60px"} 削除
+
+              - remarks_collection = options_for_select( Customer.all.select(:name).map{|x|["表示例:" + x.name]}.unshift([""]) )
+              -# - @sale.sales_details.order("product_id DESC").each do |sales_detail|
+
+              - @sales_details.each_with_index do |sales_detail,index|
+              - new_or_existing = sales_detail.new_record? ? 'new' : 'existing'
+              - prefix = "sale[#{new_or_existing}_sales_detail_attributes][]"
+                = fields_for prefix,sales_detail do |ff|
+                  %tr
+                    %td
+                      - product_pointed = true if sales_detail.product_id.present?
+                      - target_product = Product.find(sales_detail.product_id) if product_pointed
+                      = ff.text_field :line_number, class: 'form-control',type: "hidden",value: "#{sales_detail.line_number? ? sales_detail.line_number: index+1}",id: "line_number"
+                      .form-group
+                        = text_field_tag :product_code,"#{target_product.code if product_pointed}",class: 'form-control'
+                        = ff.text_field :product_id, class: 'form-control',id: 'sales_detail_product_id',type: "hidden"
+                      %td
+                        .form-group
+                          = text_field_tag :product_name,"#{Product.find(sales_detail.product_id).name if sales_detail.product_id.present?}", class: 'form-control', :disabled => "true"
+                      %td
+                        .form-group
+                          = ff.text_field :product_detail,{value: "#{target_product.present? && sales_detail.product_detail.blank? ? target_product.short_name : sales_detail.product_detail }", class: 'form-control'}
+                      %td
+                        .form-group
+                          = ff.text_field :quantity, class: 'form-control',id: 'sales_detail_quantity'
+                      %td
+                        .form-group
+                          = text_field_tag :aggregate,"", class: 'form-control'
+                      %td
+                        .form-group
+                          = text_field_tag :unit_id,"#{Unit.find(Product.find(sales_detail.product_id).unit_id).name if sales_detail.product_id.present? && sales_detail.product_id && Product.find(sales_detail.product_id).unit_id.present?}", class: 'form-control',disabled: "true"
+                      %td
+                        .form-group
+                          = ff.text_field :unit_price, class: 'form-control',id: 'sales_detail_unit_price'
+                      %td
+                        .form-group
+                          = text_field_tag :price,"#{sales_detail.price if sales_detail.present?}",class: 'form-control',disabled: "true"
+                          = ff.text_field :price, class: 'form-control',type: "hidden", id: "price_value"
+                      %td
+                        .form-group
+                          = ff.text_field :notes, class: 'form-control'
+                      %td
+                        .form-group
+                          = ff.select :remarks, options_for_select(remarks_collection), class: 'form-control'
+                          /= ff.text_field :remarks, class: 'form-control'
+                      %td
+                        / wrapped block below with div.actions class
+                        .actions.pull-right
+                          %a.btn.btn-link.remove.has-tooltip{"data-placement" => "top", href: "#", title: "この明細行を削除"}
+                            %i.icon-trash.icon-large
+
+  .row
+    .col-sm-12
+      .box
+        .box-transparent
+          %input{name: "authenticity_token", type: "hidden"}/
+          .form-group
+            %label.col-sm-1.control-label{for: "inputText1"} 配送コース
+            .col-sm-1
+              %input#inputText1.form-control{disabled: "disabled", type: "text"}/
+            %label.col-sm-5.control-label{for: "inputText1"} 合計
+            .col-sm-2
+              %input#grand_total.form-control{disabled: "disabled", type: "text", value: ""}/
+            %label.col-sm-1.control-label{for: "inputText1"} 仕切金額
+            .col-sm-2
+              %input#inputText1.form-control{disabled: "disabled", type: "text"}/
+  .form-actions.form-actions-padding-sm
+    .row
+      .col-md-10.col-md-offset-0
+        = f.submit '確認', class: 'btn btn-primary'
+        - if params[:action] =~ /update/
+          = link_to '戻る', edit_sales_detail_path(@sale), class: 'btn'
+        - elsif params[:action] =~ /create/
+          = link_to "戻る", onclick: "window.history.back();"
+        - else
+          = link_to 'back to index|一覧画面へ', sales_path, class: 'btn'
+          / = link_to '戻る', sales_details_path, class: 'btn'
+#modal1.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog", tabindex: "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header{style: "background-color: #00acec;"}
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+        %h4.modal-title{style: "color: #ffffff;"} 得意先検索
+      .modal-body
+        %label.control-label 表示順 &nbsp
+        %label.radio-inline
+        %input{id: "customer_id_asc", type: "radio", value: "id_asc",name: "order"}>/
+        コード順  昇順
+        %label.radio-inline
+        %input{id: "customer_id_desc",type: "radio", value: "id_desc",name: "order"}>/
+        コード順  降順
+        %label.radio-inline
+        %input{id: "customer_id_kana_asc",type: "radio", value: "kana_asc",name: "order"}>/
+        カナ名称順  昇順
+        %label.radio-inline
+        %input{id: "customer_id_kana_desc",type: "radio", value: "kana_desc",name: "order"}>/
+        カナ名称順  降順
+        %hr
+        = render 'customer_search_form'
+      .modal-body#customer
+        %table.table.table-bordered.table-hover{style: "margin-bottom:0;"}
+          %thead
+            %tr
+              %th コード
+              %th 名称
+          %tbody
+            %tr
+              %td
+              %td
+        .modal-footer
+          %button.btn.btn-primary{type: "button"} 選択
+          %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} キャンセル
+:javascript
+  $("#customer_code").change(function () {
+   $.ajax({url: '#{find_customer_ajax_sales_details_path}',
+   data: 'code='+$("input#customer_code.form-control")[0].value,
+   dataType: 'script'})
+  });
+
+  $("input#sales_detail_quantity.form-control").live("change", function() {
+    checksum($(this).parents("tr").index());
+  });
+
+  $("input#sales_detail_unit_price.form-control").live("change", function () {
+    checksum($(this).parents("tr").index());
+  });
+
+  $("input#product_code.form-control").live("change", function() {
+      findproduct($(this).parents("tr").index());
+  });
+
+  function checksum(row_num){
+    <!-- updating wholesale_price-->
+    var cell_grand_total = $("input#price.form-control");
+    var sub_total; var grand_total = 0;
+    sub_total = cell_grand_total[row_num].value
+      = ($("input#sales_detail_unit_price.form-control")[row_num].value - 0)
+      * ($("input#sales_detail_quantity.form-control")[row_num].value - 0);
+    <!-- updating grand total of the form -->
+    cell_grand_total.each(function () {
+      grand_total += parseInt($.trim($(this).val()));
+    });
+
+    if (grand_total > 0) {
+      $("#grand_total").val(grand_total.toString().replace(/(\d)(?=(\d\d\d)+$)/g, '$1,'));
+    }else{
+      $("#grand_total").val(0);
+    }
+  }
+
+  function findproduct(row_num){
+   var product_code=$("input#product_code.form-control")[row_num].value;
+   var row_number=row_num;
+   var customer_code=$("input#customer_code.form-control")[0].value;
+   var date=$("input#sale_delivery_date.form-control")[0].value;
+   var quantity=$("input#sales_detail_quantity.form-control")[row_num].value;
+   $.ajax({url: '#{find_product_ajax_sales_details_path}',
+   data: {code: product_code,row: row_number,customer_code: customer_code,date: date,quantity: quantity },
+   dataType: 'script'})
+  }
+
+  $(function(){
+    $("input[name=order]").change(function(){
+      $.ajax({
+        url: "/sales_details/customer_search?order="+ $('input[name=order]:checked').val(),
+        type: "POST",
+      });
+    });
+  });
+
+  // functions below are arranged rip-off scripts
+  // in the bottom of flatty_ueda20140124/todo.html
+  $(".responsive-table .actions .remove").live("click", function(e) {
+     $(this).tooltip("hide");
+     //newtr = $(this).parents("tr").clone();
+     //newtr_txt = '<tr>'+ newtr.html().replace(/value\s*=[\'\"].+[\'\"]/g, "value=\"\"")+'</tr>';
+     // $(this).parents("tr").fadeIn(500, function() {
+       // return $(".responsive-table tbody").append(newtr_txt);
+       // <!-- return $(".responsive-table tbody").append(newtr);-->
+     // });
+     $(this).parents("tr").fadeOut(500, function() {
+        $(this).remove();
+       var sales_table = document.getElementById ("sales_details");
+       for(var i=0;i<sales_table.rows.length-1;i++)
+       {
+         $("input#line_number.form-control")[i].value=i+1;
+       }
+       
+     });
+
+     e.stopPropagation();
+     e.preventDefault();
+     return false;
+     // <!--   return e.preventDefault();-->
+  });
+
+  $(".responsive-table .new-todo").live('submit', function(e) {
+    var tr, todo_name;
+    todo_name = $(this).find("#todo_name").val();
+    $(this).find("#todo_name").val("");
+    if (todo_name.length !== 0) {
+      tr = $(this).parents(".responsive-table").find("tr.item").first().clone();
+      tr.find("input[type='checkbox']").attr("checked", false);
+      tr.removeClass("important").removeClass("done");
+      tr.find("label.todo span").text(todo_name);
+      $(".responsive-table ul").first().prepend(tr);
+      tr.effect("highlight", {}, 500);
+    }
+    return e.preventDefault();
+  });
+
+  $(".responsive-table .actions .important").live("click", function(e) {
+    $(this).parents("tr").toggleClass("important");
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  });
+
+  $(".responsive-table .check").live("click", function() {
+    var checkbox;
+    checkbox = $(this).find("input[type='checkbox']");
+    if (checkbox.is(":checked")) {
+      return $(this).parents("tr").addClass("done");
+    } else {
+      return $(this).parents("tr").removeClass("done");
+    }
+  });
+  //* END OF RIP-OFF ============================ */
+

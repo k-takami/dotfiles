@@ -1,0 +1,40 @@
+AllCops:
+  Rails: true
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**'
+    - 'db/schema.rb'
+    - 'test/**/*'
+    - 'config/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - '**/*.slim'
+    - '**/*.haml'
+    - '**/*.sql'
+    - spec/spec_helper.rb
+    - spec/integration_helper.rb
+    - script/rails
+  DisplayCopNames: true
+
+
+# class/module/block/method/lineの最大行数 文字数
+Metrics/ClassLength:
+  Max: 200
+Metrics/MethodLength:
+  Max: 20
+  CountComments: false  # count full line comments?
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+Metrics/LineLength:
+  Max: 100
+
+Metrics/AbcSize:
+  Max: 20
+
+# Jenkinsと相性悪いかも 'Do not use :: for method call.'無効化 Dir::entries=>OK, Dir.entries=>NG
+ColonMethodCall:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false

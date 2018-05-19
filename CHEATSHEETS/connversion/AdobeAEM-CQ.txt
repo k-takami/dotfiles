@@ -1,0 +1,2154 @@
+#TODO 
+	<%= render resourceType, properties: value %> @parsys 
+	差分解消
+		vimdiff ./app/views/mycode/components/page/report/diseasepage/content.jsp ./app/views/report/diseasepage/_content.html.erb
+		title の#TODO:.*トリック
+		ハードコーディングで事前定義するか、(define_methodなどで)動的にゲッターを定義するか、苗字みたく動的に補完する（しかしオーバーヘッド含み）、あるいはroutes.rbをユルユルにしておくか、今回は折衷したかったので、report_controllerだけ動的に都度判別しています。
+		棒グラフ
+			https://mycode.jp/bin/mycode/servlets/internal/distribution-graph.png?data=P34NBrE4WHEOfofDeeqC8HyUpG%2Bd6Si%2FFJchxDyAzJxQTA5H3CEujVqNsO5nWy4RxgFX%2Bmw%2BUWFllUknUeToBw%3D%3D
+			なぜか日曜以降よめるようになっていた。
+				http://pc.beginners-luck.net/pcwp/2012/04/12/css-get-background-image.html
+			java.empty? == rails.blank? ではないのか？
+			twocolumulayout, iparsys partial化　
+			tooltipコントローラーでヘッダーフッターナビゲーションなどけす。
+			<body class="mc-mobile mc-factors " style="overflow-x: hidden; zoom: 1;">
+  
+  
+  <div id="MC-BACKGROUND"></div>
+  <div class="mc-base-wrapper">
+    
+
+
+
+
+    
+<div id="MC-BASE-CONTAINER">
+  
+
+<style>
+    body {
+        background: #fff;
+    }
+    .mc-base-wrapper {
+        background-color: #fff;
+        min-width: 0;
+    }
+    .mc-tooltip-container {
+        background: White;
+        margin: 0 30px;
+    }
+    .mc-tooltip-box {
+        padding: 30px 0;
+    }
+</style>
+<div class="mc-tooltip-container">
+    <div class="mc-tooltip-box">
+        <div class="par parsys"><div class="simpleparagraph section">
+
+
+
+<h2 class="mc-ta-l" style="">
+    
+    遺伝要因と環境要因
+    
+    
+</h2>
+</div>
+<div class="simpleparagraph section">
+
+
+
+<p class="mc-ta-l" style="">
+    
+    疾患のなりやすさには、“遺伝要因”と“環境要因”が関わっています。疾患の発症リスクにおける遺伝要因の割合と環境要因の割合は疾患ごとに異なります。生活習慣などを改善する事により、発症のリスクを減少させる事が可能だと考えられています。<br><br></p><div class="mc-ta-c"><img src="https://mycode.cdn-dena.com/content/dam/img/tooltip/factor.gif?v=3daabed7504f0de3c6d36f0f5cb3ebb9" alt=""></div>
+    
+    
+<p></p>
+</div>
+
+</div>
+
+    </div>
+</div>
+</div>
+    
+
+
+
+
+
+
+
+<!--
+More detailed timing info is available by uncommenting some code in the timing.jsp component
+Timing chart URL:
+http://chart.apis.google.com/chart?chtt=factors.html+%2853ms%29&cht=bhs&chxt=x&chco=c6d9fd,4d89f9&chbh=a&chds=0,53,0,53&chxr=0,0,53&chd=t:48,49,49,49,49,49,50,50,50,51,51,51,51,51,51,51,51,52,52,53|1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,2,2,0,1,0&chly=init.jsp|init.jsp|init-controller.jsp|variable.jsp|viewport.jsp|head.jsp|init.jsp|servicelibs.jsp|headlibs.jsp|title.jsp|canonical.jsp|pagination.jsp|ga_tag.jsp|bodyclass.jsp|blink.jsp|content.jsp|container.jsp|simpleparagraph.jsp|parsys.jsp|simpleparagraph.jsp&chs=600x500
+-->
+
+
+  </div>
+
+
+
+<a href="#" class="mc-top-button-img" style="display: none;">
+  <img src="https://mycode.jp/etc/designs/mycode/clientlib/images/common/icon-jump-to-top.png" alt="遺伝要因と環境要因 PageTopへ">
+</a><div id="sb-container"><div id="sb-overlay"></div><div id="sb-wrapper"><div id="sb-title"><div id="sb-title-inner"></div></div><div id="sb-wrapper-inner"><div id="sb-body"><div id="sb-body-inner"></div><div id="sb-loading"><div id="sb-loading-inner"><span>読込中</span></div></div></div></div><div id="sb-info"><div id="sb-info-inner"><div id="sb-counter"></div><div id="sb-nav"><a id="sb-nav-play" title="再生" onclick="Shadowbox.play()"></a><a id="sb-nav-pause" title="一時停止" onclick="Shadowbox.pause()"></a></div></div></div><a id="sb-nav-previous" title="前" onclick="Shadowbox.previous()"></a><a id="sb-nav-next" title="次" onclick="Shadowbox.next()"></a><a id="sb-nav-close" title="閉じる" onclick="Shadowbox.close()"></a></div></div></body>
+			あ
+			は
+			
+		  
+	コード清掃
+	アンダースコアがついた理由：いまは voices_controller.rbのアクションとしてそのページにとばして
+いるため、Rails内部規約で数字始まりのaction(=ruby method) はサーバーエラーになるからです。
+アンダースコアがはずせるか否か：　01や02…をidとしてrouting許可すれば対応できます。今はYAMLの中まで_01,_02…と一括置換したので、置換を戻す処理もともないます。
+たまにみかけるこの 2 がついているやつ：なにもちがいません. ruby標準添付ライブラリーで自動変換の結果、そうなってしまっただけです。パーサー的にはmalformedではないという認識です。
+しかし、
+「|2-」 の出現箇所が以下にありますので、必要に応じて修正プッシュします。；
+/platinum-dev-env/cms/app/assets/content/mycode/benefits/basis/content.yml　１箇所
+/platinum-dev-env/cms/app/assets/content/mycode/my/report/hypertension/detail/content.yml　2箇所 (edi
+	KPT
+		parsysに全部のresourceTypeをgrep結果からドカンと定義する
+	週末
+	some_body	[9:23 PM]  
+認識あっています。5つのXMLで「構成されて」います。
+
+[9:25]  
+例にならって、
+＄find non-small-cell-lung-cancer
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/advice
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/advice/content.yml
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/content.yml
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/detail
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/detail/content.yml
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/genes
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/genes/content.yml
+KSF-Mac006:cms some_body$ greper "resourceType" ./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/content.yml
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/content.yml:11:  sling:resourceType: mycode/components/page/report/diseasepage
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/content.yml:15:    sling:resourceType: foundation/components/iparsys
+./app/assets/content/mycode/my/report/non-small-cell-lung-cancer/content.yml:22:      sling:resourceType: mycode/components/content/title
+やはり紐付け情報はresourceTypeとしてはない。サブフォルダー名をgrabして、そのサブフォルダーのXML/YAML全部ロードするしくみでしょうか？ (edited)
+
+fujiura	[9:27 PM]  
+YAML.loadってあればロードする的な使い方も可能なんでしたっけ
+
+some_body	[9:27 PM]  
+即答できませんが。。。考え中。。。
+
+fujiura	[9:28 PM]  
+やりたいこととしては
+
+[9:28]  
+non-small-cell-lung-cancerなら5つのYAMLをロードしますし
+
+[9:28]  
+gliomaならadviceがないので4つかな
+
+[9:28]  
+それをいちいち病気種別ごとに決め打ちにはしたくないなあ、というところです。
+
+some_body	[9:33 PM]  
+http://izumin.hateblo.jp/entry/2015/01/14/235238
+ Augmented Usamimi
+【Rails】rails_configのymlファイル複数読み込み - Augmented Usamimi
+超便利gemことRailsConfig． ただ，記述が増えてきたりすると分割したくなる． config/initializers内に設定ファイル追加してそこで読み込むだけ． Settings.add_source!("/path/to/source.yml") Settings.reload! DBのマスタデータとして利用するのもありかな？ Dir.glob(Rails.root.join('db/master/**/*.yml')).each do |master| Settings.add_source!(master) end Settings.reload! railsconfig/r… 
+Jan 14th, 2015 at 11:52 PM
+ 
+ 
+
+[9:33]  
+https://github.com/zilkey/active_hash
+物色中。。。 (edited)
+
+[9:35]  
+http://kotatu.org/blog/2014/10/09/active-hash-gem/
+物色中。。。
+ kotatu.org
+【Rails】静的データのモデル化にactive_hash gemが便利・・！ - kotatu.org
+Railsアプリを作っていて、画面で更新する必要のないデータを扱う時って意外と多い気がします。そんな時は、fixtureからActiveRecordオブジェクトとして読み込んで扱うのが一般的なやり方と思います。ただ、この時にmigrati 
+(edited)
+
+[9:39]  
+ファイルシステム上のパスが決まった時点で配下のyaml一式全部ロードして、それを利用しやすい状態にする初期処理つくる、みたいなことしか即答できないですね。。。
+自由研究しているひまがないけど、研究課題。 (edited)
+
+fujiura	[9:40 PM]  
+少なくとも病気詳細の下のファイルはyamlの数が不定だと思ったので
+
+[9:40]  
+でも、予めマップを作っておくなりで対応すればよいかと思います
+
+[9:40]  
+rescueはYAML.loadでは補足できるんだか出来ないんだかはっきりせず・・・
+
+some_body	[9:42 PM]  
+例外出さないメドッドが仮にあれば、rescueできないです。異常終了がないrubyメソッドはパッと思いつかない。
+
+[9:44]  
+このgemも一別の価値あり。xpath-likeなことができそう。本題とは外れますが；
+http://qiita.com/gipcompany/items/d5689bc7cf68c6e0edab
+ Qiita
+RubyでYAMLファイルをloadするもう1つの便利な方法 - Qiita
+先日の[投稿](http://gipcompany.github.io/ruby/2015/12/13/hashie%E3%81%8B%E3%82%89%E5%AD%A6%E3%81%B6%E3%83%A1%E3%82%BF%E3%8... 
+ 
+ 
+
+[9:48]  
+yaml_collection = []  # <---idea 1
+yaml_collection = {}  # <---idea2
+
+Dir.glob(Rails.root.join('db/master/**/*.yml')).each do |file|
+    additional_yaml=  File.exists?(file) ? YAML.load_file(file) : {} 
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    yaml_collection << additional_yaml
+end
+みたいなことをするしかないなとおもいます。あるいはgem ‘Hashie'なり’active_hash’ でresourceTYpe決定時点で検索可能な状態にMap/Arrayの状態にプリロード
+
+ *Dir.glob してきた時点で存在チェックは済んでいるのでFile.exists? は実は不要。
+
+yaml_collection = {
+”sling:resourceType: /path/to/resource１”:  とってきたYAML1の全部ぶちこみ
+”sling:resourceType: /path/to/resource２”:  とってきたYAML2の全部ぶちこみ
+”sling:resourceType: /path/to/resource３”:  とってきたYAML3の全部ぶちこみ
+”sling:resourceType: /path/to/resource４”:  とってきたYAML4の全部ぶちこみ
+...
+”sling:resourceType: /path/to/resourceN”:  とってきたYAMLnの全部ぶちこみ
+}  
+こんなかんじの処理をAEMはdocument-DB的にそこかしこでやっているでしょうね。memcachedやmongoDBみたいな感じ (edited)
+
+fujiura	[9:48 PM]  
+なるほど、存在チェックですか
+
+some_body	[9:58 PM]  
+我々が打鍵しているあいだに桜庭さんの発見あり。
+
+sakuraba	[10:00 PM]  
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/.content.xml#L968 (edited)
+
+[10:01]  
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/non-small-cell-lung-cancer/.content.xml#L40
+
+[10:02]  
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/non-small-cell-lung-cancer/detail/.content.xml
+
+some_body	[10:05 PM]  
+/platinum-dev-env/cms/app/assets/content/mycode/my/report/meningioma/content.yml を例にとると；
+YAML末尾に
+ genes: 
+ detail: 
+空要素のキーが出現します。これはXMLでは<genes/>や　<detail/>に呼応し、YAML/XMLどれも「サブフォルダーの名前を表している」ことになります。
+親YAML中に子YAML情報がある。これも一つの存在チェック方法 (edited)
+KSF Adobe移植
+スカイプ、ハングアウトを超えうるビデオ会議サービス『Appear.in』
+レンダリング基本
+:00]  
+@here 皆さんご注目ー
+
+[5:00]  
+まず、あるページをレンダリングするためのテンプレートはxmlを参照することで分かります
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/phosphorus/genes/.content.xml#L13
+
+[5:00]  
+この場合は
+mycode/components/page/report/traitsgenepage
+ですね
+
+[5:01]  
+で mycode/components/page/report/traitsgenepage ですが、実際にはこのような継承関係を持っています
+
+[5:01]  
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/basepage
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/memberbasepage
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/membercontentpage
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/basepage
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/traitspage
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/traitsgenepage
+
+[5:01]  
+ここまでは.content.xmlをたどれば分かるかと思います。
+
+[5:01]  
+で、これらのテンプレートのカレントディレクトリに置かれているファイルを見ると
+
+[5:02]  
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/basepage
+・body.jsp
+・basepage.jsp
+・container.jsp
+・bodyclass.jsp
+・init.jsp
+・header.jsp
+・modal.jsp
+・header.jsp
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/memberbasepage
+・init.jsp
+・header.jsp
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/membercontentpage
+・container.jsp
+・content.jsp
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/basepage
+・container.jsp
+・init.jsp
+・post.POST.jsp
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/traitspage
+・bodyclass.jsp
+・content.jsp
+・modal.jsp
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/traitsgenepage
+・bodyclass.jsp
+・content.jsp
+こんな感じです（basepageは一部省略）
+
+[5:02]  
+このうちどのファイルがレンダリングに使用されているか皆さん分かりますか？
+
+some_body	[5:03 PM]  
+cq:includeClientLibをみてしらべるのでしょうか？
+
+[5:04]  
+ファイル構造だけでわかる？
+
+fujiura	[5:04 PM]  
+構造だけで分かります
+
+[5:04]  
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/basepage
+・body.jsp○
+・basepage.jsp○
+・container.jsp×
+・bodyclass.jsp×
+・init.jsp×
+・header.jsp×
+・modal.jsp×
+・header.jsp×
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/memberbasepage
+・init.jsp×
+・header.jsp○
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/membercontentpage
+・container.jsp×
+・content.jsp×
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/basepage
+・container.jsp○
+・init.jsp○
+・post.POST.jsp○
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/traitspage
+・bodyclass.jsp×
+・content.jsp×
+・modal.jsp○
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report/traitsgenepage
+・bodyclass.jsp○
+・content.jsp○
+正解はこのとおりです
+
+[5:04]  
+○が実際のレンダリングに使われるファイル
+
+mi_takahashi	[5:05 PM]  
+認識あってます
+
+fujiura	[5:05 PM]  
+一般的なクラスのオーバーライドと同じ仕組みです。
+より深い階層のカレントファイルを見に行きます。
+
+[5:06]  
+なので <cq:include content.jsp> したときに
+カレントのcontent.jspを読み込む、なければより浅い階層のcontent.jspを探す
+という仕組みが必要になります
+
+[5:08]  
+それをrailsでどう実現しているかというと
+traitsgenepage_controller < traitspage_controller < basepage_controller < membercontentpage_controller < memberbasepage_controller < basepage_controller
+と、コントローラーに継承関係を持たせることで実現しました (edited)
+
+sakuraba	[5:08 PM]  
+参考URL
+http://qiita.com/awakia/items/3265f91768bcfd582bd7
+これの方法2を使ってます。
+ Qiita
+Application Layoutを整理する3つの方法 - Qiita
+サービスを運営していると、* Admin以下のページだけちょっとヘッダーを変えたい* ABテストのために2種類のレイアウトを試してみたい* キャンペーン用にある期間だけ別のロゴを使いたい* ユーザー登録ページだけ簡易レイア... 
+ 
+ 
+
+some_body	[5:10 PM]  
+構造からわかる、というのがわかりました。 (edited)
+
+fujiura	[5:11 PM]  
+ですし、ルーティングの際にも
+https://mycode.jp/my/report/alp.html は traitspage_controller に処理されるべきだし
+https://mycode.jp/my/report/alp/genes.html は traitsgenepage_controller に処理させないといけない
+ということです
+
+[5:12]  
+私もこれに納得しているわけじゃないんですが、他に方法が見つからず・・・
+
+[5:12]  
+です
+
+some_body	[5:13 PM]  
+じゃあ階層「名」毎にコントローラーつくるのが基本になりますね？　名前衝突が気になりますが。 (edited)
+
+fujiura	[5:13 PM]  
+そうですね。
+もっというと
+https://mycode.jp/my/report/alp/genes.html 
+https://mycode.jp/my/report/foo/genes.html
+が同じコントローラーとは限らないわけです (edited)
+
+[5:14]  
+ココを見る限りでは
+diseasepage と diseasecustompage があったりするので
+https://github.dena.jp/Thelxinoe/platinum-cms/tree/release_src_20160926/content/src/main/content/jcr_root/apps/mycode/components/page/report
+
+[5:15]  
+もっとも同じ階層に配置されるページはほとんどが同じテンプレートだとは思うので
+一部の例外を別コントローラーに振り分けるような形で対応できるとは想定しています
+
+[5:17]  
+↓この衝突の回避手段として、深い階層のコントローラーは
+rails g controller report::diseasepage
+など階層を指定するのが良いと思っています。
+03-5718-3328 東京DeLSチームの直通番号
+PW
+藤浦さん桜庭さん池内さん高橋さん青木さん鎌倉社長　千葉さん
+
+ KSF大井町でつかうGitHub https://github.dena.jp/login ID: ksf-bpsome_body Email: bpsome_body@ksf.jp Password: Jbc ーー＞二段階認証なのでAndroidの認証システムアプリ立ち上げ
+
+sakura.ad.jp
+	domain: bpsome_body@ksf-jp.sakura.ne.jp
+	pw: #2zVe9AG    —> JBC
+	お客さま情報
+	アカウント:	ksf-jp
+	初期ドメイン:	ksf-jp.sakura.ne.jp
+	ユーザ名:	bpsome_body
+
+PJ
+	my code: 対応
+	bookmark移管
+	dos =  DeNa life science
+	宇田川さん　
+
+		plutinumCMS2が実際の意向対象
+本番my code test account
+	ID takayuki.asano+kanayama1@dena.com
+	PW denadena9A
+	秘密の質問答え 渋谷ヒカリエ
+
+
+#ClassTree
+	Controllers
+		MembercontentpageController
+			MypageController
+		GuestcontentpageController
+			LoginpageController
+			PasswordresetpageController
+		ContentpageController
+			WhatisdnaController
+			TestingController
+			GenesController
+			BenefitsController
+		ApplicationController
+			BasepageController
+			LoginController
+task :future
+KSF-Mac006:platinum-cms some_body$ filelist |grep future
+./content/src/main/content/jcr_root/content/mycode-dev/topics/flavonoids_in_future_anticancer
+./content/src/main/content/jcr_root/content/mycode-dev/topics/flavonoids_in_future_anticancer/.content.xml
+./content/src/main/content/jcr_root/content/mycode-dev/whatisdna/future
+./content/src/main/content/jcr_root/content/mycode-dev/whatisdna/future/.content.xml
+./content/src/main/content/jcr_root/content/mycode-dev/whatisdna/future/.content.xml.swp
+KSF-Mac006:platinum-cms some_body$ greper "jcr:content" ./* |grep future
+./content/src/main/content/jcr_root/content/mycode-dev/topics/flavonoids_in_future_anticancer/.content.xml:4:    <jcr:content
+./content/src/main/content/jcr_root/content/mycode-dev/topics/flavonoids_in_future_anticancer/.content.xml:156:    </jcr:content>
+./content/src/main/content/jcr_root/content/mycode-dev/whatisdna/future/.content.xml:4:    <jcr:content
+./content/src/main/content/jcr_root/content/mycode-dev/whatisdna/future/.content.xml:62:    </jcr:content>
+Binary file ./content/src/main/content/jcr_root/content/mycode-dev/whatisdna/future/.content.xml.swp matches
+KSF-Mac006:platinum-cms some_body$ cd ~/Downloads/platinum-cms2/
+
+
+
+	rendering order
+		basepage
+		
+[3, 12] in /Users/some_body/Downloads/platinum-dev-env/cms/app/views/basepage/_body.html.erb
+    3:   <div id="MC-MASK"></div>
+    4:   <div id="MC-BACKGROUND"></div>
+    5:   <div class="mc-base-wrapper">
+    6:     <%= render 'header' %>
+    7:     <%= render 'blink' %>
+=>  8:     <%= render 'container' %>
+    9:     <%= render 'footer' %>
+   10:   </div>
+   11:   <%= render 'modal' %>
+   12: </body>
+呼応関係
+直感ではMVC+HelperのM[odel]がなく、
+Railsのapp/layouts に相当するのが
+AEMのjcr_root/apps/#{サイト名}/components/page/basepage
+
+Railsのapp/helpers/#{表示ページ}_helper.rbに相当するものがAEMのjcr_root/apps/#{サイト名}/templates/#{ページ名のフォルダー}
+な気がしています。
+#Models of #AEM
+KSF-Mac006:platinum-cms some_body$ ll ./bundle/src/main/java/com/dena/cdo/platinum/models/
+total 840
+drwxrwxr-x  92 some_body  staff   3128 10 25 19:10 .
+drwxrwxr-x  30 some_body  staff   1020 10 25 19:10 ..
+-rw-rw-r--   1 some_body  staff   1364 10 25 19:10 ActivityFeedback.java
+-rwxrwxr-x   1 some_body  staff   1313 10 25 19:10 Advice.java
+-rwxrwxr-x   1 some_body  staff    385 10 25 19:10 AdviceSurvey.java
+-rwxrwxr-x   1 some_body  staff    523 10 25 19:10 AssessmentField.java
+-rw-rw-r--   1 some_body  staff   1442 10 25 19:10 AssociateCampaign.java
+-rw-rw-r--   1 some_body  staff    116 10 25 19:10 Avatar.java
+-rw-rw-r--   1 some_body  staff    952 10 25 19:10 Bookmark.java
+-rw-rw-r--   1 some_body  staff    788 10 25 19:10 BookmarkInfo.java
+-rw-rw-r--   1 some_body  staff   1352 10 25 19:10 Breadcrumb.java
+-rw-rw-r--   1 some_body  staff    439 10 25 19:10 CampaignGroup.java
+-rwxrwxr-x   1 some_body  staff   1217 10 25 19:10 CartItem.java
+-rw-rw-r--   1 some_body  staff    803 10 25 19:10 Character.java
+-rwxrwxr-x   1 some_body  staff    253 10 25 19:10 ChipType.java
+-rwxrwxr-x   1 some_body  staff   4819 10 25 19:10 Chromosome.java
+-rwxrwxr-x   1 some_body  staff    869 10 25 19:10 ChromosomeRegion.java
+-rw-rw-r--   1 some_body  staff   2778 10 25 19:10 CreditCard.java
+-rwxrwxr-x   1 some_body  staff   1006 10 25 19:10 Customer.java
+-rw-rw-r--   1 some_body  staff    563 10 25 19:10 DefineError.java
+-rwxrwxr-x   1 some_body  staff  12863 10 25 19:10 Disease.java
+-rwxrwxr-x   1 some_body  staff   6093 10 25 19:10 DiseaseFactor.java
+-rwxrwxr-x   1 some_body  staff    382 10 25 19:10 DiseaseFactorFilter.java
+-rwxrwxr-x   1 some_body  staff   1422 10 25 19:10 DiseaseGenotype.java
+-rwxrwxr-x   1 some_body  staff   3031 10 25 19:10 Factor.java
+-rwxrwxr-x   1 some_body  staff   1071 10 25 19:10 FactorFamily.java
+-rwxrwxr-x   1 some_body  staff    621 10 25 19:10 Gender.java
+-rw-rw-r--   1 some_body  staff   2286 10 25 19:10 Genome.java
+-rwxrwxr-x   1 some_body  staff   1363 10 25 19:10 Genotype.java
+-rwxrwxr-x   1 some_body  staff   3816 10 25 19:10 GuestCustomer.java
+-rw-rw-r--   1 some_body  staff   1167 10 25 19:10 Haplogroup.java
+-rwxrwxr-x   1 some_body  staff    512 10 25 19:10 Inbox.java
+-rw-rw-r--   1 some_body  staff   2299 10 25 19:10 Information.java
+-rw-rw-r--   1 some_body  staff   1233 10 25 19:10 InformationJson.java
+-rw-rw-r--   1 some_body  staff    779 10 25 19:10 InformationLevel.java
+-rw-rw-r--   1 some_body  staff   1430 10 25 19:10 Invitation.java
+-rw-rw-r--   1 some_body  staff    767 10 25 19:10 InvitationJson.java
+-rwxrwxr-x   1 some_body  staff   1615 10 25 19:10 LockInfo.java
+-rw-rw-r--   1 some_body  staff   9326 10 25 19:10 Member.java
+-rwxrwxr-x   1 some_body  staff    759 10 25 19:10 MemberCustomer.java
+-rwxrwxr-x   1 some_body  staff    554 10 25 19:10 MycodeCard.java
+-rw-rw-r--   1 some_body  staff   3529 10 25 19:10 MypageBanner.java
+-rwxrwxr-x   1 some_body  staff   8098 10 25 19:10 Observation.java
+-rwxrwxr-x   1 some_body  staff   5673 10 25 19:10 ObservationDictionary.java
+-rwxrwxr-x   1 some_body  staff    603 10 25 19:10 PaymentMethod.java
+-rwxrwxr-x   1 some_body  staff   1134 10 25 19:10 PaymentMethodCode.java
+-rwxrwxr-x   1 some_body  staff    661 10 25 19:10 PaymentOption.java
+-rwxrwxr-x   1 some_body  staff   5901 10 25 19:10 Phenotype.java
+-rwxrwxr-x   1 some_body  staff   9213 10 25 19:10 PhenotypeDescription.java
+-rwxrwxr-x   1 some_body  staff    259 10 25 19:10 PhenotypeDescriptionFilter.java
+-rwxrwxr-x   1 some_body  staff    516 10 25 19:10 PhenotypeFilter.java
+-rwxrwxr-x   1 some_body  staff   2629 10 25 19:10 PhenotypeHistory.java
+-rw-rw-r--   1 some_body  staff   3737 10 25 19:10 PrintRequest.java
+-rwxrwxr-x   1 some_body  staff   1583 10 25 19:10 Product.java
+-rw-rw-r--   1 some_body  staff    768 10 25 19:10 Pubmed.java
+-rw-rw-r--   1 some_body  staff    951 10 25 19:10 ReportCommonProperty.java
+-rw-rw-r--   1 some_body  staff   2722 10 25 19:10 RssFeed.java
+-rwxrwxr-x   1 some_body  staff   2562 10 25 19:10 SCSalesOrder.java
+-rwxrwxr-x   1 some_body  staff    864 10 25 19:10 SCSalesOrderDetail.java
+-rwxrwxr-x   1 some_body  staff   2046 10 25 19:10 SalesItem.java
+-rw-rw-r--   1 some_body  staff   1363 10 25 19:10 SalesItemFilter.java
+-rwxrwxr-x   1 some_body  staff   1406 10 25 19:10 SalesOrderDetail.java
+-rwxrwxr-x   1 some_body  staff   2421 10 25 19:10 SalesRecord.java
+-rwxrwxr-x   1 some_body  staff   3719 10 25 19:10 SalesRecordImpl.java
+-rw-rw-r--   1 some_body  staff   1352 10 25 19:10 ScData.java
+-rwxrwxr-x   1 some_body  staff   4035 10 25 19:10 ShippingAddress.java
+-rw-rw-r--   1 some_body  staff    328 10 25 19:10 SimpleEnqueteQandA.java
+-rw-rw-r--   1 some_body  staff    811 10 25 19:10 SimpleEnqueteUniqueKey.java
+-rwxrwxr-x   1 some_body  staff   3883 10 25 19:10 Snp.java
+-rw-rw-r--   1 some_body  staff   4377 10 25 19:10 SocialMediaSharer.java
+-rw-rw-r--   1 some_body  staff   1175 10 25 19:10 StockCardInfo.java
+-rwxrwxr-x   1 some_body  staff   1944 10 25 19:10 Survey.java
+-rwxrwxr-x   1 some_body  staff   1033 10 25 19:10 SurveyFamily.java
+-rwxrwxr-x   1 some_body  staff  10278 10 25 19:10 SurveyField.java
+-rwxrwxr-x   1 some_body  staff    376 10 25 19:10 SurveyFieldFilter.java
+-rwxrwxr-x   1 some_body  staff    604 10 25 19:10 SurveyGroup.java
+-rw-rw-r--   1 some_body  staff    796 10 25 19:10 TelephoneNumber.java
+-rwxrwxr-x   1 some_body  staff   1997 10 25 19:10 TestingItem.java
+-rwxrwxr-x   1 some_body  staff   2000 10 25 19:10 TestingItemCategory.java
+-rw-rw-r--   1 some_body  staff   1533 10 25 19:10 TestingItemsProduct.java
+-rw-rw-r--   1 some_body  staff    444 10 25 19:10 TestingItemsProductDetail.java
+-rwxrwxr-x   1 some_body  staff   1923 10 25 19:10 TestingPackage.java
+-rwxrwxr-x   1 some_body  staff   1830 10 25 19:10 TestingPackageType.java
+-rwxrwxr-x   1 some_body  staff   1132 10 25 19:10 TestingStatus.java
+-rwxrwxr-x   1 some_body  staff   5609 10 25 19:10 Topic.java
+-rw-rw-r--   1 some_body  staff    442 10 25 19:10 TopicCategory.java
+-rw-rw-r--   1 some_body  staff   1345 10 25 19:10 TopicTheme.java
+-rwxrwxr-x   1 some_body  staff   5823 10 25 19:10 Trait.java
+-rwxrwxr-x   1 some_body  staff   1120 10 25 19:10 TraitGenotype.java
+-rwxrwxr-x   1 some_body  staff   2859 10 25 19:10 TraitVariation.java
+drwxrwxr-x   5 some_body  staff    170 10 25 19:10 builders
+drwxrwxr-x  14 some_body  staff    476 10 25 19:10 jcr
+rendering order
+	/platinum-dev-env/cms/app/views/mycode/components/content/_parsys.html.erb
+	<% if @content.blank? then %>
+<div>
+@contentが読みこまれていません
+</div>
+<% else %>
+<%
+  properties = @content["jcr:content"][path]
+%>
+<div class="parsys <%=path%>">
+<%= render 'mycode/components/content/parsys', properties: properties %>
+</div>
+<% end %>
+		/platinum-dev-env/cms/app/views/mycode/components/content/_parsys.html.erb
+		    properties.each { |key, value|
+        resourceType = value["sling:resourceType"]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if [
+          "mycode/components/content/form/simplesubmit",
+          "mycode/components/content/form/simplecheckbox",
+          "mycode/components/content/form/simplepassword",
+          "mycode/components/content/form/simpletext",
+          "mycode/components/content/form/passwordrevealer",
+          'mycode/components/content/simpleparagraph',
+          'mycode/components/content/simplelink',
+          'mycode/components/content/parsys/colctrl',
+          'mycode/components/content/parsys',
+          'mycode/components/content/forbidden',
+          'mycode/components/content/commonfooter',
+          'mycode/components/content/top/carousel',
+          'mycode/components/content/stepcircle',
+          'mycode/components/content/image',
+          'mycode/components/content/simplehr',
+          'mycode/components/content/kit/confirm',
+          'mycode/components/content/kit/error',
+          'mycode/components/content/kit/complete',
+          'mycode/components/content/kit/planSection',
+          'mycode/components/content/button2',
+          'mycode/components/content/form/start'
+        ].include?(resourceType) then
+%>
+            <%= render resourceType, properties: value %>
+<%
+footer
+
+<!--
+    
+    <div class="mc-footer-link">
+        <div class="mc-inner-wrapper  mc-footer-login ">
+            <div class="mc-grid-control">
+                
+
+
+
+<dl class="mc-link-area mc-area1">
+    
+
+    
+        <dt><a href="/my/report/diseases.html">検査結果</a></dt>
+        <dt><a href="/my/advice.html">アドバイス</a></dt>
+    
+
+    <dt><a href="/my/survey.html">生活習慣チェック</a></dt>
+    <dt><a href="https://www.mycode.jp/fumfum.html">MYCODE fumfum</a></dt>
+    <dt><a href="/my/health-support.html">生活改善プログラム</a></dt>
+    <dt><a href="/topics.html">MYCODEトピックス</a></dt>
+    <dd></dd>
+</dl>
+<dl class="mc-link-area mc-area2">
+    <dt></dt>
+    <dd>
+        <ul>
+            <li><a href="/my/password.html">パスワードと秘密の質問変更</a></li>
+            <li><a href="/my/profile/edit.html">アカウント情報変更</a></li>
+            <li><a href="/my/mail.html">メールアドレス変更</a></li>
+            
+        </ul>
+    </dd>
+</dl>
+<dl class="mc-link-area mc-area3">
+    <dt></dt>
+    <dd>
+        <ul>
+            <li><a href="/terms.html">会員規約</a></li>
+            <li><a href="/terms/informedconsent.html">検査申し込みに関する説明事項</a></li>
+            <li><a href="/privacy.html">個人情報保護方針</a></li>
+            <li><a href="/transactions.html">特定商取引法に基づく表記</a></li>
+        </ul>
+    </dd>
+    <dt></dt>
+    <dd class="mc-ma-t">
+        <ul>
+            <li><a href="/glossary.html">用語集</a></li>
+            <li><a href="/faq.html">FAQ（よくあるご質問）</a></li>
+            <li><a href="/inquiry.html">お問い合わせ</a></li>
+        </ul>
+    </dd>
+</dl>
+<div class="mc-info">
+    <p class="mc-footer-news mc-fw-b">＜最新情報＞</p>
+    <p>遺伝子（DNA）および遺伝子検査（DNA検査）に関わる最新情報をFacebook、Twitter、Google+でも配信しています。</p>
+    <div class="mc-social">
+        <a href="https://goo.gl/YyBcGE" class="mc-social-facebook" rel="nofollow"></a>
+        <a href="https://goo.gl/foqs5F" class="mc-social-twitter" rel="nofollow"></a>
+        <a href="https://goo.gl/x4QT8t" class="mc-social-google" rel="nofollow"></a>
+    </div>
+</div>
+
+
+            </div>
+        </div>
+        
+
+<div class="mc-footer-inquiry">
+    <dl class="mc-footer-inquiry-sec">
+        <dt class="mc-footer-inq-ttl">＜サービスお問い合わせ先＞<br></dt>
+        <dd class="mc-footer-inq-main">MYCODEお客様サポート</dd>
+        <dd class="mc-footer-inq-main mc-footer-inq-pa"><span class="mc-tel">0120-08-4946</span> <span class="mc-fw-n">平日 午前10時から午後７時（土・日・祝日除く）</span></dd>
+        <dd class="mc-footer-inq-main mc-footer-inq-pa"><span class="mc-mail">support@mycode.jp</span></dd>
+    </dl>
+</div>
+
+    </div>
+    
+
+
+
+<div class="mc-footer-copyright">
+  <div class="mc-inner-wrapper">
+    <div class="mc-copyright">Copyright &copy; 2016 DeNA Life Science, Inc. All Rights Reserved.</div>
+  </div>
+</div>
+
+</footer>
+
+    
+-->
+footer-rev
+   <%byebug%> 
+<footer id="MC-FOOTER">
+<% dummy=(render 'basepage/footer').html_safe %>
+<%dummy%>
+</footer>
+_snptable.html.erb-mae
+
+<div class="mc-ac-contents">
+    <table class="mc-table-report" id="report-snp-table">
+        <thead>
+        <tr>
+            
+            <th class="mc-cell-1">
+                <div class="mc-inner">染色体領域 / <span>SNP / 近傍遺伝子</span></div>
+            </th>
+            <th class="mc-cell-2">
+                <div class="mc-inner">あなたの遺伝子型</div>
+            </th>
+            
+            <th class="mc-cell-3">
+                <div class="mc-inner">平均との<br>比較</div>
+            </th>
+            
+            <th class="mc-cell-4">
+                <div class="mc-inner">日本人における割合</div>
+            </th>
+            
+            <th class="mc-cell-5">
+                <div class="mc-inner"></div>
+            </th>
+            
+        </tr>
+        </thead>
+        
+            <tbody>
+            
+            
+                <tr class="">
+                    
+                        <td rowspan="3" class="mc-graph mc-cell-1" style="background-color: #fff;">
+                            <span class="mc-more-btn mc-ac-toggle-single">染色体領域 / SNP / 近傍遺伝子</span>
+                            <div class="mc-inner mc-ac-content-single" style="position: relative;">
+                                <img src="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/images/report/graph-snp.png?v=d305fd2505c833287bc7b9ccd04e9df0"/>
+                                <div style="position: absolute; top:  5px; width: 50px; margin: 0px auto; text-align: center; color: #00c27b;">10</div>
+                                <div style="position: absolute; top: 55px; left: 95px;">10p12.31</div>
+                                <div style="position: absolute; top: 85px; left: 95px;">rs11012732</div>
+                                <b><div style="position: absolute; top: 135px; width: 140px; left: 95px;">MLLT10</div></b>
+                            </div>
+                        </td>
+                    
+                    <td class="mc-cell-2">
+                        <div class="mc-inner">GG</div>
+                    </td>
+                    
+                        <td class="mc-cell-3">
+                            <div class="mc-inner">0.47</div>
+                        </td>
+                    
+                    <td class="mc-cell-4">
+                        <div class="mc-inner">0.0%</div>
+                    </td>
+                    
+                    
+
+                        
+                        
+                            <td class="mc-cell-5">
+                                <div class="mc-inner">
+                                        
+                                    
+                                        
+                                    
+                                        
+                                    
+                                </div>
+                            </td>
+                        
+                    
+                    
+                </tr>
+            
+                <tr class="">
+                    
+                    <td class="mc-cell-2">
+                        <div class="mc-inner">AG</div>
+                    </td>
+                    
+                        <td class="mc-cell-3">
+                            <div class="mc-inner">0.69</div>
+                        </td>
+                    
+                    <td class="mc-cell-4">
+                        <div class="mc-inner">0.8%</div>
+                    </td>
+                    
+                    
+
+                        
+                        
+                            <td class="mc-cell-5">
+                                <div class="mc-inner">
+                                        
+                                    
+                                        
+                                    
+                                        
+                                    
+                                </div>
+                            </td>
+                        
+                    
+                    
+                </tr>
+            
+                <tr class="mc-column-hl">
+                    
+                    <td class="mc-cell-2">
+                        <div class="mc-inner">AA</div>
+                    </td>
+                    
+                        <td class="mc-cell-3">
+                            <div class="mc-inner">1.00</div>
+                        </td>
+                    
+                    <td class="mc-cell-4">
+                        <div class="mc-inner">99.2%</div>
+                    </td>
+                    
+                    
+
+                        
+                        
+                            <td class="mc-cell-5">
+                                <div class="mc-inner">
+                                        
+                                    
+                                        
+                                            あなたの遺伝子型はこちらです
+                                        
+                                    
+                                        
+                                    
+                                </div>
+                            </td>
+                        
+                    
+                    
+                </tr>
+            
+            </tbody>
+        
+    </table>
+</div>
+
+basepage/head
+<head>
+    <meta name="version" content="1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    
+<meta name="viewport" content="width=device-width">
+
+    <meta name="format-detection" content="telephone=no">
+    
+    <meta name="apple-mobile-web-app-title" content="MYCODE">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google-site-verification" content="Qz2DeddAg2nGT0k31oNKacSrU5oMYRK9duNWRc7q1Ys" />
+    
+    <meta name="robots" content="noindex"/>
+
+
+
+<link href="/etc/designs/mycode.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="https://mycode.cdn-dena.com/etc/designs/mycode/clientlibs/jquery/base.min.js?v=d305fd2505c833287bc7b9ccd04e9df0"></script>
+<script type="text/javascript" src="https://mycode.cdn-dena.com/etc/designs/mycode/clientlibs/underscore.min.js?v=d305fd2505c833287bc7b9ccd04e9df0"></script>
+<script type="text/javascript" src="https://mycode.cdn-dena.com/etc/designs/mycode/clientlibs/fundamental.min.js?v=d305fd2505c833287bc7b9ccd04e9df0"></script>
+<script type="text/javascript" src="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib.min.js?v=d305fd2505c833287bc7b9ccd04e9df0"></script>
+<link rel="stylesheet" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib.min.css?v=d305fd2505c833287bc7b9ccd04e9df0" type="text/css">
+
+<link rel="stylesheet" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/css/page_layout.css?v=d305fd2505c833287bc7b9ccd04e9df0"/>
+<link rel="stylesheet" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/css/print.css?v=d305fd2505c833287bc7b9ccd04e9df0"/>
+<link rel="stylesheet" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/css/media_queries.css?v=d305fd2505c833287bc7b9ccd04e9df0"/>
+<link rel="stylesheet" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/css/media_queries_marathon.css?v=d305fd2505c833287bc7b9ccd04e9df0"/>
+<link rel="stylesheet" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/css/page_layout_marathon.css?v=d305fd2505c833287bc7b9ccd04e9df0"/>
+<!--[if lte IE 8]>
+<div>
+ご利用のブラウザがIE8のため、検査結果の一覧表示ができません。下記の推奨ブラウザでご確認ください。<br/>
+・推奨ブラウザ：Internet Explorer11、 Chrome 最新版、 Firefox 最新版
+</div>
+<![endif]-->
+
+<script>MyCode.Env.Runmode = "prod";</script>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="https://mycode.cdn-dena.com/etc/designs/mycode/favicon.ico?v=d305fd2505c833287bc7b9ccd04e9df0">
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="https://mycode.cdn-dena.com/etc/designs/mycode/favicon.ico?v=d305fd2505c833287bc7b9ccd04e9df0">
+    
+    <link rel="apple-touch-icon-precomposed" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/images/touch_icon/touch-icon-iphone.png?v=d305fd2505c833287bc7b9ccd04e9df0">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/images/touch_icon/touch-icon-ipad.png?v=d305fd2505c833287bc7b9ccd04e9df0">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/images/touch_icon/touch-icon-iphone-retina.png?v=d305fd2505c833287bc7b9ccd04e9df0">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/images/touch_icon/touch-icon-ipad-retina.png?v=d305fd2505c833287bc7b9ccd04e9df0">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://mycode.cdn-dena.com/etc/designs/mycode/clientlib/images/touch_icon/touch-icon-iphone6-plus.png?v=d305fd2505c833287bc7b9ccd04e9df0">
+
+<title>髄膜腫 | 癌（がん）・肥満や生活習慣病の遺伝子・DNA検査のMYCODE</title>
+
+<link rel="canonical" href="https://mycode.jp&#x2f;my&#x2f;report&#x2f;meningioma.html"/>
+
+        <meta name="x-csrf-token" content="aaf8e319ad765dd52ee62091a0251bda3e75d8a6c64b0da252c704823b6b443d">
+        <script>
+            $(function(){
+                var inputElm = $("<input>").attr({
+                    type: "hidden",
+                    name: "x-csrf-token",
+                    value: "aaf8e319ad765dd52ee62091a0251bda3e75d8a6c64b0da252c704823b6b443d"
+                });
+                $("form").each(function(){
+                    var attr = $(this).attr("method");
+                    if (attr && attr.toLowerCase() === 'post') {
+                        $(this).prepend(inputElm.clone());
+                    }
+                });
+            });
+        </script>
+    
+    
+    <script src="//assets.adobedtm.com/4efc4bfed26ee1fea5d880d18ff7086e8917fa79/satelliteLib-a2b6da9dfee8fc3a1d173bd8496fea6f19584a0b.js"></script>
+
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PWSLP8"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>if(window==parent){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PWSLP8');}</script>
+<script>
+  if(window==parent) {
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    var trackingId = "UA-53647754-1";
+    ga('create', trackingId, 'auto');
+    
+    ga('set', 'userId', "A20DA987FD160B37B7A84622DEEBBDCD");
+    
+    ga('send', 'pageview');
+  }
+</script>
+</head
+cut buffer
+<div id="MC-BASE-CONTAINER">
+
+  <%= render 'mycode/components/content/breadcrumb' %>
+
+    <form method="post" action="/my/report/meningioma.html/confirm" name="formBookmarkRegister">
+        <input type="hidden" name=":form" value="report-bookmark"/>
+<input type="hidden" name=":formResource" value="UwyQFeCczvFqqEfa5nBFOKt8jd0GdLBOLnNibuPkRoiUhHcmc0JQKxTdSTYyjg&#x2b;m&#x2f;mubDJmUJXi2dltVXK&#x2b;Q3eilBMWygLu1aSx9zM55DKA&#x3d;"/>
+
+        <input type="hidden" id="_charset_" name="_charset_" value="utf-8">
+        <div id="MC-HEAD-CONTENTS">
+            <div class="parsys title iparsys"><div class="title section">
+
+<div class="mc-inner-wrapper">
+  <div class="mc-page-head ">
+    <div class="mc-top-area">
+　    <h2 class="mc-page-title">髄膜腫
+        <span class="mc-title-kana">[ずいまくしゅ]</span>
+      </h2>
+      <div class="mc-button-group mc-f-r">
+        <button type="submit" class="mc-sub-button mc-small mc-f-l"><span>気になるリストに登録する</span></button>
+        <a href="/my/report/diseases.html" class="mc-sub-button mc-small mc-f-l">
+          <span>病気の結果一覧に戻る</span>
+        </a>
+      </div>
+    </div>
+    <div class="mc-page-lead">
+      <div class="mc-page-lead-paging mc-hidden">
+          <a href="#" class="mc-chevron-l mc-prev"></a>
+          <a href="#" class="mc-chevron-r mc-next"></a>
+      </div>
+      <div class="mc-page-lead-text">
+        <div class="mc-page-lead-box">
+          <div id="ellipsis-wrapper">
+            髄膜腫は、良性脳腫瘍の一種で、脳腫瘍では最も多く、日本では脳腫瘍全体の20数％を占めるというデータがあります。年代的には中高年に多く、また女性に発生しやすいと言われます。
+            <a href="#" onclick="javascript: $('#ellipsis-wrapper').trigger('destroy'); return false;" title="もっと見る" class="readmore" style="display: none;">もっと見る »</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- #TODO: 本来は /platinum-dev-env/cms/app/views/mycode/components/content/title/title.jsp で実装-->
+<script type="text/javascript" src="https://mycode.cdn-dena.com/etc/designs/mycode/clientlibs/jquery/dotdotdot.min.js?v=d305fd2505c833287bc7b9ccd04e9df0"></script>
+<script>
+    $(function(){
+        $("#ellipsis-wrapper").dotdotdot({
+            after: "a.readmore",
+            wrap: 'letter',
+            
+            height: 80,  // 2 line
+            
+            watch: "window"
+        });
+    });
+    MyCode.Components.Report.Disease.enableLink();
+</script>
+<!-- END OF #TODO: 本来は /platinum-dev-env/cms/app/views/mycode/components/content/title/title.jsp で実装-->
+
+</div>
+<div class="section"><div class="new"></div>
+</div><div class="iparys_inherited"><div class="parsys title iparsys">
+</div>
+</div>
+</div>
+
+        </div>
+    </form>
+
+<!-- /platinum-dev-env/cms/app/views/contentpage/_container.html.erb  --> 
+    <div id="MC-MAIN-CONTENTS">
+        <div class="mc-inner-wrapper">
+            <div class="mc-contents">
+<!-- /platinum-dev-env/cms/app/views/contentpage/_container.html.erb  --> 
+
+
+構造
+./app/views/mycode/components/content/_simpleparagraph.html.erb
+./app/views/mycode/components/content/report/commons/_graphsnplist.html.erb
+./app/views/mycode/components/content/report/commons/graphsnplist
+./app/views/mycode/components/content/report/commons/graphsnplist/.content.xml
+./app/views/mycode/components/content/report/commons/graphsnplist/dialog.xml
+./app/views/mycode/components/content/report/commons/graphsnplist/graphsnplist.jsp
+./app/views/mycode/components/content/report/disease/_distributiongraph.html.erb
+./app/views/mycode/components/content/report/disease/_graphdisease.html.erb
+./app/views/mycode/components/content/report/disease/_graphdna.html.erb
+./app/views/mycode/components/content/report/disease/_reportgraph.html.erb
+./app/views/mycode/components/content/report/disease/distributiongraph
+./app/views/mycode/components/content/report/disease/distributiongraph/.content.xml
+./app/views/mycode/components/content/report/disease/distributiongraph/clientlib
+./app/views/mycode/components/content/report/disease/distributiongraph/clientlib/.content.xml
+./app/views/mycode/components/content/report/disease/distributiongraph/clientlib/graph.js
+./app/views/mycode/components/content/report/disease/distributiongraph/clientlib/js.txt
+./app/views/mycode/components/content/report/disease/distributiongraph/dialog.xml
+./app/views/mycode/components/content/report/disease/distributiongraph/distributiongraph.jsp
+./app/views/mycode/components/content/report/disease/graphdisease
+./app/views/mycode/components/content/report/disease/graphdisease/.content.xml
+./app/views/mycode/components/content/report/disease/graphdisease/dialog.xml
+./app/views/mycode/components/content/report/disease/graphdisease/graphdisease.jsp
+./app/views/mycode/components/content/report/disease/graphdna
+./app/views/mycode/components/content/report/disease/graphdna/.content.xml
+./app/views/mycode/components/content/report/disease/graphdna/assets
+./app/views/mycode/components/content/report/disease/graphdna/assets/.content.xml
+./app/views/mycode/components/content/report/disease/graphdna/assets/css
+./app/views/mycode/components/content/report/disease/graphdna/assets/css.txt
+./app/views/mycode/components/content/report/disease/graphdna/assets/css/graphdna.css
+./app/views/mycode/components/content/report/disease/graphdna/dialog.xml
+./app/views/mycode/components/content/report/disease/graphdna/graphdna.jsp
+./app/views/mycode/components/content/report/disease/reportgraph
+./app/views/mycode/components/content/report/disease/reportgraph/.content.xml
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs/.content.xml
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs/css
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs/css.txt
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs/css/reportgraph.css
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs/js
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs/js.txt
+./app/views/mycode/components/content/report/disease/reportgraph/clientlibs/js/reportgraph.js
+./app/views/mycode/components/content/report/disease/reportgraph/dialog.xml
+./app/views/mycode/components/content/report/disease/reportgraph/reportgraph.jsp
+./app/views/mycode/components/content/report/trait/_graphtrait.html.erb
+./app/views/mycode/components/content/report/trait/graphtrait
+./app/views/mycode/components/content/report/trait/graphtrait/.content.xml
+./app/views/mycode/components/content/report/trait/graphtrait/dialog.xml
+./app/views/mycode/components/content/report/trait/graphtrait/graphtrait.jsp
+./app/views/mycode/components/content/simpleparagraph
+./app/views/mycode/components/content/simpleparagraph/.content.xml
+./app/views/mycode/components/content/simpleparagraph/dialog.xml
+./app/views/mycode/components/content/simpleparagraph/i18n
+./app/views/mycode/components/content/simpleparagraph/i18n/.content.xml
+./app/views/mycode/components/content/simpleparagraph/i18n/en.xml
+./app/views/mycode/components/content/simpleparagraph/i18n/ja.xml
+./app/views/mycode/components/content/simpleparagraph/simpleparagraph.jsp
+properties & parsys
+/platinum-dev-env/cms/app/views/foundation/components/_parsys.html.erb
+8: properties = @content["jcr:content"][path] 
+                                                                            ^^^^^^^^ path = hash key name
+   caller: 39: <%= render 'foundation/components/parsys', path: "confirm-step" %> 
+/platinum-dev-env/cms/app/views/mycode/components/content/form/actions/_showbulkeditor.html.erb
+20: final ValueMap properties = ResourceUtil.getValueMap(resource); 
+	properties =
+	KSF-Mac006:cms some_body$ greper "properties =" ./*
+./app/helpers/application_helper.rb:53:    properties = self.try(:properties)
+./app/views/foundation/components/_parsys.html.erb:7:  properties = @content["jcr:content"][path]
+./app/views/mycode/components/content/advice/clientlibs/js/exercises.js:24:Ejst.toggleProperties = function(id, expand) {
+./app/views/mycode/components/content/advice/clientlibs/js/exercises.js:36:Ejst.expandProperties = function(comp) {
+./app/views/mycode/components/content/form/actions/_showbulkeditor.html.erb:20:    final ValueMap properties = ResourceUtil.getValueMap(resource);
+./app/views/mycode/components/content/form/actions/showbulkeditor/showbulkeditor.jsp:20:    final ValueMap properties = ResourceUtil.getValueMap(resource);
+./app/views/mycode/components/content/widget/_placeholder.html.erb:11:    String[] styleProperties = {"width", "height", "background"};
+./app/views/mycode/components/content/widget/placeholder/placeholder.jsp:11:    String[] styleProperties = {"width", "height", "background"};
+./public/etc/designs/mycode/clientlibs/angular-1.5/angular.js:13790:            var properties = [], property;
+KSF-Mac006:cms some_body$ pwd
+/Users/some_body/Downloads/platinum-dev-env/cms
+
+
+/Users/some_body/Downloads/platinum-cms
+KSF-Mac006:platinum-cms some_body$  greper "properties =" ./*
+./bundle/src/main/resources/etc/designs/mycode/clientlibs/angular-1.5/angular.js:13790:            var properties = [], property;
+./bundle/src/main/resources/etc/designs/mycode/clientlibs/rome/rome.js:572:        momentProperties = [],
+./bundle/src/main/resources/etc/designs/mycode/clientlibs/rome/rome.js:2451:    moment.momentProperties = momentProperties;
+./content/src/main/content/jcr_root/apps/mycode/components/content/advice/clientlibs/js/exercises.js:24:Ejst.toggleProperties = function(id, expand) {
+./content/src/main/content/jcr_root/apps/mycode/components/content/advice/clientlibs/js/exercises.js:36:Ejst.expandProperties = function(comp) {
+./content/src/main/content/jcr_root/apps/mycode/components/content/form/actions/showbulkeditor/showbulkeditor.jsp:20:    final ValueMap properties = ResourceUtil.getValueMap(resource);
+./content/src/main/content/jcr_root/apps/mycode/components/content/widget/placeholder/placeholder.jsp:11:    String[] styleProperties = {"width", "height", "background"};
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/angular-1.5/angular.js:13790:            var properties = [], property;
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/rome/rome.js:572:        momentProperties = [],
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/rome/rome.js:2451:    moment.momentProperties = momentProperties;
+./content/src/test/testem/test_modules/sinon/pkg/sinon-1.10.2.js:535:        var pieces = [], properties = samsam.keys(object).sort();
+./content/src/test/testem/test_modules/sinon/pkg/sinon-1.10.3.js:535:        var pieces = [], properties = samsam.keys(object).sort();
+./content/src/test/testem/test_modules/sinon/pkg/sinon.js:535:        var pieces = [], properties = samsam.keys(object).sort();
+./content/src/test/testem/test_modules/sinon/test/rhino/env.rhino.1.2.js:337:        properties = {},
+./content/src/test/testem/test_modules/sinon/test/rhino/env.rhino.1.2.js:7927:var inputElements_dataProperties = {};
+./content/src/test/testem/test_modules/sinon/test/rhino/env.rhino.1.2.js:10870:CSS2Properties = function(element){
+./content/src/test/testem/test_modules/sinon/test/rhino/env.rhino.1.2.js:11326:var $css2properties = [{}];
+./content/src/test/testem/test_modules/sinon/test/sinon/test_test.js:19:            var properties = 
+#DeNA #質問票
+■業務連絡 @here 
+DeLSでGitHubの以降が行われるらしく
+11/8〜11の12−13時 or  11/8 10-11時にGitにアクセスできなくなる可能性が高そうです。
+どちらの時間帯になるかは確定次第お伝えします。
+
+
+----- Today November 2nd, 2016 -----
+fujiura [12:05 AM]  
+カートの確認や購入についてのAPIが http://192.168.99.100:3333/ に無い気がする・・・ (edited)
+
+fujiura [12:10 AM]  
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_src_20160926/bundle/src/main/java/com/dena/cdo/platinum/api/CartConfirmationRequest.java
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_src_20160926/bundle/src/main/java/com/dena/cdo/platinum/api/CartExecRequest.java
+あたりかな。呼び出し元を追っていくか
+
+[12:12]  
+@here
+ちなみにAPIの使い方分からないとか、Modelの使い方分からないとかあったら
+DeNAさんに質問できるパスがあるので、じゃんじゃん質問してくださいねー
+
+fujiura [12:28 AM]  
+あ、ここかな。APIたたくところはXxxAction.javaなのかも。
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_src_20160926/bundle/src/main/java/com/dena/cdo/platinum/controllers/CartPageAction.java
+
+fujiura [12:48 AM]  
+ちなみに現時点でお客さんにしている質問共有しておきます
+
+fujiura-ext [10:14 PM]  
+@hirai さん
+@uehara さん
+購入ページのXMLで、textにロジックを含めている箇所があるようです。
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/cart/.content.xml#L514
+もしかしたら他にもあるのかもしれませんが、
+今後の対応方針として上記のようなロジックを見つけた場合は、XMLからテンプレート側にロジックを移管する
+（erbに<% if controller.forDigitalContent に埋め込む）
+で対応を進めるつもりです。問題ありましたらお知らせください。
+
+
+----- Today November 2nd, 2016 -----
+fujiura-ext [12:48 AM]  
+@hirai さん
+@uehara さん
+
+ちょっと困ったことになったので相談に乗ってください。
+先ほどまでSprint2の目的でもあるAPI接続の一環で、カート系のAPI接続を試みていました。
+例えば購入前の入力データ確認（cartのconfirm）について、
+AEMというかJava側の実装を確認すると、ここがリクエスト送信部ですよね。
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_src_20160926/bundle/src/main/java/com/dena/cdo/platinum/controllers/CartPageAction.java#L119
+
+ただ、実際のリクエスト先を追っていくとStoreServiceImpl::send
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_src_20160926/bundle/src/main/java/com/dena/cdo/platinum/api/impl/StoreServiceImpl.java#L152
+からさらに呼ばれているStoreServiceImpl::buildConfirmMethod
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_src_20160926/bundle/src/main/java/com/dena/cdo/platinum/api/impl/StoreServiceImpl.java#L177
+のcreatePostMethod("guest.cart.confirm") またはcreatePostMethod("member.cart.confirm")が
+で作られるURLがAPIであることがわかります。
+
+この２つはまあ、会員/非会員でAPIが違うだけと思いますが、
+どちらにしろこのリクエスト先であるguest.cart.confirm/member.cart.confirmに対応する
+APIの詳細を頂けていない気がしています。
+その場合、上記APIのモックを作ったり実装するのに必要な情報って共有可能でしょうか？
+
+fujiura [1:03 AM]  
+レス来たよー
+
+uehara [12:50 AM]  
+> 購入ページのXMLで、textにロジックを含めている箇所があるようです。
+
+これに関しては取り急ぎおっしゃっているような対応で問題ないかと思います
+
+[1:04]  
+で、APIのリクエストURLはここ見ないといけなかった
+
+https://github-ext.dena.jp/Thelxinoe/platinum-cms/blob/release_src_20160926/bundle/src/main/resources/platinum.default.properties#L80
+この2行が対応している
+store.url.guest.cart.confirm=api/v1/sales_orders/visitor_order
+store.url.member.cart.confirm=api/v1/sales_orders/member_order
+
+[1:05]  
+これで、あるページからAPIリクエストしてそうなときに
+どうやってリクエスト先APIを調べるか間では一般化できたね。重要な情報なので皆さんご確認宜しく
+（明日の朝会でももっかい説明します）
+
+[1:05]  
+ただ、やっぱり
+api/v1/sales_orders/visitor_order
+の詳細はもらって無いのでここはつなげなそうだなー
+
+fujiura [1:11 AM]  
+と思ったらこんな感じで共有されているそうな
+https://github-ext.dena.jp/Thelxinoe/platinum-store/blob/release_20161020/app/controllers/api/v1/sales_orders_controller.rb
+
+[1:14]  
+モックの作り方は明日みんなで @sakuraba さんに聞きましょう
+
+
+
+@hirai さん
+@uehara さん
+
+本日は、○○画面→○○確認画面
+へのパラメータ引渡しについて調査します。
+
+例：購入画面
+https://mycode.jp/cart.healthcare.html?int=gmenu
+で購入に必要な情報をformに入れてPOSTします。
+
+ここでformに入れた情報は購入確認画面
+https://mycode.jp/cart.confirm.html/confirm
+でもformのinput type=hiddenとして入っているのですが
+（ここがAEMのformHelperで泥臭くやっているところだと思いますが）
+ここをRailsに移植するべく具体的な方法を調査します。
+
+観点としては
+単純に前段の画面でPOSTされたものをparamsから取ってきて
+それをformHelperに渡しているのか、
+APIのレスポンスをmodelに格納して
+それをformHelperに渡しているのか、などです。
+
+そんなん調べるまでもなくこうやってるよー、
+などの情報があれば助かります。
+
+
+
+fujiura-ext [4:46 PM]  
+@uehara さん
+ざっくりした質問で申し訳ないのですが
+あるAPIにレスポンス用のモデルを用意するかどうかについて
+なんらかの基準が存在しますでしょうか。
+
+と言いますのも今から/api/v1/sales_orders/visitor_order(非会員注文)
+の結果を格納するモデルを作成するところなのですが
+参考にしているplatinum-mycodeのAPIクライアントとモデルが
+https://github-ext.dena.jp/Thelxinoe/platinum-mycode/tree/release_20160923/lib/mycode_api_client
+https://github-ext.dena.jp/Thelxinoe/platinum-mycode/tree/release_20160923/app/models
+1対1対応ではないようなので気になりました。 (edited)
+
+[4:50]  
+返信
+
+uehara [4:48 PM]  
+頻繁に使ったり、インターフェース共通にしたかったりするものは `app/models` 下に作ったりしてますが、APIそのままで十分なものは mycode_api_clientのvirtusモデルそのまま使ってると言う感じですかね
+
+fujiura-ext [4:50 PM]  
+あーなるほど。
+感覚的には理解できます。
+API同士の関連性の理解が追いついていないので、
+一旦virtusモデルを使って、統合するのは後のリファクタリング
+という方針で作業します。
+
+
+
+
+
+
+
+
+分業案
+	XML変換、javaのcontroller/Modelスケルトン移行、routes,rb jspのerb初期埋設処理
+他人のコードへの疑問
+
+
+
+	ELEvaluator.evaluate(properties.get("header", "あなたの遺伝子型の${controller.viewModel.disease.name}の発症リスク（日本人平均との比較）"　みたいな引数二個にgetメソッド対応しているのか？
+	# for jsp Hash.get
+class Hash
+  def get(*args)
+    if args.length > 0 then
+      if self.has_key?(args[0]) then
+        return self[args[0]]
+      else
+        args[0] = args[0].to_sym
+      end
+    end
+    begin
+      self.fetch *args
+    rescue => e
+    end
+  end
+end
+aaaa
+<%#
+<!--
+# <c:set var="graph" value="<%=g%>" scope="request"/>
+# <c:set var="frequencyBelow" value="<%=getValue(g.getFrequencyBelow())%>" scope="request"/>
+# <c:set var="frequencyOn" value="<%=getValue(g.getFrequencyOn())%>" scope="request"/>
+# <c:set var="frequencyAbove" value="<%=getValue(g.getFrequencyAbove())%>" scope="request"/>
+-->
+%>
+ViewModels
+KSF-Mac006:platinum-cms some_body$ ll ./bundle/src/main/java/com/dena/cdo/platinum/viewmodels/
+total 448
+drwxrwxr-x  52 some_body  staff  1768 11  2 14:14 .
+drwxrwxr-x  30 some_body  staff  1020 10 25 19:10 ..
+-rwxrwxr-x   1 some_body  staff  2017 10 25 19:10 AdviceSummaryViewModel.java
+-rwxrwxr-x   1 some_body  staff  5728 10 25 19:10 AdviceViewModel.java
+-rw-rw-r--   1 some_body  staff  1564 10 25 19:10 AvatarTraitViewModel.java
+-rw-rw-r--   1 some_body  staff   955 10 25 19:10 AvatarViewModel.java
+-rw-rw-r--   1 some_body  staff   619 10 25 19:10 BookmarkSummaryPageViewModel.java
+-rwxrwxr-x   1 some_body  staff   948 10 25 19:10 CartCompletePageViewModel.java
+-rw-rw-r--   1 some_body  staff  1523 10 25 19:10 CartConfirmPageViewModel.java
+-rw-rw-r--   1 some_body  staff  1389 10 25 19:10 CartEntryPageViewModel.java
+-rwxrwxr-x   1 some_body  staff  1798 10 25 19:10 CartPageViewModel.java
+-rw-rw-r--   1 some_body  staff   823 10 25 19:10 DiscoverySummaryViewModel.java
+-rwxrwxr-x   1 some_body  staff  4125 10 25 19:10 DiseaseFactorViewModel.java
+-rwxrwxr-x   1 some_body  staff  1856 10 25 19:10 DiseaseFactorViewModelList.java
+-rwxrwxr-x   1 some_body  staff  3601 10 25 19:10 DiseaseTagViewModel.java
+-rwxrwxr-x   1 some_body  staff  3815 10 25 19:10 DiseaseViewModel.java
+-rwxrwxr-x   1 some_body  staff  1439 10 25 19:10 DiseaseViewModelList.java
+-rwxrwxr-x   1 some_body  staff  4815 10 25 19:10 FactorViewModel.java
+-rw-rw-r--   1 some_body  staff   808 10 25 19:10 GraphDefinitionViewModel.java
+-rw-rw-r--   1 some_body  staff   916 10 25 19:10 InformationSummaryViewModel.java
+-rw-rw-r--   1 some_body  staff  1093 10 25 19:10 InformationSummaryViewModelList.java
+-rw-rw-r--   1 some_body  staff   175 10 25 19:10 InvitationFriendsPageViewModel.java
+-rwxrwxr-x   1 some_body  staff  4728 10 25 19:10 KitConfirmPageViewModel.java
+-rw-rw-r--   1 some_body  staff   716 10 25 19:10 MetaTag.java
+-rw-rw-r--   1 some_body  staff   375 10 25 19:10 MetaTagCollection.java
+-rwxrwxr-x   1 some_body  staff  1041 10 25 19:10 MypageAdviceWidgetViewModel.java
+-rw-rw-r--   1 some_body  staff  2352 10 25 19:10 OrderCancelConfirmPageViewModel.java
+-rw-rw-r--   1 some_body  staff  2197 10 25 19:10 PagingViewHelper.java
+-rw-rw-r--   1 some_body  staff  1862 10 25 19:10 PagingViewModel.java
+-rwxrwxr-x   1 some_body  staff   468 10 25 19:10 PhenotypeViewModel.java
+-rwxrwxr-x   1 some_body  staff  1847 10 25 19:10 PhenotypeViewModelHelper.java
+-rwxrwxr-x   1 some_body  staff  1566 10 25 19:10 ProductViewModel.java
+-rwxrwxr-x   1 some_body  staff  1064 10 25 19:10 ReportHistoryPageViewModel.java
+-rwxrwxr-x   1 some_body  staff  1504 10 25 19:10 ReportPageViewModel.java
+-rwxrwxr-x   1 some_body  staff  2541 10 25 19:10 ReportSummaryJsonViewModel.java
+-rwxrwxr-x   1 some_body  staff  1367 10 25 19:10 ReportSummaryPageViewModel.java
+-rw-rw-r--   1 some_body  staff  1051 10 25 19:10 SalesOrderDetailViewModel.java
+-rwxrwxr-x   1 some_body  staff  1129 10 25 19:10 SnpViewModel.java
+-rw-rw-r--   1 some_body  staff   296 10 25 19:10 SurveyCompletePageViewModel.java
+-rwxrwxr-x   1 some_body  staff  1018 10 25 19:10 SurveyFamilyViewModel.java
+-rw-rw-r--   1 some_body  staff  1016 10 25 19:10 SurveySummaryPageViewModel.java
+-rwxrwxr-x   1 some_body  staff  8488 10 25 19:10 SurveyViewModel.java
+-rwxrwxr-x   1 some_body  staff  2097 10 25 19:10 TestingItemCategoryViewModel.java
+-rwxrwxr-x   1 some_body  staff  3903 10 25 19:10 TestingItemViewModel.java
+-rw-rw-r--   1 some_body  staff  7814 10 25 19:10 TopPageCarouselViewModel.java
+-rwxrwxr-x   1 some_body  staff  2526 10 25 19:10 TopicDetailViewModel.java
+-rw-rw-r--   1 some_body  staff  2764 10 25 19:10 TopicSearchViewModel.java
+-rwxrwxr-x   1 some_body  staff  1168 10 25 19:10 TopicSideViewModel.java
+-rwxrwxr-x   1 some_body  staff  2787 10 25 19:10 TopicSummaryViewModel.java
+-rwxrwxr-x   1 some_body  staff  1013 10 25 19:10 TraitViewModel.java
+-rwxrwxr-x   1 some_body  staff  1149 10 25 19:10 WithdrawalViewModel.java
+drwxrwxr-x  26 some_body  staff   884 10 25 19:10 builders
+KSF-Mac006:platinum-cms some_body$ ll ./bundle/src/main/java/com/dena/cdo/platinum/viewmodels/builders/
+total 280
+drwxrwxr-x  26 some_body  staff    884 10 25 19:10 .
+drwxrwxr-x  52 some_body  staff   1768 11  2 14:14 ..
+-rwxrwxr-x   1 some_body  staff  11047 10 25 19:10 AdviceSummaryViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   3722 10 25 19:10 AvatarViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   2591 10 25 19:10 BookmarkSummaryPageViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   4333 10 25 19:10 CartCompletePageViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   5852 10 25 19:10 CartConfirmViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   3567 10 25 19:10 DiscoverySummaryViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   5293 10 25 19:10 InformationSummaryViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   5905 10 25 19:10 MypageAdviceWidgetViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   2431 10 25 19:10 OrderCancelConfirmViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   2242 10 25 19:10 PagingViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff  10976 10 25 19:10 ReportConsumingViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   3774 10 25 19:10 ReportHistoryPageViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   7274 10 25 19:10 ReportPageViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   4512 10 25 19:10 ReportSummaryJsonViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   4037 10 25 19:10 ReportSummaryPageViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   3903 10 25 19:10 SurveyCompletePageViewModelBuiler.java
+-rw-rw-r--   1 some_body  staff   8131 10 25 19:10 SurveySummaryPageViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   2963 10 25 19:10 TopicBaseSearchViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   1077 10 25 19:10 TopicBaseViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   2624 10 25 19:10 TopicDetailViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   2698 10 25 19:10 TopicSideViewModelBuilder.java
+-rwxrwxr-x   1 some_body  staff   1985 10 25 19:10 TopicSummaryViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff    738 10 25 19:10 TopicTagSearchViewModelBuilder.java
+-rw-rw-r--   1 some_body  staff   2235 10 25 19:10 TopicTextSearchViewModelBuilder.java
+parsys VS iparsys
+	ruby
+	graphdiseaseはiparsysってのをincludeしている箇所があったと思いますが、そこから間接的に読み込まれますよ
+
+[9:40]  
+下記のコードを_container.html.erbに埋め込むと
+<%= render "foundation/components/iparsys", path: "ipar_disease_top_header" %>
+
+YAMLのipar_disease_top_header:がパースされ
+sling:resourceType: mycode/components/content/parsys/colctrl
+sling:resourceType: mycode/components/content/report/disease/distributiongraph
+sling:resourceType: mycode/components/content/report/disease/graphdisease
+sling:resourceType: mycode/components/content/report/commons/reportevidence
+などが自動的に埋め込まれます
+
+[9:41]  
+これがparsys（パラグラフシステム）の概念ですね
+
+[9:42]  
+ただし読み込んで欲しいmycode/components/content/report/disease/graphdisease などは
+各人が下記に追加する必要があります
+https://github.dena.jp/Thelxinoe/platinum-cms2/blob/develop/app/views/mycode/components/content/_parsys.html.erb
+
+[9:43]  
+あと、parsys自体は読み込みの中継をするだけなので
+_graphdisease.html.erb の実装も各人がする必要があります
+
+
+あと、parsys自体は読み込みの中継をするだけなので
+_graphdisease.html.erb の実装も各人がする必要があります
+
+[9:44]  
+↓のような状態で格納されているので、jspをerbに変換する必要がある
+https://github.dena.jp/Thelxinoe/platinum-cms2/blob/develop/app/views/mycode/components/content/report/disease/_graphdisease.html.erb
+
+
+
+
+	files
+	KSF-Mac006:platinum-cms some_body$ ff |grep parsys
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/_cq_editConfig.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/colctrl.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/design_dialog.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/dialog.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/icon.png
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/2cols
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/2cols-7-5
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/2cols-7-5/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/2cols-7-5/_cq_editConfig.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/2cols/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/2cols/_cq_editConfig.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/3cols
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/3cols/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/3cols/_cq_editConfig.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/sidespace
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/sidespace/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/sidespace/_cq_editConfig.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/sidespace7
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/sidespace7/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/colctrl/virtual/sidespace7/_cq_editConfig.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/design_dialog.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/editcontext.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/new
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/new/.content.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/new/_cq_editConfig.xml
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/new/new.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/parsys.jsp
+KSF-Mac006:platinum-cms some_body$ ff |grep iparsys
+KSF-Mac006:platinum-cms some_body$ vi ./content/src/main/content/jcr_root/apps/mycode/components/content/parsys/parsys.jsp
+twocolumn-layout
+KSF-Mac006:cms some_body$ greplr "twocolumn" ./*
+./app/assets/content/mycode/my/report/content.yml
+./app/views/DD/DD_meningioma.html.erb
+./app/views/DD/EXglioma.html.erb
+./app/views/mycode/components/layout/._twocolumnlayout.html.erb.swp
+./app/views/mycode/components/layout/_twocolumnlayout.html.erb
+./app/views/mycode/components/layout/_twocolumnlayout.html.erb.BAK
+./app/views/mycode/components/layout/twocolumnlayout/twocolumnlayout.jsp
+./app/views/report/commons/_graphsnplist.html.erb
+./app/views/report/disease/_graphdna.html.erb
+./app/views/report/diseasepage/_content.html.erb
+./log/development.log
+./tmp/meningioma-no-parent-folder/mae.html
+./tmp/meningioma-no-parent-folder/meningioma-LOCAL.htm
+./tmp/meningioma-no-parent-folder/meningioma-Modals-MIN.htm
+./tmp/meningioma-no-parent-folder/meningioma-Modals.htm
+./tmp/meningioma-no-parent-folder/meningioma-rev1.htm
+./tmp/meningioma-no-parent-folder/meningioma-rev1_files/meningioma-rev2.htm
+./tmp/meningioma-no-parent-folder/meningioma-rev2.htm
+./tmp/meningioma-no-parent-folder/meningioma-rev3.htm
+./tmp/meningioma-no-parent-folder/髄膜腫 _ 癌（がん）・肥満や生活習慣病の遺伝子・DNA検査のMYCODE.htm
+
+controllers
+KSF-Mac006:platinum-cms some_body$ ll ./bundle/src/main/java/com/dena/cdo/platinum/controllers/
+total 1192
+drwxrwxr-x  108 some_body  staff   3672 11  9 14:56 .
+drwxrwxr-x   30 some_body  staff   1020 10 25 19:10 ..
+-rwxrwxr-x    1 some_body  staff   1429 10 25 19:10 AddressSearchController.java
+-rwxrwxr-x    1 some_body  staff   4415 10 25 19:10 AdviceSummaryController.java
+-rw-rw-r--    1 some_body  staff   1742 10 25 19:10 AgreementAction.java
+-rw-rw-r--    1 some_body  staff   1812 10 25 19:10 AgreementPageController.java
+-rw-rw-r--    1 some_body  staff   2682 10 25 19:10 AuthPageBaseController.java
+-rw-rw-r--    1 some_body  staff   2959 10 25 19:10 AvatarActionController.java
+-rw-rw-r--    1 some_body  staff    901 10 25 19:10 BadRequest.java
+-rw-rw-r--    1 some_body  staff   9620 10 25 19:10 BaseController.java
+-rwxrwxr-x    1 some_body  staff    330 10 25 19:10 BasePageController.java
+-rw-rw-r--    1 some_body  staff   1425 10 25 19:10 BookmarkDeleteAction.java
+-rw-rw-r--    1 some_body  staff   1970 10 25 19:10 BookmarkRegisterAction.java
+-rw-rw-r--    1 some_body  staff   2775 10 25 19:10 BookmarkSummaryController.java
+-rw-rw-r--    1 some_body  staff   3800 10 25 19:10 CampaignPageAction.java
+-rw-rw-r--    1 some_body  staff   3740 10 25 19:10 CampaignPageController.java
+-rw-rw-r--    1 some_body  staff    294 10 25 19:10 CartController.java
+-rw-rw-r--    1 some_body  staff  23884 10 25 19:10 CartPageAction.java
+-rw-rw-r--    1 some_body  staff  24787 10 25 19:10 CartPageController.java
+-rwxrwxr-x    1 some_body  staff   3962 10 25 19:10 ColumnPageController.java
+-rw-rw-r--    1 some_body  staff   1250 10 25 19:10 ControllerException.java
+-rw-rw-r--    1 some_body  staff   5206 10 25 19:10 DiscoveryBaseController.java
+-rw-rw-r--    1 some_body  staff   3889 10 25 19:10 DiscoveryCampaignAction.java
+-rw-rw-r--    1 some_body  staff   6658 10 25 19:10 DiscoveryCampaignController.java
+-rw-rw-r--    1 some_body  staff   3374 10 25 19:10 DiscoveryOptionalPurchasePageAction.java
+-rw-rw-r--    1 some_body  staff   7536 10 25 19:10 DiscoveryOptionalPurchasePageController.java
+-rw-rw-r--    1 some_body  staff   1327 10 25 19:10 DiscoveryPageController.java
+-rw-rw-r--    1 some_body  staff   2199 10 25 19:10 DiscoverySummaryController.java
+-rw-rw-r--    1 some_body  staff   1115 10 25 19:10 Doosra.java
+-rwxrwxr-x    1 some_body  staff   2378 10 25 19:10 EnqueteAfterCartAction.java
+-rw-rw-r--    1 some_body  staff    308 10 25 19:10 ExecBeforeRun.java
+-rwxrwxr-x    1 some_body  staff   8547 10 25 19:10 FactorBaseController.java
+-rw-rw-r--    1 some_body  staff   1571 10 25 19:10 ForwardForm.java
+-rwxrwxr-x    1 some_body  staff    319 10 25 19:10 GuestBasePageController.java
+-rw-rw-r--    1 some_body  staff   4377 10 25 19:10 HaploexamPageController.java
+-rw-rw-r--    1 some_body  staff    183 10 25 19:10 HasMetaTagCollection.java
+-rw-rw-r--    1 some_body  staff   3420 10 25 19:10 InformationActionController.java
+-rw-rw-r--    1 some_body  staff   2599 10 25 19:10 InformationSummaryController.java
+-rw-rw-r--    1 some_body  staff   8149 10 25 19:10 InquiryConfirmAction.java
+-rw-rw-r--    1 some_body  staff   1796 10 25 19:10 InquiryExecAction.java
+-rw-rw-r--    1 some_body  staff   2810 10 25 19:10 InquiryPageController.java
+-rw-rw-r--    1 some_body  staff   2248 10 25 19:10 InvitationAction.java
+-rw-rw-r--    1 some_body  staff   1838 10 25 19:10 InvitationFriendsExpansionPageController.java
+-rw-rw-r--    1 some_body  staff   2674 10 25 19:10 InvitationFriendsPageController.java
+-rw-rw-r--    1 some_body  staff  15856 10 25 19:10 KitRegisterPageAction.java
+-rw-rw-r--    1 some_body  staff   5098 10 25 19:10 KitRegisterPageController.java
+-rw-rw-r--    1 some_body  staff    640 10 25 19:10 LandingPageController.java
+-rw-rw-r--    1 some_body  staff   4874 10 25 19:10 LoginFormAction.java
+-rwxrwxr-x    1 some_body  staff   1545 10 25 19:10 LoginPageController.java
+-rw-rw-r--    1 some_body  staff   2280 10 25 19:10 LoginQuestionPageController.java
+-rw-rw-r--    1 some_body  staff   2071 10 25 19:10 LoginQuestionResetConfirmationAction.java
+-rw-rw-r--    1 some_body  staff   2360 10 25 19:10 LoginQuestionResetExecAction.java
+-rw-rw-r--    1 some_body  staff   2450 10 25 19:10 LoginQuestionSettingPageController.java
+-rwxrwxr-x    1 some_body  staff   1029 10 25 19:10 MailChangeConfirmationAction.java
+-rw-rw-r--    1 some_body  staff   1821 10 25 19:10 MailChangePageController.java
+-rw-rw-r--    1 some_body  staff   1741 10 25 19:10 MailResetController.java
+-rw-rw-r--    1 some_body  staff   5750 10 25 19:10 MemberCreateFormAction.java
+-rw-rw-r--    1 some_body  staff   2951 10 25 19:10 MemberInvitationEntryAction.java
+-rw-rw-r--    1 some_body  staff   2832 10 25 19:10 MemberInvitationEntryPageController.java
+-rw-rw-r--    1 some_body  staff    143 10 25 19:10 MissingAttributeException.java
+-rw-rw-r--    1 some_body  staff  11993 10 25 19:10 MypageController.java
+-rw-rw-r--    1 some_body  staff    845 10 25 19:10 NG.java
+-rw-rw-r--    1 some_body  staff    539 10 25 19:10 OK.java
+-rw-rw-r--    1 some_body  staff   3034 10 25 19:10 OptionalPurchasePageController.java
+-rw-rw-r--    1 some_body  staff   5200 10 25 19:10 OrderCancelPageAction.java
+-rw-rw-r--    1 some_body  staff   5987 10 25 19:10 OrderCancelPageController.java
+-rw-rw-r--    1 some_body  staff   5889 10 25 19:10 PamphletPageAction.java
+-rwxrwxr-x    1 some_body  staff   2928 10 25 19:10 PamphletPageController.java
+-rwxrwxr-x    1 some_body  staff   1799 10 25 19:10 PasswordEditExecAction.java
+-rwxrwxr-x    1 some_body  staff    780 10 25 19:10 PasswordEditPageController.java
+-rwxrwxr-x    1 some_body  staff   1089 10 25 19:10 PasswordResetConfirmationAction.java
+-rwxrwxr-x    1 some_body  staff   1396 10 25 19:10 PasswordResetExecAction.java
+-rwxrwxr-x    1 some_body  staff   1739 10 25 19:10 PasswordResetPageController.java
+-rwxrwxr-x    1 some_body  staff   7418 10 25 19:10 PlansDetailController.java
+-rw-rw-r--    1 some_body  staff   1889 10 25 19:10 PlansReportSummaryController.java
+-rw-rw-r--    1 some_body  staff   6365 10 25 19:10 ProfileEditAction.java
+-rw-rw-r--    1 some_body  staff   3364 10 25 19:10 ProfileEditPageController.java
+-rw-rw-r--    1 some_body  staff   1019 10 25 19:10 ProfilePageController.java
+-rw-rw-r--    1 some_body  staff   1401 10 25 19:10 Redirect.java
+-rwxrwxr-x    1 some_body  staff   2226 10 25 19:10 RedirectHelper.java
+-rwxrwxr-x    1 some_body  staff   7613 10 25 19:10 ReportBaseController.java
+-rwxrwxr-x    1 some_body  staff    865 10 25 19:10 ReportConsumingController.java
+-rwxrwxr-x    1 some_body  staff   7286 10 25 19:10 ReportHistoryController.java
+-rwxrwxr-x    1 some_body  staff   8711 10 25 19:10 ReportSummaryController.java
+-rwxrwxr-x    1 some_body  staff   2380 10 25 19:10 ReportUnlockAction.java
+-rwxrwxr-x    1 some_body  staff    406 10 25 19:10 Required.java
+-rw-rw-r--    1 some_body  staff   1850 10 25 19:10 ResponseHelper.java
+-rwxrwxr-x    1 some_body  staff    602 10 25 19:10 Result.java
+-rw-rw-r--    1 some_body  staff   2016 10 25 19:10 ResultBase.java
+-rwxrwxr-x    1 some_body  staff   2004 10 25 19:10 SecretQuestionEditExecAction.java
+-rw-rw-r--    1 some_body  staff   2836 10 25 19:10 SecretQuestionFormAction.java
+-rwxrwxr-x    1 some_body  staff    283 10 25 19:10 SessionKeepingController.java
+-rw-rw-r--    1 some_body  staff   4132 10 25 19:10 SignupPageController.java
+-rwxrwxr-x    1 some_body  staff   4934 10 25 19:10 SurveyBaseController.java
+-rwxrwxr-x    1 some_body  staff   2117 10 25 19:10 SurveyCompleteController.java
+-rwxrwxr-x    1 some_body  staff   5895 10 25 19:10 SurveyFormAction.java
+-rwxrwxr-x    1 some_body  staff   4245 10 25 19:10 SurveySummaryAction.java
+-rwxrwxr-x    1 some_body  staff   3967 10 25 19:10 SurveySummaryController.java
+-rw-rw-r--    1 some_body  staff   2890 10 25 19:10 TestingItemsProductsController.java
+-rwxrwxr-x    1 some_body  staff   2181 10 25 19:10 TopicBaseController.java
+-rwxrwxr-x    1 some_body  staff    683 10 25 19:10 TopicDetailController.java
+-rw-rw-r--    1 some_body  staff   1030 10 25 19:10 TopicRssFeedController.java
+-rw-rw-r--    1 some_body  staff   1960 10 25 19:10 TopicSearchBaseController.java
+-rwxrwxr-x    1 some_body  staff    604 10 25 19:10 TopicSummaryController.java
+-rw-rw-r--    1 some_body  staff    905 10 25 19:10 TopicTagSearchController.java
+-rw-rw-r--    1 some_body  staff    909 10 25 19:10 TopicTextSearchController.java
+-rw-rw-r--    1 some_body  staff   5789 10 25 19:10 WithdrawalAction.java
+-rw-rw-r--    1 some_body  staff   3061 10 25 19:10 WithdrawalController.java
+DiseaseGraphServlet.
+KSF-Mac006:platinum-cms some_body$ greper "DiseaseGraphServlet.SERVLET_URL_PNG" ./*
+./bundle/src/main/java/com/dena/cdo/platinum/http/DiseaseGraphServlet.java:27:        @Property(name = "sling.servlet.paths", value = {DiseaseGraphServlet.SERVLET_URL_PNG, DiseaseGraphServlet.SERVLET_URL_JSON}),
+./content/src/main/content/jcr_root/apps/mycode/components/content/report/disease/graphdisease/graphdisease.jsp:14:<div class="mc-disease-graph" style="background: url(<%=DiseaseGraphServlet.SERVLET_URL_PNG%>?w=<%=width%>&h=<%=height%>&m=0&o=0) no-repeat;">
+./content/src/main/content/jcr_root/apps/mycode/components/content/report/disease/graphdisease/graphdisease.jsp:50:    <div class="mc-disease-graph" style="background: url(<%=DiseaseGraphServlet.SERVLET_URL_PNG%>?w=<%=width%>&h=<%=height%>&m=<%=them%>&o=<%=risk%>) no-repeat;">
+^C
+
+
+WebAPIのパラメータについて
+WebAPIのパラメータについて
+WebAPIのURLにフォーマット指定子
+例）http://xxx/%d/get
+が含まれる場合、
+シンボル名、フォーマット指定子に入るパラメータ、WebAPI自身に渡すパラメータ
+の順番で指定しないといけないようです
+
+高橋さんが見つけてくれました。
+シンボル名、WebAPI自身に渡すパラメータ
+だけにしてしまうと
+「WebAPI自身に渡すパラメータ」がフォーマット指定子によってURLに組み込まれたり
+それも無い場合は WebAPI内部がfew argments でエラーを起こすなど、予期せぬ動作となります
+
+
+
+
+parsysつかいわけ=cq:include に忠実に
+KSF-Mac006:cms some_body$ greper "render.*foundation.*parsys" ./* --include=*.*rb
+./app/views/foundation/components/_iparsys.html.erb:1:<%#呼び出し例： render "foundation/components/iparsys", properties: properties, path: "col1" %>
+./app/views/inquirypage/content/_complete.html.erb:3:    <%= render 'foundation/components/parsys', path: "complete_parTitle" %>
+./app/views/inquirypage/content/_complete.html.erb:8:    <%= render 'foundation/components/parsys', path: "complete_par1" %>
+./app/views/inquirypage/content/_confirm.html.erb:3:    <%= render 'foundation/components/parsys', path: "confirm_parTitle" %>
+./app/views/inquirypage/content/_confirm.html.erb:8:    <%= render 'foundation/components/parsys', path: "confirm_par1" %>
+./app/views/inquirypage/content/_entry.html.erb:5:    <%= render 'foundation/components/parsys', path: "parTitle" %>
+./app/views/inquirypage/content/_entry.html.erb:12:    <%= render 'foundation/components/parsys', path: "par1" %>
+./app/views/inquirypage/content/_entry.html.erb:49:        <%= render 'foundation/components/parsys', path: "csTell" %>
+./app/views/kitpage/_content_address.html.erb:40:                <%= render 'foundation/components/parsys', path: "step" %>
+./app/views/kitpage/_content_confirm.html.erb:39:            <%= render 'foundation/components/parsys', path: "confirm-step" %>
+./app/views/kitpage/_content_confirm.html.erb:42:                <%= render 'foundation/components/parsys', path: "confirm-image" %>
+./app/views/kitpage/_content_confirm.html.erb:45:                    <%= render 'foundation/components/parsys', path: "confirm-par-content" %>
+./app/views/kitpage/_content_confirm.html.erb:47:                    <%= render 'foundation/components/parsys', path: "confirm-par-content2" %>
+./app/views/landingpage/_content.html.erb:2:<%= render "foundation/components/parsys", path: "par" %>
+./app/views/landingpage/_content.html.erb:12:            <%= render "foundation/components/parsys", path: "par2" %>
+./app/views/loginpage/_content.html.erb:7:      <%= render "foundation/components/parsys", path: "par"%>
+./app/views/loginquestionpage/_content.html.erb:5:      <%= render 'foundation/components/parsys', path: "par"%>
+./app/views/membercontentpage/_content.html.erb:1:<%= render "foundation/components/parsys", path: "par"%>
+^C
+KSF-Mac006:cms some_body$ 
+KSF-Mac006:cms some_body$ greper "render.*mycode.*parsys" ./* --include=*.*rb
+./app/views/cartpage/content/_complete.html.erb:10:            <%= render "mycode/components/content/parsys", properties: path("complete-par") %>
+./app/views/cartpage/content/_complete.html.erb:14:            <%= render "mycode/components/content/parsys", properties: path("complete-par-payment") %>
+./app/views/cartpage/content/_complete.html.erb:22:                <%= render "mycode/components/content/parsys", properties: path("complete-par-guest2") %>
+./app/views/cartpage/content/_complete.html.erb:28:                            <%= render "mycode/components/content/parsys", properties: path("complete-par-guest") %>
+./app/views/cartpage/content/_complete.html.erb:42:                    <%= render "mycode/components/content/parsys", properties: path("complete-par-member2") %>
+./app/views/cartpage/content/_complete.html.erb:48:                                <%= render "mycode/components/content/parsys", properties: path("complete-par-member") %>
+./app/views/cartpage/content/_complete.html.erb:61:                    <%= render "mycode/components/content/parsys", properties: path("complete-par-member-digital-contents") %>
+./app/views/cartpage/content/_entry.html.erb:3:<%= render 'mycode/components/content/parsys', properties: path("banner") %>
+./app/views/cartpage/content/_entry.html.erb:62:                <%= render 'mycode/components/content/parsys', properties: path("entry-error") %>
+./app/views/cartpage/content/_entry.html.erb:92:                            <%= render 'mycode/components/content/parsys', properties: path("campaign") %>
+./app/views/contentpage/_content.html.erb:1:<%= render 'mycode/components/content/parsys', properties: path("par") %>
+./app/views/foundation/components/_iparsys.html.erb:9:    <%= render 'mycode/components/content/parsys', properties: properties %>
+./app/views/foundation/components/_parsys.html.erb:10:<%= render 'mycode/components/content/parsys', properties: properties %>
+./app/views/foundation/components/form/_start.html.erb:16:<%= render 'mycode/components/content/parsys', properties: properties %>
+./app/views/inquirypage/content/_complete.html.erb:14:            <%= render 'mycode/components/content/parsys', properties: path("complete_par2") %>
+./app/views/inquirypage/content/_complete.html.erb:20:    <%= render 'mycode/components/content/parsys', properties: path("complete_par3") %>
+./app/views/inquirypage/content/_confirm.html.erb:70:        <%= render 'mycode/components/content/parsys', properties: properties["confirm_text"] %>
+./app/views/inquirypage/content/_confirm.html.erb:86:        <%= render 'mycode/components/content/parsys', properties: properties["confirm_par3"] %>
+./app/views/inquirypage/content/_entry.html.erb:31:                <%= render 'mycode/components/content/parsys', properties: path("par2") %>
+./app/views/inquirypage/content/_entry.html.erb:41:                <%= render 'mycode/components/content/parsys', properties: path("par3") %>
+./app/views/inquirypage/content/_entry.html.erb:53:        <%= render 'mycode/components/content/parsys', properties: path("par4") %>
+./app/views/kitpage/_content_entry.html.erb:29:            <%= render 'mycode/components/content/parsys', properties: path("par") %>
+./app/views/mycode/components/content/cart/entry/_customer.html.erb:112:        <%= render 'mycode/components/content/parsys', properties: path("entry-customer-par") %>
+./app/views/mycode/components/content/cart/entry/_shippingaddress.html.erb:125:        <%= render 'mycode/components/content/parsys', properties: properties["entry-customer-par"] %>
+./app/views/mycode/components/content/kit/_entry.html.erb:76:<%#= render 'mycode/components/content/parsys', properties: path("par1") %>
+./app/views/mycode/components/content/kit/_entry.html.erb:77:<%= render 'mycode/components/content/parsys', properties: properties["par1"] %>
+./app/views/mycode/components/content/kit/_entry.html.erb:81:<%#= render 'mycode/components/content/parsys', properties: path("par4") %>
+./app/views/mycode/components/content/kit/_entry.html.erb:82:<%= render 'mycode/components/content/parsys', properties: properties["par4"] %>
+./app/views/mycode/components/content/kit/_entry.html.erb:89:<%#= render 'mycode/components/content/parsys', properties: path("par5") %>
+./app/views/mycode/components/content/kit/_entry.html.erb:90:<%= render 'mycode/components/content/parsys', properties: properties["par5"] %>
+./app/views/mycode/components/content/kit/shippingaddress/_entry.html.erb:108:        <%= render 'mycode/components/content/parsys', properties: path("entry-customer-par") %>
+./app/views/mycode/components/content/layout/_section.html.erb:3:    <%= render 'mycode/components/content/parsys', properties: properties%>
+./app/views/mycode/components/content/mypage/apeal/_kitregister.html.erb:37:            <%= render resourceType="mycode/components/content/parsys", properties: properties["apeal2"] %>
+./app/views/plans/_content.html.erb:553:    <%= render 'mycode/components/content/parsys', properties: path("bottom-par")%>
+
+
+
+AJAX
+
+@some_body さん
+病気レポート詳細のトリックが分かりました。
+https://mycode.jp/my/report/glioma.html
+等のページはajax=trueをつけてXHRで3回リクエストを送ってくるので、
+それらのページが無いと正しく表示がなされないのですね。
+
+[10:29]  
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/.content.xml
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/non-small-cell-lung-cancer/.content.xml
+などの2つのXMLはマージされるかもしれませんが、
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/non-small-cell-lung-cancer/detail/.content.xml
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/non-small-cell-lung-cancer/genes/.content.xml
+などサブディレクトリのXMLは、AJAXで取得されるそれぞれのページにのみ使われていて、マージの必要は無いのかもしれませんね。
+
+[10:29]  
+試しに
+https://mycode.jp/my/report/glioma.html?&ajax=true
+https://mycode.jp/my/report/glioma/detail.html?ajax=true
+https://mycode.jp/my/report/glioma/genes.html?ajax=true
+などにアクセスすると、XHRで取得されているページを確認することが出来ますし
+
+[10:30]  
+これらのページを擬似的にpublicに配置した場合、
+グラフや遺伝子型が表示されることを確認しました
+
+fujiura	[10:33 PM]  
+uploaded an image: Pasted image at 2016-11-12, 10:33 PM 
+Add Comment
+
+fujiura	[10:34 PM]  
+↑上記は実際にrails上でXHRコンテンツをpublic下に配置してレンダリングさせたものです
+
+fujiura	[10:35 PM]  
+uploaded an image: Pasted image at 2016-11-12, 10:35 PM 
+Add Comment
+
+fujiura	[10:45 PM]  
+↑も
+
+[10:46]  
+つまりXHRで取得されるページを構築するアクションさえきちんと設計しておけば
+グラフはきちんと表示されるいうことになりますね（ただし背景画像のぞく） (edited)
+
+[10:47]  
+月曜日はXHRで取得されるページを作成し、可能ならAPIもつなげていきましょう
+
+fujiura	[10:55 PM]  
+お客さんからも回答アリ。
+
+fujiura-ext    [10:37 PM]  
+@hirai さん回答ありがとうございます。
+
+[10:38]  
+質問の意図が正しく伝わらなかったので、もう少し詳しく説明します
+
+[10:39]  
+われわれはAEMのXMLが、下記のようにに空キーを利用した階層構造を持っていると想定しています。
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/.content.xml#L157
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/.content.xml#L846
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/.content.xml#L968
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/non-small-cell-lung-cancer/.content.xml#L40
+https://github.dena.jp/Thelxinoe/platinum-cms/blob/release_contents_20160926/jcr_root/content/mycode/my/report/non-small-cell-lung-cancer/detail/.content.xml
+
+[10:40]  
+上記の例なら
+my→report→non-small-cell-lung-cancer→detail
+
+[10:41]  
+これですと
+https://mycode.jp/my/report/non-small-cell-lung-cancer.html
+を表示するために
+my や my/report や my/report/non-small-cell-lung-cancer に配置されたXMLが参照されるのは良いのですが
+
+[10:42]  
+ページを見ると明らかに
+my/report/non-small-cell-lung-cancer/detailや
+my/report/non-small-cell-lung-cancer/genesなどさらに下部のXMLページが構築に使用されていたため
+AEMに下部ツリーをたどる、われわれの知らない仕組みがあるのかと疑っての質問でした (edited)
+
+[10:45]  
+ただし、上記については自己解決しました。
+苦肉の策なのかどうか分かりませんが、内部的に
+https://mycode.jp/my/report/non-small-cell-lung-cancer/genes.html?ajax=true
+などをXHRでリクエストして一時的にページを構築させ、
+それを https://mycode.jp/my/report/non-small-cell-lung-cancer.html にはめ込むという方策をとっていたのですね。
+
+uehara    [10:49 PM]  
+おっしゃる通りで、もともと四つのページを一つのページで表示するために頑張ったという。
+おそらくそのページだけだと思います。
+
+[10:57]  
+@some_body さん
+月曜日にコントローラーの設計について話しましょう
+my/report/xxxx/detail.html?ajax=true
+my/report/xxxx/genes.html?ajax=true
+my/report/xxxx/advice.html?ajax=true
+がリクエストされても良いように設計する必要があります（既に出来ているかもしれませんが）
+
+
+----- Yesterday November 13th, 2016 -----
+fujiura	[4:27 PM]  
+javaをrubyに変換するコマンドを追加しました。
+https://github.dena.jp/Thelxinoe/platinum-dev-env/pull/21
+
+これを使ってmodelの実装を進めます
+https://github.dena.jp/Thelxinoe/platinum-cms2/tree/develop/app/models
+
+fujiura	[10:24 PM]  
+課題：FREQUENCY_FORMATTER.format
+
+[10:25]  
+課題：toString から呼ばれるObjects.dump や Objects.toStringHelper
+
+
+----- Today November 14th, 2016 -----
+fujiura	[9:39 AM]  
+共有会！
+
+[9:41]  
+modelの移植はプルリク出しました。
+コード移植しただけで動作確認して無いのであっさりトップページでエラー出るかも知れず、そこは朝確認します
+https://github.dena.jp/Thelxinoe/platinum-cms2/pull/80
+
+layout
+./advice99/.content.xml:	cq:template=/apps/mycode/templates/report/**factors	factors**
+./advice_backup/.content.xml:	cq:template=/apps/mycode/templates/report/**diseasepage	diseasepage**
+cq:template=/apps/mycode/templates/report/advice	advice
+
+
+例外）
+./factor_sample/advice/.content.xml:	cq:template=/apps/mycode/templates/report/factors/advice	advice
+
+
+
+#TODO:
+ KSF-Mac006:cms some_body$ greper "#TODO:" ./app/ --include=*.*rb
+./app//controllers/benefits_controller.rb:6:    #TODO: 本来このパスはYAMLのcq:templateから読むべきか？
+./app//controllers/concerns/cartpage.rb:2:  #TODO:authorModeはここじゃない気がする
+./app//controllers/report/diseasepage_controller.rb:8:#TODO:ここで病名に応じたYAMLを読み込む
+./app//controllers/report_controller.rb:22:    #TODO: render template: 'report/diseasesummary'
+./app//controllers/report_controller.rb:52:    #TODO: return json # if request.xhr? for snp_list_graph
+./app//models/bookmark_info.rb:13:    #TODO:
+./app//models/chromosome.rb:21:    #TODO:
+./app//models/infomation_json.rb:15:  #TODO: Virtusのデフォルトコンストラクタでは下記がカバーできない可能性
+./app//models/sales_order_detail.rb:8:  #TODO: newInstance必要なら実装
+./app//models/sc_data.rb:27:  #TODO: newInstanceを必要なら実装する
+./app//models/simple_enquete_unique_key.rb:11:  #TODO:必要ならnewInstanceを実装する
+./app//models/testing_items_product.rb:12:  #TODO:equalsを必要なら実装する
+./app//views/mycode/components/content/_parsys.html.erb:4:    #properties ||= [] #TODO: properties がセットされてない場合　空配列にしないとInternal Server Error
+./app//views/mycode/components/content/_snptable.html.erb:5:<!-- #TODO: 「あなたの遺伝子型を確認する」propertiesを引き渡していないから。AEMではおそらくGsonか何らかの 以下のような多階層構造体。JSON?
+./app//views/mycode/components/content/cart/entry/_creditcard.html.erb:273:        <% if vm.stockCardInfo then #TODO: %>
+./app//views/mycode/components/content/report/commons/_supervisor.html.erb:65:    #TODO: 暫定対応：
+./app//views/report/commons/_graphsnplist.html.erb:77:    // <!-- #TODO:distribution-graph.pngは本来サーブレットからパラメーターをうけとる -->
+./app//views/report/commons/_supervisor.html.erb:65:    #TODO: 暫定対応：
+./app//views/report/disease/_distributiongraph.html.erb:41:    #TODO: ここはDeNAの以下ライブラリーで描画
+./app//views/report/disease/_distributiongraph.html.erb:75:    <%#TODO: graph.js +38 %>
+./app//views/report/disease/_distributiongraph.html.erb:149:  <b>#TODO:■Gsons 実装実装</b>
+./app//views/report/disease/_distributiongraph.html.erb:150:  #TODO: 
+./app//views/report/disease/_graphdna.html.erb:71:    // #TODO: DUMMY JSONを投げるとURLを返すサーブレット ?
+./app//views/report/disease/_graphdna.html.erb:85:  <!-- <%#TODO: =DnaGraphServl
+
+
+
+
+CMS-JSON
+KSF-Mac006:platinum-cms some_body$ ffgrep json
+./bundle/src/main/resources/assessments.json
+./bundle/src/main/resources/haploexam.json
+./bundle/src/main/resources/httpmock.analytics.json
+./bundle/src/main/resources/httpmock.bookmark.json
+./bundle/src/main/resources/httpmock.hg.json
+./bundle/src/main/resources/httpmock.hs.json
+./bundle/src/main/resources/httpmock.lifelog.json
+./bundle/src/main/resources/httpmock.member.campaign.json
+./bundle/src/main/resources/httpmock.member.json
+./bundle/src/main/resources/httpmock.store.delivery.json
+./bundle/src/main/resources/httpmock.store.json
+./bundle/src/main/resources/httpmock.store.order.cancel.json
+./bundle/src/main/resources/httpmock.testingitem.json
+./bundle/src/main/resources/jcrmock.pdservice.json
+./bundle/src/main/resources/phenotype-order.json
+./bundle/src/main/resources/pricing.json
+./bundle/src/main/resources/testing-items-product-detail.json
+./bundle/src/main/resources/testing-plans-category.json
+./bundle/src/main/resources/testing-plans.json
+./bundle/src/main/resources/trait-mypage-order.json
+./bundle/src/test/resources/httpmock.analytics.fail.json
+./bundle/src/test/resources/httpmock.analytics.json
+./bundle/src/test/resources/httpmock.hg.json
+./bundle/src/test/resources/httpmock.hs.json
+./bundle/src/test/resources/httpmock.inquiry.fail.json
+./bundle/src/test/resources/httpmock.inquiry.json
+./bundle/src/test/resources/httpmock.lab.json
+./bundle/src/test/resources/httpmock.lifelog.json
+./bundle/src/test/resources/httpmock.member.fail.json
+./bundle/src/test/resources/httpmock.member.json
+./bundle/src/test/resources/httpmock.member.platinum-sys-test.json
+./bundle/src/test/resources/httpmock.sitecatalyst.json
+./bundle/src/test/resources/httpmock.store.json
+./bundle/src/test/resources/httptest.analytics.fail.json
+./bundle/src/test/resources/httptest.analytics.json
+./content/src/main/content/jcr_root/apps/mycode-hs/components/page/dailytaskpage/json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/campaign/entry/address.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/cart/entry/shippingaddress/address.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/form/addressSearch/json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/form/tags/namespacesoptions.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/informationheader/header.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/informationlist/list.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/invitationheader/invitationheader.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/content/kit/shippingaddress/entry/address.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/page/basepage/sc_data.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/page/cartpage/enquete.json.POST.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/page/plans/report/summary/phenotype-order.json.jsp
+./content/src/main/content/jcr_root/apps/mycode/components/page/topics/index/refresh.json.jsp
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/fundamental/js/json2.js
+./content/src/test/testem/bin/generate_testem_json.js
+
+API
+	wget http://192.168.99.100:3333/api/v1/testing_items
+	wget http://192.168.99.100:3333/api/v1/members/2/invitation_acceptance
+ノウハウ共有
+activeModel
+	gorgeous
+	-      Hash.from_xml(to_s)
++      # Hash.from_xmlはキー名のハイフンをアンダースコアにしてしまうので、パーサーを変更
++      ActiveSupport::XmlMini.parse(to_s)
++      # Hash.from_xml(to_s)
+	
+	activemodel
+	確認もかねて共有します
+■10秒で思い出すサーバー側validation実装■
+modelにActiveModel::Modelをincludeして、validatesを以下のように設定しよう！
+validates :email_confirm, :presence => {:message => "EMAIL_CONFIRMATION_MISMATCH" }
+
+※ActiveModel::ModelをincludeするとStrong Parametersの設定が必要。やらないとActiveModel::ForbiddenAttributesErrorがraiseされます。
+
+任意のタイミングでmodel.valid(またはinvalid)して入力チェック！
+エラーがあるとmodel.errors.messagesにエラーメッセージがはいるので、うまいことviewにもってこよう！
+
+↓フォームのある画面担当の人は見覚えあると思いますこういうscript
+<script>MyCode.Commons.Http.Response.setErrors(<%= Gsons.VANILLA.toJson(controller.getForm().getErrors().keySet()) %>);</script>
+validationのエラーメッセージを以下のように設定すると、jsが入力欄を赤くしてくれます！
+<script>MyCode.Commons.Http.Response.setErrors(["EMAIL_CONFIRMATION_MISMATCH"]);</script>
+global, init, variable
+KSF-Mac006:cms some_body$ greper "page/report/" ./app/views/mycode/components/page/report --include=*.erb --include=*.js* --include=*.*ml
+./app/views/mycode/components/page/report/diseasecustompage/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/basepage"
+./app/views/mycode/components/page/report/diseasegenepage/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/diseasepage"
+./app/views/mycode/components/page/report/diseasepage/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/basepage"
+./app/views/mycode/components/page/report/diseasesummarypage/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/summarypage"
+./app/views/mycode/components/page/report/factors/advice/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/factors/base"
+./app/views/mycode/components/page/report/factors/index/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/factors/base"
+./app/views/mycode/components/page/report/factors/recipe/base/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/factors/base"
+./app/views/mycode/components/page/report/factors/recipe/index/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/factors/recipe/base"
+./app/views/mycode/components/page/report/factors/recipe/item/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/factors/recipe/base"
+./app/views/mycode/components/page/report/traitsgenepage/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/traitspage"
+./app/views/mycode/components/page/report/traitspage/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/basepage"
+./app/views/mycode/components/page/report/traitsummarypage/.content.xml:5:    sling:resourceSuperType="mycode/components/page/report/summarypage"
+KSF-Mac006:cms some_body$ greper "page/report/.*init" ./* --include=*.erb --include=*.js* --include=*.*ml
+./app/views/report/diseasepage/_content.html.erb:35:# render '/mycode/components/page/report/diseasesummarypage/init.html.erb', properties: properties, myRequest: myRequest, pageContext: @pageContext, disease: Disease.dummy, member:@member
+KSF-Mac006:cms some_body$ greper "page/report/.*variable" ./* --include=*.erb --include=*.js* --include=*.*ml
+./app/views/report/diseasepage/_content.html.erb:34:# render '/mycode/components/page/report/diseasesummarypage/variable.html.erb', properties: properties, myRequest: myRequest, pageContext: @pageContext, disease: Disease.dummy, member:@member
+KSF-Mac006:cms some_body$ greper "page/report/.*global" ./* --include=*.erb --include=*.js* --include=*.*ml
+DiseaseSummarycontroller init-variables
+ <% controller.request = myRequest %>
+    <% controller.response = myResponse %>
+    <% controller.currentPage = currentPage %>
+    <% controller.resourceResolver = resourceResolver %>
+    <% controller.memberService = sling.getService(MemberService.class) %>
+    <% controller.productService = sling.getService(ProductService.class) %>
+    <% controller.hgService = sling.getService(HgService.class) %>
+    <% controller.storeService = sling.getService(StoreService.class) %>
+    <% controller.pdService = sling.getService(PhenotypeDescriptionProvider.class) %>
+<% member = controller.getMember()  #scope=request %>
+<% fullName = member.fullName #scope=request %>
+<% gender = fn:toLowerCase(member.gender) #scope=request %>
+<% otherGenderName = gender == 'male' ? '女性' : '男性' #scope=request %>
+ReportSummaryPage init
+<jsp:useBean id="controller" class="com.dena.cdo.platinum.controllers.ReportSummaryController" scope="request">
+    <jsp:setProperty name="controller" property="request" value="<%=myRequest%>"/>
+    <jsp:setProperty name="controller" property="response" value="<%=myResponse%>"/>
+    <jsp:setProperty name="controller" property="currentPage" value="<%=currentPage%>"/>
+    <jsp:setProperty name="controller" property="resourceResolver" value="<%=resourceResolver%>"/>
+    <jsp:setProperty name="controller" property="memberService" value="<%=sling.getService(MemberService.class)%>"/>
+    <jsp:setProperty name="controller" property="storeService" value="<%=sling.getService(StoreService.class)%>"/>
+    <jsp:setProperty name="controller" property="hgService" value="<%=sling.getService(HgService.class)%>"/>
+    <jsp:setProperty name="controller" property="pdService" value ="<%=sling.getService(PhenotypeDescriptionProvider.class)%>"/>
+    <jsp:setProperty name="controller" property="productService" value ="<%=sling.getService(ProductService.class)%>"/>
+class Report::SummarypageController < MembercontentpageController
+	class Report::DiseasesummarypageController < Report::SummarypageController
+
+`JS CSS clientLIB`
+cq:includeClientLib  categoryはAEMのJSやCSSを名前空間管理下からよみこむAEMタグらしいです
+ref: https://docs.adobe.com/docs/en/cq/5-6/howto/taglib.html#%3Ccq:includeClientLib%3E
+
+<script type="text/javascript" src=
+<link rel="stylesheet" href=“
+
+に置き換えた方がいいですかね？
+以下のjsp/erb内の当該AEMタグが出現場所です；
+
+
+$ greper "cq:includeClientLib categories" app/views/mycode/components/*/report/* --include=*.*rb
+app/views/mycode/components/page/report/diseasecustompage/_content.html.erb:20:<cq:includeClientLib categories="mycode.jquery.blockUI"/>
+app/views/mycode/components/page/report/diseasepage/_content.html.erb:16:    <cq:includeClientLib categories="mycode.ajaxpageloader"/>
+app/views/mycode/components/page/report/diseasepage/_content.html.erb:219:    <cq:includeClientLib categories="mycode.jquery.blockUI"/>
+app/views/mycode/components/page/report/diseasepage/_modal.html.erb:30:<cq:includeClientLib categories="mycode.modal"/>
+app/views/mycode/components/content/report/disease/_reportgraph.html.erb:6:<cq:includeClientLib categories="mycode.jquery.ui"/>
+app/views/mycode/components/page/report/traitsgenepage/_content.html.erb:12:<cq:includeClientLib categories="mycode.jquery.blockUI"/>
+app/views/mycode/components/page/report/traitspage/_content.html.erb:15:    <cq:includeClientLib categories="mycode.ajaxpageloader"/>
+app/views/mycode/components/page/report/traitspage/_content.html.erb:132:<cq:includeClientLib categories="mycode.jquery.blockUI"/>
+app/views/mycode/components/page/report/traitspage/_modal.html.erb:30:<cq:includeClientLib categories="mycode.modal"/>
+app/views/mycode/components/page/report/update/_container.html.erb:197:<cq:includeClientLib categories="mycode.modal"/>
+app/views/mycode/components/page/report/diseasesummarypage/_container.html.erb:527:<cq:includeClientLib categories="mycode.accordion,mycode.modal,mycode.report.phenotype.summary"/>
+app/views/mycode/components/page/report/traitsummarypage/_container.html.erb:459:<cq:includeClientLib categories="mycode.accordion,mycode.modal,mycode.report.phenotype.summary"/>
+
+
+app/views/mycode/components/content/report/commons/_dialogContent.html.erb:75:<cq:includeClientLib categories="mycode.report.commons.lockdialog"/>
+app/views/mycode/components/page/report/diseasepage/_content.html.erb:17:    <cq:includeClientLib categories="mycode.report.commons.basepage"/>
+app/views/mycode/components/page/report/traitspage/_content.html.erb:14:    <cq:includeClientLib categories="mycode.report.commons.basepage"/>
+app/views/mycode/components/content/report/disease/_advice.html.erb:175:<cq:includeClientLib categories="mycode.report.disease.advice"/>
+app/views/mycode/components/page/report/diseasepage/_content.html.erb:18:    <cq:includeClientLib categories="mycode.report.disease.advicetable"/>
+app/views/mycode/components/content/report/disease/_graphdna.html.erb:11:<cq:includeClientLib categories="mycode.report.disease.graphdna"/>
+app/views/mycode/components/content/report/disease/_reportgraph.html.erb:73:<cq:includeClientLib categories="mycode.disease.reportgraph"/>
+app/views/mycode/components/content/report/disease/_distributiongraph.html.erb:8:<!--cq:includeClientLib categories="mycode.report.distributiongraph"/-->
+
+app/views/mycode/components/page/report/factors/advice/_container.html.erb:33:<cq:includeClientLib categories="mycode.advice.highlight"/>
+app/views/mycode/components/page/report/factors/index/_content.html.erb:22:<cq:includeClientLib categories="mycode.advice.highlight"/>
+app/views/mycode/components/content/report/commons/_topics.html.erb:35:<cq:includeClientLib categories="mycode.topics.ellipsis"/>
+`headlibs`
+init.js
+
+mycode.js
+mycode/const.js
+
+mycode/env.js
+mycode/i18n.js
+
+mycode/commons.js
+mycode/commons/base.js
+mycode/commons/base/number.js
+mycode/commons/base/string.js
+mycode/commons/base/mail.js
+mycode/commons/base/date.js
+mycode/commons/http.js
+mycode/commons/http/response.js
+mycode/commons/http/cookie.js
+mycode/commons/storage.js
+mycode/commons/storage/keymaster.js
+mycode/commons/storage/localstorage.js
+mycode/commons/storage/sessionstorage.js
+mycode/commons/ui.js
+mycode/commons/ui/autoheight.js
+mycode/commons/ui/header.js
+mycode/commons/ui/dropdown.js
+mycode/commons/ui/tooltip.js
+mycode/commons/ui/pagetopbutton.js
+mycode/commons/ui/mypagecarousel.js
+mycode/commons/ui/toppagecarousel.js
+mycode/commons/ui/mobileheadermenu.js
+mycode/commons/ui/progressbar.js
+
+mycode/models.js
+mycode/models/member.js
+mycode/models/phenotype.js
+mycode/models/advice.js
+
+mycode/collection.js
+mycode/collection/phenotype.js
+mycode/collection/advice.js
+
+mycode/service.js
+mycode/service/report.js
+mycode/service/advice.js
+mycode/service/discovery.js
+
+mycode/components.js
+mycode/components/form.js
+mycode/components/form/keycode.js
+mycode/components/form/formatter.js
+mycode/components/form/validator.js
+mycode/components/form/inputhelper.js
+mycode/components/form/addresssearch.js
+mycode/components/form/checksubmit.js
+mycode/components/form/saver.js
+mycode/components/form/passwordrevealer.js
+mycode/components/recipe.js
+mycode/components/report.js
+mycode/components/advice.js
+mycode/components/discovery.js
+
+mycode/components/form/validator/telnumber.js
+
+mycode/sitecatalyst.js
+
+common.js
+legacy_form_validator.js
+graph.js
+anchors_indep.js
+~                  
+
+`report-clientlibs`
+KSF-Mac006:platinum-cms some_body$ find ./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/* |grep txt |cat
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/commons/basepage/js.txt
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/commons/lockdialog/css.txt
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/commons/lockdialog/js.txt
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/disease/advice/js.txt
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/disease/advicetable/js.txt
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/phenotype/summary/js.txt
+./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/trait/summary/js.txt
+KSF-Mac006:platinum-cms some_body$ find ./content/src/main/content/jcr_root/etc/designs/mycode/clientlibs/report/* |grep txt |xargs cat
+#base=.
+basepage.js#base=css
+lockdialog.css#base=js
+lockdialog.js#base=.
+advice.js
+#base=.
+advicetable.js
+
+#base=.
+init.js
+values.js
+controllers.js
+tooltip.js
+
+#base=.
+traitsummary.js
+KSF-Mac006:platinum-cms some_body$ 
+

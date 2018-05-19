@@ -1,0 +1,119 @@
+# 自動生成されるものはチェック対象から外す
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'test/**/*'
+    - 'config/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - '**/*.slim'
+    - '**/*.haml'
+    - '**/*.sql'
+    - spec/spec_helper.rb
+    - spec/integration_helper.rb
+    - script/rails
+  DisplayCopNames: true
+
+# 複数行にわたるメソッドのインデントチェックを無効化する
+Style/MultilineOperationIndentation:
+  Enabled: false
+# spec ファイルでは {} ブロックを複数行で書くのを許可する
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+Style/SpaceBeforeFirstArg:
+  Exclude:
+    - 'db/migrate/*.rb'
+# 要素数が3個以内の配列については []で宣言してもよい
+Style/WordArray:
+  MinSize: 3
+Style/SymbolArray:
+  MinSize: 3
+# has_ から始まるメソッドを許可する
+Style/PredicateName:
+  NamePrefixBlacklist:
+    - "is_"
+    - "have_"
+  NamePrefix:
+    - "is_"
+    - "have_"
+# ネストは5段まで許可
+Metrics/BlockNesting:
+  Max: 5
+# 一部のファイルについてはクラスに関する説明不用
+Style/Documentation:
+  Exclude:
+    - 'db/migrate/*'
+    - 'config/application.rb'
+
+
+# class/module/block/method/lineの最大行数 文字数
+Metrics/ClassLength:
+  Max: 500
+  Exclude:
+Metrics/ModuleLength:
+  Max: 500
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+Metrics/MethodLength:
+  CountComments: false  # count full line comments?
+Metrics/LineLength:
+  Max: 160
+
+
+#メソッドの難解さ
+Metrics/AbcSize:
+  Max: 100
+Metrics/CyclomaticComplexity:
+  Max: 20
+  Exclude:
+Metrics/PerceivedComplexity:
+  Max: 20
+
+# rubocopデフォルトが非実用的におもえるもの ################
+BlockComments:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/MutableConstant:
+  Enabled: false
+Style/RedundantReturn:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+
+# 以下をcomment-inすると さらにゆるくなる # ################
+# #Comments should start with a space.
+# LeadingCommentSpace:
+#   Enabled: false
+# #Redundant curly braces around a hash parameter.
+# BracesAroundHashParameters:
+#   Enabled: false
+# #Missing top-level class documentation comment.
+# Documentation:
+#   Enabled: false
+# #Align the elements of a array literal if they span more than one line.
+# AlignArray:
+#   Enabled: false
+# #Cyclomatic complexity for exec_transform is too hig
+# CyclomaticComplexity:
+#   Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+# 文字列は"
+Style/StringLiterals:
+  Enabled: false
+#ruby 1.8系で文法エラー
+Style/SymbolArray:
+  Enabled: false
+#Proc.newをprocニ置き換えるの規則も非現実的
+# 文字列 and return をつかいたいので && || を必ずしも推奨しない
+Style/AndOr:
+  Enabled: false
+

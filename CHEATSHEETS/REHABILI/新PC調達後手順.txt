@@ -1,0 +1,31 @@
+Off2k7のPW確認
+visus/FW確認
+HTMLマニュアル確認・DL
+CD/DCD/D:¥確認
+復元ポイント作成
+
+バックアップツール標準化（日富士通推奨）
+電源設定
+Virus/VMwareWS7.1
+
+POST
+	ENTER
+
+Fn+;->brightness
+Fn+F-->recovery
+Fn+f->diagnotics
+
+
+
+
+Win7
+	IE　proxy設定
+	performance->custom->画像縮小版とキャッシュとマウスの陰だけON
+	Wireless-gate-> some_body2
+	OS認証
+	claunchスタートメニュー（removal ediaからの登録は不可｡一旦exeを固定HDDにおいえ登録して､パス書き換え）
+
+
+IE既定の検索プロバイダーの設定
+	Google既定,goo追加
+	Yahoos削除

@@ -1,0 +1,72 @@
+#Memcached
+	//install
+		wget -q -O - http://www.atomicorp.com/installers/atomic |sh
+		yum install memcached
+		vi /etc/sysconfig/memcached
+			PORT=”11211″
+		config.cache_classes     = false
+		//**optional   config.cache_store = :dalli_store****
+		service memcached start
+	//test on Rails
+		rails c --debugger
+		Rails.cache.write("foo", "フー", :expires_in => 10)
+		foo")
+		Rails.cache.write("key", [1,2,3], expires_in: 1.hour)  # １時間で消える。
+		// もちろんオブジェクトもキャッシュ可能
+		Rails.cache.write('hash', {'hoge' => 'piyo', 'foo' => 'buz'})
+		Rails.cache.read('hash') # => {'hoge' => 'piyo', 'foo' => 'buz'}
+		Rails.cache.clear # すべてのキャッシュをクリア
+	//Railsへのくみこみかた
+		//CSV-locading
+			//Rails.root/lib/batches に以下のファイルを配置
+			　area.csv
+			　address.csv
+			　shelter.csv
+			　memcache_store.rb
+			//バッチを実行
+				rails runner Batches::MemcacheStore.execute
+			//値の取得テスト
+				Rails.cache.read("area")["6"]["name"]
+			// ==== options
+				実行環境の指定 :: -e production
+			以下の形式でstoreする
+				file => {
+					code => { 
+						項目1 => value,
+						項目2 => value,
+						項目3 => value,
+						...
+					}
+				}
+			// 住所のオートコンプリート用に以下の値もstoreする
+			　state  : 都道府県
+			　city   : 市区町村
+			　street : 町丁目
+				state => {
+					code => name,
+					code => name,
+					code => name,
+					...
+				}
+		rails runner Batches::MemcacheStore.execute
+		class User < ActiveRecord::Base
+			// Userインスタンスに hoge1, hoge2 という名前で保持期間１時間のキャッシュを使用する場合
+			cache_attr_accesor :hoge1, :hoge2, :span => 1.hour
+		end
+		//こんな感じで使用できます。放っておけば:spanで指定した時間経過後にキャッシュはクリアされます。
+			u = User.find(300)
+			u.hoge1 = 'value1'
+			u.hoge2 = 'value2'
+		// 実際には下記と等価になります
+			Cache.read('User_hoge1', 300)
+			Cache.write('User_hoge1', 300, 'value1', 1.hour)
+		//また、モデルのインスタンスだけでなくクラスの属性としても使用することができます。
+			class User < ActiveRecord::Base
+				class << self
+					cache_attr_accessor :hoge1
+					end
+			end
+			User.hoge1 = 'value1'  #デフォルトでは２週間保持されます
+	
+#Redis
+

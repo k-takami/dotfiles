@@ -1,0 +1,7 @@
+to_text
+%s/<!--//gc | %s/-->//gc | %s/<\/?\w*>//gc | %s/<\/*\w*>//gc | %s/&nbsp;/ /gc | %s/\n\n\n*/\r/gc
+
+boolean文字列判定は
+	storeTextPresent|文字列|レシーバー でレシーバーは真偽文字列だが判定は値そのもの
+	if|レシーバー==true
+	if|レシーバー==false

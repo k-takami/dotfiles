@@ -1,0 +1,114 @@
+#ntpd 
+	service ntpd stop;ntpdate clock.nc.fukuoka-u.ac.jp;service ntpd start; date; 
+	//+印がでないならば以下インフラチェック
+		kconfig |grep ntp 
+		netstat -an |grep -niE "(ntp|123)" 
+		iptables -I INPUT -p udp --dport 123 -j ACCEPT 
+		iptables -L :q
+	// vi /etc/cron.hourly/ntp.cron
+		#!/bin/sh 
+		/usr/sbin/ntpdate clock.nc.fukuoka-u.ac.jp 
+	// vi /etc/ntp/step-tickers
+		clock.nc.fukuoka-u.ac.jp
+#DNSの設定
+	/etc/resolv.conf
+		nameserver 192.168.137.1  # VMnet8のIPアドレスを指定
+	#DNS records
+		A-CNAME NS-MX-SOA : Address
+#SAMBA
+  cat " [opt]\n path = /home/apl\n read only = No\n " >> /etc/samba/smb.conf
+  /etc/rc.d/init.d/smb restart
+  #スタート＞ファイル名を指定して実行＞(VMのIP)でつながります #ネットワークドライブを割り当てると便利
+
+#iptables
+	#停止
+	/etc/init.d/iptables stop
+	#無効
+	chkconfig iptables off
+	#状況確認
+	/etc/init.d/iptables status
+	vi /etc/sysconfig/tables
+	
+	#iptables-webmin-way
+		#apt-get install iptables fwbuilder ssh-server
+		sudo su
+		iptables -F
+		sh filter.sh
+		iptables -L
+		iptables-save > /etc/iptables.up.rules
+		iptables-restore < /etc/iptables.up.rules
+		#webmin set
+		http://sei.qee.jp/docs/program/hta/makeDeny/index.html
+		iptables  http://www.hakusan.tsg.ne.jp/tjkawa/lib/krfilter/index.j
+	#webalizer-------------------------------------------------------------------------------
+		#かならずshellで作業。vimのシェルコマンドではうまくslinkがつくられない
+		#cd #{RAILS_ROOT}/public
+		!sudo ln -s var/log/webalizer webalizer
+#SMTP-AUTH設定 #curys-sasl 
+	cyrus-saslは非常に多機能で、
+	一般的な テキスト 認証の他に暗号化認証も扱うことができますし、
+	構築中のLinuxサーバー の ユーザーアカウント 名とパスワードをそのまま認証に使うことも、
+	別の データベース を使って認証を行うこともできるようになっています。
+	//#install
+		cyrus-sasl-xxxxxxx
+		cyrus-sasl-plain
+	vi /usr/lib/sasl2/smtpd.conf
+		pwcheck_method: saslauthd
+	service saslauthd start
+		saslauthdを起動中:                                         [  OK  ]
+	vim /etc/postfix/main.cf
+		myorigin = $myhostname
+			"SMTP Auth"の利用を許可する
+		smtpd_sasl_auth_enable = yes
+		"anonymous"接続を拒否する。
+		smtpd_sasl_security_options = noanonymous
+		"OutlookExpress対応
+		broken_sasl_auth_clients = yes
+		smtpd_sasl_local_domain = $mydomain
+		smtpd_recipient_restrictions =
+			permit_mynetworks,
+			permit_sasl_authenticated は、sasl認証できたものだけ受け入れる。
+			permit_sasl_authenticated,
+			reject で、その他は、拒否する。
+			reject_unauth_destination,
+			permit_auth_destination で、認証できたものは、受け入れる。
+			permit_auth_destination,
+			reject_unauth_destination で、認証できなかったものは、拒否する。
+			reject
+			permit_mynetworksは、サーバー内のネットワーク、つまり内部からの利用を許可するものです。
+			etc/init.d/postfix restart
+	//curys-sasl password config
+		/useradd some_body -s /sbin/nologin
+		/usr/sbin/saslpasswd -c some_body
+		/usr/sbin/sasldblistusers
+		chgrp postfix /etc/sasldb
+		chmod 640 /etc/sasldb
+#postfix
+	#インストール
+	yum install postfix
+	#設定のながれ
+		cp -p /etc/postfix/master.cf
+		vi /etc/postfix/main.cf
+		hostname
+		mkdir /root/Maildir; mkdir /home/apl/Maildir
+		chmod 700  /root/Maildir; chmod 700  /home/apl/Maildir
+		chown root:root  /root/Maildir
+		chown apl:apl  /home/apl/Maildir
+		/etc/rc.d/init.d/postfix restart
+	#動作確認
+		#ポート開放確認
+			telnet localhost 25
+			quit
+		#サーバーローカルshellレベルでの直接送信
+			echo test|sendmail root
+		#Mailbox確認(Mailbox型式は暫定的にMailDir型式)
+			date;ls -alt /[$USERHOME]/Maildir/new
+		cat /root/Maildir/new/*
+			例)  date;ls -alt /root/Maildir/new
+			date;ls -alt /root/Maildir/new; ls -alt  /home/apl/Maildir/new/
+			cat /home/apl/Maildir/new/13617*
+		#potfixログ確認
+			tail /var/log/maillog
+		BCC=ON
+		#A社からは外部不特定通信先へのSSH通信(:443)とSMTP通信(:25)はみとめられていない｡したがってSMTP機能をつかったﾒｰﾙ配信機能はローカルホスト環境で行った｡
+		

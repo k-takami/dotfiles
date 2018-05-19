@@ -1,0 +1,271 @@
+                                                                                           Last Update        2010/03/03
+　はじめての自宅サーバ構築 - Fedora/CentOS -                                                  Visitors         4,813,982
+                                                                                             Pageviews        20,421,113
+                                                         It opened to 2004/09/19.         Today(IP/PV)       1,107/5,657
+
+    ホーム          サイトマップ     更新履歴        質問掲示板       雑談掲示板       接続機器評価掲示 リンク[new](3)
+                                                                                       板
+
+                            このページは表示専用です。新規投稿・レスや最新情報はこちらです。
+
+   [file_y3] スパム等のアクセス禁止について                                                                  [img_pc]
+
+   日時： 2006/07/31 19:57
+   名前： house
+
+       ①不明点・障害内容：スパム等のアクセス禁止の記述（バーチャルドメイン）
+       ③Distribution　　：ｆｃ５
+       ⑤ネットワーク構成：バーチャルドメインでの実験
+
+       いつも大変お世話になっております。
+       いろいろ検索エンジンを駆使して、
+       スパムアクセスの禁止のリスト・方法を見つけました。
+
+       一般的には/etc/httpd/conf/httpd.conf への記述でしょうが、
+       これをバーチャルドメインの記述に記載することって出来ますでしょうか？
+
+       次ページに記載せて頂きます・
+
+       うまくスパム等のアクセスを拒否できるでしょうか？
+       もしかすると、根本的なところを間違っているかもしれませんが、
+       よろしかったらコメントをお願いします。
+
+
+
+
+           デルではおとくなキャンペーン実施中！*                レノボ Web 広告限定ストア（キャンペーン＆新着情報）*
+
+   [file] Re: スパム等のアクセス禁止について ( No.1 )                                                        [img_pc]
+
+   日時： 2006/07/31 20:08
+   名前： house
+
+       例）
+       /etc/httpd/conf.d/vierualtest001.conf を作成
+
+       <VirtualHost *:80>
+       ServerName main.test-0001.com
+       ServerAlias test-0001.com *.test-0001.com
+       DocumentRoot /var/www/test-0001
+
+       # 韓国の拒否
+       # Bad agent ※ googleは許可(笑)
+       SetEnvIf User-Agent "pompos.html" BadRobot
+       SetEnvIf User-Agent "WWWC" BadRobot
+       SetEnvIf User-Agent "WebFetch" BadRobot
+       SetEnvIf User-Agent "htdig" BadRobot
+       SetEnvIf User-Agent "ia_archiver" BadRobot
+       SetEnvIf User-Agent "Openfind" BadRobot
+       SetEnvIf User-Agent "TurnitinBot" BadRobot
+       SetEnvIf User-Agent "dloader" BadRobot
+       SetEnvIf User-Agent "FAST-WebCrawler" BadRobot
+       SetEnvIf User-Agent "Sidewinder" BadRobot
+       SetEnvIf User-Agent "Mercator" BadRobot
+       SetEnvIf User-Agent "BaiDuSpider" BadRobot # 040428 typo修正 by doggie
+       SetEnvIf User-Agent "WISEnutbot" BadRobot
+       SetEnvIf User-Agent "mogimogi" BadRobot
+       SetEnvIf User-Agent "Rumours-Agent" BadRobot
+       SetEnvIf User-Agent "Openbot" BadRobot
+       SetEnvIf User-Agent "Scooter" BadRobot
+       SetEnvIf User-Agent "SideWinder" BadRobot
+       SetEnvIf User-Agent "CyberSpider" BadRobot
+       SetEnvIf User-Agent "Gaisbot" BadRobot
+       SetEnvIf User-Agent "InternetLinkAgent" BadRobot
+       SetEnvIf User-Agent "slurp@inktomi.com" BadRobot
+       SetEnvIf User-Agent "NPBot" BadRobot
+       SetEnvIf User-Agent "searchhippo" BadRobot
+       SetEnvIf User-Agent "grub-client" BadRobot
+       SetEnvIf User-Agent "MSNBOT" BadRobot # ここまでは自前分
+       # 追加はここから
+       SetEnvIf User-Agent "www.kokotoi.org" BadRobot # Zao/0.2対策 by doggie
+       SetEnvIf User-Agent "Tkensaku" BadRobot # by doggie
+       SetEnvIf User-Agent "HenryTheMiragoRobot" BadRobot # by たかはしようすけ
+       # 韓国の拒否ここまで
+
+
+   [file] Re: スパム等のアクセス禁止について ( No.2 )                                                        [img_pc]
+
+   日時： 2006/07/31 20:00
+   名前： house
+
+       # アダルトサイト拒否
+       # SPAM URL によく含まれる単語ベースでのフィルタ
+       SetEnvIf Referer "^http://([^/]*[.-])?(adult|amateurs?|anal|asian|asiantrans|bea?sti?ali?ty|bondage|camera|
+       dating|erotic|femdom|fetish|fick|fuck|fucking|gang-?bang|gay|girls?|hand-?job|hardcore|hentai|incest|
+       masturbating|mature|nude|nudity|peeing|porn|pussy|rape|rope|sex|animalsex|blacksex|cybersex|farmsex|petsex|
+       telefonsex|zoosex|sexe|sexkontakt|tits?|transex|viagra|videos|webcams|xxx)[.-]" referer_spam
+       # 上記に漏れてしまう URL への個別対応
+       SetEnvIf Referer "^http://babe-image-sodomie\.triplexxxhardcore\.com" referer_spam
+       SetEnvIf Referer "^http://big-beautiful-busty-babes\.symbiantgroup\.com" referer_spam
+       SetEnvIf Referer "^http://black-sluts-teen\.sanodbor\.org" referer_spam
+       SetEnvIf Referer "^http://blondes-drinking-toy-little\.wijlv\.org" referer_spam
+       SetEnvIf Referer "^http://chicas-calientes-putas-amor-gratis\.womens-5-a-side\.net" referer_spam
+       SetEnvIf Referer "^http://cumshots-cum-shots-oral\.eatthemusic\.com" referer_spam
+       SetEnvIf Referer "^http://free-teen-movies\.esrhelp\.com" referer_spam
+       SetEnvIf Referer "^http://gayteenporn\.host\.sk" referer_spam
+       SetEnvIf Referer "^http://gayteensites\.motime\.com" referer_spam
+       SetEnvIf Referer "^http://melada-oral-pulsar-fotografias-sexo-fotos\.ceramicasanjudas\.com" referer_spam
+       SetEnvIf Referer "^http://moore-gynecologist-redheads-hard-chat-rooms\.rn-recruiter\.com" referer_spam
+       SetEnvIf Referer "^http://positions-toplesspics-freeboobs-clit-blackcock-fatsex\.nareia\.com" referer_spam
+       SetEnvIf Referer "^http://pregnant-world\.ipos-aspboa\.org" referer_spam
+       SetEnvIf Referer "^http://sexy-gros-seins-de-jeunes-lesbiennes\.feldmanforcongress\.com" referer_spam
+       SetEnvIf Referer "^http://shit-pissing-dwarf-transvestism-transexual-fat\.vieboard\.net" referer_spam
+       SetEnvIf Referer "^http://www\.allergy-medication\.net" referer_spam
+       SetEnvIf Referer "^http://www\.animals-shirts-cat-dog-t-shirts-hawaiian-shirt\.us" referer_spam
+       SetEnvIf Referer "^http://www\.beastialitystories\.info" referer_spam
+       SetEnvIf Referer "^http://www\.big-dicks\.name" referer_spam
+       SetEnvIf Referer "^http://www\.blonde-brunette\.com" referer_spam
+       SetEnvIf Referer "^http://www\.body-piercing\.us" referer_spam
+       SetEnvIf Referer "^http://www\.capitalraiser\.com" referer_spam
+       SetEnvIf Referer "^http://www\.carpiar\.net" referer_spam
+       SetEnvIf Referer "^http://www\.cheap-insurance\.us" referer_spam
+       SetEnvIf Referer "^http://www\.cum-shot\.name" referer_spam
+       SetEnvIf Referer "^http://www\.cureage\.com" referer_spam
+       SetEnvIf Referer "^http://www\.deepanalmpegs\.com" referer_spam
+       SetEnvIf Referer "^http://www\.discount-drugs\.name" referer_spam
+       SetEnvIf Referer "^http://www\.evenway\.net" referer_spam
+       SetEnvIf Referer "^http://www\.findish\.com" referer_spam
+       SetEnvIf Referer "^http://www\.findspot\.net" referer_spam
+       SetEnvIf Referer "^http://www\.freempggals\.com" referer_spam
+       SetEnvIf Referer "^http://www\.gayfunplaces\.com" referer_spam
+       SetEnvIf Referer "^http://www\.glory-hole\.name" referer_spam
+       SetEnvIf Referer "^http://www\.goelf\.com" referer_spam
+       SetEnvIf Referer "^http://www\.gofolks\.com" referer_spam
+       SetEnvIf Referer "^http://www\.hard-boys\.com" referer_spam
+       SetEnvIf Referer "^http://www\.healhome\.com" referer_spam
+       SetEnvIf Referer "^http://www\.healwizard\.com" referer_spam
+       SetEnvIf Referer "^http://www\.i-ru\.net" referer_spam
+       SetEnvIf Referer "^http://www\.inceststories\.ws" referer_spam
+       SetEnvIf Referer "^http://www\.ixay\.com" referer_spam
+       SetEnvIf Referer "^http://www\.makehelp\.com" referer_spam
+       SetEnvIf Referer "^http://www\.mominaction\.info" referer_spam
+       SetEnvIf Referer "^http://www\.mygidi\.com" referer_spam
+       SetEnvIf Referer "^http://www\.myremed\.com" referer_spam
+       SetEnvIf Referer "^http://www\.ownbody\.com" referer_spam
+       SetEnvIf Referer "^http://www\.pbite\.com" referer_spam
+       SetEnvIf Referer "^http://www\.perverted-dreams\.com" referer_spam
+       SetEnvIf Referer "^http://www\.phind\.net" referer_spam
+       SetEnvIf Referer "^http://www\.scat-movies\.info" referer_spam
+       SetEnvIf Referer "^http://www\.shemale\.name" referer_spam
+       SetEnvIf Referer "^http://www\.shirts-t-shirts\.com" referer_spam
+       SetEnvIf Referer "^http://www\.snomer\.com" referer_spam
+       SetEnvIf Referer "^http://www\.striptrends\.com" referer_spam
+       SetEnvIf Referer "^http://www\.thispot\.com" referer_spam
+       SetEnvIf Referer "^http://www\.video-4-free\.com" referer_spam
+       SetEnvIf Referer "^http://www\.vitazine\.com" referer_spam
+       SetEnvIf Referer "^http://www\.xuev\.net" referer_spam
+       SetEnvIf Referer "^http://www\.zoothumbnails\.com" referer_spam
+       # アダルトサイト拒否ここまで
+
+       # 以上のアクセス拒否
+
+       <Files *>
+       Order allow,deny
+       Allow from all
+       Deny from env=referer_apam
+       Deny from env=BadRobot
+       </Files>
+
+       </VirtualHost>
+
+   [file] Re: スパム等のアクセス禁止について ( No.3 )                                                        [img_pc]
+
+   日時： 2006/07/31 20:07
+   名前： house
+
+       もし、バーチャルの記述で無理な場合、
+       バーチャルドメインのディレクトリに
+       .htaccess
+       を作成し、これに
+
+       # 韓国からのアクセスを拒否
+       # Bad agent ※ googleは許可(笑)
+       SetEnvIf User-Agent "pompos.html" BadRobot
+       SetEnvIf User-Agent "WWWC" BadRobot
+       SetEnvIf User-Agent "WebFetch" BadRobot
+       省略
+       # 韓国からのアクセスを拒否ここまで:wq
+
+       # アダルトサイト等からのアクセス拒否ここから
+       # SPAM URL によく含まれる単語ベースでのフィルタ
+       SetEnvIf Referer "^http://([^/]*[.-])?(adult|amateurs?|anal|asian|asiantrans|bea?sti?ali?ty|bondage|camera|
+       dating|erotic|femdom|fetish|fick|fuck|fucking|gang-?bang|gay|girls?|hand-?job|hardcore|hentai|incest|
+       masturbating|mature|nude|nudity|peeing|porn|pussy|rape|rope|sex|animalsex|blacksex|cybersex|farmsex|petsex|
+       telefonsex|zoosex|sexe|sexkontakt|tits?|transex|viagra|videos|webcams|xxx)[.-]" referer_spam
+       # 上記に漏れてしまう URL への個別対応
+       SetEnvIf Referer "^http://babe-image-sodomie\.triplexxxhardcore\.com" referer_spam
+       SetEnvIf Referer "^http://big-beautiful-busty-babes\.symbiantgroup\.com" referer_spam
+       SetEnvIf Referer "^http://black-sluts-teen\.sanodbor\.org" referer_spam
+
+       省略
+
+       <Files *>
+       Order allow,deny
+       Allow from all
+       Deny from env=referer_apam
+       </Files>
+
+       を記載すれば大丈夫でしょうか？
+
+       よろしくお願い申し上げます。
+
+   [file] Re: スパム等のアクセス禁止について ( No.4 )                                                        [img_ez]
+
+   日時： 2006/07/31 20:32
+   名前：管理者
+
+       houseさん、こんにちは。
+
+       携帯からなので簡略レスをお許し下さい。
+       また、検証もしていないので断言もできませんが、apacheの動作としては機能するはずです。
+
+       ただ、「バーチャルで…」については不明ですが…
+
+   [file] Re: スパム等のアクセス禁止について ( No.5 )                                                        [img_pc]
+
+   日時： 2006/07/31 22:32
+   名前： house
+
+       コメントありがとうございます。
+
+       確認ですが、
+
+       １．/etc/httpd/conf/httpd.conf の記載ならば出来るはず
+       ２．バーチャルドメインの場合、そのディレクトリに .htaccessで記載すればたぶん出来る
+       ３．バーチャル　/etc/httpd/conf.d/virtualhost.conf への直接の記載はうまくいくかどうか不明
+
+       と考えて良いでしょうか？
+
+       何度もすみませんが、よろしくお願い申し上げます。
+
+   [file] Re: スパム等のアクセス禁止について ( No.6 )                                                        [img_pc]
+
+   日時： 2006/07/31 22:42
+   名前：管理者
+
+       > １．/etc/httpd/conf/httpd.conf の記載ならば出来るはず
+       > ２．バーチャルドメインの場合、そのディレクトリに .htaccessで記載すればたぶん出来る
+       > ３．バーチャル　/etc/httpd/conf.d/virtualhost.conf への直接の記載はうまくいくかどうか不明
+       上記3点は、密接な関係があるので補足します。
+
+       「/etc/httpd/conf/httpd.conf」と「/etc/httpd/conf.d/virtualhost.conf」で、前者の方にバーチャル側の設定があれば
+       、同様の内容となります。
+       (親の設定ファイルにあるか、AddInの設定ファイルにあるかの違いになる)
+       同様に２の設定では３に近い・・・
+
+       当方が「たぶん出来る」と書かせて頂いたのは「/etc/httpd/conf/httpd.conf」に全般的な設定を行った場合です。
+       (リアルドメインもバーチャルドメインも有効にした場合となります。)
+
+       <VirtualHost>ディレクティブ内に定義した場合は、そのバーチャル内で動作するか確信できないと説明したかった次第で
+       す。
+       ただ、「SetEnvIf」による属性設定は有効になる筈なので「動作するかもしれない」と曖昧な回答しか出来ません。(すみ
+       ません・・・)
+
+       当方でも環境を作り、確認してみますね。
+
+                                                      [gifbanner]
+        リーズナブルで抜群のスペック。パソコン工房*                     価格.comブロードバンドプロバイダ比較*
+
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                       Copyright(©)2004-2010 First home server construction. All Right Reserved.
+
