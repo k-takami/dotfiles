@@ -164,3 +164,35 @@ end
 # ln -s  /var/www/.dotfiles/rdebugrc  /var/www/.rdebugrc
 # ln -s  /var/www/.dotfiles/tigrc  /var/www/.tigrc
 
+=begin
+###########  刷新手順 ####################
+# IE11 でrepo 削除、forkしなおし
+# PCで以下；
+  rm -rf .dotfiles_old/
+  mv .dotfiles/ .dotfiles_old
+  git clone https://github.com/k-takami/dotfiles.git
+  mv dotfiles/ .dotfiles ;
+
+  cd $_
+  # rm -rf * .gitignore 
+  sudo mv /media/sf_Downloads/dotfiles-master.zip .
+  unzip dotfiles-master.zip 
+  sudo unzip dotfiles-master.zip 
+  sudo mv dotfiles-master/* .
+  sudo cp -pr ../.dotfiles_old/vim .
+  sudo rm dotfiles-master*
+  sudo chmod -R 775 * ; sudo chmod -R 644 vim; sudo chown -R user:user *
+  sudo chmod 644 oh-my-zsh/custom/plugins/rbates/*
+  sudo chmod 644 oh-my-zsh/custom/rbates*
+
+  git add . ; girstHD SI.tar.zip
+  git rm  vim/plugin/tComment.vim vim/plugin/unimpaired.vim
+  unzip SI.tar.zip ; tar xvf SI.tar ; rm SI.tar
+  lat ; gst ;
+
+  gicmm "mint17 tmp"
+  git push https://k-takami@github.com/k-takami/dotfiles master
+  wget https://drive.google.com/open?id=1Uz72XWoXXzm6BSPqmrkBW51jY1pM1Qaa
+=end
+
+
