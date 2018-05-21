@@ -59,17 +59,4 @@ rvm gemset help  #そのほかgemsetコマンド
 	oksales ; rvm use ruby-2.0.0-p195; rvm gemset use rails405
 	rublancer; rvm use ruby-1.9.3-p429; rvm gemset use rails323
 	NDL private: rvm use --create 2.4@5.0.1
-余談：ruby #コンパイルインストール
-▼Rubyのコンパイルインストール
-[root@localhost work]# tar zxvf ruby-1.9.3-p194.tar.gz
-[root@localhost work]# cd ruby-1.9.3-p194
-[root@localhost ruby-1.9.3-p194]# ./configure
-[root@localhost ruby-1.9.3-p194]# make
-[root@localhost ruby-1.9.3-p194]# make install
-[root@localhost ruby-1.9.3-p194]# make clean
-＃確認
-[root@localhost ruby-1.9.3-p194]# ruby -v
-ruby 1.9.3p194 (2012-04-20 revision 35410) [i686-linux]
-[root@localhost ruby-1.9.3-p194]#
-[root@localhost ruby-1.9.3-p194]# gem install bundler --no-rdoc --no-ri
 

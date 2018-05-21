@@ -1,72 +1,37 @@
+ruby #コンパイルインストール
+$ tar zxvf ruby-1.9.3-p194.tar.gz
+$ cd ruby-1.9.3-p194
+$ ./configure
+$ make
+$ make install
+$ make clean
+＃確認
+$ ruby -v
+$ gem install bundler --no-rdoc --no-ri
+
+
+
+
+
+
+
+
 #写経 #rails2-180tips /ash
   #remove rdoc and ri doc
     rm -r `gem env gemdir`/doc
 
-  時間
-    Time.now**.strftime('%Y-%m-%d_%H:%M:%S')**
-    .yesterday, .tomorrow, .ago, .since, .last_***, .gininning_of_***, , .local,
-    *rails 1.2互換にするときは。.to_time <=> to_datetime
-    時計上の時間で検索したい場合は
-      Time.parse("2012-09-20 22:35").gmtime
-      といったようにやる。 MySQL上での時間データは、時差を加味しない時間が保存されているため、gmtimeで調整する/
   JSON
     *rails 1系をrails2互換にする時は .attributes.to_json
     hash変換: JSON.decode(***)
-  Proc
-    &:*** = Proc.new{|x| x.***}
-    .to_proc.call(***) = Proc.new{|x| x.send(***)
-  Array
-    .rand, .split, .split{x| 分割条件式},
-    .each_slice(要素分割単位数).to_a　= Rails.AR#.in_groups_of(要素分割単位数),
   Enumerable
     .index_by(&:***), .group_by(&:***), .sum(&:***)
     ModelA.find(:all).index_by( hash_keys_array)
     ModelA.find(:all).index_by( &:attribute_name_of_model_A)
-  Hash
-    取得    ：  hash_a.slice( keys )
-    除外取得：  hash_a.except( keys )
-    差分取得：  hash_a.diff{hash_b},
-    ハッシュ経由の特定キー名抽出　　RUN_KB_SONOTA
-      obj.to_h.select { |k| k =~ /sonota/ }.values
-
-      require 'bigdecimal'
-      BigDecimal.new(nnn)
-
-      case...when
-      & ==|x|
-      .any? --> 一個trueがあればtrue
-      .any?(&:method) --> methodが一個trueがあればtrue
-      .compact --> nil要素のぞいた要素数
-      (hash, ary)  .any?  [boolean]
-      (hash, ary)  .all?  [boolean]
-      (hash,    )  .fetch(key) == ['keystr']
-      (hash,    )  .fetch(key, defaultvalue) == ['keystr']
-    deep_merge
-    deep_symbolize_keys ; #全階層をto_sym
-    キャストcasting:
-      if some_obj.is_a?(Array)
-        some_obj.even? ? Hash[*some_obj.flatten] : Hash[*(some_obj << nil).flatten]
-      end
-    複数hashの値をﾏｰｼﾞ
-        def get_message_hash
-      # @message_hash = IB.ndl_online_locales[ja_or_en]["message"]
-      hash_ja = IB.ndl_online_locales['ja']["message"]
-      hash_en = IB.ndl_online_locales['en']["message"]
-      @message_hash = hash_ja.merge(hash_en){ |key, val_ja, val_en| "#{val_ja} (#{val_en})" }
-    end
-
-  String
-    start_with?(string) <=> end_with?(string)
-
   #rubyごろあわせ
     escape meta blacktets :  qwrsix : str, str-ary, regexp, sym, sym-aryi, exec`` : 大文字で""のエスケープ nil->"nil"にしないようにqwは注意
   #rubyわりざん: 16.quo(27).to_f
 
-
-
-  //#1-liner
-      rake db:seed
-
+  #1-liner
     文字列の置換には、sub、sub!、gsub、gsub!メソッドを使う
       string#sub(置換前パターン,置換後文字列)
         * subは最初のパターンだけを置換。gsubは全てのパターンを置換する。
@@ -316,6 +281,7 @@
       * 026 文字列を検索する 46
         str1.grep(/RE/){line| line-statement }
       * 027 正規表現が文字列の先頭・末尾にマッチするか調べる 49
+        start_with?(string) <=> end_with?(string)
         "文字列あたま  \A
         "文字おわり    \z
         "文字おわり    \z
@@ -441,6 +407,42 @@
       * 082 有効なメールアドレスか調べる 141
 
     第3章 配列とハッシュ
+
+        取得    ：  hash_a.slice( keys )
+        除外取得：  hash_a.except( keys )
+        差分取得：  hash_a.diff{hash_b},
+        ハッシュ経由の特定キー名抽出　　RUN_KB_SONOTA
+          obj.to_h.select { |k| k =~ /sonota/ }.values
+
+          require 'bigdecimal'
+          BigDecimal.new(nnn)
+
+          case...when
+          & ==|x|
+          .any? --> 一個trueがあればtrue
+          .any?(&:method) --> methodが一個trueがあればtrue
+          .compact --> nil要素のぞいた要素数
+          (hash, ary)  .any?  [boolean]
+          (hash, ary)  .all?  [boolean]
+          (hash,    )  .fetch(key) == ['keystr']
+          (hash,    )  .fetch(key, defaultvalue) == ['keystr']
+        deep_merge
+        deep_symbolize_keys ; #全階層をto_sym
+        キャストcasting:
+          if some_obj.is_a?(Array)
+            some_obj.even? ? Hash[*some_obj.flatten] : Hash[*(some_obj << nil).flatten]
+          end
+        複数hashの値をﾏｰｼﾞ
+            def get_message_hash
+          # @message_hash = IB.ndl_online_locales[ja_or_en]["message"]
+          hash_ja = IB.ndl_online_locales['ja']["message"]
+          hash_en = IB.ndl_online_locales['en']["message"]
+          @message_hash = hash_ja.merge(hash_en){ |key, val_ja, val_en| "#{val_ja} (#{val_en})" }
+        end
+
+        .rand, .split, .split{x| 分割条件式},
+        .each_slice(要素分割単位数).to_a　= Rails.AR#.in_groups_of(要素分割単位数),
+
       * 083 配列を作成する 144
         Array.new(m)  #m elements
         ary1 = [val1, val2, ... , val3]; ary1 = %w(srt1 str2 ... str3 ); ary1 = str1.split(/RE/)
@@ -706,6 +708,13 @@
       * 192 有理数を使う 296
 
     第7章 日付と時刻
+        Time.now**.strftime('%Y-%m-%d_%H:%M:%S')**
+        .yesterday, .tomorrow, .ago, .since, .last_***, .gininning_of_***, , .local,
+        *rails 1.2互換にするときは。.to_time <=> to_datetime
+        時計上の時間で検索したい場合は
+          Time.parse("2012-09-20 22:35").gmtime
+          といったようにやる。 MySQL上での時間データは、時差を加味しない時間が保存されているため、gmtimeで調整する/
+
       * 193 現在の日時を調べる 298
         Time.now.[getutc|localtime]
         Date.today.to_s
@@ -838,6 +847,10 @@
     * 252 無名関数を使う 405
       noname-func = lambda{|arg1| ... }
       noname-func.call(arg1)
+
+      &:*** = Proc.new{|x| x.***}
+      .to_proc.call(***) = Proc.new{|x| x.send(***)
+
     * 253 メソッドを擬似オーバーロードoverloadする 406
           #ラッパーオブジェクトからの文字列に対応できないので、まずpolymorphism, respond_to? で対応すべき
           def some_method(args)
