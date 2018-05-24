@@ -229,8 +229,9 @@ test:
     # regrepl attr_accessible app |xargs  ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
     # regrepl current_user app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/if current_user/, "if current_user && current_user")'
 
-
-# TODO: ruby2.5
-
+#XXX: react-request-form
+  # XXX: freelancer でreact
+  # XXX: snippets
+  #
 
 end

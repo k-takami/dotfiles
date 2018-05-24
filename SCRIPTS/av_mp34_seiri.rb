@@ -1,4 +1,5 @@
 # coding: utf-8
+#XXX: USAGE:  sudo ruby ~/.dotfiles/SCRIPTS/av_mp34_seiri.rb -f /media/sf_Downloads/XXX
 require_relative 'common'
 
 
@@ -26,15 +27,15 @@ def process_a_folder(foldername)
   end
 end
 
-
 # 再帰処理ラッパー
 all_subfolders_under(@option[:from]).each do |folder|
   p "------------ folder #{folder} を処理中・・・ -----------"
   process_a_folder folder
   p "------------ folder #{folder} を処理しました -----------"
-  break if Dir.glob("*.iso").none?
-  puts "\n ISOファイル一覧は以下のとおり----------------------"
-  puts `ls -alt ./*iso `
+  if Dir.glob("*.iso").any?
+    puts "\n ISOファイル一覧は以下のとおり----------------------"
+    puts `ls -alt ./*iso `
+  end
 end
 
 

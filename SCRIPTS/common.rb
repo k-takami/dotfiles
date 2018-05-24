@@ -4,11 +4,16 @@ require 'fileutils';  require 'nkf' ;
 require "optparse"; @option_parser = OptionParser.new; @option_parser.class
 # require "getoptlong"; option_parser = GetOptLong.new; #<= before ruby 1.8
 
-require 'pry'
 if RUBY_VERSION < "1.9"
-  require 'rdebug'  ; # ruby 1.8.x
-elsif RUBY_VERSION > "1.9.0" && !RUBY_VERSION.include?("2.2.")
-  require 'debugger'; # ruby 1.9.x
+  require 'pry'
+  require 'rdebug'  ;
+elsif RUBY_VERSION > "1.9.0" && RUBY_VERSION < "2.2.0"
+  require 'pry'
+  require 'debugger';
+elsif RUBY_VERSION < "2.4.0"
+  require 'byebug';
+else
+  # binding.irb
 end
 
 

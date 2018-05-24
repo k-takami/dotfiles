@@ -1,19 +1,14 @@
-ruby #コンパイルインストール
-$ tar zxvf ruby-1.9.3-p194.tar.gz
-$ cd ruby-1.9.3-p194
-$ ./configure
-$ make
-$ make install
-$ make clean
-＃確認
-$ ruby -v
-$ gem install bundler --no-rdoc --no-ri
-
-
-
-
-
-
+ruby インストール compile installation
+  # wget https://www.ruby-lang.org/ja/downloads/ 
+  $ tar zxvf ruby-1.9.3-p194.tar.gz
+  $ cd ruby-1.9.3-p194
+  $ ./configure
+  $ make
+  $ sudo make install
+  $ sudo make clean
+  ＃確認
+  $ ruby -v
+  $ sudo gem install bundler --no-rdoc --no-ri
 
 
 #写経 #rails2-180tips /ash

@@ -8,17 +8,21 @@
 installation
 	$ supkgupdate
 	$ supkgadd curl
+
 	#linuxRHEL :
 		$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+
 	#OSX 
 		$  sudo chmod -R 775 /usr/local/
 		$ pkgadd gpg2; gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 
 		vi ~/.bash_profile
 			[[ -s "/root/.rvm/scripts/rvm" ]] && source "/root/.rvm/scripts/rvm"
 			source /etc/profile.d/rvm.sh
+
 	#linuxDebian https://github.com/rvm/ubuntu_rvm
 		supkgadd rvm
-	**\curl -sSL https://get.rvm.io | bash -s stable**
+    **\curl -sSL https://get.rvm.io | bash -s stable**
+
 	__不明手順__
 		sh -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
 	**$ source ~/.rvm/scripts/rvmsource ~/.rvm/scripts/rvm ; type rvm | head -n 1**
@@ -28,6 +32,7 @@ export PATH="$HOME/.rvm/scripts/rvm:$HOME/.rvm/bin:$PATH"
 echo $GEM_HOME; echo $GEM_PATH # https://github.com/rvm/rvm/issues/2817
 
 	$ rvm requirements
+
 	#installation of ruby
 		$ rvm list known
 		$ rvm install 2.2
