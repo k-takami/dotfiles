@@ -1,3 +1,16 @@
+
+#写経 #rails2-180tips /ash
+    #remove rdoc and ri doc
+      rm -r `gem env gemdir`/doc
+
+    JSON
+      *rails 1系をrails2互換にする時は .attributes.to_json
+      hash変換: JSON.decode(***)
+    Enumerable
+      .index_by(&:***), .group_by(&:***), .sum(&:***)
+      ModelA.find(:all).index_by( hash_keys_array)
+      ModelA.find(:all).index_by( &:attribute_name_of_model_A)
+
 #Rails 2新比較
 find-all_by_columnname(値配列 ) as array
 mytigbug; tigbug

@@ -1481,38 +1481,26 @@ build_app_list
   #
 #Rails環境変数=  Rails.application.config
 
+#rubyごろあわせ
+  escape meta blacktets :  qwrsix : str, str-ary, regexp, sym, sym-aryi, exec`` : 大文字で""のエスケープ nil->"nil"にしないようにqwは注意
+#rubyわりざん: 16.quo(27).to_f
 
-#写経 #rails2-180tips /ash
-    #remove rdoc and ri doc
-      rm -r `gem env gemdir`/doc
-
-    JSON
-      *rails 1系をrails2互換にする時は .attributes.to_json
-      hash変換: JSON.decode(***)
-    Enumerable
-      .index_by(&:***), .group_by(&:***), .sum(&:***)
-      ModelA.find(:all).index_by( hash_keys_array)
-      ModelA.find(:all).index_by( &:attribute_name_of_model_A)
-    #rubyごろあわせ
-      escape meta blacktets :  qwrsix : str, str-ary, regexp, sym, sym-aryi, exec`` : 大文字で""のエスケープ nil->"nil"にしないようにqwは注意
-    #rubyわりざん: 16.quo(27).to_f
-
-  // Rubyコーディングスタイル
-    // then 省略
-    // .blank? .present?をつかう｡　.nil? .empty?はつかわない｡
-    // ※find_by_xxxという書き方はNG（元々あるメソッドを上書きしてし まうため）
-    //   find(:all, :conditions => ["name LIKE ?%", "A"], :order => "name ASC")
-    // ビジネスロジックはモデルに記入
-    // モデルは共通モデルクラスを継承
-    //  require_dependency 'model_helper'
-    //   class Foo < CustomModel extend ModelHelper
-    //
-    //文法チェックと警告
-    // ruby -wc <ファイル名>
-      ruby -wTW2 <ファイル名>
-    //pwdのRDoc生成は　 rdoc -c utf8
-    //Rails全体の rake doc:app
-    //
-    // Stackはスタックを実装するクラスである。
-    class Stack
+// Rubyコーディングスタイル
+  // then 省略
+  // .blank? .present?をつかう｡　.nil? .empty?はつかわない｡
+  // ※find_by_xxxという書き方はNG（元々あるメソッドを上書きしてし まうため）
+  //   find(:all, :conditions => ["name LIKE ?%", "A"], :order => "name ASC")
+  // ビジネスロジックはモデルに記入
+  // モデルは共通モデルクラスを継承
+  //  require_dependency 'model_helper'
+  //   class Foo < CustomModel extend ModelHelper
+  //
+  //文法チェックと警告
+  // ruby -wc <ファイル名>
+    ruby -wTW2 <ファイル名>
+  //pwdのRDoc生成は　 rdoc -c utf8
+  //Rails全体の rake doc:app
+  //
+  // Stackはスタックを実装するクラスである。
+  class Stack
 
