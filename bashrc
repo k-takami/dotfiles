@@ -278,6 +278,8 @@ alias bdl='            bundle install'
 # オフライン環境では --local オプションを付けることでrubygems.org等を見に行かずに、vendor/cacheフォルダを見るようになります。
 alias bdllocal='       bundle install --local'
 alias bdllikerails12=' bundle install --path vendor/bundle'
+# ローカルから普通にもどすときは
+# $ rm -rf vendor/bundle/ Gemfile.lock .bundle/config ; bdl; rails s;
 alias ds1='DISABLE_SPRING=1 '
 alias bx='             ds1 bundle exec '
 alias bxs='            ds1 bx rspec'

@@ -46,6 +46,8 @@ map -hosts on /net (autofs, nosuid, automounted, nobrowse)
 map auto_home on /home (autofs, automounted, nobrowse)
 vagrant@192.168.33.10:/home/vagrant/Publus_Server on /Users/appirits_1020380/Downloads/src/Publus_Server (osxfuse, nodev, nosuid, synchronous, mounted by appirits_1020380)
 
+#shortcuts
+  ctrl+command+d: 辞書ひく
 
 
 

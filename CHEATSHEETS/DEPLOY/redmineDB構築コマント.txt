@@ -1,3 +1,8 @@
+wget http://www.redmine.org/projects/redmine/wiki/Download
+  # top link 
+# http://guide.redmine.jp/RedmineInstall/#Requirements
+
+
 database.yml.sample を元に database.yml を作成(postgresql用に書き換える必要がある)
 
 RAILS_ENV=test rake db:migrate:reset

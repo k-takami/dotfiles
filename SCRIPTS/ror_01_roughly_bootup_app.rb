@@ -140,7 +140,7 @@ test:
   end
 
 
-  # devise対策：終端のend 直線に #      grep config.secret_key = "`rake secret`" を挿入
+  # devise対策：終端のend 直前に #      grep config.secret_key = "`rake secret`" を挿入
   target = "config/initializers/devise.rb"
   if gemfile.grep(/^ *gem *.devise/).empty? && File.exist?(target)
     ary_of_the_file         = File.read(target).split("\n")
@@ -232,6 +232,13 @@ test:
 #XXX: react-request-form
   # XXX: freelancer でreact
   # XXX: snippets
-  #
+#XXX: quiet-asset
+# if RUBY_VERSION >= "2.5.0"
+  # mv config/initializers/quiet_assets.rb config/initializers/quiet_assets.rbBAK
+#XXX: rake 11.0.1 互換性問題：
+  #NoMethodError: undefined method `last_comment' for #<Rake::Application:...>
+  # Gemfile の末尾に gem 'rake', '< 11.0' という記述を加える。
+  # ターミナルで bundle update rake コマンドを実行する。
+  # ターミナルで RAILS_ENV=test bin/rake db:create db:migrate コマンドを実行する。
 
 end

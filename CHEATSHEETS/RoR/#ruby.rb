@@ -10,23 +10,22 @@ ruby インストール compile installation
   $ ruby -v
   $ sudo gem install bundler --no-rdoc --no-ri
 
+gem
+  gem install --local <gem ファイル名>
+  #github特定tagのgemをローカルビルドインストールするながれ；
+  $ git clone https://github.com/teamcapybara/capybara.git
+  $ cd capybara/
+  $ git tag -l
+  $ gico-b 1.1.4
+  $ gico tags/1.1.4
+  $ gem build ./capybara.gemspec
+  $ cp capybara-1.1.4.gem /usr/local/lib/ruby/gems/1.8/gems/
+  $ cd /usr/local/lib/ruby/gems/1.8/gems/
+  $ gem install --local capybara-1.1.4.gem
+  #でも依存性までは解決してくれない・・・
+  $ gem install selenium-webdriver -v 2.0
 
-#写経 #rails2-180tips /ash
-  #remove rdoc and ri doc
-    rm -r `gem env gemdir`/doc
-
-  JSON
-    *rails 1系をrails2互換にする時は .attributes.to_json
-    hash変換: JSON.decode(***)
-  Enumerable
-    .index_by(&:***), .group_by(&:***), .sum(&:***)
-    ModelA.find(:all).index_by( hash_keys_array)
-    ModelA.find(:all).index_by( &:attribute_name_of_model_A)
-  #rubyごろあわせ
-    escape meta blacktets :  qwrsix : str, str-ary, regexp, sym, sym-aryi, exec`` : 大文字で""のエスケープ nil->"nil"にしないようにqwは注意
-  #rubyわりざん: 16.quo(27).to_f
-
-  #1-liner
+#1-liner
     文字列の置換には、sub、sub!、gsub、gsub!メソッドを使う
       string#sub(置換前パターン,置換後文字列)
         * subは最初のパターンだけを置換。gsubは全てのパターンを置換する。
@@ -183,40 +182,43 @@ ruby インストール compile installation
         # delete all leading blank lines at top of file
           $  ruby -pe '@lineFound = true if $_ !~ /^\s*$/; next if !@lineFound' < file.txt
 
-  // Rubyコーディングスタイル
-    // then 省略
-    // .blank? .present?をつかう｡　.nil? .empty?はつかわない｡
-    // ※find_by_xxxという書き方はNG（元々あるメソッドを上書きしてし まうため）
-    //   find(:all, :conditions => ["name LIKE ?%", "A"], :order => "name ASC")
-    // ビジネスロジックはモデルに記入
-    // モデルは共通モデルクラスを継承
-    //  require_dependency 'model_helper'
-    //   class Foo < CustomModel extend ModelHelper
-    //
-    //文法チェックと警告
-    // ruby -wc <ファイル名>
-      ruby -wTW2 <ファイル名>
-    //pwdのRDoc生成は　 rdoc -c utf8
-    //Rails全体の rake doc:app
-    //
-    // Stackはスタックを実装するクラスである。
-    class Stack
+
+
+
   『Rubレシピブック第2版』目次 rubyrecipebook2
     第1章 Rubyの文法
-      * 001 リテラル 2
+      * 001 リテラル（＝記法） 2
+        1_000_000
+        # 正規表現は%r<> でも %r[]でも 認識される
+        # %Q[]　では式展開できる
       * 002 演算子 7
         <=, >=
+        and or not は優先度がひくい
       * 003 変数と定数 10
+        lvar, @ivar, @@cvar, $gvar, Const
       * 004 代入 12
       * 005 文の区切り 13
+        # 行末に二項演算子や　引数の区切がくると改行は無視され　文のおわりとはみなされない
       * 006 コメント 14
       * 007 真偽値と条件分岐 15
       * 008 繰り返し 19
         break;next;retry;redo
         for i in [n..m] do ....... end
+        処理 while cond end
+        処理 until cond end
         while cond do ...... end
         until cond do ...... end
+        #処理を最低一回は実行したい場合
+        begin 処理 end while cond
+        begin 処理 end until cond
+      * 176 回数を指定して処理を繰り返す 276
+        10.times{|i| 処理 }
+        開始値.upto(終了整数){|i| 処理}
+        開始値.downto(終了整数){|i| 処理}
+        (開始値..終了整数).each{|i| 処理}
+        (開始値...終了整数).each{|i| 処理} #終了整数未満
       * 009 メソッド呼び出し 21
+        #引数に*配列型 とすると、配列が第一第二...第nと展開してわたる
         obj.method( *ary1) == obj.method( el1, 4el2, e3....elN )
       * 010 ブロック 22
         local_val
@@ -225,25 +227,36 @@ ruby インストール compile installation
         $global_val
         Const
       * 011 メソッド定義 23
-        priotity:  def sample( arg, arg=defaultvalue, *valiable-arg{,10}, &block-arg{,1}
+        priotity:  def sample( arg, arg=defaultvalue, *valiable-arg{,1}, &block-arg{,1}
+        # yield 引数 は ブロックに引数を渡す
         引数展開    #{arg}
         引数展開実行  `#{arg}`
       * 012 メソッドの呼び出し制限 24
-        public <---by default , except "initialize" method.
-        private <----no receiver,
+        public
+        private <----receiver定義を省略した形でしかよべなくする,initializeもprivate
         protected <-----only callable from sub-class/same-class
       * 013 クラス定義 25
+        #selfはclass定義直下ではclass自身を返し、メソッド定義内ではインスタンスを返す
       * 014 モジュール定義 27
+                      class     module
+        include       不可      可能
+        inheritance   可能      不可
+        instanciate   可能      不可
+        #selfはincludeされるとincludeされたオブジェクトを返す
       * 015 特異メソッド 29
+        #特異メソッド定義
+        def オブジェクト.特異メソッド名(args) end
+        #特異クラス定義(<< と　< のちがいに注意)
         class foo << bar;  def tokui-method-name(args); end  #<---callable inside by "self."
       * 016 例外処理 30
         begin [shori1] resucue [cond1] then [reigaishori1] rescue [cond2] then [reigaishori2] ... else [shori2] ensure [mandatory-shori]
         # rescue修飾子をつかう書き方
         主処理 rescue 例外処理
       * 018 予約語 32
-        __FILE__|__LINE__|BEGIN|END|begin|end|alias|and|break|case|class|def|defined?|do|else|elsif|ensure|false|for|if|in|module|
+        PATH|redo
+        __FILE__|__LINE__|BEGIN|END|RUBYLIB|RUBYOPT|RUBYSHELL|RUBYPATH|COMSPEC
+        begin|end|alias|and|break|case|class|def|defined?|do|else|elsif|ensure|false|for|if|in|module|
         next|nil|not|or|redo|rescue|retry|return|self|super|then|true|undef|unless|when|while|yield|
-        RUBYLIB|RUBYOPT|RUBYSHELL|RUBYPATH|PATH|COMSPEC
 
     第2章 文字列
       * 019 適切な文字列リテラルを選ぶ 34
@@ -251,8 +264,8 @@ ruby インストール compile installation
         "#{formula} " == %Q(#{formula})  <----escape&expand
         %W(el2 el2)     <-----["el1","el2"]
         %w( el1 el2)    <-----[el1,el2]
-      * 020 デフォルトの文字コードを設定する 36
-      * 021 文字コードを変換する 38 * 022 文字コードを推測する 41
+*h 020 デフォルトの文字コードを設定する 36
+      * 021 文字コードを変換する 38
         #推測はKconv&NKFともに 文字化けの誤動作がありがちで、やめた方が無難。
         require 'kconv'
           変換前コード 変換後コード  自動判定           入力文字コードを指定
@@ -266,39 +279,58 @@ ruby インストール compile installation
           UTF-8        Shift_JIS    NKF.nkf('-s', str) NKF.nkf('-W -s', str)
           EUC-JP       JIS          NKF.nkf('-j', str) NKF.nkf('-E -j', str)
           Shift_JIS    EUC-JP       NKF.nkf('-e', str) NKF.nkf('-S -e', str)
+*h 022 文字コードを推測する 41
       * 023 文字列を複製する 43
-        str1.dup
-        str1.clone
-        puts str1.dup/clone.obect_id
+        str1.dup　 #<---文字列だけコピーする
+        str1.clone #<---特異メソッド　.taint .freeze 情報もコピーする
+        puts str1.dup/clone.obect_id　#<---確認
       * 024 文字列を反復する 44
         "str" * 999
       * 025 文字列の長さを得る 45
-      * 026 文字列を検索する 46
+        バイト数は.length, 文字数は .split(//).size
+*h 026 文字列を検索する 46
+        出現bバイト位置は、.index(正規表現または文字列) , .rindex(正規表現または文字列) 
         str1.grep(/RE/){line| line-statement }
       * 027 正規表現が文字列の先頭・末尾にマッチするか調べる 49
         start_with?(string) <=> end_with?(string)
+        # メタキャラクター ^ $ は行の頭尾をあらわし、文字列全体ではない \Zは最後の行末を表す
         "文字列あたま  \A
-        "文字おわり    \z
-        "文字おわり    \z
+        "文字おわり    \z #<---改行コードふくむ
         PHONE_NO_REGEX = /\A[-+[:digit:]]*\z/u  #add
-
-      * 028 単語にマッチさせる 50
+* 028 単語にマッチさせる 50
       * 029 特定の文字コードで正規表現マッチを行う 52
-      * 030 正規表現「.」に\nをマッチさせる 54
+        /正規表現/[usen]/  : 例 EUCならば /REGEXP/e マルチバイト扱いなしならば　/REGEXP/n
+        escape sequenced literal embedding: /#{"\245"}/[usen]
+*h 030 正規表現「.」に\nをマッチさせる 54
+        /正規表現/m #<--- [usen]と排他指定
       * 031 前回マッチした部分の続きからマッチさせる 55
-        require'strscan';scanner=SrtingScanernew(orgstr1);until scanner.eos? { shori }
+        require'strscan';scanner=SrtingScaner.new(orgstr1);until scanner.eos? { scanner.scan /regexp/ }
       * 032 特定の文字・文字列の出現回数を調べる 57
         str1.scan(/RE/).length;
-      * 033 文字の出現頻度を調べる 59
+        count=0 ; str1.scan(/RE/){ count += 1}
+*h 033 文字の出現頻度を調べる 59
       * 034 文字列を比較する 60
+        ==, <=, < <=
       * 035 空白にマッチさせる 61
+        /[\t\n\r\f/ #<--- \fは改ページ記号
       * 036 文字列が空行か調べる 62
-      * 037 数値を表す文字列か調べる 63
+        /^$/      　
+      * 037 数字文字列か調べる 63
+        Integer(str）または　Float(str) #<--- ただし数字じゃないと例外。ArgumentError .to_i, .to_fはだめ。
       * 038 文字列を数値に変換する 64
-        str1.to_i;str1.to_f; str1.hex;tr1.oct; "010101001110".to_i(2|8|1-|16|32)
-      * 039 文字が大文字か小文字かを調べる 66
+        str1.to_i;str1.to_f; str1.hex;tr1.oct; "010101001110".to_i(2|8|1-|16|32) #<---各進数に変換
       * 040 文字を大文字・小文字に変換する 67
-      * 041 文字列の一部を取り出す 69
+        .upcase, .downcase,
+        特定文字だけ変換ならば　"some string".tr "some", "SOME" #===> "SOME String"
+        先頭文字だけ変換ならば　.capitalize
+        大文字小文字逆転ならば  .swapcase
+        #X-Mailer, Content-Typeみたいに統一するメソッドの例；
+        def canonical_header_name(str)
+          str.split('-').map{|s| s.capitalize.join('-')}
+        end
+        #全角半角を連想配列で変換
+        TABLE = { a" => "Ａ", "b" => "Ｂ"}; "abc".gsub(/[ab]/){|ch| TABLE[ch] }
+*h 041 文字列の一部を取り出す 69
       * 042 正規表現にマッチした部分を取り出す 71
         str1stMatch = str1.slice(/RE(group)/, 0)
           slice(XXX,[0..n])にはマッチしたキャラクタークラス\0..\nが格納される
@@ -307,15 +339,17 @@ ruby インストール compile installation
         retary = /RE(grp1)i(grp2)(grpN)/.match("line").to_a[1..-1]
       * 043 正規表現にマッチした部分の前後の文字列を取り出す 73
         REobj = /RE/.match(org-str); str1 = REobj.pre_match; str2 = REobj.post_match;
-      * 044 特定の文字を含む部分の長さを調べる 74
+*h 044 特定の文字を含む部分の長さを調べる 74
       * 045 文字列を段落に分ける 76
         String#.split(/REGEXP/);
         String#.to_a;
-      * 046 文字列を行に分ける 78
+        #区切ごとの出力
+        "some-str\n\nanother-str".each("\n\n"){|paragraph| p paragraph }
+*h 046 文字列を行に分ける 78
         String#.to_a;
-      * 047 文字列を単語に分ける 79
+*h 047 文字列を単語に分ける 79
         String#.split(nil)
-        String#.scan(/REGEXP/); String#.scan(/(?:RE|RE)/);
+        String#.scan(/REGEXP/); String#.scan(/(?:RE|RE)/); #<---grouping は(?: ) をつかわないと.scanの挙動が保証されない
       * 048 正規表現で文字列を分割する 81
         require 'strscan';
       * 049 文字列を文字ごとに処理する 83
@@ -329,8 +363,7 @@ ruby インストール compile installation
         DbyteStrReplaceOnce.sub(/RE/){strAry-formula}; DbyteStrReplaceeMulti.gsub(/RE/){strAry-formula};
         1byteStr.tr("mae", "ato")
         str1[n,m] ="charAto"
-      * 053 文字をエスケープする/エスケープを外す 88
-      * 054 文字列の一部を取り除く 90
+*h 053 文字をエスケープする/エスケープを外す 88
       * 055 行末の改行文字を取り除く 92
         String#.chomp("\n")
       * 056 文字列の先頭・末尾から空白などを取り除く 94
@@ -338,10 +371,10 @@ ruby インストール compile installation
         str1.sub(/^[\s　]+/,"").sub(/^[\s　]+$/,"")
         ruby1.8String#.rstrip
         ruby1.8String#.lstrip
-      * 057 タブと半角空白文字を変換する 96
+*h 057 タブと半角空白文字を変換する 96
         require 'nkf' ; NKF.nkf('-m0Z1 -W -w', new_filename)
-      * 058 インデントを変更する 97
-      * 059 ヒアドキュメントの本体をインデントして書く 99
+*h 058 インデントを変更する 97
+*h 059 ヒアドキュメントの本体をインデントして書く 99
         禁則：herecodumentはruby1.8.xでこった長文のデバッグがしづらいのでコマンドラインくみたてには使わない。
         悪い例
           １）
@@ -365,13 +398,19 @@ ruby インストール compile installation
         str1[from, to] = ""
       * 062 文字列の途中に破壊的に文字列を挿入する 104
         str1.sub(/^.{index}/){|s| s + "挿入文字列" } 
-      * 063 文字と文字コードを相互変換する 106
+      *  063 文字と文字コードを相互変換する 106
+        "文字列".unpack("C*")
+        # "C*"は符号なし8ビット整数。逆変換はpack
+        "字"[0].chr
+        (Obsolete@ ruby 2.5) 97.chr ?97
       * 064 文字列をn文字ずつに分割する 108
          some_string.scan(/.{1,n}/m)
       * 065 文字列を最大nバイトに切り詰める 109
       * 066 文字列を最大n文字に切り詰める 111
-      * 067 文字列を最大n桁に切り詰める 112
+        str1stMatch = str1.slice(/\A.{0, n}/m)
+*h 067 文字列を最大n桁に切り詰める 112
       * 068 文字列の一部を特定の文字で埋める 113
+        str.gsub(/(.)/ "*" * $1/length)
       * 069 メッセージダイジェスト(MD5)を作成する 114
           #IMAP, SMTP-AUTH, APOP
           require 'digest/md5';
@@ -387,22 +426,34 @@ ruby インストール compile installation
       * 073 正規表現を分割して記述する 120
         /(?:ptn1)|(?:ptn2)/
         /#{ptn1}|#{ptn2}/
-      * 074 正規表現集 122 #TODO: .
+        正規表現を文字列に変換するのは /re/.source
+*h 074 正規表現集 122 #TODO: .
       * 075 文字列を段落ごとに整形する 124
-        nkf
-        Kconv.to_xxx
-      * 076 いろいろなテキストフォーマットを解析する 125
+        require 'nkf' ; NKF.nkf( "-f80 -m0", some_long_string) #<--- 80文字界行でMIMEデコードをOFFに折り返し整形する例
+*h 076 いろいろなテキストフォーマットを解析する 125
       * 077 「,」で区切られたデータ（CSV）を処理する 128
-      * 078 XMLを解析する 130
-        (1)  require'rexml/document';require'iconv'
-        (2)  require'hpricot'
+        require 'csv' ; CSV.parse(   filename, delimiter_string){|line | p line.to_a } #<---readming
+        require 'csv' ; CSV.generate(filename, delimiter_string){|lines| lines << some_array } #<---writing
+*h 078 XMLを解析する 130
+        (1)  require 'rexml/document';require'iconv'
+        (2)  require 'hpricot'
       * 079 YAMLを解析する 134
-      * 080 HTMLを処理する 136
-      * 081 単語を補完する 139
-      * 082 有効なメールアドレスか調べる 141
+        #input
+        str = << YAML
+        ---
+        key: value
+        ...
+        YAML
+        require 'yaml'; YAML.load(str)
+        #
+        #cwoutputinput
+        require 'yaml'; YAML.dump(hash)  #<--- ruby 18.8.xではデフォルト値つきのハッシュは出力できない
+*h 080 HTMLを処理する 136
+        require 'uri'; URI.extract(raw_html)  #<---url文字列だけ配列で取得
+*h 081 単語を補完する 139
+*h 082 有効なメールアドレスか調べる 141
 
     第3章 配列とハッシュ
-
         取得    ：  hash_a.slice( keys )
         除外取得：  hash_a.except( keys )
         差分取得：  hash_a.diff{hash_b},
@@ -476,7 +527,7 @@ ruby インストール compile installation
         ary1.replace(ary2) #ary2の内容でおきかわる
       * 095 配列の要素をランダムに取得する 159
         n = ary[rand(ary.length)]
-  * 096 配列の要素をシャッフルする 160
+*h 096 配列の要素をシャッフルする 160
       * 097 配列の要素数を調べる 161
         ary1.length
       * 098 配列の要素の出現回数を調べる 162
@@ -513,7 +564,7 @@ ruby インストール compile installation
         require 'csv';CSV.generate_line(ary1)
       * 112 バイナリサーチを行う 176  #<= DL from RAA
         require 'bsearch'; obj1.bsearch_first|.bsearch_last{|el| el <=> cond1 }
-* 113 ハッシュのキーになるクラスを作る 177
+*h 113 ハッシュのキーになるクラスを作る 177
       * 114 ハッシュに要素を追加する 178
         hash1 = {}
           hash1["x"] = y
@@ -539,7 +590,7 @@ ruby インストール compile installation
       * 119 1つのキーに複数の値が対応するハッシュを作る 185
         ruby1.8hash1 = Hash.new{|hash1, key| hash1[key] = []};
         ruby1.8hash1["x"] << y; ruby1.8hash1["x"] << y1  ...
-* 120 ハッシュのキーと値を入れ替える 186
+*h 120 ハッシュのキーと値を入れ替える 186
         .invert
       * 121 配列やハッシュをソートする  = sort, sort_by 187
         sortedAry =  ary1.sort
@@ -557,7 +608,7 @@ ruby インストール compile installation
         hash1.keys & hash2.keys
         #different keys
         (hash1.keys | hash2.keys) - (hash1.keys & hash2.keys)
-* 126 コレクションのような性質をもつクラスを作る 193
+*h 126 コレクションのような性質をもつクラスを作る 193
         配列やハッシュを継承または移譲する
       * 127 スタックやキューを使う 194
         aryOrHash.push; aryOrHash.pop    #<= removing-get from earlier element
@@ -573,10 +624,11 @@ ruby インストール compile installation
       * 129 相対パスから絶対パスを求める 200
         File.expand_path(str) #~, ./ ../ など MSwinでは/C://みたくドライブ文字つきで展開される
         eg) Dir.glob(File.expand_path('../histories/*id.rb', __FILE__)).each { |file| require file }
-      * 130 パス名がワイルドカードと正規表現の中間的パターンにマッチするか調べる 201
+*h 130 パス名がワイルドカードと正規表現の中間的パターンにマッチするか調べる 201
 #        File.fnmatch("半正規表現wildcard", "ファイル名" )
-* 131 ディレクトリとファイルの一覧を取得する 203
-  ** は階層無視ワイルドカード
+*h 131 ディレクトリとファイルの一覧を取得する 203
+        ** は階層無視ワイルドカード
+        eg) Dir.glob("**/[ch]")  #<---cソースを再帰的に
       * 132 現在のディレクトリ名を取得する 205
         dirname=Dir.pwd
       * 133 現在のディレクトリを変更する 206
@@ -595,17 +647,37 @@ ruby インストール compile installation
                       require 'fileutils' ;FileUtils.install("org.file", "/dir/path", :mode=>0644)
       * 137 ファイルを削除する 211
         require'fileutils';FileUtils.rm(file or ary_file,:force=true)
-
-
-
-
-
       * 138 ファイルが読み込み・書き込み可能か調べる 212
+        File.readable_real?(path)
+        File.writable_real?(path)
+        File.executable_real?(path)
+        File.owned?(path) #<--- in case of windows, available on NTFS only
+        File.grpowned?(path)
       * 139 ファイルの存在を調べる/種類を判定する 214
-      * 140 ファイルの属性を取得する 216
+        File.exist?(path) # boolean
+        File.size?(path)  # nil in case of 0 === File.zero?
+        File.file?(path) # boolean
+        File.directory?(path) # boolean
+        File.symlink?(path) # boolean
+        File.socket?(path) # boolean
+        File.pipe?(path) # boolean
+        File.blockdev?(path) # boolean
+        File.chardev?(path) # boolean
+        File.lstat(path) # symlink情報
+*h 140 ファイルの属性を取得する 216
+        File.stat(path).(dev|ino|mode|nlink|uid|gid|rdev|rdev_major|rdev_minor|size|blksize|blocks|atime|ntime|ctime)
       * 141 ファイルの属性を変更する 218
+        File.utaime(Time型アクセス時刻, Time型変更時刻, path1, path2 ...) 
+        require 'fileutils'; FileUtils.chmod(0644, [file1, file2 ...])
+        require 'etc';Etc.getpwnam(uid).uid,  File.chown(Etc.getpwnam(uid).gid, file1, file2, ...)
+        # Etc.getgrpnam(gid)はgid--->uid変換; 
       * 142 リンクを作成する 220
-      * 143 2つのファイルが同じか調べる 222
+        File.symlink(target_path, sym_link_path)
+        File.link(target_path, hard_link_path)
+        File.readlink(link_path)
+        File.lstat(link_path)
+*h 143 2つのファイルが同じか調べる 222
+        require 'fileutils'; FileUtils.cmp(file1, file2) #<---boolean
       * 144 ディレクトリを作成する 224
         #ruby1.8
         require'fileutils';FileUtils.mkdir_p("dir" or ary_dirname   ,:mode=>0644)
@@ -626,8 +698,13 @@ ruby インストール compile installation
         end
         # OR, require 'find' 
       * 147 ディレクトリを削除する 227
+        require 'fileutils'; FileUtils.rm_r([file1, file2 ...])
+        require 'fileutils'; FileUtils.rm_r(Dir.glob "pattern*")
+        #強制は[files], :force => true にする
       * 148 ファイル操作を事前に確認する 228
-      * 149 名前がぶつからない新しいファイルを作成する 229
+        :noop => true, verbose => true  #<---noopはdummy&skip, verboseは出力
+*h 149 名前がぶつからない新しいファイルを作成する 229
+
     第5章 入出力
       * 150 ファイルを開く 232
         File.open("filename"){|f| ...... }
@@ -660,47 +737,138 @@ ruby インストール compile installation
         File.open("filename", flags, 0644){|f| f.puts(str)}
         File.open("filename", "[rwab]+?"){|f| f.puts(str)}
       * 154 ファイルの最後にデータを追加する 240
-      * 155 ワンライナでファイルを更新する 241
-      * 156 出力操作とファイルの更新を同期させる 243
+        File.open("filename", "[rwa]+?b"){|f| f.puts "str" } #<---waが基本
+*h 155 ワンライナでファイルを更新する 241
+        -p print
+        -i別名　別名つきでバックアップ
+        -a array化して$Fに代入
+        -F 区切文字指定
+        -l lineをよしなに整形入出力。\nをとったり自動改行したり
+*h 156 出力操作とファイルの更新を同期させる 243
+      $stdout.sync = true
       * 157 ファイルの行数を数える 245
-      * 158 行単位にファイルを末尾から処理する 246
-      * 159 成長するファイルを追いかけながら読む 249
+        File.open("filename", "[rwa]+?b"){|f| f.lineno }
+        or
+        File.read("in.txt").count #<--- in case of ruby1.6, File.open("filename", "[rwa]+?b"){|f| f.read }.count
+*h 158 行単位にファイルを末尾から処理する 246
+        f=File.readlines("filename").reverse_each{|line| line.処理 }
+*h 159 成長するファイルをtailコマンドみたく追いかけながら読む 249
+        File.seek(0, IO::SEEK_END)
+        File.seek(0, IO::SEEK_CUR)
       * 160 テンポラリファイルを作成する 250
-      * 161 ファイルをロックする 251
-      * 162 ファイルを16進ダンプする 253
-      * 163 ファイルに1行挿入する 254
+        require 'tempfile'; temp = Tempfile.new(path) ; temp.puts "something"; temp.close
+        #garbage collectionで自動削除されるが、temp.openで再度オープンできる
+        #garbage collectionで自動削除されるが、明示的削除したければ temp.close(true)
+      * 161 ファイルをロックする(ロック最中に再度ロックしようとするとdead lock) 251
+        mode = File::LOCK_EX #exclusive
+        mode = File::LOCK_SH #shared 別プロセスからもロック可能
+        mode = File::LOCK_NB #no_blocking. dead lock回避方法
+        mode = File::LOCK_UN #unlockを明示的に指定。通常file.closeで自動unlock
+        File.open("filename"){|f| f.flock(mode) }
+*h 162 ファイルを16進ダンプする 253
+*h 163 ファイルに1行挿入する 254
       * 164 ファイルに改行コード無変換のバイナリモードで書き込む 256#ブロックわたすと自動でFile.close
         File.open("filename", "[rwa]+?b"){|f| f.binmode;f.write(str)}
-      * 165 固定長レコードを処理する 257
+*a 165 固定長レコードを処理する 257
       * 166 ファイルのサイズを切り詰める 259
-      * 167 ファイルの先頭のn行を削除する 260
-      * 168 ファイルの末尾のn行を削除する 261
-      * 169 標準入出力をファイルにつなぎ換える 263
-      * 170 IOオブジェクトを複製する 264
+        File.trancate(bytesize) 
+*h 167 ファイルの先頭のn行を削除する 260 ---> n行以降をtmpfileにwriteしてrename-swap
+*h 168 ファイルの末尾のn行を削除する 261
+*h 169 標準入出力をファイルにつなぎ換える 263
+*a 170 IOオブジェクトを複製する 264
       * 171 printfで出力を整形する 266
+        %d %o %b %x #<---整数　バインド変数
+        %f %e %g %x #<---float バインド変数
+        %s          #<---文字列  バインド変数
+        %p          #<---Object#inspect  バインド変数
+        "%s %s" % %w(foo bar) # => "foo bar" をsprintf,つまり文字列整形だけして返す
+
     第6章 数値
-      * 172 数値をフォーマットする 270
+*h 172 数値をフォーマットする 270
+          
       * 173 ビット演算を行う 273
+        ビット表現は 0b11111111 みたく0bプレフィクス
+        b = 0b11110000 b2= 0b******** のとき、
+        b[i] は最下位ビットを0としてそのビットを取得。上記例では b[0]からb[7]まで全部１
+        ~b, b & b2, b | b2, b ^ b2, b >> N, b << Nはそれぞれ ビットの
+        反転、積、   和、     XOR, Nビット0詰め左シフト、Nビット0詰め右シフト、をあらわす
+        def pb(i)
+          printf("%08b\n", i & 0b11111111)
+        end
       * 174 2進，8進，10進，16進の各表現を相互に変換する 274
+        文字列→数値
+          方法1: Integer("0b***"), Integer("0***"), Integer("0x***") は二進数8進数16進数の変換
+          方法2: "0b***".to_i(2),"0***".to_i(8),"0x***".to_i(16)     は二進数8進数16進数の変換
+        数値→文字列
+          "%d" % 数,"%b" % 数,"%c" % 数,"%x" % 数 は 10, 2, 8, 16進数の文字列化
       * 175 数値を3桁ずつ「，」で区切る 275
-      * 176 回数を指定して処理を繰り返す 276
+        def commify(numstr)
+          int, frac = numstr.split('.')
+          int = int.gsub(/(\d)(?=\d{3}+$)/, '\\1,\\2') #?=は先読み取得対象、?>はマッチ範囲最大化の「強欲マッチ」
+          int << '.' << frac if frac
+          return int
+        end
       * 177 最大値・最小値を求める 277
-      * 178 数値の総和を求める 278
+        [].max | [].min #文字列は辞書順でmax/minを返す
+      * 178 数値の総和や反復処理結果を求める 278
+        [*1..5].inject(0){|result, i| result + i} #0は初期値
+        [*1..5].inject(0){|result, i| result * i} #0は初期値
       * 179 絶対値を求める 279
-        num.abs
+        数.abs
+        複素数最寄り素数の絶対値：require'complex'#<--- ruby 1.8
+        Complex(3.0,4.0).abs #=> 5.0
       * 180 割り算の余りを求める 280
+        %または　数.divmod(数)[1]
+        10 % -3.5 #=> -0.5 
+        10.remainder -3.5 #=> 3 レシーバーの符号にあわせて計算
+        有理数：require'rational' #<---ruby 1.8
+        10.quo(3) #=>[10,3] quotient
       * 181 べき乗を求める 282
-      * 182 最大公約数と最小公倍数を求める 283
+        2 ** 4 #=>16
+      * 182 最大公約数i(Gretest Common Divisor)と最小公倍数(Least Common Multiple)を求める 283
+        require'rational' #<---ruby 1.8
+        数A.gcd 数B  ;  数A.lcm 数B
       * 183 平方根を求める 284
+        Math.sqrt 10  または　10 ** 0.5
       * 184 三角関数を計算する 285
-      * 185 直交座標を極座標に変換する 286
+        Math.sin 数 # .cos .tan .asin .acos .atan もある
+        module Math
+          def deg2rad(degree)
+            degree / ( 360.0 / (PI*2))
+          end
+          module_function :deg2rad
+        end
+        Math.sin(Math.deg2rad(30)) #=> 0.5
+*h 185 直交座標を極座標に変換する 286
       * 186 対数計算を行う 287
+        Math.log() #自然対数
+        Math::E #自然対数の底
+        Math.log10() #常用対数
+        Math.exp() #指数関数
+        Math::E ** Math.log(10) #=> 10.0
+        Math.exp(Math.log(10)) #=> 10.0
+        Math.log10(1000) #=> 3.0
       * 187 浮動小数点数を丸める 288
-      * 188 浮動小数点数を比較する 290
-      * 189 乱数を得る 291
-      * 190 行列を使う 293
-      * 191 複素数を使う 295
-      * 192 有理数を使う 296
+        数.(round|truncate|ceil|floor) #それぞれ、四捨五入、切り捨て、正負上寄せ、正負下寄せ　のmethod
+        class Numeric
+          def round_n(nth)
+            num = self * (10 ** (-nth))
+            num.round * (10 ** nth)
+          end
+        end
+*h 188 浮動小数点数を比較する 290
+*h 189 乱数を得る 291
+        rend(n) #0~nの整数、省略ならば0~1までのフロート
+        srand   #初期値設定
+*h 190 行列を使う 293
+        require 'matrix'
+*h 191 複素数を使う 295
+        require'complex'#<--- ruby 1.8
+        Comple.(abs|polar|image|conungate)
+*h 192 有理数を使う 296
+        有理数：require'rational' #<---ruby 1.8
+        Rational(1, 5)
+        数.(to_r|quo)
 
     第7章 日付と時刻
         Time.now**.strftime('%Y-%m-%d_%H:%M:%S')**
@@ -743,8 +911,41 @@ ruby インストール compile installation
 
     第8章 環境とのかかわり
       * 204 Rubyスクリプトをコマンドにする 314
+        #chmodで実行可能にして次のshbang
+        #!/usr/bin/env ruby
+        #!/usr/absolute_path/ruby -Ke  #<---一個限定でオプション指定可能
+
+        #!/bin/sh ruby
+        exec ruby -S -x ${@ + "$@"}
+        #!ruby
+          #以下にスクリプト本体
+
+        #cygwin環境 #chmodで実行可能にして次のshbang
+          #!ruby
+
+        #Windows-native
+          #関連付けでrubyを起動して、なおかつ> >> |をつかいたいばあいはレジストリ編集：
+            # cf: support.microsoft.com/efault.aspx?scid=kb;en-us;321788
+          # rubyのインタプリターとファイルを1パックに配布するソフトは加藤勇也さんのExerbがよい
+
+        # Winows-batch作成
+          @echo off
+          if "%OS" == "Windows_NT" goto WinNT
+          "C:\Program Files\ruby\bin\ruby" -x "C:/some/script.bat" %1 %2 %3 %4 %5 %6 %7 %8 %9
+          goto end_of_ruby
+          :WinNT
+          "C:\Program Files\ruby\bin\ruby" -x "C:/some/script.bat" %*
+          goto end_of_ruby
+          #!ruby
+            #以下にスクリプト本体
+          __END__
+          :end_of_ruby
+
       * 205 コマンドにしたRubyスクリプトを一時的にオプションつきで実行する 317
+        UNIX: $ env RUBYOPt=-d scriptname
+        WIN:  $ set RUBYOPt=-d scriptname
       * 206 コマンドライン引数を得る 319
+        WIN: rubyは内部的に\を/におきかえる。引数を””でくくることで、? *のグロブ展開がされる。引数両端が''ではダメ。
       * 207 コマンドラインオプションを解析する 321
       * 208 環境変数にアクセスする 324
         ENV
@@ -756,32 +957,112 @@ ruby インストール compile installation
           #statement using XXXclass
         end
       * 210 Rubyのライブラリローダを制御する 326
-      * 211 Rubyスクリプトをデバッグする 327
+        $ruyb -I./some/path
+        UNIX: $ env RUBYLIB=***:***:***
+        WIN:  $ set RUBYLIB=***;***;***
+        irb> $LOAD_PATH  #<--- = $:
+        irb> $"  #<--- = loaded libralies
+         
+*h 211 Rubyスクリプトをデバッグする 327
       * 212 ユーザやグループに関する情報を得る 331
         require'etc';Etc.get*** : [pwuid|name|passwd|uid|gid|dir|shell|grnam|grgid|]
-    * 213 ユーザID・グループIDを切り替える 334
-    * 214 Windowsレジストリにアクセスする 337
+      * 213 ユーザID・グループIDを切り替える 334
+        require 'etc';
+        #rootから一般ユーザーに一時的にきりかえる
+        def switch_euid(user)
+          uid = Process.euid; Process.euid = Etc.getpwnam(user).pid; yield
+        ensure
+          Process.euid = uid
+        end
+        switch_euid("test"){ shori }
+
+        #rootから一般ユーザーに完全にきりかえる
+        def switch_uid(user)
+          uid = Process.uid; Process::UID.change_privilege(uid) ; yield
+        end
+        switch_uid("test")
+        #これ以降はtestユーザーに切り替わって処理
+
+        #gid uid全部きりかえ >= ruby 1.8
+        def switch_user(user)
+          fork{
+            pw = Etc.getpwnam(user); Process.initroups(pw.gid) ;
+            Process::GID.change_privilege(pw.gid) ; Process::UID.change_privilege(pw.uid) ;
+            #確認はProcess.groups
+          }
+        end
+        switch_user("test"){ shori }
+
+      * 214 Windowsレジストリにアクセスする 337
+        require 'win32/registry'
+        Win32::Registry::HKEY_CURRENT_USER.open('some\parent\of\key', Win32::Registry::KEY_WRITE){|reg| 
+          reg['key'] = some_value
+        end
+        #上の Win32::Registry::KEY_WRITEをはぶくと、取得モードになる
     * 215 システムのライブラリ関数を呼ぶ 339
+        WIN: require 'Win32API'; Win32API.new(i'user32', 'MessageBoxA', %w(P P P I), "I").call('0', 'message', 'caption', 0)
+        # P=pointer, I=integer, V=void above
+        UNIX: require 'dl'; 'dl/import'; 
+        #例）
+        module Xlib
+          extend Dl::Importable
+          dlload 'libX11.so'
+          extern "Display* XopenDisplay(char*)"
+        end
+        Xlib.methods(true).detect{|name| /xopen/i =~ name}
+
+    * 222 Windowsアプリケーションを操る 353
+      #Windows native path取得(Win32APIライブラリーで取得する面倒な方法も有る）
+    　`cygpath -w #{path_before_conversion}`
   第9章 プロセスとプロセス間通信
     * 216 スクリプトを一時的に停止する 344
       sleep(n.n秒) 
       sleep #<---永久停止
-    * 217 スクリプトの処理時間を計測する 345
+    * 217 スクリプトの処理時間を計測する / ベンチマーク 345
+      #ruby > 1.8
+      require 'bnchmark'; Benchmark.bm(見出しの長さの整数値) {|x|
+        x.report("caption"){
+          処理
+        }
+      }
+      #ruby < 1.8
+      times0 = Process.times
+      10000.times{ 処理 }
+      times1 = Process.times
+      [times1.utime - times0.utime, times1.stime - times0.stime]
+      #utime = user time, stime = sytem call time, ctime = child process time summary , cstime = child process system call time summary
 * 218 コマンドを起動する 347
-      stdoutを得る。
-        `command`                  :まとめて取得
-        open(|command){|x|...y}   :行単位処理？
-          #open("| command") {|msg| msg.gets } #list = open('|ls /home/hogehoge/') {|msg| msg.gets}
-          #注意しなくてはいけないのがopenする際に、ブロックを与えないとバックグラウンドで実行したプロセスへのpipeがクローズされないまま、ゾンビになってしまうのです。
+      `command`                  :まとめて取得
+      open("| command" ){|f| f.gets }   :STDOUTすこしづづ処理
+      require 'open3'; stdin, stdout, stderr = Open3.popen3("command"){|stdin, stdout, stderr|
+        print stderr.read
+        print stdout.read
+        # 不要なハンドラは明示的にcloseできる：stdini.close; stdout.close; stderr.close
+      }
+
+      open("| command", "w" ){|f| f.puts }   :STDINすこしづづ処理
+        #open("| command") {|msg| msg.gets } #list = open('|ls /home/hogehoge/') {|msg| msg.gets}
+        #注意しなくてはいけないのがopenする際に、ブロックを与えないとバックグラウンドで実行したプロセスへのpipeがクローズされないまま、ゾンビになってしまうのです。
+        
     * 219 プロセスをフォークする 349
-    * 220 シグナルハンドラを設定する 350
-    * 221 デーモンになる 351
-    * 222 Windowsアプリケーションを操る 353
+      child_pid = fork{ exec('usr/bin/ruby') }
+      exit_pid, status = *Process.waitpid2(child_pid) #ruby 1.6 では status >> 8 すると終了コードを取得でる
+*h 220 シグナルハンドラを設定する 350
+*h 221 デーモンになる 351
     * 223 ローカルホスト名を得る 355
+      require 'socket'; Socket.gethostname
     * 224 ホスト名とIPアドレスを変換する 356
+      require 'socket'
+      Socket.getaddrinfo(hostname, nil, Socket::AF_UNSPEC)[0][3]
+      Socket.getnameinfo([Socket::AF_UNSPEC, nil, ipaddress)[0]
+      # IPv4指定ならばAF_inet, IPv6指定ならばAF_INET6, hostname未設定ならばIPアドレスが戻る
     * 225 TCPクライアントを作る 357
-    * 226 TCPサーバを作る 358
-    * 227 HTTPクライアントを作る 361
+      require 'socket'; TCPSocket.open('localhost', 80){|f| f.print 'GET / HTTP/1.0\r\n\r\n'
+        print f.read
+      }
+      
+*h 226 TCPサーバを作る 358
+    * 227 HTTPクライアントを作る 361 (NOTE: Windows版ではIOとスレッドの併用でフリーズするらしい)
       require 'net/http'
       Net::HTTP.version_1_2
       httpclass = Net::HTTP
@@ -793,6 +1074,15 @@ ruby インストール compile installation
         puts response.body
       }
     * 228 別プロセスのRubyオブジェクトにアクセスする 363
+      # NOTE: rubyバージョン同一、garbage-collectorでのオブジェクト消失に注意、クラサバ間でオブジェクトの型が異なりうる
+      # server-process
+      require 'drb'; exposed_obj = %w[drb server]
+      Drb.start_service('druby://localhost:8787', exposed_obj);Drb.thread.join
+      # client-process
+      require 'drb'; Drb.start_service; exposed_obj = DrbObject.new_with_uri('druby://localhost:8787')
+      exposed_obj.each{i| 処理 }
+      #ref:  dRubyによる分散・Webプログラミング、オーム社
+
   第10章 CGI
     * 229 フォームから入力された値を取り出す 366
     * 230 クエリ文字列を取り出す 368
@@ -829,22 +1119,56 @@ ruby インストール compile installation
       .to_f
     * 246 オブジェクトを配列に変換する 394
       .to_a
-    * 247 オブジェクトをファイルに保存する 395
-      Marshal.dump
+    * 247 オブジェクトをファイルに保存する 395 #IO, Socket, pipeオブジェクトは復元できない
+      Marshal.dump(object) #<---ruby version依存の可能性あり。しかもバイナリー保存
+      #ファイルの共有とmutex
+      require 'pstore'; db = PStore.new('shared-file-name'); db.transaction {
+        db["key"] = some_object
+      }
+
+      # .to_yaml <---> YAML.load($stdin) でASCII形式保存リストアする方法も有る
+      # AMartial.dump(obj) <---> AMartial.load($stdin)          する方法も有る
+
     * 248 多重継承する 398
-      include
+      module M1
+        def a end
+      end
+      module M2
+        def a end
+      end
+      class C # M1とM2の両方の属性を継承させる
+        include M1
+        include M2
+      end
     * 249 メソッドを委譲する 399
       forwardable  #個別に委譲する
       delegate   #全部に委譲する
+      # 方法1：引数を* と&で転送する
+      class SomeWrapper
+        def pop(*args, &block) @output.pop(*args, &block) end
+      end
+      # 方法2A：forwardable ライブラリーをつかう
+      require 'forwardable'
+      class SomeWrapper
+        def initialize @output = [] end
+        extend Forwardable
+        def_delegator @output, :pop, :pop_new_name
+      end
+      # 方法2B：forwardable ライブラリーをつかう
+      require 'forwardable'
+      class SomeWrapper
+        DelegateClass(Array)
+        def initialize super [] end
+      end
     * 250 ブロックを委譲する 401
       &block うけわたし
-    * 251 StringやArrayとして扱えるクラスを作る 402
+*h 251 StringやArrayとして扱えるクラスを作る 402
     * 252 無名関数を使う 405
       noname-func = lambda{|arg1| ... }
       noname-func.call(arg1)
 
       &:*** = Proc.new{|x| x.***}
-      .to_proc.call(***) = Proc.new{|x| x.send(***)
+      .to_proc.call(***) = Proc.new{|x| x.send(***) }
 
     * 253 メソッドを擬似オーバーロードoverloadする 406
           #ラッパーオブジェクトからの文字列に対応できないので、まずpolymorphism, respond_to? で対応すべき
@@ -861,13 +1185,15 @@ ruby インストール compile installation
       calling(:symbol1 => "xxx", ...:symbolN => "yyy" )
     * 255 モジュール関数を定義する 409
       module_function :method_name
-    * 257 インスタンス変数をクラスごとにプライベートにする 411
-    * 258 オブジェクトにメソッドが存在するか調べる 413
-     .responde_to?
-     .method_defined?
+    * 257 同じインスタンス変数をクラスごとにプライベートにするのは不可能 411
+    * 258 オブジェクトやクラスにメソッドが存在するか調べる 413
+     obj.responde_to?(:sym, [boolean] #第二引数にtrue指定だとprivateなメソッドの確認ができる
+     klass.method_defined?
      defined?
-    * 259 オブジェクトに定義されているメソッドのリストを得る 415
-
+    * 259 オブジェクトやクラスに定義されているメソッドのリストを得る 415
+      obj.(|public_|private_|protected_|singleton_)methods
+      klass.(public_instance_|private_instance|protected_instance_)methods
+      #第一引数にtrueをわたさないとダメかも。バージョン独立にならない
     * 256 クラスメソッドの別名を定義する 410
     * 017 aliasとundef(メソッド無効化) 31
       alias method-newname medhod-oldname; undef forbidden-method-name
@@ -903,11 +1229,21 @@ ruby インストール compile installation
             end
           end
     * 266 ファイルをRubyスクリプトとしてロードする 426
-      load
+      load '絶対パス' #早退パスだと ＄LOAD_PATHからさがします
+      SomeClass.new.instance_eval(File.read 'path'))とすると、SomeClassで読んだファイルを実行できる。
     * 267 文字列をRubyスクリプトとして実行する 427
-      eval
+      eval #<--- String#dump , .marshall のオブジェクト化
+      # 意図をはっきりさせたければ instance_variables(_get|_set), constants, const_(get|set), define_method, send i をつかうべき
     * 268 スクリプトファイル名・行番号をすり替える 428
-  付録
+      #シングルクオート記号をつかって全部のエスケープを無効にするのが要点
+      class MyClass
+        module_eval(<<-'EOS', 'another_file_name.rb', すり替えたい開始行番号)
+          def some_method
+            処理
+          end
+        EOS
+      end
+*h  付録
     * A01 Web上のリソース 430
     * A02 コマンドラインオプション 431
     * A03 Rubyが参照する環境変数 434
@@ -916,107 +1252,8 @@ ruby インストール compile installation
     * A06 packテンプレート文字列 441
 
 
-Ruby 実習マニュアル・第五版 著者大黒学
-AgileWebDeb-DHH
-  P421:cache
-    page caching:  simplest, inside httpd
-    action caching:  inside ActionControler,  before-filter
-    #option B:  sweeper-base
-      class ArticleSweeper < ActionController::Caching::Sweeper
-        observe Article
-      ...(cf.--->p426)
-    #option A:  controller-base
-      class content_controller < ApplicationController
-      before_filter :verify_method_name, :except=>:publi_content
-      def public_content
-        @articles=Article.list_public
-      end
-      def privte_content
-        @articles=Article.list_premium
-      end
-      def create_article
-        article=Article.new(params[:article])
-        if article.save
-          expire_page  :action=>"public_content"
-        end
-      end
-      def update_article
-        article=Article.new(params[:article])
-        if article.save
-          expire_action  :action=>"premium_content"  :id=>article
-        end
-      end
-      def delete_article
-        Article.destroy(params[:id])
-        expire_page  :action=>"public_content"
-        expire_action  :action=>"premium_content"  :id=>params[:id]
-      end
 
-      private
-      def verify_method_name
-        user=session[:user_id]
-        user=User.find(user) if user
-        unless user && user.active?
-          redirect_to :controller=>"login", :action=>"signup_new"
-        end
-      end
-      #edit /config/environments/XXX.rb
-        config.action_controller.perform_caching=true/false
-      #prepare network-drive to store cache
-      fragment caching --->p477
-      #セッションの失効
-        #cron 60分ごとに２ｎｎをキャッシュ,public.action/idをキャッシュ削除  411.585,
-          #SQL:  delete from session where now() - updated_at > 3600;
-        #cron 60分ごとに２ｎｎをキャッシュ,public.action/idをキャッシュ削除  411.585,
-          #cron:  find {#@@page_cache_directory}/public -name '*.html*' -ctime +10m -delete
-      p213,538,585  #ruby script/runner 'Hoge.piyo' -e production
-      これだとRailsのアプリケーションの環境そのままにHogeモデルのpiyoメソッドを呼び出すことができる。
-      eオプションをつけることにより実行環境を選べる
-
-      id  11  92  *265    251
-      ActiveRecord294-299
-        SQL直実行: (テーブルがすでにloadされたときだけつかえる initializerでERROR:  relation "ndl_repositories" does not existの時点では無効)
-        find_by_sql以外の方法
-find_by_sql以外の方法もついでに紹介。
-ActiveRecord::Base.connection.select_all
-返り値はActiveRecord::Result、各要素はHashになっておりドットアクセスができない。プレースホルダーもActiveRecord::Base::sanitizeとかを使わないと利用できない。
-ActiveRecord::Base.connection.execute
-返り値はMysql2::Result。各要素の取得に一手間必要で面倒。
-ActiveRecord::Base.connection.select
-select_allとほぼ一緒。同じようなメソッドとしてdelete, insertもあるらしい。
-
-    cycle (layoutスタイル交互切り替えhelper）
-    link_to "Nonsense search", searches_path(:foo => "bar", :baz => "quux")
-      # => <a href="/searches?foo=bar&amp;baz=quux">Nonsense search</a>
-    link_to "Profile", @profile
-      # => <a href="/profiles/1">Profile</a>
-      <% link_to(@profile) do %>
-        <strong><%= @profile.name %></strong> -- <span>Check it out!!</span>
-    <% end %>
-      # => <a href="/profiles/1"><strong>David</strong> -- <span>Check it out!!</span></a>
-      #99 flash
-      #ActonCtrler  before_filter 147,414
-      #68,  335  validate_xxx
-      #verify only=>[:method1a,:method1b] :except=>:method2,
-        #:add_flash=> {:keyOrHash => "msg"},
-        #:redirect_to=> params,
-        #:params=> :keyOrHash,
-        #:method=> :[:get/:post/:put/:delete],
-        #:session=> :keyOrHash,
-        #:xhr=> :keyOrHash,
-        #:session=> :keyOrHash,
-        #:add_flash=> {:hash=>hashvalue},
-        #:add_headers=> {:hash=>hashvalue}e
-        #:render=> params,
-        #
-      #before/after/around_filter :method1,only=>[:method1a,:method1b] :except=>:method2
-      #before/after/around_filter do |cntroller_name|
-        #--> controller.self.filter  #100  flash
-    #335  validate_xxx
-
-  #写経rails2 180 tips
-
-  #Rails183Tips
+#Rails183Tips
     ActiveSupport
       .camelize  <=> .underscore
       .tablerize <=>.classify
@@ -1244,17 +1481,38 @@ build_app_list
   #
 #Rails環境変数=  Rails.application.config
 
-gem
-  gem install --local <gem ファイル名>
-  #github特定tagのgemをローカルビルドインストールするながれ；
-  $ git clone https://github.com/teamcapybara/capybara.git
-  $ cd capybara/
-  $ git tag -l
-  $ gico-b 1.1.4
-  $ gico tags/1.1.4
-  $ gem build ./capybara.gemspec
-  $ cp capybara-1.1.4.gem /usr/local/lib/ruby/gems/1.8/gems/
-  $ cd /usr/local/lib/ruby/gems/1.8/gems/
-  $ gem install --local capybara-1.1.4.gem
-  #でも依存性までは解決してくれない・・・
-  $ gem install selenium-webdriver -v 2.0
+
+#写経 #rails2-180tips /ash
+    #remove rdoc and ri doc
+      rm -r `gem env gemdir`/doc
+
+    JSON
+      *rails 1系をrails2互換にする時は .attributes.to_json
+      hash変換: JSON.decode(***)
+    Enumerable
+      .index_by(&:***), .group_by(&:***), .sum(&:***)
+      ModelA.find(:all).index_by( hash_keys_array)
+      ModelA.find(:all).index_by( &:attribute_name_of_model_A)
+    #rubyごろあわせ
+      escape meta blacktets :  qwrsix : str, str-ary, regexp, sym, sym-aryi, exec`` : 大文字で""のエスケープ nil->"nil"にしないようにqwは注意
+    #rubyわりざん: 16.quo(27).to_f
+
+  // Rubyコーディングスタイル
+    // then 省略
+    // .blank? .present?をつかう｡　.nil? .empty?はつかわない｡
+    // ※find_by_xxxという書き方はNG（元々あるメソッドを上書きしてし まうため）
+    //   find(:all, :conditions => ["name LIKE ?%", "A"], :order => "name ASC")
+    // ビジネスロジックはモデルに記入
+    // モデルは共通モデルクラスを継承
+    //  require_dependency 'model_helper'
+    //   class Foo < CustomModel extend ModelHelper
+    //
+    //文法チェックと警告
+    // ruby -wc <ファイル名>
+      ruby -wTW2 <ファイル名>
+    //pwdのRDoc生成は　 rdoc -c utf8
+    //Rails全体の rake doc:app
+    //
+    // Stackはスタックを実装するクラスである。
+    class Stack
+
