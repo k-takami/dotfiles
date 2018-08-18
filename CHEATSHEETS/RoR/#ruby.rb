@@ -963,7 +963,9 @@ gem
         irb> $LOAD_PATH  #<--- = $:
         irb> $"  #<--- = loaded libralies
          
-*h 211 Rubyスクリプトをデバッグする 327
+      *h 211 Rubyスクリプトをデバッグする 327
+         ruby -r debug some_path.rb
+         b fullpath.rb:linenumber #<--- break
       * 212 ユーザやグループに関する情報を得る 331
         require'etc';Etc.get*** : [pwuid|name|passwd|uid|gid|dir|shell|grnam|grgid|]
       * 213 ユーザID・グループIDを切り替える 334

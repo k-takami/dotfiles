@@ -36,8 +36,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 
-export DL_HOME=~/
-#export DL_HOME=~/Download
+# export DL_HOME=~/
+export DL_HOME=~/Download
 #export GIT_USERNAME=k_takami
 #export GIT_USERNAME=kenichi.takami
 export GIT_USERNAME=takami-appirits

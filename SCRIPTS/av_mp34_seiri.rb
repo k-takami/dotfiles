@@ -1,13 +1,17 @@
 # coding: utf-8
-#XXX: USAGE:  sudo ruby ~/.dotfiles/SCRIPTS/av_mp34_seiri.rb -f /media/sf_Downloads/XXX
+#NOTE: USAGE: -f 対象フォルダー -m zenhan(半角化モード)
+#  sudo ruby ~/.dotfiles/SCRIPTS/av_mp34_seiri.rb -f /media/sf_Downloads/XXX -m zenhan
+#NOTE: debugは $ ruby -r debug で
 require_relative 'common'
 
 
 def process_a_folder(foldername)
-  (Dir.glob "#{foldername}/*").grep(/\.(mp3|mp4|wav|cdr|iso|m4v)/).sort.each do |file|
+  (Dir.glob "#{foldername}/*").grep(/\.(mp3|mp4|wav|cdr|iso|m4v|dat)/i).sort.each do |file|
+    # MP3プレイヤー固有のTOCファイル をけす
+    next if file =~ /OLYM\w_TB.DAT/ && FileUtils.rm(file)
     # ファイル名の整形(/^\d+ +/, '')、／重複整頓、*.cdr->*.isoに
     file         = file.gsub("//", '/')
-    new_filename = File.basename(file).sub(/^[\-\d\.]+ +/, '')
+    new_filename = File.basename(file).sub(/^[\-\.]?\d\d?[\-\.]?\w? +/, '')
     new_filename = new_filename.sub(/\.cdr$/, '.iso')
     new_filename = new_filename.sub(/\.m4v$/, '.mp4')
     new_filename = from_utf8_into_hankaku_utf8_with new_filename
@@ -27,9 +31,18 @@ def process_a_folder(foldername)
   end
 end
 
+
 # 再帰処理ラッパー
 all_subfolders_under(@option[:from]).each do |folder|
   p "------------ folder #{folder} を処理中・・・ -----------"
+  # フォルダー名そのものの半角化オプション
+  if @option[:mode] == 'zenhan' && folder =~ /[０-９ａ-ｚＡ-Ｚア-ンー]/
+    new_folder_name = NKF.nkf('-m0Z41 -W -w', folder)
+    File.rename(folder, new_folder_name)
+    p " --------- MPx_Shaver フォルダー名を半角にしました:  #{folder} ---> #{new_folder_name}"
+    folder = new_folder_name
+  end
+
   process_a_folder folder
   p "------------ folder #{folder} を処理しました -----------"
   if Dir.glob("*.iso").any?
