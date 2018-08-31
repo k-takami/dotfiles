@@ -1,6 +1,6 @@
 # coding: utf-8
 # XXX: `sudo gem install debugger byebug rdebug sqlite3 pry-debugger ` 
-require 'fileutils';  require 'nkf' ; 
+require 'fileutils';  require 'nkf' ; require 'yaml';
 require "optparse"; @option_parser = OptionParser.new; @option_parser.class
 # require "getoptlong"; option_parser = GetOptLong.new; #<= before ruby 1.8
 

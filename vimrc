@@ -459,7 +459,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     NeoBundle 'tlib'
 
   " GENERIC FOR PROGRAMMING --------------------------------------------------------------------
-  NeoBundle 'dbext4rdb'
+  " NeoBundle 'dbext4rdb'
+  NeoBundle 'https://github.com/vim-scripts/dbext.vim.git'
   "re-habiliリハビリ:<Leader>  dbp slt sT se sh, desc=sdt, range-execution=sea,
                  ":h dbext-mappings
     "http://kaworu.jpn.org/vim/vim%E3%81%AEdbext.vim%E3%81%A7SQL%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%82%92%E6%93%8D%E4%BD%9C%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95
@@ -474,6 +475,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     let g:dbext_default_profile_PG_test = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog_test' 
     let g:dbext_default_profile_usual = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog' 
     "NG let dbext_default_profile = 1
+    let g:dbext_default_profile_sampleSQLite = 'type=SQLITE:dbname=./db/development.sqlite3'
 
   NeoBundle 'scrooloose/syntastic'
     let g:syntastic_ruby_checkers = ['mri'] "['mri', 'rubocop']

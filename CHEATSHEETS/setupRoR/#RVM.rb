@@ -52,6 +52,8 @@ rvm gemset help  #そのほかgemsetコマンド
 		**rvm gemset use rails323 --default**
 	**rvm gemset rename rails323 rail40**
 	$ rvm gemset empty # インストールしたgem を取り除く
+	$ rvm uninstall ruby番号 #gemのこしてrvm下のruby消去
+	$ rvm remove    ruby番号 #gemもろともrvm下のruby消去
 	$ rvm gemset delete 名称 # セット自体を消去
 	$ rvm gemset install 名称 # gem install... と同じ
 	$ rvm gemset name # 現在使っているセット

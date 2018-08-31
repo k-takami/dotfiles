@@ -1,9 +1,9 @@
 # coding: utf-8
 # USAGE (customize):
-# ruby ~/.dotfiles/SCRIPTS/ror_roughly_bootup_app.rb -f `pwd` -m restore
+# ruby ~/.dotfiles/SCRIPTS/ror_01_roughly_bootup_app.rb -f `pwd` -m restore
 # USAGE (undo, restoration):  yyyymmdd defaults to today when ommited.
-# ruby ~/.dotfiles/SCRIPTS/roughly_bootup_rails_app.rb -f `pwd` -m restore
-# ruby ~/.dotfiles/SCRIPTS/roughly_bootup_rails_app.rb -f `pwd` -m restore20180415
+# ruby ~/.dotfiles/SCRIPTS/ror_01_roughly_bootup_app.rb -f `pwd` -m restore
+# ruby ~/.dotfiles/SCRIPTS/ror_01_roughly_bootup_app.rb -f `pwd` -m restore20180415
 require_relative 'common'
 @apps_root = @option[:from]
 @mode      = @option[:mode]
@@ -48,6 +48,10 @@ else
     gemfile << "  gem 'iconv', '~> 1.0.3' #<--- superdry apppended" if gemfile.grep(/^ *gem *.iconv/).empty?
     # Gemfileのバージョン依存激しいものをバージョン指定解除
     gemfile.select{ |i| i=~ /^ *gem *.(rmagick).*[ ,\"\'\d\.]+/}.each{|j| puts j.gsub(/(,[ <>=\d\.\"]+$)/ , " # \\1") }
+    if Rails::VERSION::STRING >= "5"
+    if RUBY_VERSION >= "2.3.0"
+      gemfile << "  gem 'binding_of_caller' #<--- superdry apppended" if gemfile.grep(/^ *gem *.binding_of_caller/).empty?
+    end
 
     from_array_into_file gemfile, target
   end
@@ -184,6 +188,8 @@ test:
   #  <=> db/migrate/migrate なるファイルができるなど、時刻同一のmigration重複で起きる。
 
 
+
+
 =begin
   if `rake --version`.split.last > "0.9"
     # rake 0.9以降のuninitialized constant Rake::RDocTask は動かない。
@@ -228,6 +234,15 @@ test:
     # bx rails g devise:install
     # regrepl attr_accessible app |xargs  ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
     # regrepl current_user app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/if current_user/, "if current_user && current_user")'
+
+# ~/.dotfiles/RAILS_ROOT/development.rb アペンド
+# TODO: gmail用の2段階認証設定ページは
+# 　　 設定：　https://myaccount.google.com/signinoptions/two-step-verification/enroll-welcome
+# 　　 captca 生成：　https://security.google.com/settings/security/apppasswords
+# TODO: ~/.bashrcなどでexportする. config/secrets.yml (5.2以降は　config/credentials.yml )かきかえ；
+#      email_provider_username: <%= ENV["GMAIL_USERNAME"] %>
+#      email_provider_password: <%= ENV["GMAIL_PASSWORD"] %>
+
 
 #XXX: react-request-form
   # XXX: freelancer でreact

@@ -13,9 +13,9 @@
     config.serve_static_assets = true #<---#rails3~4 画像無効化だがunicorn/nginxとのくみあわせではサーバー付加へらすために明示false
     config.action_controller.perform_caching = false #rails4-5 's defaults
     if Rails::VERSION::STRING >= "3.1"
-      config.assets.compile = false #uglify
-      config.assets.compress = false #*.gz化
+      # config.assets.compile = false #uglify 　CSS-FW 'Foundation'では必須か coffee_script scss therubyracerつかうならばtrueに
       config.assets.digest = false #digest-hash-appending
+      config.assets.compress = false #*.gz化
       config.assets.debug = false #trueにすると、application.css/jsと個別のファイルの二重読み込みがされます。
     elsif Rails::VERSION::STRING >= "3.0"
       # config.assets.enabled = false #NG: slaggish for NDL

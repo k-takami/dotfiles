@@ -1,6 +1,9 @@
+dbext:No SQL TOP pattern defined.  You must define a g:dbext_default_SQLITE_SQL_Top_pat and a g:dbext_default_SQLITE_SQL_Top_sub
+
+                                                     ★Leaderは,になってるよ★
+                                                     ★ inode番号依存っぽい★
                                                      dbext.vim           MariaDB/MySQL                       PostgreSQL        SQLite
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                                                     ★Leaderは,になってるよ★
 #データ操作
 Connect to a database                                <Leader>dbp         mysql <dbname>                      psql <dbname>     sqlite3 <filename>
                                                                                -u<username>                       -U <username>

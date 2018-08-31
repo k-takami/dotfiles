@@ -171,24 +171,6 @@ nameserver 192.168.137.1  # VMnet8のIPアドレスを指定
    $ rvm use ruby-2.0.0-p195@rails3.2.13 --default
 
 
-
-  プロジェクトごとに rvm の gemset を作るワンライナー
-  rvm use --create jruby-1.6.2@hoge-pj
-  rvm gemset help
-      {import,export,create,copy,rename,empty,delete,name,dir,list,list_all,gemdir,install,pristine,clear,use,update,unpack,globalcache}
-  ##$ rvm gemset create 名称    # セットを新規作成
-  $ rvm use 名称                    # セットの切り替え
-  $ rvm gemset empty           # インストールしたgem を取り除く
-  $ rvm gemset delete 名称    # セット自体を消去
-  $ rvm gemset install 名称    # gem install... と同じ
-  $ rvm gemset name    # 現在使っているセット
-  $ rvm gemset list        # 現在使っているruby のバージョン内のgemセット一覧
-  $ rvm gemset list_all   # rubyのバージョンをまたいだgemセット一覧
-  $ rvm gemset dir        # 現在使っているセットのディレクトリパス
-  rubyのバージョンを変えて同じgemsetを使いたい場合
-  $ rvm gemset copy ruby1.9.2-p180@global ruby1.9.2-p290@global
-
-
   root@localhost:/opt/me/tkt-redmine# rvm list
     rvm rubies
     => ruby-1.9.3-p429 [ i686 ]

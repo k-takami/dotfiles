@@ -254,6 +254,7 @@ gem
         主処理 rescue 例外処理
       * 018 予約語 32
         PATH|redo
+        __END__, DATA #Ruby スクリプトの終わりを表すキーワードで、これ以降はスクリプトとして読み込まれません。DATAは__END__以降の各行
         __FILE__|__LINE__|BEGIN|END|RUBYLIB|RUBYOPT|RUBYSHELL|RUBYPATH|COMSPEC
         begin|end|alias|and|break|case|class|def|defined?|do|else|elsif|ensure|false|for|if|in|module|
         next|nil|not|or|redo|rescue|retry|return|self|super|then|true|undef|unless|when|while|yield|
@@ -964,8 +965,8 @@ gem
         irb> $"  #<--- = loaded libralies
          
       *h 211 Rubyスクリプトをデバッグする 327
-         ruby -r debug some_path.rb
-         b fullpath.rb:linenumber #<--- break
+           ruby -r debug some_path.rb
+           b fullpath.rb:linenumber #<--- break
       * 212 ユーザやグループに関する情報を得る 331
         require'etc';Etc.get*** : [pwuid|name|passwd|uid|gid|dir|shell|grnam|grgid|]
       * 213 ユーザID・グループIDを切り替える 334
