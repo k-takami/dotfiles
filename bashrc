@@ -349,9 +349,18 @@ umask 002
 
 
 #変数展開コマンド ####################################################### 
+# パターン  動作  典型的な使用例
+# ${変数#パターン}  文字列先頭の最短マッチ部分を削除  単に先頭の固定文字列を削除するとき使う
+# ${変数##パターン} 文字列先頭の最長マッチ部分を削除  ${HOGE##*/}でbasename
+# ${変数%パターン}  文字列末尾の最短マッチ部分を削除  ${HOGE%/*}でdirname。単に末尾の固定文字列を削除するときにも使う
+# ${変数%%パターン} 文字列末尾の最長マッチ部分を削除  あまり使わない
+# ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換  
+# ${変数//検索文字列/置換文字列}  全ての文字列を置換  ${HOGE//foo/bar}
 
 function tarzip_rorapp {
-  tar zcvf $1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* $1;lat;
+  local chomped1=${1%\/} ;  # 行末スラッシュ削除
+  tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* tmp $chomped1;lat;
+  #XXX --exclude node_modules 
 }
 
 function killmyps {
@@ -444,3 +453,5 @@ alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生�
 # bashrc をデフォルトから汚したくない！と思う人は（まれでしょうが）
 source ~/.dotfiles/SI/pj-dependent.bashrc
 cd ~/.dotfiles
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

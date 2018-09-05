@@ -707,7 +707,7 @@ gem
 *h 149 名前がぶつからない新しいファイルを作成する 229
 
     第5章 入出力
-      * 150 ファイルを開く 232
+      * 150 (~展開なしのパスで)ファイルを開く 232
         File.open("filename"){|f| ...... }
         f=File.open("filename"); f.each{|line| ...... }
         # OR, specify line delimiter as below;
@@ -1507,3 +1507,5 @@ build_app_list
   // Stackはスタックを実装するクラスである。
   class Stack
 
+#逆引き
+    #Errno::ENOENT Exception: --> FileUtils.mkdir_p していないから

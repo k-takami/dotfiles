@@ -104,3 +104,22 @@ getbase.org
   border-top-right-radius: 1px;
   border-bottom-left-radius: 1px;
   border-bottom-right-radius: 1px;
+
+
+
+#SCSS(CSS混入可能) & SASS(半角空白二個で波括弧代用可能、;省略可能、": "は半角空白必須
+  /*ベンダープレフィックスした角丸*/
+  @import "compass"; /* <--- compassをトランスパイル */
+  div { @include border-radius(10px); }
+  $変数名
+  MIXIN
+    @mixin scss-mixin
+    @include scss-mixin-calling
+    = sass-mixin
+    + sass-mixin-calling
+
+  @制御ステートメント
+  ネスト記述
+
+
+    
