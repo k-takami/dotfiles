@@ -33,6 +33,7 @@ Git clone時に上記のようなエラーが出たら 公開鍵をGitHubに登�
 3.実行
 
 docker-machine create --driver virtualbox default
+# シェルをVM環境につなぐ
 `eval $(docker-machine env)`
 # 以下は"docker-compose.yml"があるディレクトリで実行
 docker-compose run cms rake db:create
