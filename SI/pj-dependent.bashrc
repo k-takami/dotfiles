@@ -41,6 +41,13 @@ alias cvfmyenv='cd $DL_HOME; tar zcvf backup.tar.gz ~/.*rc seleniumIDE/ diff/ses
 
 # alias mydb='      mysql -h localhost -u cassia -pcassia cassiadb'
 # alias mydb='      mysql -h localhost -u root -p'
+alias mydb='      mysql -h localhost -u loohcs -ppassword loohcs_development'
+# # DB Server Container
+# MYSQL_ROOT_PASSWORD=password
+# MYSQL_DATABASE=loohcs_development
+# MYSQL_USER=loohcs
+# MYSQL_PASSWORD=password
+
 alias mydbstg='psql -U catalog -h 10.2.82.102'
 alias mydbprod='psql -U catalog -h 10.2.66.212'
 alias sqlite='sqlite3'

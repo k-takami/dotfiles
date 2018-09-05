@@ -1,36 +1,36 @@
 1.ツールのインストール
-For Windows
-Docker公式サイトからインストーラをダウンロードし、インストールする。
-https://www.docker.com/products/docker-toolbox
-For macOS
-Windowsと同様、Docker公式サイトからインストーラをダウンロードするか、以下を実行する。
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew install caskroom/cask/brew-cask
-brew install cask virtualbox
-brew install docker
-brew install docker-compose
-brew install docker-machine
+  For Windows
+  Docker公式サイトからインストーラをダウンロードし、インストールする。
+  https://www.docker.com/products/docker-toolbox
+For macOS (old)
+  Windowsと同様、Docker公式サイトからインストーラをダウンロードするか、以下を実行する。
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew install caskroom/cask/brew-cask
+  brew install cask virtualbox
+  brew install docker
+  brew install docker-compose
+  brew install docker-machine
+
+
+
 2. リポジトリのクローン
+  コマンドプロンプト(Windows)、ターミナル(macOS)で以下を実行。
+  git clone --recursive git@github-ext.dena.jp:Thelxinoe/platinum-dev-env.git
 
-コマンドプロンプト(Windows)、ターミナル(macOS)で以下を実行。
-
-git clone --recursive git@github-ext.dena.jp:Thelxinoe/platinum-dev-env.git
 2.1 public-keyでエラーが出たとき
+  Permission denied (publickey).
+  fatal: Could not read from remote repository.
 
-Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-Git clone時に上記のようなエラーが出たら 公開鍵をGitHubに登録する。 http://qiita.com/shizuma/items/2b2f873a0034839e47ce 鍵の生成はTeratermからも行える。
+  Please make sure you have the correct access rights
+  and the repository exists.
+  Git clone時に上記のようなエラーが出たら 公開鍵をGitHubに登録する。 http://qiita.com/shizuma/items/2b2f873a0034839e47ce 鍵の生成はTeratermからも行える。
 
 設定 ＞ SSH鍵生成
-鍵の種類＝RSA
-ビット数＝2048
-で鍵を生成し、
-公開鍵の保存、秘密鍵の保存で
-公開鍵（id_rsa.pub）と秘密鍵（rsa.pub）を保存する。
-3.実行
+  鍵の種類＝RSA
+  ビット数＝2048
+  で鍵を生成し、
+  公開鍵の保存、秘密鍵の保存で
+  公開鍵（id_rsa.pub）と秘密鍵（rsa.pub）を保存する。
 
 docker-machine create --driver virtualbox default
 # シェルをVM環境につなぐ
@@ -40,9 +40,9 @@ docker-compose run cms rake db:create
 docker-compose run cms rake db:migrate
 docker-compose up -d
 3.1実行(Windows)
-docker-machine create --driver virtualbox default
-docker-machine env > docker-env.bat
-docker-env.bat
+  docker-machine create --driver virtualbox default
+  docker-machine env > docker-env.bat
+  docker-env.bat
 # 以下は"docker-compose.yml"があるディレクトリで実行
 docker-compose run -d cms rake db:create
 docker-compose run -d cms rake db:migrate
@@ -79,11 +79,19 @@ $ mysql.server start &
 docker-compose run --service-ports cms rails s
 
 用語集
-	Dockerホスト
-		Dockerが動いている仮想環境。 今回の場合、VirtualBox上にある。
-	Dockerコンテナ
-		プロセスやネットワークが隔離された空間。 環境の作成や破棄が簡単になる。
-Dockerコマンド
+	Dockerホスト Dockerが動いている仮想環境。 今回の場合、VirtualBox上にある。
+	Dockerコンテナ プロセスやネットワークが隔離された空間。 環境の作成や破棄が簡単になる。
+
+
+Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
+  # docker ps で表示される右端の列のコンテナ名を確認
+  # docker exec -it コンテナ名 コマンド
+   　eg) docker exec -it loohcs_wordpress.test_1 bash  
+
+	# なんらかのコマンドを実行する ex. rake db:migrate など
+	docker-compose run web rake db:migrate
+	# docker-compose run ${コンテナ名} ${なんらかのコマンド}
+
 	# Virtual BoxでDockerホストを作成する。
 	docker-machine create --driver virtualbox default
 	# Dockerホストの環境変数を出力する。
@@ -98,36 +106,11 @@ Dockerコマンド
 	docker-compose up -d
 	# Dockerコンテナを停止して破棄する。`= docker stop & docker rm`
 	`docker-compose down`
-	# なんらかのコマンドを実行する ex. rake db:migrate など
-	docker-compose run web rake db:migrate
-	# docker-compose run ${コンテナ名} ${なんらかのコマンド}
 	
-	
-コンテナ一覧
-	db
-	client
-	MySQL 5.6
-	使用ポート 3306
-	cms
-	CMS本体
-	使用ポート 3000
-	phpMyAdmin 最新版
-	使用ポート8080
-	mock
-	APIモックサーバ
-	使用ポート 3333
-	ref
-	APIリファレンス
-	使用ポート 8888
-	pre-commit導入方法
-	for macOS
-		pre-commit_setup.shを実行
-	for Windows
-		以下のようにpre-commitファイルをコピーする。
-	cms
-		コピー元 bin/hooks/cms/pre-commit
-		コピー先 .git/modules/cms/hooks
-	mock
-		コピー元 bin/hooks/mock/pre-commit
-		コピー先.git/modules/mock/hooks
+  #コンテナ結合＆ポートフォワーディング指定でコンテナ作成 先ほど作ったイメージでtestappコンテナを作成し起動させます。
+    $docker run -it --name testapp --link mysql:mysql -d -p 8080:80 myuser/centos:1.0 
+  #SCP: $ docker cp
+    $docker cp ~/Desktop/test.txt testapp:test.txt
+
+OSX　container場所(VMsizeはpreference->Disk)：　/Users/user/Library/Containers/com.docker.docker/Data/vms/0/ 
 	
