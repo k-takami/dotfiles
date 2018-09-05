@@ -6,6 +6,8 @@
 require 'rake'
 require 'erb'
 # USAGE: rake install
+# ln -fs ~/Dotfiles/ ~/.dotfiles
+# mkdir -p ~/.vim/bundle && git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 desc "install the dot files into user's home directory"
 
