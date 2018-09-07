@@ -11,9 +11,11 @@ alias regrepgsub_bak='grep -lnirE "\w+takami" . --exclude=*.bak --include=*txt* 
 # alias myapp='   cd $DL_HOME/platinum-dev-env/cms'
 # alias myapp='   cd $DL_HOME'
 export PATH="$PATH:/opt/apache-jmeter-3.2/bin"
-alias myapp='   cd $DL_HOME/src'
-alias myapp1='   cd /opt/enju-flower/'
-alias myapp2='   cd /opt/enju-management'
+alias myapp=' cd /Users/user/src'
+alias myapp1='cd /Users/user/src/irodori/loohcs'
+alias myapp2='cd /Users/user/src/irodori/suganumap-backend'
+# alias myapp1='   cd /opt/enju-flower/'
+# alias myapp2='   cd /opt/enju-management'
 export GITSTART1=b0895aadd11edd3a0c6e2e430bdaa70f8b31d291 
 export GITSTART2=419e94e39e34e04520840bfbfac52d9580cee5d2 
 alias mytodo1='   myapp1; gdino $GITSTART1 |xargs grep     -niE  "(todo|xxx|fixme|pending): " ; cd -'

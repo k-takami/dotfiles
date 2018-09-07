@@ -175,22 +175,21 @@ alias inrb=' --include=*.*rb'
 alias exvd=' --exclude-dir=vendor/'
 
 alias REM=' : <<"REM"' #REMで終端すること
-alias regrep='     grep  -nirE'
-alias regrep-r='   grep  -niE'
-alias regrepc1='   grep  -C1 -nirE'
-alias regrepc1-r=' grep  -C1 -niE'
-alias regrepc3='   grep  -C3 -nirE'
-alias regrepc3-r=' grep  -C3 -niE'
-alias regrepl='    grep  -lnirE'
-alias regrepl-r='  grep  -lniE'
+
+# $1検索語　$2場所 regrep の$2がなければ、./*で補完
+function regrep   { local options=${2:-*}  ; grep     -nirE  $1 $options;}
+function regrepl  { local options=${2:-*}  ; grep     -lnirE $1 $options;}
+function regrep-r { local options=${2:-*}  ; grep     -niE   $1 $options;}
+function regrepl-r { local options=${2:-*} ; grep     -lniE  $1 $options;}
+function regrepc1 { local options=${2:-*}  ; grep -C1 -niE   $1 $options;}
+function regrepc3 { local options=${2:-*}  ; grep -C3 -niE   $1 $options;}
+function regrepc1-r { local options=${2:-*}; grep -C1 -nirE  $1 $options;}
+function regrepc3-r { local options=${2:-*}; grep -C3 -nirE  $1 $options;}
 
 alias grepvcode='   find . |grep -viE "\.(svc|git|hg)" | grep'
 alias grepvr='   grep -viE "(\..?sv|\.yml|\..?css|\.js.+|\.erb|\.NEW|\.OLD|\.BAK|\/db\/migrate|development.rb|schema.rb)" | grep'
 alias grepvrsort='sort | grepvrbc . '
 alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
-alias filelist='    find ./* | sort | less '
-alias ff='filelist'
-alias ffgrep='      find . | grep -iE '
 
 #SYNC WITH after fugitive.vim grep.vim
 alias gst='      git status' #Gstatus
@@ -359,7 +358,7 @@ umask 002
 
 function tarzip_rorapp {
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
-  tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* tmp $chomped1;lat;
+  tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* --exclude=node_modules $chomped1;lat;
   #XXX --exclude node_modules 
 }
 
@@ -424,6 +423,10 @@ function grepsnippets {
 function grepremotegems {
  echo 'gem list ***GEMNAME*** --remote --all';
 }
+
+alias ff='    find ./* | sort | less '
+alias ffgrep='find . | grep -iE '
+
 function rmbak {
   ffgrep .bak |xargs -n1 rm $_ ;
   find . | grep -E "DEV$" |xargs -n1 rm $_ ;

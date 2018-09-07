@@ -32,13 +32,13 @@ For macOS (old)
   公開鍵の保存、秘密鍵の保存で
   公開鍵（id_rsa.pub）と秘密鍵（rsa.pub）を保存する。
 
-docker-machine create --driver virtualbox default
-# シェルをVM環境につなぐ
-`eval $(docker-machine env)`
-# 以下は"docker-compose.yml"があるディレクトリで実行
-docker-compose run cms rake db:create
-docker-compose run cms rake db:migrate
-docker-compose up -d
+3.実行
+  docker-machine create --driver virtualbox default
+  `eval $(docker-machine env)`
+  # 以下は"docker-compose.yml"があるディレクトリで実行
+  docker-compose run cms rake db:create
+  docker-compose run cms rake db:migrate
+  docker-compose up -d
 3.1実行(Windows)
   docker-machine create --driver virtualbox default
   docker-machine env > docker-env.bat
@@ -50,17 +50,7 @@ docker-compose up -d
 
 `$ docker-compose run cms bundle install`
 `$ docker-compose run cms rails s`
-**特定コンテナ再起動　＆　コンテナプロセス一覧**
-	` docker (start|stop|restart) platinumdevenv_cms_1 ; docker ps`
-		eg) 
-		$ docker start platinumdevenv_cms_1
-platinumdevenv_cms_1
-$ docker attach platinumdevenv_cms_1
-	docker-compose build
-	docker rm [container-name] OR docker-compose down**
-**byebug**
-	docker attach platinumdevenv_cms_1
-		`$ docker ps;  docker start platinumdevenv_cms_1 ;docker attach platinumdevenv_cms_1 ; docker ps`
+
 **MEMO**
 マイページ	次回fumfum（https://mycode.jp/my.html ） dummy account
 
@@ -111,6 +101,42 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
     $docker run -it --name testapp --link mysql:mysql -d -p 8080:80 myuser/centos:1.0 
   #SCP: $ docker cp
     $docker cp ~/Desktop/test.txt testapp:test.txt
+
+  # imageをファイルで授受：docker save コマンドと docker load コマンドを使うと良い。
+
+  **特定コンテナ再起動　＆　コンテナプロセス一覧**
+    ` docker (start|stop|restart) platinumdevenv_cms_1 ; docker ps`
+      eg) 
+  $ docker attach platinumdevenv_cms_1
+    docker-compose build
+    docker rm [container-name] OR docker-compose down**
+
+  # デバッグ環境：
+    # Gemfile
+      gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+      gem 'pry-rails'
+      gem 'pry-byebug'
+    # development.rb
+      stdin_open: true
+      tty: true
+    # アプリルートに.pryrc, .byebygrc
+      https://budougumi0617.github.io/2017/09/02/debug-rails-on-docker/
+    **byebug**
+      docker attach platinumdevenv_cms_1
+
+  # 運用管理
+    apt-get clean;
+    docker build --squash
+      サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
+    docker system prune: (new in 1.13): 
+      ---> deletes all stopped containers, all idle volumes
+    docker save < image_name> /docker load < image_name> 
+      ---> これはレイヤーをまとめず保持するだけなので事前整頓必要
+    docker export <コンテナ ID> | docker import - <イメージ名>:<タグ> 
+      ---> ただしdocker build(Dockerfile)でイメージに付与した属性 VOLUME、EXPOSE、ENVなどは消失。
+      保持されるのはファイルシステムだけと考えておけばいいと思います。
+
+
 
 OSX　container場所(VMsizeはpreference->Disk)：　/Users/user/Library/Containers/com.docker.docker/Data/vms/0/ 
 	
