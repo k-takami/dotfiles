@@ -622,6 +622,7 @@ gem
         File.basename(str)
 #        File.basename(str, ".拡張子") #拡張子以外を返す
         File.extname(str)
+        Pathname(path).sub_ext  [ruby1.9]拡張子を与えられた文字列で置き換えた Pathname オブジェクト返します。eg) export_file_name.sub_ext(Dnp::Settings.extension.plane_file)
       * 129 相対パスから絶対パスを求める 200
         File.expand_path(str) #~, ./ ../ など MSwinでは/C://みたくドライブ文字つきで展開される
         eg) Dir.glob(File.expand_path('../histories/*id.rb', __FILE__)).each { |file| require file }
@@ -1233,10 +1234,18 @@ gem
           end
     * 266 ファイルをRubyスクリプトとしてロードする 426
       load '絶対パス' #早退パスだと ＄LOAD_PATHからさがします
+        eg) load (File.dirname(@rails_template) + '/recipes/rails_stripe_checkout.rb')
       SomeClass.new.instance_eval(File.read 'path'))とすると、SomeClassで読んだファイルを実行できる。
     * 267 文字列をRubyスクリプトとして実行する 427
       eval #<--- String#dump , .marshall のオブジェクト化
       # 意図をはっきりさせたければ instance_variables(_get|_set), constants, const_(get|set), define_method, send i をつかうべき
+        o local_variables(局所変数名）
+        o global_variables（グローバル変数名）
+        #Rails below?;
+          o Object#instance_variables（インスタンス変数名）
+          o Module#class_variables（モジュール（クラス）変数名）
+          o Module#constants（そのモジュール（クラス）の定数名）
+        o Module.constants（そのモジュール（クラス）とインクルード（上位）を含む（アクセスできる）定数名）
     * 268 スクリプトファイル名・行番号をすり替える 428
       #シングルクオート記号をつかって全部のエスケープを無効にするのが要点
       class MyClass
@@ -1312,18 +1321,11 @@ gem
       * 文字列から変数への変換
         o eval(String)→変数
       * 変数（定数）名の文字列（のリスト）の取得
-        o local_variables(局所変数名）
-        o global_variables（グローバル変数名）
-        o Object#instance_variables（インスタンス変数名）
-        o Module#class_variables（モジュール（クラス）変数名）
-        o Module#constants（そのモジュール（クラス）の定数名）
-        o Module.constants（そのモジュール（クラス）とインクルード（上位）を含む（アクセスできる）定数名）
 
   #Ruby未整理
     injectの場合はresultにはブロック内で最後に評価した値が入る
     each_with_objectの場合は、resultは常にeach_with_objectの引数として渡されたオブジェクトを指す
     .map.with_index
-    .sub_ext  . 拡張子を与えられた文字列で置き換えた Pathname オブジェクト返します。eg) export_file_name.sub_ext(Dnp::Settings.extension.plane_file)
     未整理
 正規表現にマッチしているときだけ 切り取ってキーにしてハッシュ代入　：　@generated_job_info_links[uid] = str if (uid = str.match(/uid=\w+/).to_s[4..-1])
  Rubyではfalseとnilがfalse、それ以外の値がすべてtrueと評価されます。

@@ -731,9 +731,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     let g:bookmark_auto_close = 1
     let g:bookmark_center = 1
     " rehabili リハビリ mi mm ma BookmarkSave BookmarkLoad 
-      " Add/edit/remove annotation at current line  mi  :BookmarkAnnotate <TEXT>
       " Add/remove bookmark at current line   mm  :BookmarkToggle
       " Show all bookmarks (toggle)   ma  :BookmarkShowAll
+      " Add/edit/remove annotation at current line  mi  :BookmarkAnnotate <TEXT>
       " Save all bookmarks to a file    :BookmarkSave <FILE_PATH>
       " Load bookmarks from a file    :BookmarkLoad <FILE_PATH>
       " 
