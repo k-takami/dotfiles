@@ -1,4 +1,4 @@
-#FireFox 27
+#FireFox 27 ~ 43
 	settings: 
 		disable auto-update (to avoid selenium-trouble), 
 		open previously closed tabs upon bootup

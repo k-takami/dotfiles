@@ -122,6 +122,8 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
     # アプリルートに.pryrc, .byebygrc
       https://budougumi0617.github.io/2017/09/02/debug-rails-on-docker/
     **byebug**
+      # dockerプロセス名にシェルをアタッチする。抜ける時はCtrl+P -Ctrl-Q 
+      # ドカタッチ
       docker attach platinumdevenv_cms_1
 
   # 運用管理
@@ -130,11 +132,19 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
       サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
     docker system prune: (new in 1.13): 
       ---> deletes all stopped containers, all idle volumes
-    docker save < image_name> /docker load < image_name> 
+    docker save image_name > filename.tar
+    docker load < filename.tar
       ---> これはレイヤーをまとめず保持するだけなので事前整頓必要
     docker export <コンテナ ID> | docker import - <イメージ名>:<タグ> 
       ---> ただしdocker build(Dockerfile)でイメージに付与した属性 VOLUME、EXPOSE、ENVなどは消失。
       保持されるのはファイルシステムだけと考えておけばいいと思います。
+
+   # image 作成と削除
+    $ docker rmi test
+    $ docker commit suganumap-backend_web_1 suganumap-backend_web_1.0910
+    $ docker images
+   # 履歴確認はIMAGE-NAMEで
+    $ docker history suganumap-backend_web_1.0910
 
 
 

@@ -55,8 +55,11 @@ export GIT_USERNAME=takami-appirits
 #when updgraded ruby
 #export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
 
-#DOCKER
+#DOCKER & Pow
 #eval $(docker-machine env)
+export POW_TIMEOUT=300
+# export POW_WORKERS=3
+# powder (config/status|restart)
 
 # User specific aliases and functions
 
@@ -133,6 +136,7 @@ alias rm='rm -r'
 alias kill9='        kill -9 '
 alias killallrails5='pkill -a thin; ' 
 alias myps='ps -ef  |grep -niE "\b(memcached|unicorn|ant|redis|sidekiq|rails|ruby|thin|fsevent|spring)\b" | sort -k6'
+alias duck='du -ck' #kilobyte-totalを表示
 
 alias vims='  vim     -S ~/session-'
 alias vimsve='vim +VE -S ~/session-'
@@ -163,39 +167,78 @@ alias ksen-s='echo "★★★★★★★★★★★★★★★★★★★★
 alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"'
 alias ksen-d='echo "#################################################################################"'
 alias ksen-e='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
+alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
 # alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
 # alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
 # alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
 # alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
-
-alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
-alias incexc=' echo "--include=**  --exclude=*.sw* --exclude=*~ --exclude=log/* --exclude=*spec* --exclude=*spec* --exclude=tmp/* --exclude=*vendor/bundle* --exclude=node_module*/* --exclude-dir=vendor "'
-alias nrnd=' --no-ri --no-rdoc '
-alias inrb=' --include=*.*rb'
-alias exvd=' --exclude-dir=vendor/'
-
 alias REM=' : <<"REM"' #REMで終端すること
 
+#  #grep結果ファイル中文字列をかきかえ
+# $ regrepl attr_accessible app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
+
+# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
+
+#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
+#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
+
+alias cdd=' cd ~/.dotfiles'
+alias nrnd=' --no-ri --no-rdoc '
+alias no_spec=' echo "--exclude=*spec* "'
+function includerb { echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
+function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak "; }
+function appfilesonly { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log "; }
+function greprc {
+  local options=${@:2} ;
+  grep -niE --include=*rc $1 ~/.dotfiles/*                      $options;
+  grep -niE               $1 ~/.dotfiles/SI/pj-dependent.bashrc $options;
+}
+
+function greprcrbonly { greprc `includerb` `nogabage` $@ ; }
+
+function grepdf {
+  # ex) greprc serchword -C1 `includerb` `nogabage`
+  local options=${@:2} ;
+  grep -niE  $1 ~/.dotfiles/* --include=*rc $options;
+  grep -nirE $1 ~/.dotfiles/SI              $options;
+  grep -nirE $1 ~/.dotfiles/SCRIPTS         $options;
+  grep -nirE $1 ~/.dotfiles/CHEATSHEETS     $options;
+  grep -nirE $1 ~/.dotfiles/vim/snippets    $options;
+  # echo "grep -nirE $1 ~/.dotfiles/vim/snippets  $options ### ";
+}
+
+function greprails {
+local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 'gems') "` ;
+  grep -nirE "def \w*$1" $gempath ;
+}
+
 # $1検索語　$2場所 regrep の$2がなければ、./*で補完
-function regrep   { local options=${2:-*}  ; grep     -nirE  $1 $options;}
-function regrepl  { local options=${2:-*}  ; grep     -lnirE $1 $options;}
-function regrep-r { local options=${2:-*}  ; grep     -niE   $1 $options;}
-function regrepl-r { local options=${2:-*} ; grep     -lniE  $1 $options;}
-function regrepc1 { local options=${2:-*}  ; grep -C1 -niE   $1 $options;}
-function regrepc3 { local options=${2:-*}  ; grep -C3 -niE   $1 $options;}
-function regrepc1-r { local options=${2:-*}; grep -C1 -nirE  $1 $options;}
-function regrepc3-r { local options=${2:-*}; grep -C3 -nirE  $1 $options;}
+# alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
+function greper   {                             grep     -nirE  $@          ; }
+function greperrb {                             grep     -nirE  `includerb` `nogabage` $@ ; }
+function regrep   {     local options=${2:-*} ; grep     -nirE  $1 $options ; }
+function regreprb {     local options=${2:-*} ; grep     -nirE  `includerb` `nogabage` $1 $options ; }
+function regrep_nosub { local options=${2:-*} ; grep     -niE   $1 $options ; }
+function regrepl  {     local options=${2:-*} ; grep     -lnirE $1 $options ; }
+function regrepl-r {    local options=${2:-*} ; grep     -lniE  $1 $options ; }
+function regrepc1 {     local options=${2:-*} ; grep -C1 -niE   $1 $options ; }
+function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
+function regrepc1-r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
+function regrepc3-r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
+alias vimclean='rm ~/*.sw* ; cd ~/.dotfiles ; git status ; cd - ;'
+alias ror_snip_list='sh ~/.dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
+alias ror_lns_gitignore='ln -s ~/.dotfiles/gitignore .gitignore'
 
 alias grepvcode='   find . |grep -viE "\.(svc|git|hg)" | grep'
 alias grepvr='   grep -viE "(\..?sv|\.yml|\..?css|\.js.+|\.erb|\.NEW|\.OLD|\.BAK|\/db\/migrate|development.rb|schema.rb)" | grep'
 alias grepvrsort='sort | grepvrbc . '
-alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
 
 #SYNC WITH after fugitive.vim grep.vim
 alias gst='      git status' #Gstatus
 alias gwr='      git add' #Gwrite
 alias gdi='      git diff' #gdif
 alias gbl='      git blame' #Gblame
+alias grm='      git rm' 
 alias gcfggettmturl=' git config --get remote.origin.url'
 
 
@@ -248,8 +291,13 @@ alias gilotheir=' git log --all --stat --branches=* --remotes=* ' #followed by f
 alias gilostheir='git log --all --stat --branches=* --remotes=* -S'
 alias mygilo='    git log --committer=$GIT_USERNAME'
 alias gilosmine=' git log --committer=$GIT_USERNAME -S'
-  #    コミットの中で"hogehoge"という文字列を含む行が変更されたものだけ表示 ：例  $ tig -S"hogehoge" filename
-alias gplomrbs='  git pull origin master --rebase'
+#    コミットの中で"hogehoge"という文字列を含む行が変更されたものだけ表示 ：例  $ tig -S"hogehoge" filename
+
+# $ git checkout master           # master ブランチへ切り替え
+# $ git pull --rebase             # 最新化(前述の設定により --rebase は省略可能)
+# $ git checkout feature/xxxxxx   # push したい自分のブランチへ切り替え
+alias gplomrbs='  git pull --rebase origin master'  # 本来はマージ履歴をのこさない --ff をつけるべきかも？
+alias girbmst='   git rebase master --no-ff'  # 最新化した master ブランチに対して自分のブランチをリベース
 alias girbcntne=' git rebase --continue'
 alias girbabt='   git rebase --abort'
 alias girbihd='   git rebase -i' # to be follwed by HEAD~~ or HEAD~~~~~~回数分
@@ -366,49 +414,6 @@ function killmyps {
   # myps検索pid以外をgrepしてkill 
   kill -9 `myps | grep -v grep | ruby -ane 'p $F[1].to_i'`
 }
-function includerb {
-  echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor";
-}
-function nogabage {
-  echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak ";
-}
-function appfilesonly {
-  echo "  --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log ";
-}
-function greprc {
-  local options=${@:2} ;
-  grep -niE  $1 ~/.dotfiles/* --include=*rc        $options;
-  grep -niE  $1 ~/.dotfiles/SI/pj-dependent.bashrc $options;
-}
-
-#  #grep結果ファイル中文字列をかきかえ
-# $ regrepl attr_accessible app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
-
-# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
-
-#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
-#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
-
-function greprcrbonly {
-  greprc  $@ `includerb` `nogabage`  ;
-}
-
-function grepdf {
-  # ex) greprc serchword -C1 `includerb` `nogabage`
-  local options=${@:2} ;
-  grep -niE  $1 ~/.dotfiles/* --include=*rc $options;
-  grep -nirE $1 ~/.dotfiles/SI              $options;
-  grep -nirE $1 ~/.dotfiles/SCRIPTS         $options;
-  grep -nirE $1 ~/.dotfiles/CHEATSHEETS     $options;
-  grep -nirE $1 ~/.dotfiles/vim/snippets    $options;
-  # echo "grep -nirE $1 ~/.dotfiles/vim/snippets  $options ### ";
-}
-
-function greprails {
-local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 'gems') "` ;
-  grep -nirE "def \w*$1" $gempath ;
-}
-
 function chomR {
   sudo chown -R $1 $3 ;  sudo chmod -R $2 $3
 }
@@ -442,12 +447,10 @@ function rmbak {
 # find . -name "*.rb" -o -name "*.yml" | xargs wc -l
 # rake stats
 
+#ATOM環境
+alias atom_pkg_export=' apm list --installed --bare > ~/.dotfiles/atom_packages.txt ; cdd; gwr atom_packages.txt ; '
+alias atom_pkg_restore='apm install --packages-file ~/.dotfiles/atom_packages.txt'
 
-
-
-alias vimclean='rm ~/*.sw* ; cd ~/.dotfiles ; git status ; cd - ;'
-alias ror_snip_list='sh ~/.dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
-alias ror_lns_gitignore='ln -s ~/.dotfiles/gitignore .gitignore'
 
 #Google 2-Step Verification tool 'oathtool'
 alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生成画面で表示されるbase32の文字をスペースなしで引数として入力 %s/ //  #<  sudo apt-get install oathtool
@@ -455,6 +458,5 @@ alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生�
 # CONFIDENTIAL PJ-dependent unixコマンド #############################
 # bashrc をデフォルトから汚したくない！と思う人は（まれでしょうが）
 source ~/.dotfiles/SI/pj-dependent.bashrc
-cd ~/.dotfiles
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

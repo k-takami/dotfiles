@@ -190,12 +190,13 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
     span.input-group-btn>button
 
 ## label/badge/alert
-    span.label.label-default
-               label-primary
-               label-success
-               label-info
-               label-warning
+    span.label.
+               label-default
                label-danger
+               label-success
+               label-warning
+               label-info
+               label-primary
     
     span.badge
     
@@ -331,7 +332,74 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
     <div data-spy="affix" data-offset-top="60" data-offset-bottom="200">
 
 
-################# RoR ###################
+################# ERB ###################
 responsive design tool [https://blisk.io](https://blisk.io)
 <%= stylesheet_link_tag 'bootstrap-3.3.7.min' %>
+
+################# HAML ###################
+#template/ snippet
+  .row
+    .col-xs-2.col-sm-2.col-md-2.col-lg-2= '2'
+    .col-xs-2.col-sm-2.col-md-2.col-lg-2= '2'
+    .col-xs-2.col-sm-2.col-md-2.col-lg-2= '2'
+    .col-xs-2.col-sm-2.col-md-2.col-lg-2= '2'
+    .col-xs-2.col-sm-2.col-md-2.col-lg-2= '2'
+    .col-xs-2.col-sm-2.col-md-2.col-lg-2= '2'
+  .row
+    .col-xs-2.col-sm-2= '2'
+    .col-xs-2.col-sm-2= '2'
+    .col-xs-2.col-sm-2= '2'
+    .col-xs-2.col-sm-2= '2'
+    .col-xs-2.col-sm-2= '2'
+    .col-xs-2.col-sm-2= '2'
+
+#raw / .escape
+  != '<br /><br /><br /><br />'
+  &= '<br /><br /><br /><br />'
+#表示非表示制御
+  -# block below is visible if smart_phone
+  .hidden-lg.hidden-md
+    .col-xs-1.col-sm-1= ''
+    .col-xs-5.col-sm-5= image_tag 'download_app_at_app_store.png',   width: '100%'
+    .col-xs-5.col-sm-5= image_tag 'download_app_at_google_play.png', width: '100%'
+    .col-xs-1.col-sm-1= ''
+  -# block below is visible unless smart_phone
+  .hidden-xs.hidden-sm
+    .col-md-1.col-lg-1= ''
+    .col-md-5.col-lg-5= image_tag 'download_app_at_app_store.png',   width: '50%'
+    .col-md-5.col-lg-5= image_tag 'download_app_at_google_play.png', width: '50%'
+    .col-md-1.col-lg-1= ''
+
+#写真雑誌スタイル zassi
+  - home_bg_png, height = 'assets/***.png', '20em'
+  .text-center{style: "background-image:url('#{home_bg_png}');height:#{height};"}
+    %div{style: "color:white;"}
+      = image_tag 'SOMEPICTURE.png' , width: "50%",
+
+################# 語呂合わせ ########
+xssmmdlg: xs-sm-md-lg: 
+
+################# jQuery plugins ########
+    .fluid-box.hidden-xs
+      .fluid-box-inner.top-carousel
+
+################# Media Query ###########
+#SCSS
+@media (max-width: $screen-xs-max) { ... }
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) { ... }
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) { ... }
+@media (min-width: $screen-lg-min) { ... }
+
+@media (max-width: $screen-sm-max) { ... }
+@media (min-width: $screen-md-min) { ... }
+
+
+#SASS
+@media (max-width: @screen-xs-max) { ... }
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
+@media (min-width: @screen-lg-min) { ... }
+
+@media (max-width: @screen-sm-max) { ... }
+@media (min-width: @screen-md-min) { ... }
 
