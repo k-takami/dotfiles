@@ -1,0 +1,119 @@
+"*":
+  "atom-ide-ui":
+    "atom-ide-diagnostics-ui":
+      autoVisibility: true
+      showDirectoryColumn: true
+  "autocomplete-ruby":
+    suggestionPriority: true
+  "browser-plus":
+    currentFile: false
+    homepage: "http://suganumap-backend.test/categories/boost"
+  core:
+    automaticallyUpdate: false
+    debugLSP: true
+    disabledPackages: [
+      "linter-rails-best-practices"
+      "bracket-matcher"
+      "linter"
+    ]
+    openEmptyEditorOnStart: false
+    telemetryConsent: "limited"
+    themes: [
+      "one-light-ui"
+      "one-light-syntax"
+    ]
+  editor:
+    fontSize: 21
+    preferredLineLength: 100
+    showIndentGuide: true
+    tabType: "soft"
+  "exception-reporting":
+    userId: "f10097ba-5086-4aa3-93a3-90afee212b4f"
+  favorites:
+    paths: [
+      "/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss"
+      "/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets"
+      "/Users/user/Downloads/to2TBHDD/si.otl"
+      "/Users/user/Desktop/tmp.sh"
+      "/Users/user/src/irodori/suganumap-backend/app/views/media"
+    ]
+  "linter-ui-default":
+    panelHeight: 208
+  "open-recent":
+    maxRecentFiles: 16
+  "open-tig": {}
+  "recent-files-fuzzy-finder":
+    restoreSession: true
+  "save-session":
+    dataSaveFolder: "/Users/user/.atom/packages/save-session/projects"
+  "save-workspace-Workspaces":
+    suganupapNavbar:
+      panes: [
+        {
+          data:
+            orientation: "horizontal"
+            tabs: [
+              "/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss"
+              "/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss"
+              "/Users/user/src/irodori/suganumap-backend/app/views/media/_footer.html.haml"
+            ]
+          type: "pane"
+        }
+        {
+          data:
+            orientation: "horizontal"
+            tabs: [
+              "/Users/user/Downloads/to2TBHDD/si.otl"
+              "/Users/user/Desktop/tmp.sh"
+            ]
+          type: "pane"
+        }
+      ]
+      projectPaths: [
+        "/Users/user/src/irodori/suganumap-backend"
+        "/Users/user/dotfiles"
+      ]
+    test:
+      panes: [
+        {
+          data:
+            orientation: "horizontal"
+            tabs: [
+              "/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss"
+            ]
+          type: "pane"
+        }
+        {
+          data: [
+            {
+              data:
+                orientation: "vertical"
+                tabs: [
+                  "/Users/user/Downloads/to2TBHDD/si.otl"
+                ]
+              type: "pane"
+            }
+            {
+              data:
+                orientation: "vertical"
+                tabs: [
+                  "/Users/user/Desktop/tmp.sh"
+                ]
+              type: "pane"
+            }
+          ]
+          orientation: "vertical"
+          type: "paneAxis"
+        }
+      ]
+      projectPaths: [
+        "/Users/user/src/irodori/suganumap-backend"
+        "/Users/user/dotfiles"
+      ]
+  tasks:
+    addTimestampOnConvertToTask: true
+  "vim-mode-clipboard-plus": {}
+  "vim-mode-plus":
+    useClipboardAsDefaultRegister: true
+  welcome:
+    showOnStartup: false

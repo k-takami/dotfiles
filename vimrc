@@ -1,3 +1,9 @@
+" "============================================================================
+" NOTE: FIRST INSTALL NEOBUNDLE
+" mkdir -p ~/.vim/bundle
+" git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+" "============================================================================
+
 " based on http://github.com/jferris/config_files/blob/master/vimrc
 
 " Use Vim settings, rather then Vi settings (much better!).

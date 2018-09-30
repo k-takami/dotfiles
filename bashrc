@@ -11,64 +11,42 @@ HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
 #PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
 # git config --global color.ui true
 
-
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 export SYSTEMD_PAGER=
 
-## rbenv
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
 
-## /Users/k-takami/.rvm/bin/rvm
-source ~/.rvm/scripts/rvm ; type rvm | head -n 1
-export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
-echo $GEM_HOME; echo $GEM_PATH # https://github.com/rvm/rvm/issues/2817
-alias rvminfo="     rvm list; rvm gemset list; gem query -an rails;" # gem list; "
-alias rvmusecreate='rvm use --create'
-alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
-alias rvmusemine='  rvm use 2.4@5.0.1; ruby -v; '
-alias rvminstallrails='gem install rails' # -v=5.0.0.1 --no-ri --no-rdoc　など・・・
-
-#export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-
-# export DL_HOME=~/
-export DL_HOME=~/Download
-#export GIT_USERNAME=k_takami
-#export GIT_USERNAME=kenichi.takami
-export GIT_USERNAME=takami-appirits
-
-  export ANT_HOME=$DL_HOME/apache-ant-1.9.6
-  export M3_HOME=$DL_HOME/apache-maven-3.3.9
-    export M3=$M3_HOME/bin
-#export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-#export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.6"`
-#export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
-##export PATH="$PATH:$JAVA_HOME:$ANT_HOME/bin
-
-#/usr/local/mysql/bin
-
-#when updgraded ruby
-#export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
-
-#DOCKER & Pow
+#==== DOCKER & Pow ==========================
 #eval $(docker-machine env)
 export POW_TIMEOUT=300
 # export POW_WORKERS=3
 # powder (config/status|restart)
 
-# User specific aliases and functions
 
-alias rm='rm -i'
-alias cp='cp -p'
-#alias cp='cp -pi'
-#alias mv='mv -i'
+#==== ~/.rvm/bin/rvm ==========================
+if [ -f ~/.atom ] ; then
+  source ~/.rvm/scripts/rvm ; type rvm | head -n 1
+  export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
+  alias rvminfo="     rvm list; rvm gemset list; gem query -an rails;" # gem list; "
+  alias rvmusecreate='rvm use --create'
+  alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
+  alias rvmusemine='  rvm use 2.4@5.0.1; ruby -v; '
+fi
+alias rvminstallrails='gem install rails' # -v=5.0.0.1 --no-ri --no-rdoc　など・・・
+#when updgraded ruby
+#export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
+echo "GEM_HOME / GEM_PATH are :  $GEM_HOME / $GEM_PATH " # https://github.com/rvm/rvm/issues/2817
+## rbenv
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
+#export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
 
-# node and npm
+
+#==== node and npm ==========================
+if [ -f ~/.config/yarn ] ; then
+  export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 alias npmpkglist=' npm    ls --depth=0'
 alias npmpkglistg='npm -g ls --depth=0'
 alias npmappclean='npm cache clean; rm -rf node_modules; rm -rf bower_components; '
@@ -76,7 +54,24 @@ alias angularinstallg='npm install; bower install; typings install'
 alias angularinstall=' npm install; node_modules/bower/bin/bower install; node_modules/typings/dist/bin.js install; npm rebuild node-sass'
 alias webpacklocal='sudo node_modules/webpack/bin/webpack.js'
 
-#OS-dependent
+#FIXME:  export DL_HOME=~/
+export DL_HOME=~/Download
+#export GIT_USERNAME=k_takami
+#export GIT_USERNAME=kenichi.takami
+
+
+#==== JVM ==========================
+  # export ANT_HOME=$DL_HOME/apache-ant-1.9.6
+  # export M3_HOME=$DL_HOME/apache-maven-3.3.9
+    # export M3=$M3_HOME/bin
+#export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+#export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.6"`
+#export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+##export PATH="$PATH:$JAVA_HOME:$ANT_HOME/bin
+
+
+
+#==== OS-dependent ==========================
 # OS detection ref: https://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
 OS="`uname`"
 platform='unknown'
@@ -128,7 +123,14 @@ if [ $platform == 'osx' ] || [ $platform == 'linuxRHEL' ] ; then
   alias killosx_zombieprocess='killall -m fsevent_watch; killall -m spring ; myps'
 fi
 
-#unixコマンド
+
+#==== unixコマンド ==========================
+# User specific aliases and functions
+alias rm='rm -i'
+alias cp='cp -p'
+#FIXME:
+#alias cp='cp -pi'
+#alias mv='mv -i'
 alias ll=' ls -al'
 alias lat='ls -halt'
 alias las='ls -alSr' 
@@ -404,11 +406,18 @@ umask 002
 # ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換  
 # ${変数//検索文字列/置換文字列}  全ての文字列を置換  ${HOGE//foo/bar}
 
-function tarzip_rorapp {
+function tarziprorapp {
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* --exclude=node_modules $chomped1;lat;
   #XXX --exclude node_modules 
 }
+
+function tarziprorgitonly {
+  local chomped1=${1%\/} ;  # 行末スラッシュ削除
+  tar zcvf $chomped1-git-`date '+%Y%m%d'`.tar.gz  $chomped1/.git;  lat;
+  #XXX --exclude node_modules 
+}
+
 
 function killmyps {
   # myps検索pid以外をgrepしてkill 
@@ -448,15 +457,25 @@ function rmbak {
 # rake stats
 
 #ATOM環境
-alias atom_pkg_export=' apm list --installed --bare > ~/.dotfiles/atom_packages.txt ; cdd; gwr atom_packages.txt ; '
-alias atom_pkg_restore='apm install --packages-file ~/.dotfiles/atom_packages.txt'
+function atom_backup {
+  local target=atom
+  apm list --installed --bare > ~/.dotfiles/$target/packages.txt ;
+  cp ~/.$target/keymap.cson ~/.dotfiles/$target/
+  cp ~/.$target/config.cson ~/.dotfiles/$target/
+  cdd; gwr $target/ ; gst; lat $target/
+  cd -
+}
+alias atom_restore='apm install --packages-file ~/.dotfiles/atom/packages.txt'
+
+function openatomfromvimsession {
+  local outfile=openatomfromvimsession.sh
+  grep -E "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
+  vim $outfile; sh $outfile; rm  $outfile; lat; 
+}
 
 
 #Google 2-Step Verification tool 'oathtool'
 alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生成画面で表示されるbase32の文字をスペースなしで引数として入力 %s/ //  #<  sudo apt-get install oathtool
 
-# CONFIDENTIAL PJ-dependent unixコマンド #############################
-# bashrc をデフォルトから汚したくない！と思う人は（まれでしょうが）
+# ==== PJ-dependent unixコマンド ==========================
 source ~/.dotfiles/SI/pj-dependent.bashrc
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
