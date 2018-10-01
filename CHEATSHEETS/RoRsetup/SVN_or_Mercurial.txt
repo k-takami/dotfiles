@@ -1,0 +1,29 @@
+#SourceTree  #Mercurial
+	初回のpull はupdateではなく、マージで。
+	禁則：commit ammend -m でファイル無選択は全選択と同じになるバグがある。設定ファイルが知らないうちにpushされてしまう。
+		「適用前にもどす」はbackout相殺履歴をつくるだけ。「指定のリビジョンにもどす」は、どうやらワーキングコピーを全消しにする（らしい）
+	コミット取り消しは　「ここからストリップ」＋「ワーキングコピーを変更しない」チェック
+	パッチは同じブランチに適用しないと履歴が変になる。大量merge発生扱いになる。
+	INVENTIT-env
+		Macbook Pro 'tester' :    /    123456789
+		bitbukket: some_body_yourinvenitit    /    JBC*
+		SVN: https://p.yourinventit.com/svn/repository/active-projects/
+			ユーザー：some_body@yourinventit.com    パスワード：some_body1234
+
+#SVN #Subversion
+	TortoiseSVN ダウンロード
+		http://tortoisesvn.net/downloads.html
+	#config
+		vim ~/.subversion/config
+			[miscellany]
+			global-ignores = *.sw? *.*~ *vim73
+	#svn up/down
+		svn status| grep -niE "*rb$"
+		svn list svn+ssh://svn.drecom.jp/svn/sg/bikkuri/doc/03_開発ドキュメント/ 
+		//　SVNでbranchからco --> branchにcommit
+		svn checkout svn+ssh://***.***.***/(directory) [checkout-name --username --password ***]
+			svn list https://172.18.200.144/jalt_internal/J-ALERT-SOURCE/trunk/10_受信機設定管理ツール/SetupInfoManagement --username kaihatsu4
+		svn update
+		svn commit svn+ssh://***.***.***/(directory) [option] 
+		svn add [filename1] [filename2] ... 
+		svn commit -m "活動名 コミット備忘録" a[filename1] [filename2] ... 

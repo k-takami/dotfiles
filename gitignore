@@ -1,11 +1,10 @@
 *~
 .*.sw*
-.DS_Store
 .bundle
-.dbeaver-data-sources.xml
 .gitignore
+.git-old
+.git-*.tgz
 .pem/
-.project
 .pryrc
 .svn
 .yardoc
@@ -28,6 +27,7 @@ log
 tmp
 /tmp
 db/*.sqlite3
+db/*.sqlite3-journal
 *.properties
 *.config
 rerun.txt
@@ -41,5 +41,37 @@ spec/examples.txt
 # pickle-email-*.html
 # public/js/application.js
 
+# rails_config
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
+
+# carrierwave
+/public/uploads
+# dotenv
+/.env
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+
+# coverage rate
+/coverage
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+
+# credentials
+/config/vars.yml
+
+# Editor-files
 vim/.VimballRecord
 vim/.netrwhist
+.DS_Store
+.dbeaver-data-sources.xml
+.byebug_history
+.yarn-integrity
+.project
+.annotations.cson
+.idea/

@@ -1,0 +1,27 @@
+-bash: scat: コマンドが見つかりません
+root@localhost:/opt/logilogi/me/realaf_admin/app/views/admin/ex_contents# cat ‾/.gitconfig
+[user]
+#  name = some_body
+#  email = some_body@gmail.com
+
+  name = takami
+#   name = some_body
+#   email = some_body@gmail.com
+
+[http]
+  sslVerify = false
+  sslCert = /home/apl/clientcert.pem
+  sslKey = /home/apl/private.key
+  postBuffer = 104857600
+[color]
+  ui = true
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:¥"%h %ad | %s%d [%an]¥" --graph --date=short
+[core]
+  excludesfile = ‾/.gitignore
+[github]
+        user = username

@@ -1,0 +1,32 @@
+#aptana differencial plug-ins 
+	vwrapper Stable: http://vrapper.sourceforge.net/update-site/stable
+		man: http://vrapper.sourceforge.net/documentation/?topic=visual_mode
+	Extended VS Presentation plugin for Eclipse: http://andrei.gmxhome.de/eclipse/   --> select eclipse 3.6- plugins subites
+		
+	MoreClipBoard:  http://moreclipboard.sourceforge.net/updates
+	DBeaver: http://dbeaver.jkiss.org/update/3.0/
+	http://dbeaver.jkiss.org/update/2.0/
+
+	net.jumperz.app.MMonjaDB_1.0.16.jar 
+	http://www.jumperz.net/update/
+	net.sf.lunar_eclipse.editing_3.1.1.jar　(<-- = EditorEnhancement) 
+	Unbind Ctrl+C and Ctrl+Insert from Copy command and Bind this key combinations to Transparent Copy via MultiClipboard. 
+	Unbind Cutcommand: Ctrl+X and Shift+Delete key combinations are to be bind to Transparent Cut via MultiClipboard. 
+	usage: Ctrl+Shift+V to paste via clipboard-history 
+#aptana shortcut keys for window navigation => F6F7F8 
+#aptana <-> vim 
+	S-C-l == shortcuts 
+	jump 
+		C-Q  <>  C-o 
+		terminal view shortcutを全部消去する　矩形編と衝突 
+importing all projects
+project explorer 右上▽ > 'Customize View' > 'Filters' - uncheck .* files to show dotfiles
+#eclipseでのライブラリー追加方法
+　target -> libにはりつけ→PJ property→ JavaBuild path -> library -> Add jars
+	tool->Run->Run configurations -> config -> EnvironmentにDOS変数追加
+		MAIN (java)
+		Arguments (JVM+プログラム) 
+#Vagrant+SSH環境　#貧弱PC like 8GM RAM
+	DISABLE: General > Workspace > Refresh using native hooks or polling
+	DISABLE: General > Workspace > Refresh on access
+

@@ -13,16 +13,11 @@ getbase.org
 #alt text ---> </div title="..">
 <div title="ALT text here." id="CSS-class-with-background"></div>
 
-#SCROLLBAR
-  body { overflow:hidden; } //<---FireFox
-  #element::-webkit-scrollbar{ display: none; }
-
-
 
 #TRAVERSING
   Nokogiri::HTML.parse(html_text).css("class_name[attr*^$='value']")
 
-#TOGGLING AND RESISING BY THRESHOLD
+Media query   #TOGGLING AND RESISING BY THRESHOLD
   // bootstrap ver3+~ ではbtn-(lg|md|sm|xs)-blockがつかえるらしいが不安定な印象；
   @media screen and (max-width: 720px) {
     table.table.table-hover thead {
@@ -53,41 +48,45 @@ getbase.org
     });
   </script>
 
-#noscrollbal
+#SCROLLBAR: overflow-x : hidden みたくxy指定できる
+/* 注意点として、JavaScriptなどでscrollbars=noでウィンドウを開いていると */
+/* そちらが優先されてしまい、縦スクロールも表示されなくなる。 */
+/* scrollbars=yesで開いてからCSSで指定すること。 */
   <style>
+    body { overflow:hidden; } //<---FireFox
     body { overflow:hidden; }
     #element::-webkit-scrollbar{ display: none; }
   </style>
 
 
 #何番目系の便利なCSSまとめ"
-  種類  -child  -of-type
-  最初  :first-child  :first-of-type
-  最後  :last-child   :last-of-type
-  n番目   :nth-child(n)   :nth-of-type(n)
+  種類  -of-type -child  
+  最初  :first-of-type       :first-child  
+  最後  :last-of-type        :last-child   
+  n番目 :nth-of-type(n)    :nth-child(n)
   後ろからn番目   :nth-last-child(n)  :nth-last-of-type(n)
-  １個だけ  :only-child   :only-of-type
+  １個だけ:only-of-type  :only-child   
 
   最初
-  :first-child 1個だけ子要素がある（親要素から見て、子要素が1個だけある）
   :only-of-type 1個だけある子要素がある（親要素から見て、ある子要素が1個だけある）
-  X番目 :nth-child(X)
+  :first-child 1個だけ子要素がある（親要素から見て、子要素が1個だけある）
   X番目 :nth-of-type(X)
+  X番目 :nth-child(X)
   :nth-child(Xn) Xの倍数
   最後からX番目
-  :nth-last-child(X) 最後からX番目
   :nth-last-of-type(X) ある要素の最後からX番目
+  :nth-last-child(X) 最後からX番目
   X番目からYまで
-  :nth-child(n+X) X番目以降（X番目から最後まで）
   :nth-of-type(n+X) ある要素のX番目以降
-  :nth-child(-n+X) X番目以前（最初からX番目まで）
   :nth-of-type(-n+X) ある要素のX番目以前
+  :nth-child(n+X) X番目以降（X番目から最後まで）
+  :nth-child(-n+X) X番目以前（最初からX番目まで）
   最後からX個
-  :nth-last-child(-n+X) 最後からX個
   :nth-last-of-type(-n+X) ある要素の最後からX個
+  :nth-last-child(-n+X) 最後からX個
   最後からX番目以前
-  :nth-last-child(n+X) 最後からX番目以前
   :nth-last-of-type(n+X) ある要素の最後からX番目以前
+  :nth-last-child(n+X) 最後からX番目以前
   "
 
 
@@ -105,6 +104,11 @@ getbase.org
   border-bottom-left-radius: 1px;
   border-bottom-right-radius: 1px;
 
+#たて中央（画像）
+  img {
+    position: relative;
+    top: 5em;
+  }
 
 
 #SCSS(CSS混入可能) & SASS(半角空白二個で波括弧代用可能、;省略可能、": "は半角空白必須
@@ -121,5 +125,28 @@ getbase.org
   @制御ステートメント
   ネスト記述
 
+#HTMLにおけるli要素のリストマーク（・）を消す方法 --->  ul { list-style: none; }
 
-    
+#画像かさねる
+  <cite></cite>
+  cite {
+    position: absolute;
+    top: 0;
+    bottom: 0; left: 0;
+    height: 40em;
+    width: 100%;
+    color: #fff;
+    background: red;
+    opacity: 0.55;
+    // filter: alpha(opacity=55);
+    // border-top: 1px solid #999;
+  }
+
+#前のdiv/spanとちがう背景色指定方法；
+  background: -moz-linear-gradient(top, black, black);
+  background: -webkit-linear-gradient(top, black, black);
+  background: linear-gradient(to bottom, black, black);
+  background-size: cover;
+  background-position: center;
+
+

@@ -1,4 +1,6 @@
 #vim差分 
+  " 正規表現検索は/\v で
+
 	g;    --> jump to previous editing place 
 	dap   --> delete paragraph block 
 config

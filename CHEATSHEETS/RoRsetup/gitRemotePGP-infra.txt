@@ -1,0 +1,113 @@
+
+鍵71BAD39Aを絶対的に信用するよう記録しました
+公開鍵と秘密鍵を作成し、署名しました。
+
+gpg: 信用データベースの検査
+gpg: 最小の「ある程度の信用」3、最小の「全面的信用」1、PGP信用モデル
+gpg: 深さ: 0  有効性:   1  署名:   0  信用: 0-, 0q, 0n, 0m, 0f, 1u
+pub   2048R/71BAD39A 2013-07-28
+                 指紋 = A14B 3389 A1A0 46A6 E809  4387 C148 7793 71BA D39A
+uid                  unistandard <unistandard@gmail.com>
+sub   2048R/67525997 2013-07-28
+
+
+
+#rngd
+	yum install rng-tools
+	echo "EXTRAOPTIONS='-r /dev/urandom'"                >> /etc/sysconfig/rngd
+	$chmod 755 /etc/init.d/rngd
+	$chkconfig rngd on
+
+#gpg-agentの環境整備
+	$echo "GPG_TTY=$(tty); export GPG_TTY"  >> ‾/.bashrc
+	#(ログインごとに1個agent起動するが､ログオフで止まらない｡｡｡?)
+	#$echo "gpg-agent --daemon              >> ‾/.bash_profile
+
+#実行
+	rngd service rngd restart
+	gpg-agent --daemon
+
+
+#現状確認 status of current processes
+	yum list installed|grep gpg
+	ps -ef |grep -nirE "(gpg-agent|rngd)"
+
+  $ git commit -S -m "message" filenames followed by space to commit
+
+
+	#公開鍵一覧と削除
+	gpg -k
+	gpg --delete-keys username
+	#秘密鍵一覧と削除
+	gpg -K
+	gpg --delete-secret-keys username
+
+#help
+	gpg -h
+
+
+#Rails config
+	cd Rails.root
+	git config --global user.signingkey 71BAD39A
+
+#instalation of git 1.8.3.1 on centOS 6.3
+        wget http://puias.math.ias.edu/data/puias/computational/6/i386/git-1.8.3.1-1.sdl6.i686.rpm
+	rpm -Uvh --nodeps  git-1.8.3.1-1.sdl6.i686.rpm
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+#postgres
+  service postgresql-9.2 start
+	su - postgres
+	psql redmine_pg_dev
+  #注意点
+    .config/database.yml はhost: 127.0.0.1にしないと､既存user/pwでもident認証
+にひっかかる｡postgresqlはident認証(unix id/pw = postgres d/pwで一致)がデフォル
+ト｡
+  #gemfileでpgのインストールをもとめられたら､事前にPATHとsoci-postgresql-devel.i686
+   を準備しないとgem install はこける｡:w
+   in case of REHL linuxes(REHL, centOS, fedora)
+   you hae to make sure PATH and/or postgresql-devel is prepared as example below;
+   export PATH=/usr/pgsql-9.2/bin:$PATH
+   yum install soci-postgresql-devel.i686
+  gem "pg", ">= 0.11.0", :platforms => [:mri, :mingw]	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+rorwebcoder
+[2013/07/31 21:53:21] rorwebcoder: uppose we have ProjectA (for offshore programmers)   and Project-B (Main Home repo)
+[2013/07/31 21:54:38] rorwebcoder: we can clone the ProjectA as a branch in to ProjectB and merge it.
+[2013/07/31 21:54:47] rorwebcoder: Example:
+[2013/07/31 21:55:43] rorwebcoder: in ProjectB >>  $git remote add   offshore   git@github.com:ssccc:ddddd/hhhshs:offshore.git
+[2013/07/31 21:56:09] rorwebcoder: Project B>> $ git fetch offshore
+[2013/07/31 21:56:30] rorwebcoder: projectB>> $git checkout -b offshore offshore/master
+[2013/07/31 21:57:01] rorwebcoder: Now we will get a new remote branch of offshore repository.
+[2013/07/31 21:57:16] rorwebcoder: now we can proceed with merging.
+[2013/07/31 21:58:16] rorwebcoder: like :      git checkout master    and git merge offshore
+[2013/07/31 21:58:55 | Edited 21:59:12] rorwebcoder: so the changes of offshore repo can be continuously pulled in to remote branch , and merged and pushed in   to the master
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+スキャンエイトお問合せ
+    フリーダイヤル0120-06-6503
+    スキャンエイト工務部・配送先 株式会社　英登　横浜営業所
+    〒221-0802    横浜市神奈川区六角橋1-9-4    TEL 045-716-6503
+
+
+モノクロ希望
+18.4 x 12.8 x 1.6 cm 235p
+21.5 x 15 x 2.2 cm 405p 
+28.2 x 21 x 1.2 cm 226p 
+
+カラースキャン希望
+21.5 x 15 x 2.2 cm 255p : color
+
+
+-----
+660
+
+
+

@@ -11,61 +11,42 @@ HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
 #PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
 # git config --global color.ui true
 
-
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 export SYSTEMD_PAGER=
 
+
+#==== DOCKER & Pow ==========================
+#eval $(docker-machine env)
+export POW_TIMEOUT=300
+# export POW_WORKERS=3
+# powder (config/status|restart)
+
+
+#==== ~/.rvm/bin/rvm ==========================
+if [ -f ~/.atom ] ; then
+  source ~/.rvm/scripts/rvm ; type rvm | head -n 1
+  export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
+  alias rvminfo="     rvm list; rvm gemset list; gem query -an rails;" # gem list; "
+  alias rvmusecreate='rvm use --create'
+  alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
+  alias rvmusemine='  rvm use 2.4@5.0.1; ruby -v; '
+fi
+alias rvminstallrails='gem install rails' # -v=5.0.0.1 --no-ri --no-rdoc　など・・・
+#when updgraded ruby
+#export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
+echo "GEM_HOME / GEM_PATH are :  $GEM_HOME / $GEM_PATH " # https://github.com/rvm/rvm/issues/2817
 ## rbenv
 #export PATH="$HOME/.rbenv/bin:$PATH"
 #eval "$(rbenv init -)"
-
-## /Users/k-takami/.rvm/bin/rvm
-source ~/.rvm/scripts/rvm ; type rvm | head -n 1
-export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
-echo $GEM_HOME; echo $GEM_PATH # https://github.com/rvm/rvm/issues/2817
-alias rvminfo="     rvm list; rvm gemset list; gem query -an rails;" # gem list; "
-alias rvmusecreate='rvm use --create'
-alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
-alias rvmusemine='  rvm use 2.4@5.0.1; ruby -v; '
-alias rvminstallrails='gem install rails' # -v=5.0.0.1 --no-ri --no-rdoc　など・・・
-
 #export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
 
 
+#==== node and npm ==========================
+if [ -f ~/.config/yarn ] ; then
+  export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-
-# export DL_HOME=~/
-export DL_HOME=~/Download
-#export GIT_USERNAME=k_takami
-#export GIT_USERNAME=kenichi.takami
-export GIT_USERNAME=takami-appirits
-
-  export ANT_HOME=$DL_HOME/apache-ant-1.9.6
-  export M3_HOME=$DL_HOME/apache-maven-3.3.9
-    export M3=$M3_HOME/bin
-#export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-#export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.6"`
-#export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
-##export PATH="$PATH:$JAVA_HOME:$ANT_HOME/bin
-
-#/usr/local/mysql/bin
-
-#when updgraded ruby
-#export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
-
-#DOCKER
-#eval $(docker-machine env)
-
-# User specific aliases and functions
-
-alias rm='rm -i'
-alias cp='cp -p'
-#alias cp='cp -pi'
-#alias mv='mv -i'
-
-# node and npm
 alias npmpkglist=' npm    ls --depth=0'
 alias npmpkglistg='npm -g ls --depth=0'
 alias npmappclean='npm cache clean; rm -rf node_modules; rm -rf bower_components; '
@@ -73,7 +54,24 @@ alias angularinstallg='npm install; bower install; typings install'
 alias angularinstall=' npm install; node_modules/bower/bin/bower install; node_modules/typings/dist/bin.js install; npm rebuild node-sass'
 alias webpacklocal='sudo node_modules/webpack/bin/webpack.js'
 
-#OS-dependent
+#FIXME:  export DL_HOME=~/
+export DL_HOME=~/Download
+#export GIT_USERNAME=k_takami
+#export GIT_USERNAME=kenichi.takami
+
+
+#==== JVM ==========================
+  # export ANT_HOME=$DL_HOME/apache-ant-1.9.6
+  # export M3_HOME=$DL_HOME/apache-maven-3.3.9
+    # export M3=$M3_HOME/bin
+#export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+#export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.6"`
+#export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+##export PATH="$PATH:$JAVA_HOME:$ANT_HOME/bin
+
+
+
+#==== OS-dependent ==========================
 # OS detection ref: https://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
 OS="`uname`"
 platform='unknown'
@@ -125,7 +123,14 @@ if [ $platform == 'osx' ] || [ $platform == 'linuxRHEL' ] ; then
   alias killosx_zombieprocess='killall -m fsevent_watch; killall -m spring ; myps'
 fi
 
-#unixコマンド
+
+#==== unixコマンド ==========================
+# User specific aliases and functions
+alias rm='rm -i'
+alias cp='cp -p'
+#FIXME:
+#alias cp='cp -pi'
+#alias mv='mv -i'
 alias ll=' ls -al'
 alias lat='ls -halt'
 alias las='ls -alSr' 
@@ -133,6 +138,7 @@ alias rm='rm -r'
 alias kill9='        kill -9 '
 alias killallrails5='pkill -a thin; ' 
 alias myps='ps -ef  |grep -niE "\b(memcached|unicorn|ant|redis|sidekiq|rails|ruby|thin|fsevent|spring)\b" | sort -k6'
+alias duck='du -ck' #kilobyte-totalを表示
 
 alias vims='  vim     -S ~/session-'
 alias vimsve='vim +VE -S ~/session-'
@@ -163,39 +169,78 @@ alias ksen-s='echo "★★★★★★★★★★★★★★★★★★★★
 alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"'
 alias ksen-d='echo "#################################################################################"'
 alias ksen-e='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
+alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
 # alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
 # alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
 # alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
 # alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
-
-alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
-alias incexc=' echo "--include=**  --exclude=*.sw* --exclude=*~ --exclude=log/* --exclude=*spec* --exclude=*spec* --exclude=tmp/* --exclude=*vendor/bundle* --exclude=node_module*/* --exclude-dir=vendor "'
-alias nrnd=' --no-ri --no-rdoc '
-alias inrb=' --include=*.*rb'
-alias exvd=' --exclude-dir=vendor/'
-
 alias REM=' : <<"REM"' #REMで終端すること
 
+#  #grep結果ファイル中文字列をかきかえ
+# $ regrepl attr_accessible app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
+
+# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
+
+#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
+#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
+
+alias cdd=' cd ~/.dotfiles'
+alias nrnd=' --no-ri --no-rdoc '
+alias no_spec=' echo "--exclude=*spec* "'
+function includerb { echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
+function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak "; }
+function appfilesonly { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log "; }
+function greprc {
+  local options=${@:2} ;
+  grep -niE --include=*rc $1 ~/.dotfiles/*                      $options;
+  grep -niE               $1 ~/.dotfiles/SI/pj-dependent.bashrc $options;
+}
+
+function greprcrbonly { greprc `includerb` `nogabage` $@ ; }
+
+function grepdf {
+  # ex) greprc serchword -C1 `includerb` `nogabage`
+  local options=${@:2} ;
+  grep -niE  $1 ~/.dotfiles/* --include=*rc $options;
+  grep -nirE $1 ~/.dotfiles/SI              $options;
+  grep -nirE $1 ~/.dotfiles/SCRIPTS         $options;
+  grep -nirE $1 ~/.dotfiles/CHEATSHEETS     $options;
+  grep -nirE $1 ~/.dotfiles/vim/snippets    $options;
+  # echo "grep -nirE $1 ~/.dotfiles/vim/snippets  $options ### ";
+}
+
+function greprails {
+local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 'gems') "` ;
+  grep -nirE "def \w*$1" $gempath ;
+}
+
 # $1検索語　$2場所 regrep の$2がなければ、./*で補完
-function regrep   { local options=${2:-*}  ; grep     -nirE  $1 $options;}
-function regrepl  { local options=${2:-*}  ; grep     -lnirE $1 $options;}
-function regrep-r { local options=${2:-*}  ; grep     -niE   $1 $options;}
-function regrepl-r { local options=${2:-*} ; grep     -lniE  $1 $options;}
-function regrepc1 { local options=${2:-*}  ; grep -C1 -niE   $1 $options;}
-function regrepc3 { local options=${2:-*}  ; grep -C3 -niE   $1 $options;}
-function regrepc1-r { local options=${2:-*}; grep -C1 -nirE  $1 $options;}
-function regrepc3-r { local options=${2:-*}; grep -C3 -nirE  $1 $options;}
+# alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
+function greper   {                             grep     -nirE  $@          ; }
+function greperrb {                             grep     -nirE  `includerb` `nogabage` $@ ; }
+function regrep   {     local options=${2:-*} ; grep     -nirE  $1 $options ; }
+function regreprb {     local options=${2:-*} ; grep     -nirE  `includerb` `nogabage` $1 $options ; }
+function regrep_nosub { local options=${2:-*} ; grep     -niE   $1 $options ; }
+function regrepl  {     local options=${2:-*} ; grep     -lnirE $1 $options ; }
+function regrepl-r {    local options=${2:-*} ; grep     -lniE  $1 $options ; }
+function regrepc1 {     local options=${2:-*} ; grep -C1 -niE   $1 $options ; }
+function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
+function regrepc1-r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
+function regrepc3-r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
+alias vimclean='rm ~/*.sw* ; cd ~/.dotfiles ; git status ; cd - ;'
+alias ror_snip_list='sh ~/.dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
+alias ror_lns_gitignore='ln -s ~/.dotfiles/gitignore .gitignore'
 
 alias grepvcode='   find . |grep -viE "\.(svc|git|hg)" | grep'
 alias grepvr='   grep -viE "(\..?sv|\.yml|\..?css|\.js.+|\.erb|\.NEW|\.OLD|\.BAK|\/db\/migrate|development.rb|schema.rb)" | grep'
 alias grepvrsort='sort | grepvrbc . '
-alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
 
 #SYNC WITH after fugitive.vim grep.vim
 alias gst='      git status' #Gstatus
 alias gwr='      git add' #Gwrite
 alias gdi='      git diff' #gdif
 alias gbl='      git blame' #Gblame
+alias grm='      git rm' 
 alias gcfggettmturl=' git config --get remote.origin.url'
 
 
@@ -248,8 +293,13 @@ alias gilotheir=' git log --all --stat --branches=* --remotes=* ' #followed by f
 alias gilostheir='git log --all --stat --branches=* --remotes=* -S'
 alias mygilo='    git log --committer=$GIT_USERNAME'
 alias gilosmine=' git log --committer=$GIT_USERNAME -S'
-  #    コミットの中で"hogehoge"という文字列を含む行が変更されたものだけ表示 ：例  $ tig -S"hogehoge" filename
-alias gplomrbs='  git pull origin master --rebase'
+#    コミットの中で"hogehoge"という文字列を含む行が変更されたものだけ表示 ：例  $ tig -S"hogehoge" filename
+
+# $ git checkout master           # master ブランチへ切り替え
+# $ git pull --rebase             # 最新化(前述の設定により --rebase は省略可能)
+# $ git checkout feature/xxxxxx   # push したい自分のブランチへ切り替え
+alias gplomrbs='  git pull --rebase origin master'  # 本来はマージ履歴をのこさない --ff をつけるべきかも？
+alias girbmst='   git rebase master --no-ff'  # 最新化した master ブランチに対して自分のブランチをリベース
 alias girbcntne=' git rebase --continue'
 alias girbabt='   git rebase --abort'
 alias girbihd='   git rebase -i' # to be follwed by HEAD~~ or HEAD~~~~~~回数分
@@ -356,59 +406,23 @@ umask 002
 # ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換  
 # ${変数//検索文字列/置換文字列}  全ての文字列を置換  ${HOGE//foo/bar}
 
-function tarzip_rorapp {
+function tarziprorapp {
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* --exclude=node_modules $chomped1;lat;
   #XXX --exclude node_modules 
 }
 
+function tarziprorgitonly {
+  local chomped1=${1%\/} ;  # 行末スラッシュ削除
+  tar zcvf $chomped1-git-`date '+%Y%m%d'`.tar.gz  $chomped1/.git;  lat;
+  #XXX --exclude node_modules 
+}
+
+
 function killmyps {
   # myps検索pid以外をgrepしてkill 
   kill -9 `myps | grep -v grep | ruby -ane 'p $F[1].to_i'`
 }
-function includerb {
-  echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor";
-}
-function nogabage {
-  echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak ";
-}
-function appfilesonly {
-  echo "  --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log ";
-}
-function greprc {
-  local options=${@:2} ;
-  grep -niE  $1 ~/.dotfiles/* --include=*rc        $options;
-  grep -niE  $1 ~/.dotfiles/SI/pj-dependent.bashrc $options;
-}
-
-#  #grep結果ファイル中文字列をかきかえ
-# $ regrepl attr_accessible app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
-
-# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
-
-#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
-#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
-
-function greprcrbonly {
-  greprc  $@ `includerb` `nogabage`  ;
-}
-
-function grepdf {
-  # ex) greprc serchword -C1 `includerb` `nogabage`
-  local options=${@:2} ;
-  grep -niE  $1 ~/.dotfiles/* --include=*rc $options;
-  grep -nirE $1 ~/.dotfiles/SI              $options;
-  grep -nirE $1 ~/.dotfiles/SCRIPTS         $options;
-  grep -nirE $1 ~/.dotfiles/CHEATSHEETS     $options;
-  grep -nirE $1 ~/.dotfiles/vim/snippets    $options;
-  # echo "grep -nirE $1 ~/.dotfiles/vim/snippets  $options ### ";
-}
-
-function greprails {
-local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 'gems') "` ;
-  grep -nirE "def \w*$1" $gempath ;
-}
-
 function chomR {
   sudo chown -R $1 $3 ;  sudo chmod -R $2 $3
 }
@@ -442,19 +456,26 @@ function rmbak {
 # find . -name "*.rb" -o -name "*.yml" | xargs wc -l
 # rake stats
 
+#ATOM環境
+function atom_backup {
+  local target=atom
+  apm list --installed --bare > ~/.dotfiles/$target/packages.txt ;
+  cp ~/.$target/keymap.cson ~/.dotfiles/$target/
+  cp ~/.$target/config.cson ~/.dotfiles/$target/
+  cdd; gwr $target/ ; gst; lat $target/
+  cd -
+}
+alias atom_restore='apm install --packages-file ~/.dotfiles/atom/packages.txt'
 
+function openatomfromvimsession {
+  local outfile=openatomfromvimsession.sh
+  grep -E "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
+  vim $outfile; sh $outfile; rm  $outfile; lat; 
+}
 
-
-alias vimclean='rm ~/*.sw* ; cd ~/.dotfiles ; git status ; cd - ;'
-alias ror_snip_list='sh ~/.dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
-alias ror_lns_gitignore='ln -s ~/.dotfiles/gitignore .gitignore'
 
 #Google 2-Step Verification tool 'oathtool'
 alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生成画面で表示されるbase32の文字をスペースなしで引数として入力 %s/ //  #<  sudo apt-get install oathtool
 
-# CONFIDENTIAL PJ-dependent unixコマンド #############################
-# bashrc をデフォルトから汚したくない！と思う人は（まれでしょうが）
+# ==== PJ-dependent unixコマンド ==========================
 source ~/.dotfiles/SI/pj-dependent.bashrc
-cd ~/.dotfiles
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
