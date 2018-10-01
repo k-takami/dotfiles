@@ -1,4 +1,9 @@
 "*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "7dfcf847-9117-4066-8463-2c55c30bfe7b"
+    html:
+      beautify_on_save: true
   "atom-ide-ui":
     "atom-ide-diagnostics-ui":
       autoVisibility: true
@@ -12,9 +17,9 @@
     automaticallyUpdate: false
     debugLSP: true
     disabledPackages: [
-      "linter-rails-best-practices"
-      "bracket-matcher"
-      "linter"
+      "japanese-wrap"
+      "atom-formatter-jsbeautify"
+      "file-bookmark"
     ]
     openEmptyEditorOnStart: false
     telemetryConsent: "limited"
@@ -22,8 +27,10 @@
       "one-light-ui"
       "one-light-syntax"
     ]
+  cssfmt:
+    formatOnSave: true
   editor:
-    fontSize: 21
+    fontSize: 24
     preferredLineLength: 100
     showIndentGuide: true
     tabType: "soft"
@@ -36,9 +43,14 @@
       "/Users/user/Downloads/to2TBHDD/si.otl"
       "/Users/user/Desktop/tmp.sh"
       "/Users/user/src/irodori/suganumap-backend/app/views/media"
+      "/Users/user/.atom/keymap.cson"
     ]
+  "file-bookmark": {}
+  "git-blame":
+    columnWidth: 267
   "linter-ui-default":
-    panelHeight: 208
+    panelHeight: 632
+    showPanel: true
   "open-recent":
     maxRecentFiles: 16
   "open-tig": {}

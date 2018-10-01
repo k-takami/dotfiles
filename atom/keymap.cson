@@ -30,19 +30,26 @@
 # If you are unfamiliar with CSON, you can read more about it in the
 # Atom Flight Manual:
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#configuring-with-cson
+'atom-workspace':
+  'alt-f r': 'recent-files-fuzzy-finder:toggle-finder'
+  'F8': 'symbols-tree-view:toggle'
+  #RAILS
+  'ctrl-r s': 'rails-db-scheme:open-scheme'
+  'alt-u t': 'todo-show:toggle'
+
+'.platform-darwin':
+  'alt-v alt-e': 'tree-view:toggle'
+
+'.platform-darwin atom-text-editor':
+  'alt-m m': 'bookmarks:toggle-bookmark'
+  'alt-m a': 'bookmarks:view-all'
+  'option-a': 'toggler:toggle'
+'.platform-linux atom-text-editor':
+  'alt-m m': 'bookmarks:toggle-bookmark'
+  'alt-m a': 'bookmarks:view-all'
+  'option-a': 'toggler:toggle'
 
 '.platform-darwin atom-text-editor.vim-mode:not(.insert-mode)':
   'alt-u y': 'clipboard-plus:toggle'
 '.platform-linux atom-text-editor.vim-mode:not(.insert-mode)':
   'alt-u y': 'clipboard-plus:toggle'
-
-'.platform-darwin atom-text-editor':
-  'alt-m m': 'bookmarks:toggle-bookmark'
-# '.platform-linux atom-text-editor':
-  # 'alt-m M': 'bookmarks:toggle-bookmark'
-
-'atom-workspace':
-  'alt-f r': 'recent-files-fuzzy-finder:toggle-finder'
-'atom-text-editor':
-  'alt-m a': 'bookmarks:view-all'
-

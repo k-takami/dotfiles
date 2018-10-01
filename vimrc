@@ -516,7 +516,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     "NG: NEED RESOLVE SONFLICT OF MAPPING
     " let g:user_emmet_leader_key='<c-@>'
 
-
+  " NeoBundle 'Chiel92/vim-autoformat'
 
   " WINDOWNS: RYAN DOTFIKES SCRIPTS --------------------------------------------------------------------
   if has('win32') || has('win64')
