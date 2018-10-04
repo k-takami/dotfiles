@@ -1,4 +1,4 @@
-1.ツールのインストール
+G1.ツールのインストール
   For Windows
   Docker公式サイトからインストーラをダウンロードし、インストールする。
   https://www.docker.com/products/docker-toolbox
@@ -55,7 +55,7 @@ docker-compose up -d
 マイページ	次回fumfum（https://mycode.jp/my.html ） dummy account
 
 docker-compose down
-ERROR: network platinumdevenv_default has active endpoints 
+ERROR: network platinumdevenv_default has active endpoints
  544  docker stop
   545  docker stop platinumdevenv_cms_run_11
   546  docker rm platinumdevenv_cms_run_11
@@ -76,7 +76,7 @@ docker-compose run --service-ports cms rails s
 Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
   # docker ps で表示される右端の列のコンテナ名を確認
   # docker exec -it コンテナ名 コマンド
-   　eg) docker exec -it loohcs_wordpress.test_1 bash  
+   　eg) docker exec -it loohcs_wordpress.test_1 bash
 
 	# なんらかのコマンドを実行する ex. rake db:migrate など
 	docker-compose run web rake db:migrate
@@ -96,9 +96,9 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
 	docker-compose up -d
 	# Dockerコンテナを停止して破棄する。`= docker stop & docker rm`
 	`docker-compose down`
-	
+
   #コンテナ結合＆ポートフォワーディング指定でコンテナ作成 先ほど作ったイメージでtestappコンテナを作成し起動させます。
-    $docker run -it --name testapp --link mysql:mysql -d -p 8080:80 myuser/centos:1.0 
+    $docker run -it --name testapp --link mysql:mysql -d -p 8080:80 myuser/centos:1.0
   #SCP: $ docker cp
     $docker cp ~/Desktop/test.txt testapp:test.txt
 
@@ -106,7 +106,7 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
 
   **特定コンテナ再起動　＆　コンテナプロセス一覧**
     ` docker (start|stop|restart) platinumdevenv_cms_1 ; docker ps`
-      eg) 
+      eg)
   $ docker attach platinumdevenv_cms_1
     docker-compose build
     docker rm [container-name] OR docker-compose down**
@@ -122,7 +122,7 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
     # アプリルートに.pryrc, .byebygrc
       https://budougumi0617.github.io/2017/09/02/debug-rails-on-docker/
     **byebug**
-      # dockerプロセス名にシェルをアタッチする。抜ける時はCtrl+P -Ctrl-Q 
+      # dockerプロセス名にシェルをアタッチする。抜ける時はCtrl+P -Ctrl-Q
       # ドカタッチ
       docker attach platinumdevenv_cms_1
 
@@ -130,17 +130,17 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
     apt-get clean;
     docker build --squash
       サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
-    docker system prune: (new in 1.13): 
+    docker system prune: (new in 1.13):
       ---> deletes all stopped containers, all idle volumes
     docker save image_name > filename.tar
     docker load < filename.tar
       ---> これはレイヤーをまとめず保持するだけなので事前整頓必要
-    docker export <コンテナ ID> | docker import - <イメージ名>:<タグ> 
+    docker export <コンテナ ID> | docker import - <イメージ名>:<タグ>
       ---> ただしdocker build(Dockerfile)でイメージに付与した属性 VOLUME、EXPOSE、ENVなどは消失。
       保持されるのはファイルシステムだけと考えておけばいいと思います。
 
    # image 作成と削除
-    $ docker rmi test
+    $ docker rmi test  # <--- とまったコンテナのイメージ削除。ロールバックならば docker tag image_prefix で
     $ docker commit suganumap-backend_web_1 suganumap-backend_web_1.0910
     $ docker images
    # 履歴確認はIMAGE-NAMEで
@@ -148,5 +148,23 @@ Dockerコマンド https://qiita.com/teradonburi/items/8c23806e20ec8efc0ef4
 
 
 
-OSX　container場所(VMsizeはpreference->Disk)：　/Users/user/Library/Containers/com.docker.docker/Data/vms/0/ 
-	
+    ＃イメージ＝snapshot コンテナ＝VM
+    #Docker psでコンテナNAMEを事前確認
+    以下のコマンドは、コンテナtestvmを、一時停止無しでDockerイメージを作成してます。
+    $ docker commit --pause=false container_name image_name:tag
+    #作成したコンテナcontainerXをDockerイメージ「imageX:tag」で起動
+    $ docker run -d --name new_container_name image_name:tag
+
+    #設定情報をJSON形式で見る：Cmd が内部で実行されているデーモン情報
+    $docker inspect container_name |less
+
+    #$ docker images でイメージ名確認
+    $ docker history image_name
+
+    #docker hubの既存イメージ険悪 (filterでイメージが自動構築されたかどうか、公式なのかしぼれる)
+    $ docker search --no-trunc ruby --filter "is-automated=true" --filter stars=3 # --filter "is-official=true"
+
+
+
+
+OSX　container場所(VMsizeはpreference->Disk)：　/Users/user/Library/Containers/com.docker.docker/Data/vms/0/

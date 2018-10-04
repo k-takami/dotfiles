@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html
+  lang="ja"
+
+data-admin-domain="//blog.hatena.ne.jp"
+data-author="omiend"
+data-avail-langs="ja en"
+data-blog="omiend.hatenablog.jp"
+data-blog-comments-top-is-new="1"
+data-blog-host="omiend.hatenablog.jp"
+data-blog-is-public="1"
+data-blog-name="the industrial"
+data-blog-owner="omiend"
+data-blog-uri="http://omiend.hatenablog.jp/"
+data-blog-uuid="12921228815713664883"
+data-blogs-uri-base="http://omiend.hatenablog.jp"
+data-brand="hatenablog"
+data-data-layer="{&quot;hatenablog&quot;:{&quot;admin&quot;:{},&quot;pro&quot;:&quot;free&quot;,&quot;page_id&quot;:&quot;entry&quot;,&quot;blog&quot;:{&quot;lang&quot;:&quot;ja&quot;,&quot;disable_ads&quot;:&quot;&quot;,&quot;enable_ads&quot;:&quot;true&quot;,&quot;name&quot;:&quot;the industrial&quot;,&quot;is_public&quot;:&quot;true&quot;,&quot;uri&quot;:&quot;http://omiend.hatenablog.jp/&quot;,&quot;is_sleeping&quot;:&quot;false&quot;,&quot;force_pc_view&quot;:&quot;false&quot;,&quot;entry_show_footer_related_entries&quot;:&quot;true&quot;,&quot;is_responsive_view&quot;:&quot;false&quot;,&quot;content_seems_japanese&quot;:&quot;true&quot;,&quot;enable_keyword_link&quot;:&quot;true&quot;,&quot;owner_name&quot;:&quot;omiend&quot;},&quot;brand&quot;:&quot;hatenablog&quot;,&quot;analytics&quot;:{&quot;property_id&quot;:&quot;UA-43752692-3&quot;,&quot;non_sampling_property_id&quot;:&quot;&quot;,&quot;brand_property_id&quot;:&quot;&quot;,&quot;separated_property_id&quot;:&quot;UA-29716941-20&quot;},&quot;brand_tracking_category&quot;:&quot;hatenablog&quot;,&quot;permalink_entry&quot;:{&quot;hour&quot;:&quot;17&quot;,&quot;author_name&quot;:&quot;omiend&quot;,&quot;date&quot;:&quot;2017-08-22&quot;,&quot;categories&quot;:&quot;program\twork\tRubyOnRails\truby&quot;,&quot;title&quot;:&quot;\u307c\u304f\u306e\u304b\u3093\u304c\u3048\u305f\u3055\u3044\u304d\u3087\u3046\u306eRuby on Rails\u958b\u767a\u74b0\u5883&quot;,&quot;uri&quot;:&quot;http://omiend.hatenablog.jp/entry/2017/08/22/172352&quot;},&quot;router_type&quot;:&quot;blogs&quot;}}"
+data-device="pc"
+data-dont-recommend-pro="false"
+data-globalheader-color="b"
+data-globalheader-type="pc"
+data-has-touch-view="1"
+data-page="entry"
+data-parts-domain="https://hatenablog-parts.com"
+data-plus-available=""
+data-pro="false"
+data-router-type="blogs"
+data-static-domain="https://cdn.blog.st-hatena.com"
+data-version="553f3206c70dd5369b78cdb10bbc7829"
+
+itemscope
+itemtype="http://schema.org/Article"
+
+  data-initial-state="{}"
+
+  >
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" / >
+
+
+  
+
+
+
+  
+
+
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=7; IE=9; IE=10; IE=11" />
+  <title>ぼくのかんがえたさいきょうのRuby on Rails開発環境 - the industrial</title>
+
+  
+  <link rel="canonical" href="http://omiend.hatenablog.jp/entry/2017/08/22/172352"/>
+
+
+
+  
+  
+
+<meta itemprop="name" content="ぼくのかんがえたさいきょうのRuby on Rails開発環境 - the industrial"/>
+
+  <meta itemprop="image" content="https://www.instagram.com/p/BX7ny6cgqZXldvSlRWneslx-La5LVgAuK1wQco0/media/?size=l"/>
+
+
+  <meta property="og:title" content="ぼくのかんがえたさいきょうのRuby on Rails開発環境 - the industrial"/>
+<meta property="og:type" content="article"/>
+  <meta property="og:url" content="http://omiend.hatenablog.jp/entry/2017/08/22/172352"/>
+
+  <meta property="og:image" content="https://www.instagram.com/p/BX7ny6cgqZXldvSlRWneslx-La5LVgAuK1wQco0/media/?size=l"/>
+
+    <meta property="og:description" content="はじめに ６月に新しい会社に来て以来、会社ではRuby on Railsばかり触っている。 RoRの開発・Ruby自体初めてなので（本当はScalaやりたい）、開発環境構築をやってみたのだが、「これ本当に必要なの？」などなど分からないことだらけで、何度かハマった。 そして、最終的に開発環境構築をおえるまで３日もかかったという非常に厳しい結果に終わった。 今後、新しく入ってくるエンジニアがこんな苦労をしなくても良いように、なるべく簡単に、そして誰もが共通で開発環境を構築出来るスキームを・・・と考えた結果、Dockerを採用することに。 さて、RoRのいいところは「サービス開発の速さ」だと思ってい…" />
+<meta property="og:site_name" content="the industrial"/>
+
+  <meta property="article:published_time" content="1503390232" />
+
+    <meta property="article:tag" content="program" />
+    <meta property="article:tag" content="work" />
+    <meta property="article:tag" content="RubyOnRails" />
+    <meta property="article:tag" content="ruby" />
+      <meta name="twitter:card"  content="summary_large_image" />
+    <meta name="twitter:image" content="https://www.instagram.com/p/BX7ny6cgqZXldvSlRWneslx-La5LVgAuK1wQco0/media/?size=l" />  <meta name="twitter:title" content="ぼくのかんがえたさいきょうのRuby on Rails開発環境 - the industrial" />    <meta name="twitter:description" content="はじめに ６月に新しい会社に来て以来、会社ではRuby on Railsばかり触っている。 RoRの開発・Ruby自体初めてなので（本当はScalaやりたい）、開発環境構築をやってみたのだが、「これ本当に必要なの？」などなど分からないことだらけで、何度かハマった。 そして、最終的に開発環境構築をおえるまで３日もかかった…" />  <meta name="twitter:app:name:iphone" content="はてなブログアプリ" />
+  <meta name="twitter:app:id:iphone" content="583299321" />
+  <meta name="twitter:app:url:iphone" content="hatenablog:///open?uri=http%3A%2F%2Fomiend.hatenablog.jp%2Fentry%2F2017%2F08%2F22%2F172352" />  <meta name="twitter:site" content="@omiend" />
+  
+
+    <meta name="keywords" content="movies,movie,映画,映画館">    <meta name="description" content="はじめに ６月に新しい会社に来て以来、会社ではRuby on Railsばかり触っている。 RoRの開発・Ruby自体初めてなので（本当はScalaやりたい）、開発環境構築をやってみたのだが、「これ本当に必要なの？」などなど分からないことだらけで、何度かハマった。 そして、最終的に開発環境構築をおえるまで３日もかかったという非常に厳しい結果に終わった。 今後、新しく入ってくるエンジニアがこんな苦労をしなくても良いように、なるべく簡単に、そして誰もが共通で開発環境を構築出来るスキームを・・・と考えた結果、Dockerを採用することに。 さて、RoRのいいところは「サービス開発の速さ」だと思ってい…" />
+
+  
+<script
+  id="embed-gtm-data-layer-loader"
+  data-data-layer-page-specific="{&quot;hatenablog&quot;:{&quot;blogs_permalink&quot;:{&quot;is_blog_sleeping&quot;:&quot;false&quot;,&quot;blog_hide_afc_func&quot;:&quot;false&quot;,&quot;has_related_entries_with_elasticsearch&quot;:&quot;true&quot;,&quot;is_author_pro&quot;:&quot;false&quot;,&quot;blog_struct_hide_afc&quot;:&quot;false&quot;,&quot;blog_afc_issued&quot;:&quot;false&quot;,&quot;brand_hide_afc&quot;:&quot;false&quot;,&quot;entry_afc_issued&quot;:&quot;false&quot;,&quot;blog_hide_afc_field&quot;:&quot;false&quot;}}}"
+>
+(function() {
+  function loadDataLayer(elem, attrName) {
+    if (!elem) { return {}; }
+    var json = elem.getAttribute(attrName);
+    if (!json) { return {}; }
+    return JSON.parse(json);
+  }
+
+  var globalVariables = loadDataLayer(
+    document.documentElement,
+    'data-data-layer'
+  );
+  var pageSpecificVariables = loadDataLayer(
+    document.getElementById('embed-gtm-data-layer-loader'),
+    'data-data-layer-page-specific'
+  );
+
+  var variables = [globalVariables, pageSpecificVariables];
+
+  if (!window.dataLayer) {
+    window.dataLayer = [];
+  }
+
+  for (var i = 0; i < variables.length; i++) {
+    window.dataLayer.push(variables[i]);
+  }
+})();
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P4CXTW');</script>
+<!-- End Google Tag Manager -->
+
+
+
+
+  <link rel="shortcut icon" href="https://cdn.blog.st-hatena.com/images/favicon.ico">
+<link rel="icon" sizes="192x192" href="https://cdn.blog.st-hatena.com/images/common/meta-icon-global.png">
+
+  
+<link rel="alternate" type="application/atom+xml" title="Atom" href="http://omiend.hatenablog.jp/feed"/>
+<link rel="alternate" type="application/rss+xml" title="RSS2.0" href="http://omiend.hatenablog.jp/rss"/>
+<link rel="alternate" type="application/json+oembed" href="http://hatenablog.com/oembed?url=http%3A%2F%2Fomiend.hatenablog.jp%2Fentry%2F2017%2F08%2F22%2F172352&amp;format=json" title="oEmbed Profile of ぼくのかんがえたさいきょうのRuby on Rails開発環境"/>
+<link rel="alternate" type="text/xml+oembed" href="http://hatenablog.com/oembed?url=http%3A%2F%2Fomiend.hatenablog.jp%2Fentry%2F2017%2F08%2F22%2F172352&amp;format=xml" title="oEmbed Profile of ぼくのかんがえたさいきょうのRuby on Rails開発環境"/>
+  
+  <link rel="author" href="http://www.hatena.ne.jp/omiend/">
+
+
+  
+    <link rel="stylesheet" type="text/css" href="https://cdn.blog.st-hatena.com/css/blog.css?version=59100317491bf488a0d9af0a81e58e565865b113&amp;env=production"/>
+
+    
+  <link rel="stylesheet" type="text/css" href="//blog.hatena.ne.jp/-/blog_style/12921228815713664883/555bd8d2c3ef956bc13c087d1f49eee98dda3b4f"/>
+  
+
+  
+
+  
+<script> </script>
+
+  
+<style>
+  div#google_afc_user,
+  div.google-afc-user-container,
+  div.google_afc_image,
+  div.google_afc_blocklink {
+      display: block !important;
+  }
+</style>
+
+
+  
+    <script src="https://cdn.pool.st-hatena.com/valve/valve.js" async></script>
+<script id="test-valve-definition">
+  var valve = window.valve || [];
+
+  valve.push(function(v) {
+    v.config({ service: 'blog' });
+    
+    
+
+    
+    v.defineDFPSlot({"unit":"/4374287/blog_user","slotId":"google_afc_user_container_0","lazy":"","sizes":[[300,250],[336,280],[468,60],"fluid"]});
+    
+
+    
+
+    v.sealDFPSlots();
+  });
+</script>
+
+  
+
+  
+</head>
+
+  <body class="page-entry enable-top-editarea category-program category-work category-RubyOnRails category-ruby">
+    
+    <div id="header-container">
+     <div id="sp-suggest" style="display: none;"><a id="sp-suggest-link" href="#">スマートフォン用の表示で見る</a></div>
+    </div>
+
+    <div id="globalheader-container"
+  data-brand="hatenablog"
+  
+  
+  >
+  <iframe id="globalheader" height="37" frameborder="0" allowTransparency="true"></iframe>
+</div>
+
+
+    <div id="container">
+      <div id="container-inner">
+        <header id="blog-title" data-brand="hatenablog">
+  <div id="blog-title-inner" >
+    <div id="blog-title-content">
+      <h1 id="title"><a href="http://omiend.hatenablog.jp/">the industrial</a></h1>
+      
+        <h2 id="blog-description">都内で働くITエンジニアの日記</h2>
+      
+    </div>
+  </div>
+</header>
+
+        
+  <div id="top-editarea">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- omiend_main_Blog1_728x90_as -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-7320220894167788"
+     data-ad-slot="2727557355"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  </div>
+
+
+        
+
+        
+
+
+
+
+<div id="content" class="hfeed"
+  
+  >
+  <div id="content-inner">
+    <div id="wrapper">
+      <div id="main">
+        <div id="main-inner">
+          
+
+
+          
+  
+  <!-- google_ad_section_start -->
+  <!-- rakuten_ad_target_begin -->
+  
+  
+  
+
+  
+
+  
+    
+      
+        <article class="entry hentry js-entry-article date-first autopagerize_page_element chars-10400 words-1000 mode-markdown entry-odd" id="entry-8599973812290680147" data-keyword-campaign="" data-uuid="8599973812290680147" data-publication-type="entry">
+  <div class="entry-inner">
+    <header class="entry-header">
+  
+    <div class="date entry-date first">
+    <a href="http://omiend.hatenablog.jp/archive/2017/08/22" rel="nofollow">
+      <time pubdate datetime="2017-08-22T08:23:52Z" title="2017-08-22T08:23:52Z">
+        <span class="date-year">2017</span><span class="hyphen">-</span><span class="date-month">08</span><span class="hyphen">-</span><span class="date-day">22</span>
+      </time>
+    </a>
+  </div>
+  <h1 class="entry-title">
+  <a href="http://omiend.hatenablog.jp/entry/2017/08/22/172352" class="entry-title-link bookmark">ぼくのかんがえたさいきょうのRuby on Rails開発環境</a>
+</h1>
+
+  
+  
+
+  <div class="entry-categories categories">
+    
+    <a href="http://omiend.hatenablog.jp/archive/category/program" class="entry-category-link category-program">program</a>
+    
+    <a href="http://omiend.hatenablog.jp/archive/category/work" class="entry-category-link category-work">work</a>
+    
+    <a href="http://omiend.hatenablog.jp/archive/category/RubyOnRails" class="entry-category-link category-RubyOnRails">RubyOnRails</a>
+    
+    <a href="http://omiend.hatenablog.jp/archive/category/ruby" class="entry-category-link category-ruby">ruby</a>
+    
+  </div>
+
+
+  
+
+  
+
+</header>
+
+    
+
+    <div class="entry-content">
+  
+    <p><a href="https://www.instagram.com/p/BX7ny6cgqZXldvSlRWneslx-La5LVgAuK1wQco0/"><img src="https://www.instagram.com/p/BX7ny6cgqZXldvSlRWneslx-La5LVgAuK1wQco0/media/?size=l" alt="" /></a></p>
+
+<h2>はじめに</h2>
+
+<p>６月に新しい会社に来て以来、会社では<a class="keyword" href="http://d.hatena.ne.jp/keyword/Ruby%20on%20Rails">Ruby on Rails</a>ばかり触っている。</p>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/RoR">RoR</a>の開発・<a class="keyword" href="http://d.hatena.ne.jp/keyword/Ruby">Ruby</a>自体初めてなので<del>（本当は<a class="keyword" href="http://d.hatena.ne.jp/keyword/Scala">Scala</a>やりたい）</del>、開発環境構築をやってみたのだが、「これ本当に必要なの？」などなど分からないことだらけで、何度かハマった。</p>
+
+<p>そして、最終的に開発環境構築をおえるまで３日もかかったという非常に厳しい結果に終わった。</p>
+
+<p>今後、新しく入ってくるエンジニアがこんな苦労をしなくても良いように、なるべく簡単に、そして誰もが共通で開発環境を構築出来るスキームを・・・と考えた結果、Dockerを採用することに。</p>
+
+<p>さて、<a class="keyword" href="http://d.hatena.ne.jp/keyword/RoR">RoR</a>のいいところは「サービス開発の速さ」だと思っている。そんな<a class="keyword" href="http://d.hatena.ne.jp/keyword/RoR">RoR</a>を利用して「最近よくありがちな機能を含むサービスを一から作るならば」という観点を元に、Dockerを使った「ぼくがかんがえたさいきょうの<a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>開発環境」をまとめた。</p>
+
+<h2>機能</h2>
+
+<p>機能は、ざっと下記の通り。</p>
+
+<p>最近の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%A2%A5%D7%A5%EA%B3%AB%C8%AF">アプリ開発</a>では割りとありがちな内容を想定している。</p>
+
+<ul>
+<li>ログイン認証周りの機能</li>
+<li>リレーショナル・データベースによる永続化（<a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>を想定）機能</li>
+<li>ローカル環境における、S3相当のサーバー（<a href="https://www.minio.io/">minio.io</a>を利用）へ画像をアップロードする機能</li>
+</ul>
+
+
+<p>これらの環境をすべて <code>docker-compose up</code> するだけ（さいきょうっぽいところ）で、雛形が立ち上がるようにするのがゴールだった。</p>
+
+<h2>使い方</h2>
+
+<p>ソースは<a href="https://github.com/omiend/my_strongest_ror">コチラ</a></p>
+
+<h4>Docker for <a class="keyword" href="http://d.hatena.ne.jp/keyword/Mac">Mac</a>のインストール</h4>
+
+<p><a href="https://www.docker.com/docker-mac">Docker for Mac</a>からDocker for <a class="keyword" href="http://d.hatena.ne.jp/keyword/Mac">Mac</a>をインストール。</p>
+
+<h4>git clone</h4>
+
+<pre class="code" data-lang="" data-unlink>git@github.com:omiend/my_strongest_ror.git</pre>
+
+
+<h4>docker-compose up</h4>
+
+<pre class="code" data-lang="" data-unlink>$ cd employees/docker
+$ docker-compose up</pre>
+
+
+<h2>以下は、この環境を構築した時のメモ</h2>
+
+<h2><a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>の環境構築</h2>
+
+<p>まずは<a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>の開発環境をDockerとは別で作成する。が、これは結局<a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>の雛形を作りたいためのもの。</p>
+
+<p>もし既存のアプリがあるようであれば、読み飛ばして「Docker周りの環境構築」から読んでも大丈夫だと思う。</p>
+
+<h4>rbenv</h4>
+
+<p><code>homebrew</code> でインストール</p>
+
+<pre class="code" data-lang="" data-unlink>$ brew install rbenv</pre>
+
+
+<h4>bundler</h4>
+
+<p><code>rbenv</code> でインストール</p>
+
+<pre class="code" data-lang="" data-unlink>$ rbenv exec gem install bundler</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/rails">rails</a></h4>
+
+<p><code>rbenv</code> でインストール</p>
+
+<pre class="code" data-lang="" data-unlink>$ rbenv exec gem install rails</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>アプリケーションの雛形を作成する</h4>
+
+<p><code>rails</code> で作成する</p>
+
+<p><code>employees</code> はアプリケーション名</p>
+
+<pre class="code" data-lang="" data-unlink>$ rails new employees</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>アプリケーションの実行</h4>
+
+<pre class="code" data-lang="" data-unlink>$ cd employees/
+$ rails s</pre>
+
+
+<p><a href="http://localhost:3000">localhost:3000</a>にアクセスし、<a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>デフォルトのウェルカム画面が表示されればOK。</p>
+
+<h2>かんたんなアプリの作成</h2>
+
+<p>例として、従業員を管理するかんたんなアプリを作成する</p>
+
+<h4>Gemfileの修正</h4>
+
+<p>rails5だと、既存でsqlite3を利用するようなので、mysql2に変更。</p>
+
+<pre class="code" data-lang="" data-unlink>- gem &#39;sqlite3&#39;
++ gem &#39;mysql2&#39;, &#39;~&gt; 0.3.13&#39;</pre>
+
+
+<p>修正したら <code>bundle install</code> し直す。</p>
+
+<h4>database.ymlの修正</h4>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/mysql">mysql</a>につなげるための設定。</p>
+
+<p>これは後に、dockerのコンテナで稼働するDBに置き換わる予定だが、とりあえず一旦 <code>localhost(127.0.0.1:3306)</code> で<a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>が稼働している想定。</p>
+
+<pre class="code" data-lang="" data-unlink>default: &amp;default
+-  adapter: sqlite3
++  adapter: mysql2
++  encoding: utf8
+  pool: &lt;%= ENV.fetch(&#34;RAILS_MAX_THREADS&#34;) { 5 } %&gt;
+  timeout: 5000
+
+development:
+  &lt;&lt;: *default
+-  database: db/development.sqlite3
++  database: employees
++  username: root
++  password: 
++  host: 127.0.0.1
++  port: 3306</pre>
+
+
+<h4>DBのSchema作成</h4>
+
+<p>Schema定義は、下記<a class="keyword" href="http://d.hatena.ne.jp/keyword/SQL">SQL</a>でとりあえず。</p>
+
+<pre class="code" data-lang="" data-unlink>create database employees default character set utf8;</pre>
+
+
+<h4>Modelの作成</h4>
+
+<p><code>scaffold</code> で作成してしまう。</p>
+
+<pre class="code" data-lang="" data-unlink>$ rails g scaffold users name:string age:integer</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%DE%A5%A4%A5%B0%A5%EC%A1%BC%A5%B7%A5%E7%A5%F3">マイグレーション</a>の実行</h4>
+
+<pre class="code" data-lang="" data-unlink>$ $ rails db:migrate</pre>
+
+
+<h4>アプリ動作確認</h4>
+
+<p><code>rails s</code> で立ち上げ、<a href="http://localhost:3000/users">localhost:3000</a>にアクセスし、usersテーブルにデータが保存出来る様にフォームが動けばOK。</p>
+
+<h2>ログイン機能の実装</h2>
+
+<p>ログイン機能はdeviseを利用。</p>
+
+<h4>Gemfileの編集</h4>
+
+<pre class="code" data-lang="" data-unlink>gem &#39;devise&#39;</pre>
+
+
+<h4>bundle install実行</h4>
+
+<pre class="code" data-lang="" data-unlink>$ bundle install</pre>
+
+
+<p>deviseについてはネット上に色々情報があるので、詳細はそちらを参照。</p>
+
+<p>僕は下記を参考にさせてもらった。</p>
+
+<p><a href="http://qiita.com/cigalecigales/items/f4274088f20832252374">[<em>Rails</em>] deviseの使い方（rails5版）</a></p>
+
+<h2>LetterOpenerWeb の追加</h2>
+
+<p><a href="https://github.com/fgrehm/letter_opener_web">LetterOpenerWeb</a>は、ローカル環境にて送信したメールをブラウザで確認できるツール。</p>
+
+<h4>gemの追加</h4>
+
+<p>Gemfileに追記</p>
+
+<pre class="code" data-lang="" data-unlink>group :development, :test do
+  gem &#39;letter_opener_web&#39;  # localhostで送付されたメールを確認出来るツール
+end</pre>
+
+
+<p>同じく <code>bundle install</code> を実行</p>
+
+<pre class="code" data-lang="" data-unlink>$ docker exec employees_app bundle install</pre>
+
+
+<h4>routing追加</h4>
+
+<p><code>config/routes.rb</code> に下記を追加</p>
+
+<pre class="code" data-lang="" data-unlink>if Rails.env.development?
+  mount LetterOpenerWeb::Engine, at: &#34;/letter_opener&#34;
+end</pre>
+
+
+<p><a href="http://localhost:3000/letter_opener">localhost:3000</a>にアクセスすると、ちょっとしたメールクライアントが表示される。</p>
+
+<p>とても便利！</p>
+
+<hr />
+
+<p>以上、ここまでが<a class="keyword" href="http://d.hatena.ne.jp/keyword/rails">rails</a>の基本的なアプリ作成の流れ。</p>
+
+<h2>Docker周りの環境構築</h2>
+
+<p>ココからが本番。</p>
+
+<p>作成したアプリを、<a class="keyword" href="http://d.hatena.ne.jp/keyword/MacOS">MacOS</a>にインストールした<a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>ではなく、Dockerコンテナ上で動作させるようにする。</p>
+
+<h4>Docker for <a class="keyword" href="http://d.hatena.ne.jp/keyword/Mac">Mac</a>のインストール</h4>
+
+<p>まずは<a href="https://www.docker.com/docker-mac">Docker for Mac</a>からDocker for <a class="keyword" href="http://d.hatena.ne.jp/keyword/Mac">Mac</a>をインストール。</p>
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/Rails">Rails</a>アプリをコンテナ化するためのDockerfileを作成</h4>
+
+<p><code>employees</code> <a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リ直下に、下記の様なファイルを配置する。</p>
+
+<pre class="code" data-lang="" data-unlink>FROM ruby:2.4.1
+RUN apt-get update -qq \
+    &amp;&amp; apt-get install -y build-essential libpq-dev nodejs imagemagick libmagick++-dev \
+    &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+RUN mkdir /employees
+
+WORKDIR /employees
+
+ADD Gemfile /employees/Gemfile
+
+ADD Gemfile.lock /employees/Gemfile.lock
+
+RUN bundle install
+
+ADD . /employees
+
+RUN cd /employees</pre>
+
+
+<p><a href="https://docs.docker.com/compose/rails/">docs.docker.com/compose/rails</a>を参考に作ったもの。</p>
+
+<p>Dockerfileのコマンドは、<a href="http://docs.docker.jp/engine/reference/builder.html">docs.docker.jp/engine/reference/builder.html</a>を参考にした。</p>
+
+<h4>Dockerの作業<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リを作成</h4>
+
+<p>アプリについては、アプリ用という意味で <code>employees/</code> 直下にDockerfileを配置しているが、ソレ以外のサーバー（<a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>とS3）については <code>employees/docker</code> <a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リにすべてまとめて置きたい。</p>
+
+<pre class="code" data-lang="" data-unlink>$ mkdir docker</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>用の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リの作成</h4>
+
+<pre class="code" data-lang="" data-unlink>$ mkdir docker/mysql</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>用のDockerfile作成</h4>
+
+<p>公式の<a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a> Imageを利用するためのもの</p>
+
+<pre class="code" data-lang="" data-unlink>$ echo -n &#34;FROM mysql:5.7&#34; &gt; docker/mysql/Dockerfile</pre>
+
+
+<h4>初回起動時に実行してくれる<a class="keyword" href="http://d.hatena.ne.jp/keyword/SQL">SQL</a>ファイルを作成</h4>
+
+<p>公式<a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>イメージの機能で、<code>docker-compose up</code> 時に指定の<a class="keyword" href="http://d.hatena.ne.jp/keyword/SQL">SQL</a>を実行してくれる機能を利用するため、下記の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リを作成する。</p>
+
+<pre class="code" data-lang="" data-unlink>$ mkdir docker/mysql/docker-entrypoint-initdb.d
+$ echo -n &#34;create database employees default character set utf8;&#34; &gt; docker/mysql/docker-entrypoint-initdb.d/create_db_s.sql</pre>
+
+
+<p>後述の <code>docker-compose.yaml</code> にて、当該<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リをコンテナにマウントさせれば、初回起動時に<a class="keyword" href="http://d.hatena.ne.jp/keyword/SQL">SQL</a>を実行してくれるとのこと。</p>
+
+<p><a href="https://hub.docker.com/_/mysql/">参考 - hub.docker.com/_/mysql/</a></p>
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>の設定ファイルを作成</h4>
+
+<p><code>docker-compose up</code> する時に、コンテナ内にマウントさせる設定ファイル</p>
+
+<pre class="code" data-lang="" data-unlink>$ mkdir docker/mysql/conf.d
+$ touch docker/mysql/conf.d/custom.cnf</pre>
+
+
+<p>中身はちょっと適当すぎるのだけど、こんな感じに。</p>
+
+<pre class="code" data-lang="" data-unlink>[mysqld]
+character-set-server=utf8
+
+bind-address  = 0.0.0.0</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>用の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リ構成</h4>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リ構成はこんな感じ</p>
+
+<pre class="code" data-lang="" data-unlink>docker/mysql/
+├── Dockerfile
+├── conf.d
+│   └── custom.cnf
+└── docker-entrypoint-initdb.d
+    └── create_db.sql</pre>
+
+
+<h4>Minio用の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リの作成</h4>
+
+<p>minioとは、簡単に言うと「ローカル環境で<a class="keyword" href="http://d.hatena.ne.jp/keyword/Amazon%20S3">Amazon S3</a>を立ち上げられる」様なもの。</p>
+
+<p><a href="https://www.minio.io/">minio.io/</a></p>
+
+<h4>Minio用の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リ作成</h4>
+
+<pre class="code" data-lang="" data-unlink>$ mkdir docker/s3</pre>
+
+
+<h4>Minio用のDockerfile作成</h4>
+
+<p>docker公式の<a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a> Imageを利用するためのもの</p>
+
+<pre class="code" data-lang="" data-unlink>$ echo -n &#34;FROM minio/minio:latest&#34; &gt; docker/s3/Dockerfile</pre>
+
+
+<h4>Minio用の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リ構成</h4>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リ構成はこんな感じ</p>
+
+<pre class="code" data-lang="" data-unlink>docker/s3/
+└── Dockerfile</pre>
+
+
+<p>この後のdocker-composeでいろいろやるにはやるのだけど、これだけでS3<a class="keyword" href="http://d.hatena.ne.jp/keyword/%B4%C4%B6%AD%C1%EA">環境相</a>当のものが作れるのはすごい。</p>
+
+<h4>docker-composeファイルを作成</h4>
+
+<p>全てのDockerfileを従える絡新婦の様なファイル。</p>
+
+<pre class="code" data-lang="" data-unlink>$ touch docker/docker-compose.yaml</pre>
+
+
+<p>中身はこんな感じ。</p>
+
+<pre class="code" data-lang="" data-unlink>version: &#39;2&#39;
+services:
+  # MySQLのコンテナを作成するための設定
+  employees_db:
+    container_name: employees_db
+    image: employees_db
+    build: ./mysql
+    ports:
+      - &#34;3306:3306&#34;
+    # コンテナ内の環境変数を指定
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: &#34;yes&#34;
+    # 指定のディレクトリ・ファイルを、コンテナにマウントする
+    volumes:
+      - &#34;./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d&#34;
+      - &#34;./mysql/conf.d/:/etc/mysql/conf.d/&#34;
+      - db-data:/var/lib/mysql
+  # Railsアプリのコンテナを作成するための設定
+  employees_app:
+    container_name: employees_app
+    image: employees_app
+    # コンテナ作成に利用するファイル群を指定する（この場合、Dockerfileが存在するディレクトリを指定）
+    build: ..
+    # stdin_open: true = コンテナの標準入力をオープンしたままにする
+    stdin_open: true
+    # tty:true = コンテナに疑似TTYを割り当てる
+    tty: true
+    # コンテナ立ち上げ時に実行するコマンドを指定
+    command: bin/rails s -p 3000 -b &#39;0.0.0.0&#39;
+    volumes:
+      # employees/DcokerfileのRUNコマンドで作成しているディレクトリにマウント
+      - ..:/employees
+      - bundle:/bundle
+    # ポート指定
+    ports:
+      - &#34;3000:3000&#34;
+    environment:
+      - &#34;S3_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE&#34;
+      - &#34;S3_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY&#34;
+      - &#34;S3_REGION=ap-northeast-1&#34;
+      - &#34;S3_HOST=employees_s3&#34;
+      - &#34;S3_BUCKET=employees&#34;
+      - &#34;S3_ENDPOINT=http://employees_s3:9000&#34;
+      - &#34;S3_ASSET_HOST=http://localhost:9000/employees&#34;
+    # コンテナ間の依存指定（この場合、employees_dbが立ち上がるまで（ビルドされるまで？）
+    # employees_appのコンテナ立ち上げ（ビルド？）は実行されない
+    depends_on:
+      - employees_db
+  employees_s3:
+    container_name: employees_s3
+    image: employees_s3
+    build: ./s3
+    stdin_open: true
+    tty: true
+    command: server /export
+    ports:
+      - &#34;9000:9000&#34;
+    volumes:
+      - &#34;./s3:/export&#34;
+    environment:
+      - &#34;MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE&#34;
+      - &#34;MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY&#34;
+
+# MySQLのデータや、gemなど、ボリュームとして別管理することが出来る
+# コンテナ側でマウントするように設定することで、たとえdocker imageを削除したとしてもデータを引き継ぐ事ができる
+volumes:
+  db-data:
+    driver: local
+  bundle:
+    driver: local</pre>
+
+
+<p>コメント文はもしかしたら僕の認識が間違っているかも知れないので、あしからず。（もし間違っていたら教えて貰いたいッス）</p>
+
+<h4>dockerコンテナ間の通信</h4>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/MySQL">MySQL</a>は database.<a class="keyword" href="http://d.hatena.ne.jp/keyword/yaml">yaml</a>で<a class="keyword" href="http://d.hatena.ne.jp/keyword/localhost">localhost</a>を指しているので、これをdockerコンテナに向ける。</p>
+
+<p>とは言っても、dockerコンテナは立ち上げるたびに<a class="keyword" href="http://d.hatena.ne.jp/keyword/IP%A5%A2%A5%C9%A5%EC%A5%B9">IPアドレス</a>が変わってしまう。そのため、下記のように、docker-compose.<a class="keyword" href="http://d.hatena.ne.jp/keyword/yaml">yaml</a>に記載するサービス名をhostに指定する。</p>
+
+<p>サービス名は<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%A8%A5%A4%A5%EA%A5%A2%A5%B9">エイリアス</a>にもなっていて、<a class="keyword" href="http://d.hatena.ne.jp/keyword/IP%A5%A2%A5%C9%A5%EC%A5%B9">IPアドレス</a>を返してくれる様子（表現あってるか微妙）</p>
+
+<pre class="code" data-lang="" data-unlink>development:
+  &lt;&lt;: *default
+    database: employees
+    username: root
+    password: 
+-  host: 127.0.0.1
++  host: emoloyees_db
+    port: 3306</pre>
+
+
+<h2>Dockerコンテナ版アプリケーション起動</h2>
+
+<h4><code>docker-compose up</code></h4>
+
+<p>docker<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リにて、 <code>docker-compose up</code> をすると、各種コンテナが立ち上がる。</p>
+
+<p>ガーッとログが出るので、落ち着いたら</p>
+
+<pre class="code" data-lang="" data-unlink>$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                             PORTS                    NAMES
+f4e275287cb5        employees_app       &#34;bin/rails s -p 30...&#34;   16 seconds ago      Up 14 seconds                      0.0.0.0:3000-&gt;3000/tcp   employees_app
+f79473377160        employees_s3        &#34;/usr/bin/docker-e...&#34;   17 seconds ago      Up 15 seconds (health: starting)   0.0.0.0:9000-&gt;9000/tcp   employees_s3
+bade6d6cf45e        employees_db        &#34;docker-entrypoint...&#34;   17 seconds ago      Up 15 seconds                      0.0.0.0:3306-&gt;3306/tcp   employees_db</pre>
+
+
+<p>といった感じで確認。</p>
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%DE%A5%A4%A5%B0%A5%EC%A1%BC%A5%B7%A5%E7%A5%F3">マイグレーション</a></h4>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/rails">rails</a>のコマンドなどは、 <code>docker exec</code> を利用して実行する。</p>
+
+<pre class="code" data-lang="" data-unlink>$ docker exec employees_app rails db:migrate
+== 20170820223339 CreateEmployees: migrating ==================================
+-- create_table(:employees)
+   -&gt; 0.0443s
+== 20170820223339 CreateEmployees: migrated (0.0444s) =========================</pre>
+
+
+<p>改めて、<a href="http://localhost:3000/employees">localhost:3000</a>にアクセスし、employeesテーブルにデータが保存出来る様にフォームが動けばOK。</p>
+
+<h2>minio(s3)にファイルをアップロードする機能の実装</h2>
+
+<p>基本的にS3へのアップロード実装方法を検索すれば、いくらでもでてくる。</p>
+
+<p>minioにおいても同様。</p>
+
+<p><a href="http://qiita.com/junara/items/1899f23c091bcee3b058">こちら</a>や<a href="http://morizyun.github.io/ruby/rails-function-form-carrierwave-fog-s3.html">コチラ</a>を参考にさせていただいた。</p>
+
+<h4>gemの追加</h4>
+
+<p>3つほどgemを利用するので、Gemfileに追記</p>
+
+<pre class="code" data-lang="" data-unlink>gem &#39;carrierwave&#39;  # 画像アップロード用
+gem &#39;fog-aws&#39;      # AWS S3連携用
+gem &#39;rmagick&#39;      # 画像処理用</pre>
+
+
+<p>同じく <code>bundle install</code> を実行</p>
+
+<pre class="code" data-lang="" data-unlink>$ docker exec employees_app bundle install</pre>
+
+
+<h4><a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%A2%A5%C3%A5%D7%A5%ED%A1%BC%A5%C0">アップローダ</a>ーの作成</h4>
+
+<pre class="code" data-lang="" data-unlink>$ docker exec employees_app rails g uploader Avatar</pre>
+
+
+<p>作成された <code>uploaders/avatar_uploader.rb</code> は、少し編集</p>
+
+<pre class="code" data-lang="" data-unlink>class AvatarUploader &lt; CarrierWave::Uploader::Base
+  include CarrierWave::RMagick
+  storage :fog
+
+  def store_dir
+    &#34;#{mounted_as}/#{model.id}&#34;
+  end
+
+  version :thumb do
+    process resize_to_fit: [50, 50]
+  end
+
+  def extension_whitelist
+    %w(jpg jpeg gif png)
+  end
+
+  def filename
+    &#34;avatar.jpg&#34; if original_filename
+  end
+end
+</pre>
+
+
+<h4>carrierwaveの設定ファイルを作成</h4>
+
+<p>下記の様に作成する</p>
+
+<p><code>config/initializers/carrerwave.rb</code></p>
+
+<pre class="code" data-lang="" data-unlink>CarrierWave.configure do |config|
+  config.fog_provider = &#39;fog/aws&#39;
+  config.fog_credentials = {
+    provider: &#39;AWS&#39;,
+    # AWSアクセスキー
+    aws_access_key_id: ENV[&#39;S3_ACCESS_KEY&#39;],
+    # AWSシークレットキー(間違ってもpublic repositoryにcommitしてはいけない)
+    aws_secret_access_key: ENV[&#39;S3_SECRET_ACCESS_KEY&#39;],
+    # S3リージョン(TOKYO)
+    region: ENV[&#39;S3_REGION&#39;],
+    # S3エンドポイント名(s3-ap-northeast-1.amazonaws.com ※TOKYO)
+    host: ENV[&#39;S3_HOST&#39;],
+
+    endpoint: ENV[&#39;S3_ENDPOINT&#39;],
+    path_style: true
+  }
+  # バケット名
+  config.fog_directory = ENV[&#39;S3_BUCKET&#39;]
+  config.asset_host = ENV[&#39;S3_ASSET_HOST&#39;]
+end</pre>
+
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/%B4%C4%B6%AD%CA%D1%BF%F4">環境変数</a>は、 <code>docker-compose.yaml</code> にて設定済み</p>
+
+<h4>カラムを追加</h4>
+
+<p>usres Modelに、<a class="keyword" href="http://d.hatena.ne.jp/keyword/Avatar">Avatar</a>というカラムを追加する</p>
+
+<pre class="code" data-lang="" data-unlink>$ docker exec employees_app rails g migration AddColumnToUsers avatar:string</pre>
+
+
+<p>migrateも実行</p>
+
+<pre class="code" data-lang="" data-unlink>$ docker exec employees_app rails db:migrate</pre>
+
+
+<h4>モデルを修正</h4>
+
+<p><code>models/user.rb</code> に下記を追加</p>
+
+<pre class="code" data-lang="" data-unlink>mount_uploader :avatar, AvatarUploader</pre>
+
+
+<h4>UsersControllerを修正</h4>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/avatar">avatar</a>のパラメーターを受け取れるように、 <code>controllers/users_consroller.rb</code> を修正する</p>
+
+<pre class="code" data-lang="" data-unlink>def user_params
+-  params.require(:user).permit(:name, :age)
++  params.require(:user).permit(:name, :age, :avatar)
+end</pre>
+
+
+<h4>users/indexを修正する</h4>
+
+<p>アップロードした画像の表示をするために、下記の通り追加</p>
+
+<p><code>views/users/index.html.erb</code></p>
+
+<pre class="code" data-lang="" data-unlink>&lt;p&gt;
+  &lt;%= image_tag @user.avatar.thumb %&gt;
+  &lt;%= image_tag @user.avatar %&gt;
+&lt;/p&gt;</pre>
+
+
+<h4>users_formを修正する</h4>
+
+<p>同じく、画像アップロードを受けつけられるように、下記の通りフォームを追加する</p>
+
+<p><code>views/users/_form.html.erb</code></p>
+
+<pre class="code" data-lang="" data-unlink>&lt;div class=&#34;field&#34;&gt;
+  &lt;%= form.label :avatar %&gt;
+  &lt;%= form.file_field :avatar, id: :user_avatar %&gt;
+&lt;/div&gt;</pre>
+
+
+<p>あとは普通に編集画面で画像を選択して保存すると、minioにアップロードされる。</p>
+
+<p>minioの確認は <a href="http://localhost:9000/minio/">localhost:9000/minio/</a>にて可能。</p>
+
+<p><code>employees/</code> バケットが作成されているようにしているが、実態は <code>docker/s3/employees</code> <a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%C7%A5%A3%A5%EC%A5%AF%A5%C8">ディレクト</a>リを作ってあるから。</p>
+
+<p>S3に対して画像アップロードを行う場合、<a class="keyword" href="http://d.hatena.ne.jp/keyword/%B4%C4%B6%AD%CA%D1%BF%F4">環境変数</a>を変更するだけで良い（プログラムの修正は不要）。</p>
+
+    
+
+  
+</div>
+
+    
+  <footer class="entry-footer">
+    
+    <p class="entry-footer-section">
+  <span class="author vcard"><span class="fn" data-load-nickname="1" data-user-name="omiend">omiend</span></span>
+  <span class="entry-footer-time"><a href="http://omiend.hatenablog.jp/entry/2017/08/22/172352"><time data-relative datetime="2017-08-22T08:23:52Z" title="2017-08-22T08:23:52Z" pubdate class="updated">2017-08-22 17:23</time></a></span>
+</p>
+
+    
+  <div class="hatena-star-container">
+  </div>
+  <div class="hatena-star-metadata" style="display: none">
+    <a class="hatena-star-permalink" href="http://omiend.hatenablog.jp/entry/2017/08/22/172352">ぼくのかんがえたさいきょうのRuby on Rails開発環境</a>
+  </div>
+
+
+    
+<div class="social-buttons">
+  
+  
+    <div class="social-button-item">
+      <a href="http://b.hatena.ne.jp/entry/http://omiend.hatenablog.jp/entry/2017/08/22/172352" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-balloon" data-hatena-bookmark-lang="ja" title="この記事をはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only.gif" alt="この記事をはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+    </div>
+  
+  
+    <div class="social-button-item">
+      <div class="fb-share-button" data-layout="box_count" data-href="http://omiend.hatenablog.jp/entry/2017/08/22/172352"></div>
+    </div>
+  
+  
+    <div class="social-button-item">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://omiend.hatenablog.jp/entry/2017/08/22/172352" data-count="vertical" data-text="ぼくのかんがえたさいきょうのRuby on Rails開発環境 - the industrial" data-lang="ja">Tweet</a>
+    </div>
+  
+  
+    <div class="social-button-item">
+      <div class="g-plusone" data-size="tall" data-href="http://omiend.hatenablog.jp/entry/2017/08/22/172352"></div>
+    </div>
+  
+  
+  
+  
+</div>
+
+    
+  
+  
+    
+    <div class="google-afc-image test-google-rectangle-ads">      
+      
+      <div id="google_afc_user_container_0" class="google-afc-user-container google_afc_blocklink2_5 google_afc_boder" data-test-unit="/4374287/blog_user"></div>
+      
+        <a href="http://blog.hatena.ne.jp/guide/pro" class="open-pro-modal" data-guide-pro-modal-ad-url="https://hatenablog.com/guide/pro/modal/ad">広告を非表示にする</a>
+      
+    </div>
+  
+  
+
+
+    <div class="customized-footer">
+      
+
+        
+
+        
+
+          <div class="entry-footer-modules" id="entry-footer-secondary-modules">      
+<div class="hatena-module hatena-module-related-entries" >
+      
+  <!-- Hatena-Epic-has-related-entries-with-elasticsearch:true -->
+  <div class="hatena-module-title">
+    関連記事
+  </div>
+  <div class="hatena-module-body">
+    <ul class="related-entries hatena-urllist urllist-with-thumbnails">
+  
+  
+    
+    <li class="urllist-item related-entries-item">
+      <div class="urllist-item-inner related-entries-item-inner">
+        
+                      <a class="urllist-image-link related-entries-image-link" href="http://omiend.hatenablog.jp/entry/2017/12/21/132252">
+  <img alt="Ruby on RailsでPDF作成＆ダウンロード機能を実装" src="https://cdn.image.st-hatena.com/image/square/576851495037aa296a43c59a50b5db076d68b967/backend=imagemagick;height=100;version=1;width=100/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fo%2Fomiend%2F20171221%2F20171221132203.gif" class="urllist-image related-entries-image" title="Ruby on RailsでPDF作成＆ダウンロード機能を実装" width="100">
+</a>
+            <div class="urllist-date-link related-entries-date-link">
+  <a href="http://omiend.hatenablog.jp/archive/2017/12/21" rel="nofollow">
+    <time pubdate datetime="2017-12-21T04:22:52Z" title="2017-12-21T04:22:52Z">
+      2017-12-21
+    </time>
+  </a>
+</div>
+
+          <a href="http://omiend.hatenablog.jp/entry/2017/12/21/132252" class="urllist-title-link related-entries-title-link  urllist-title related-entries-title">Ruby on RailsでPDF作成＆ダウンロード機能を実装</a>
+
+
+          
+          
+
+                      <div class="urllist-entry-body related-entries-entry-body">PDFダウンロード機能を実装したのでメモ 環境 ここに作った。 h…</div>
+      </div>
+    </li>
+  
+    
+    <li class="urllist-item related-entries-item">
+      <div class="urllist-item-inner related-entries-item-inner">
+        
+                      <a class="urllist-image-link related-entries-image-link" href="http://omiend.hatenablog.jp/entry/2017/10/03/152439">
+  <img alt="Rails5 + Cropper.js + carrierwave で作る画像クロップ処理" src="https://cdn.image.st-hatena.com/image/square/3c23c8deb81dc28714ded3189f4802061f1ebc28/backend=imagemagick;height=100;version=1;width=100/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fo%2Fomiend%2F20171003%2F20171003152122.gif" class="urllist-image related-entries-image" title="Rails5 + Cropper.js + carrierwave で作る画像クロップ処理" width="100">
+</a>
+            <div class="urllist-date-link related-entries-date-link">
+  <a href="http://omiend.hatenablog.jp/archive/2017/10/03" rel="nofollow">
+    <time pubdate datetime="2017-10-03T06:24:39Z" title="2017-10-03T06:24:39Z">
+      2017-10-03
+    </time>
+  </a>
+</div>
+
+          <a href="http://omiend.hatenablog.jp/entry/2017/10/03/152439" class="urllist-title-link related-entries-title-link  urllist-title related-entries-title">Rails5 + Cropper.js + carrierwave で作る画像クロップ処理</a>
+
+
+          
+          
+
+                      <div class="urllist-entry-body related-entries-entry-body">作ったもの よく、SNSで利用するようなアイコンをアップロード…</div>
+      </div>
+    </li>
+  
+    
+    <li class="urllist-item related-entries-item">
+      <div class="urllist-item-inner related-entries-item-inner">
+        
+                      <div class="urllist-date-link related-entries-date-link">
+  <a href="http://omiend.hatenablog.jp/archive/2017/01/27" rel="nofollow">
+    <time pubdate datetime="2017-01-27T11:08:00Z" title="2017-01-27T11:08:00Z">
+      2017-01-27
+    </time>
+  </a>
+</div>
+
+          <a href="http://omiend.hatenablog.jp/entry/2017/01/27/200800" class="urllist-title-link related-entries-title-link  urllist-title related-entries-title">Supersetを試してみる</a>
+
+
+          
+          
+
+                      <div class="urllist-entry-body related-entries-entry-body">Supersetとは Superset 宿泊施設マッチングサイトAirBnB（エア…</div>
+      </div>
+    </li>
+  
+    
+    <li class="urllist-item related-entries-item">
+      <div class="urllist-item-inner related-entries-item-inner">
+        
+                      <div class="urllist-date-link related-entries-date-link">
+  <a href="http://omiend.hatenablog.jp/archive/2016/06/04" rel="nofollow">
+    <time pubdate datetime="2016-06-03T15:39:28Z" title="2016-06-03T15:39:28Z">
+      2016-06-04
+    </time>
+  </a>
+</div>
+
+          <a href="http://omiend.hatenablog.jp/entry/2016/06/04/003928" class="urllist-title-link related-entries-title-link  urllist-title related-entries-title">Dockerの環境構築で&quot;Please check your TLS client certific…</a>
+
+
+          
+          
+
+                      <div class="urllist-entry-body related-entries-entry-body">最近Dockerが楽しいっす。 いろいろやりたいことがあって、でも…</div>
+      </div>
+    </li>
+  
+    
+    <li class="urllist-item related-entries-item">
+      <div class="urllist-item-inner related-entries-item-inner">
+        
+                      <div class="urllist-date-link related-entries-date-link">
+  <a href="http://omiend.hatenablog.jp/archive/2015/12/24" rel="nofollow">
+    <time pubdate datetime="2015-12-24T14:44:59Z" title="2015-12-24T14:44:59Z">
+      2015-12-24
+    </time>
+  </a>
+</div>
+
+          <a href="http://omiend.hatenablog.jp/entry/2015/12/24/234459" class="urllist-title-link related-entries-title-link  urllist-title related-entries-title">coreos-vagrantで遊んでみた（というかほぼDocker）</a>
+
+
+          
+          
+
+                      <div class="urllist-entry-body related-entries-entry-body">かきっぱなしでもあれなので、供養のためにメモがてら公開。 20…</div>
+      </div>
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+  </div>
+        
+
+      
+    </div>
+    
+  <div class="comment-box">
+    
+      <a class="leave-comment-title">コメントを書く</a>
+    
+    <ul class="comment">
+      <li class="read-more-comments" style="display: none;"><a>もっと読む</a></li>
+    </ul>
+    
+  </div>
+
+  </footer>
+
+  </div>
+</article>
+
+      
+      
+    
+  
+
+  
+  <!-- rakuten_ad_target_end -->
+  <!-- google_ad_section_end -->
+  
+  
+  
+  <div class="pager pager-permalink permalink">
+    
+      
+      <span class="pager-prev">
+        <a href="http://omiend.hatenablog.jp/entry/2017/08/22/173729" rel="prev">
+          <span class="pager-arrow">&laquo; </span>
+          ガタカ
+        </a>
+      </span>
+    
+    
+      
+      <span class="pager-next">
+        <a href="http://omiend.hatenablog.jp/entry/2017/08/16/125043" rel="next">
+          キングコング 髑髏島の巨神
+          <span class="pager-arrow"> &raquo;</span>
+        </a>
+      </span>
+    
+  </div>
+
+
+  
+
+
+
+        </div>
+      </div>
+
+      <aside id="box1">
+  <div id="box1-inner">
+  </div>
+</aside>
+
+    </div><!-- #wrapper -->
+
+    
+<aside id="box2">
+  
+  <div id="box2-inner">
+    
+      
+
+<div class="hatena-module hatena-module-profile">
+  <div class="hatena-module-title">
+    プロフィール
+  </div>
+  <div class="hatena-module-body">
+    
+    <a href="http://omiend.hatenablog.jp/about" class="profile-icon-link">
+      <img src="https://cdn.profile-image.st-hatena.com/users/omiend/profile.png?1497257074"
+      alt="id:omiend" class="profile-icon" />
+    </a>
+    
+
+    
+    <span class="id">
+      <a href="http://omiend.hatenablog.jp/about" class="hatena-id-link"><span data-load-nickname="1" data-user-name="omiend">id:omiend</span></a>
+      
+  
+    
+    
+  
+
+
+    </span>
+    
+
+    
+
+    
+
+    
+      <div class="hatena-follow-button-box btn-subscribe js-hatena-follow-button-box"
+  
+  >
+
+  <a href="#" class="hatena-follow-button js-hatena-follow-button">
+    <span class="subscribing">
+      <span class="foreground">読者です</span>
+      <span class="background">読者をやめる</span>
+    </span>
+    <span class="unsubscribing" data-track-name="profile-widget-subscribe-button" data-track-once>
+      <span class="foreground">読者になる</span>
+      <span class="background">読者になる</span>
+    </span>
+  </a>
+  <div class="subscription-count-box js-subscription-count-box">
+    <i></i>
+    <u></u>
+    <span class="subscription-count js-subscription-count">
+    </span>
+  </div>
+</div>
+
+    
+
+    
+    <div class="hatena-follow-button-box btn-twitter">
+      <a href="https://twitter.com/omiend" class="twitter-follow-button" data-show-count="false" data-lang="ja">
+        @omiendをフォロー
+      </a>
+    </div>
+    
+
+    
+  </div>
+</div>
+
+    
+      <div class="hatena-module hatena-module-recent-entries ">
+  <div class="hatena-module-title">
+    <a href="http://omiend.hatenablog.jp/archive">
+      最新記事
+    </a>
+  </div>
+  <div class="hatena-module-body">
+    <ul class="recent-entries hatena-urllist ">
+  
+  
+    
+    <li class="urllist-item recent-entries-item">
+      <div class="urllist-item-inner recent-entries-item-inner">
+        
+          
+          <a href="http://omiend.hatenablog.jp/entry/2018/10/02/174657" class="urllist-title-link recent-entries-title-link  urllist-title recent-entries-title">家で作業スペースを作った話</a>
+
+
+          
+          
+
+                </div>
+    </li>
+  
+    
+    <li class="urllist-item recent-entries-item">
+      <div class="urllist-item-inner recent-entries-item-inner">
+        
+          
+          <a href="http://omiend.hatenablog.jp/entry/2018/09/18/222152" class="urllist-title-link recent-entries-title-link  urllist-title recent-entries-title">粘膜人間</a>
+
+
+          
+          
+
+                </div>
+    </li>
+  
+    
+    <li class="urllist-item recent-entries-item">
+      <div class="urllist-item-inner recent-entries-item-inner">
+        
+          
+          <a href="http://omiend.hatenablog.jp/entry/2018/09/10/143826" class="urllist-title-link recent-entries-title-link  urllist-title recent-entries-title">Slimで動的にスタイルを変更するメモ</a>
+
+
+          
+          
+
+                </div>
+    </li>
+  
+    
+    <li class="urllist-item recent-entries-item">
+      <div class="urllist-item-inner recent-entries-item-inner">
+        
+          
+          <a href="http://omiend.hatenablog.jp/entry/2018/08/28/104132" class="urllist-title-link recent-entries-title-link  urllist-title recent-entries-title">コーヒーと旅</a>
+
+
+          
+          
+
+                </div>
+    </li>
+  
+    
+    <li class="urllist-item recent-entries-item">
+      <div class="urllist-item-inner recent-entries-item-inner">
+        
+          
+          <a href="http://omiend.hatenablog.jp/entry/2018/08/26/230748" class="urllist-title-link recent-entries-title-link  urllist-title recent-entries-title">聲の形</a>
+
+
+          
+          
+
+                </div>
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+    
+      
+
+<div class="hatena-module hatena-module-archive" data-archive-type="default" data-archive-url="http://omiend.hatenablog.jp/archive">
+  <div class="hatena-module-title">
+    <a href="http://omiend.hatenablog.jp/archive">月別アーカイブ</a>
+  </div>
+  <div class="hatena-module-body">
+  </div>
+</div>
+
+    
+      <div class="hatena-module hatena-module-search-box">
+  <div class="hatena-module-title">
+    検索
+  </div>
+  <div class="hatena-module-body">
+    <form class="search-form" role="search" action="http://omiend.hatenablog.jp/search" method="get">
+  <input type="text" name="q" class="search-module-input" value="" placeholder="記事を検索" required>
+  <input type="submit" value="検索" class="search-module-button" />
+</form>
+
+  </div>
+</div>
+
+    
+      
+
+<div class="hatena-module hatena-module-category">
+  <div class="hatena-module-title">
+    カテゴリー
+  </div>
+  <div class="hatena-module-body">
+    <ul class="hatena-urllist">
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/work">
+            work (56)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Blog">
+            Blog (199)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/book">
+            book (30)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Rails">
+            Rails (5)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/RubyOnRails">
+            RubyOnRails (3)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/design">
+            design (6)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/slim">
+            slim (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Movies">
+            Movies (416)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/run">
+            run (8)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Walking">
+            Walking (5)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/MacOS">
+            MacOS (2)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Excel">
+            Excel (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/scala">
+            scala (18)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/grindhouse">
+            grindhouse (5)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/program">
+            program (83)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/music">
+            music (55)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/LINKINPARK">
+            LINKINPARK (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/ruby">
+            ruby (2)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/iPhone">
+            iPhone (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Shell">
+            Shell (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Anime">
+            Anime (2)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/JavaScript">
+            JavaScript (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/Cropper.js">
+            Cropper.js (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/git">
+            git (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/ftp">
+            ftp (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/PHP">
+            PHP (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/cocktail">
+            cocktail (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/JimmyEatWorld">
+            JimmyEatWorld (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/MWAM">
+            MWAM (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/swift">
+            swift (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/ios">
+            ios (1)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/live">
+            live (72)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/golang">
+            golang (2)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/game">
+            game (14)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/cooking">
+            cooking (3)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/darts">
+            darts (4)
+          </a>
+        </li>
+      
+        <li>
+          <a href="http://omiend.hatenablog.jp/archive/category/golf">
+            golf (1)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+    
+      
+<div class="hatena-module hatena-module-html">
+  <div class="hatena-module-body">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:250px;height:250px"
+     data-ad-client="ca-pub-7320220894167788"
+     data-ad-slot="4433987355"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  </div>
+</div>
+
+    
+    
+  </div>
+</aside>
+
+
+  </div>
+</div>
+
+
+
+
+        
+
+        
+
+      </div>
+    </div>
+    
+<footer id="footer" data-brand="hatenablog">
+  <div id="footer-inner">
+    
+      <div style="display:none !important" class="guest-footer js-guide-register test-blogs-register-guide" data-action="guide-register">
+  <div class="guest-footer-content">
+    <h3>はてなブログをはじめよう！</h3>
+    <p>omiendさんは、はてなブログを使っています。あなたもはてなブログをはじめてみませんか？</p>
+    <div class="guest-footer-btn-container">
+      <div  class="guest-footer-btn">
+        <a class="btn btn-register" href="http://blog.hatena.ne.jp/register?via=200227" target="_blank">はてなブログをはじめる（無料）</a>
+      </div>
+      <div  class="guest-footer-btn">
+        <a href="http://hatenablog.com/guide" target="_blank">はてなブログとは</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <address class="footer-address">
+      <a href="http://omiend.hatenablog.jp/">
+        <img src="https://cdn.blog.st-hatena.com/images/admin/blog-icon-noimage.png" width="16" height="16" alt="the industrial"/>
+        <span class="footer-address-name">the industrial</span>
+      </a>
+    </address>
+    <p class="services">
+      Powered by <a href="http://hatenablog.com/">Hatena Blog</a>
+      |
+        <a href="https://blog.hatena.ne.jp/-/abuse_report?target_url=http%3A%2F%2Fomiend.hatenablog.jp%2Fentry%2F2017%2F08%2F22%2F172352" class="report-abuse-link test-report-abuse-link" target="_blank">ブログを報告する</a>
+    </p>
+  </div>
+</footer>
+
+
+    
+
+    
+  <script src="https://s.hatena.ne.jp/js/HatenaStar.js?20180530"></script>
+
+
+    
+      <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=719729204785177&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    
+    
+
+<div class="quote-box">
+  <div class="tooltip-quote tooltip-quote-star">
+    <i class="blogicon-star" title="引用スターをつける"></i>
+  </div>
+  <div class="tooltip-quote tooltip-quote-stock">
+    <i class="blogicon-quote" title="引用をストック"></i>
+  </div>
+  <div class="tooltip-quote tooltip-quote-tweet js-tooltip-quote-tweet">
+    <a class="js-tweet-quote" target="_blank" data-track-name="quote-tweet" data-track-once><i class="blogicon-twitter" title="引用してツイートする"></i></a>
+  </div>
+</div>
+
+<div class="message-box" id="quote-star-message-box" style="display: none; position: absolute;">
+  スターをつけました
+</div>
+
+<div class="quote-stock-panel" id="quote-stock-message-box" style="position: absolute; z-index: 3000">
+  <div class="message-box" id="quote-stock-succeeded-message" style="display: none">
+    <p>引用をストックしました</p>
+    <button class="btn btn-primary" id="quote-stock-show-editor-button" data-track-name="curation-quote-edit-button">ストック一覧を見る</button>
+    <button class="btn quote-stock-close-message-button">閉じる</button>
+  </div>
+
+  <div class="message-box" id="quote-login-required-message" style="display: none">
+    <p>引用するにはまずログインしてください</p>
+    <button class="btn btn-primary" id="quote-login-button">ログイン</button>
+    <button class="btn quote-stock-close-message-button">閉じる</button>
+  </div>
+
+  <div class="error-box" id="quote-stock-failed-message" style="display: none">
+    <p>引用をストックできませんでした。再度お試しください</p>
+    <button class="btn quote-stock-close-message-button">閉じる</button>
+  </div>
+
+  <div class="error-box" id="unstockable-quote-message-box" style="display: none; position: absolute; z-index: 3000;">
+    <p>限定公開記事のため引用できません。</p>
+  </div>
+</div>
+
+<script type="x-underscore-template" id="js-requote-button-template">
+  <div class="requote-button js-requote-button">
+    <button class="requote-button-btn tipsy-top" title="引用する"><i class="blogicon-quote"></i></button>
+  </div>
+</script>
+
+
+
+    
+    <div id="hidden-subscribe-button" style="display: none;">
+      <div class="hatena-follow-button-box btn-subscribe js-hatena-follow-button-box"
+  
+  >
+
+  <a href="#" class="hatena-follow-button js-hatena-follow-button">
+    <span class="subscribing">
+      <span class="foreground">読者です</span>
+      <span class="background">読者をやめる</span>
+    </span>
+    <span class="unsubscribing" data-track-name="profile-widget-subscribe-button" data-track-once>
+      <span class="foreground">読者になる</span>
+      <span class="background">読者になる</span>
+    </span>
+  </a>
+  <div class="subscription-count-box js-subscription-count-box">
+    <i></i>
+    <u></u>
+    <span class="subscription-count js-subscription-count">
+    </span>
+  </div>
+</div>
+
+    </div>
+
+    
+  <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+
+<script src="https://apis.google.com/js/platform.js" async defer>
+  { lang: 'ja', "parsetags": "explicit" }
+</script>
+<script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+
+
+
+  <script type="text/javascript" src="https://cdn.blog.st-hatena.com/js/external/react-with-addons.min.js?version=15.4.1"></script>
+  <script type="text/javascript" src="https://cdn.blog.st-hatena.com/js/external/react-dom.min.js?version=15.4.1"></script>
+
+
+<script type="text/javascript" src="https://cdn.blog.st-hatena.com/js/external/jquery.min.js?version=1.12.3"></script>
+<script type="text/javascript" src="//cdn7.www.st-hatena.com/js/jquery/jquery-ui.1.10.0.custom.min.js"></script>
+<script type="text/javascript" src="https://cdn.blog.st-hatena.com/js/external/jquery.flot.js?version=0.8.3"></script>
+<script type="text/javascript" src="https://cdn.blog.st-hatena.com/js/external/jquery.flot.time.js?version=0.8.3"></script>
+
+
+
+
+
+<script type="text/javascript" src="https://cdn.blog.st-hatena.com/js/texts-ja.js?version=751da5fc486737fc8a0560ef9d2d29033eb33d9c&amp;env=production"></script>
+<script id="hatenablog-js" data-env="production"
+  type="text/javascript" src="https://cdn.blog.st-hatena.com/js/hatenablog.js?version=2bafdd0bbe34dc45127ae9bee2e3a27cb06fb133&amp;env=production" crossorigin="anonymous"></script>
+
+
+  <script type="text/javascript">Hatena.Diary.GlobalHeader.init()</script>
+
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+
+
+    
+  <script id="valve-dmp" data-service="blog" src="https://cdn.pool.st-hatena.com/valve/dmp.js" data-test-id="dmpjs" async></script>
+
+
+    
+
+
+
+
+
+  </body>
+</html>
+

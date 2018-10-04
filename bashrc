@@ -458,14 +458,15 @@ function rmbak {
 
 #ATOM環境
 function atom_backup {
-  local target=atom
-  apm list --installed --bare > ~/.dotfiles/$target/packages.txt ;
-  cp ~/.$target/keymap.cson ~/.dotfiles/$target/
-  cp ~/.$target/config.cson ~/.dotfiles/$target/
-  cdd; gwr $target/ ; gst; lat $target/
+  local target=ATOM
+  apm list --installed --bare > SI/$target/packages.txt
+  cp ~/.$target/keymap.cson     SI/$target/
+  cp ~/.$target/config.cson     SI/$target/
+  cp ~/.$target/snippets.cson   SI/$target/
+  cdd; gwr $target/ ; gst; lat  SI/$target/
   cd -
 }
-alias atom_restore='apm install --packages-file ~/.dotfiles/atom/packages.txt'
+alias atom_restore='apm install --packages-file ~/.dotfiles/ATOM/packages.txt'
 
 function openatomfromvimsession {
   local outfile=openatomfromvimsession.sh

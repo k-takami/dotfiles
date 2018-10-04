@@ -68,6 +68,9 @@ yarn-debug.log*
 # Editor-files
 vim/.VimballRecord
 vim/.netrwhist
+/* vim/neosnippets/ */
+/* vim/bundle/ */
+/* vim/ */
 .DS_Store
 .dbeaver-data-sources.xml
 .byebug_history
@@ -75,3 +78,13 @@ vim/.netrwhist
 .project
 .annotations.cson
 .idea/
+.git-old
+.git-*.tgz
+.annotations.cson
+.idea/
+
+#SI
+AWSCLI/
+SI/
+SUPPLEMENTS/
+WWW_20160515/

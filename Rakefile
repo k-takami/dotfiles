@@ -19,7 +19,7 @@ task :uninstall do
     sudo rm -i  .bash_history .rdebug_hist .irb_history .lesshst .psql_history    ;
     sudo rm -ir .gitignore .gitconfig .rubocop.yml                                ;
     sudo rm -ir .vim* .vim_mru_files .ve_favorite .vt_locations .NERDTreeBookmarks .vim-fuf-cache ;
-    sudo rm -ir .dotfiles .SCRIPTS .SI .BACKUP                                    ;
+    sudo rm -ir .dotfiles .SCRIPTS .SI .BACKUP                                    ;
   "
   system command
 end
@@ -37,7 +37,11 @@ task :install do
   end
 
   replace_all = false
-  files = Dir['*'] - %w[Rakefile README.rdoc LICENSE oh-my-zsh]
+  files = Dir['*'] - %w[
+    Rakefile README.rdoc LICENSE oh-my-zsh
+    ATOM AWSCLI CHEATSHEETS LICENSE RAILS_ROOT README.md SCRIPTS SI SUPPLEMENTS VM_HOST vim-neosnippet.tgz win73.vimrc SI.tar.zip WWW_20160515
+  ]
+
   unless os == :windows
     files << "oh-my-zsh/custom/plugins/rbates"
     files << "oh-my-zsh/custom/rbates.zsh-theme"
