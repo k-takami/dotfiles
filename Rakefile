@@ -73,6 +73,8 @@ task :install do
       link_file(file)
     end
   end
+  #OSX 10.13はcurlだけ標準添付,alpine-linuxはwgetだけ標準添付
+  system 'curl "https://drive.google.com/uc?export=download&id=1r6RDufI3w9SMWJc93qw-EmtZwkTnzdY4" -o SI.tar.zip -L'
   system "source ~/.bashrc;"
   puts "#############\n vim を起動して :NeoBundleInstall を実行してください \n #############\n"
 end
@@ -180,10 +182,10 @@ end
   mv dotfiles/ .dotfiles ;
 
   cd $_
-  # rm -rf * .gitignore 
+  # rm -rf * .gitignore
   sudo mv /media/sf_Downloads/dotfiles-master.zip .
-  unzip dotfiles-master.zip 
-  sudo unzip dotfiles-master.zip 
+  unzip dotfiles-master.zip
+  sudo unzip dotfiles-master.zip
   sudo mv dotfiles-master/* .
   sudo cp -pr ../.dotfiles_old/vim .
   sudo rm dotfiles-master*

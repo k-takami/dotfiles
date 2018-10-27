@@ -1,6 +1,6 @@
 システム環境設定パネル
-	//(keyboard: 
-		キーボートタブ右下　修飾キー→ disable caps-lock key, 
+	//(keyboard:
+		キーボートタブ右下　修飾キー→ disable caps-lock key,
 		shortcut tab--> Tabキーによるフォーカス移動
 		「フルキーボードアクセス」の項目で「すべてのコントロール」を選択
       キーボードメニューが開くので、
@@ -36,7 +36,7 @@ DOCK
 #SVN環境のためにxcodeインストール：　$svn でインストール画面ポップアップしてくれる。
 SSH-mounted-drive
 $ brew install sshfs
-$ sshfs [user]@[hostname]:[absolute_path_to_dir]  
+$ sshfs [user]@[hostname]:[absolute_path_to_dir]
 $ sshfs vagrant@192.168.33.10:/home/vagrant/Publus_Server /Users/appirits_1020380/Downloads/src/Publus_Server
 
 #確認
@@ -109,7 +109,7 @@ cat ~/.gitconfig
 		//まだやってないこと
 			「ディスクユーティリティ」でパーティションの「消去」や「再フォーマット」をしてからのOS X再インストール
 		//その他、不調箇所：左側commandボタンの接触不良。長時間押さないと打鍵が認識されない。右側commandボタンは問題無し。
-[#Safari](https://dynalist.io/d/hJ6a7BOnTYGbRJ6q5NqzxuMH#z=cSWoPfklcS4uG7G3iOqchA0U) 
+[#Safari](https://dynalist.io/d/hJ6a7BOnTYGbRJ6q5NqzxuMH#z=cSWoPfklcS4uG7G3iOqchA0U)
 #Aptana 3.x , vwrapper ,  DBeaver, session
 	#DL java6 for Mac
 		http://supportdownload.apple.com/download.info.apple.com/Apple_Support_Area/Apple_Software_Updates/Mac_OS_X/downloads/031-28873-20150722-e716fb32-3085-11e5-8509-c38ce7f678b6/javaforosx.dmg
@@ -132,15 +132,17 @@ OSX tune up : http://gori.me/mac/mac-tips/64719
   #                                                                                                                復元したいファイルを選択し、右下の「復元」ボタンを押すか、ツールバーの「アクション」ボタンを押し「〜を復元」コマンド実行します。ファイルは元にあった場所に復元されます。*/
   # ファイル以外にもフォルダやハードディスク単位で復元することもできます。*/
 
-
+#Tethering with Android: HpRNDIS ver7 install ---> exec commands below, then instal ver8, and reboot;
+$ sudo rm -rf /System/Library/Extensions/HoRNDIS.kext
+$ sudo rm -rf /Library/Extensions/HoRNDIS.kext
 
 
 mysql
 	$ ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
-	$ vi ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist 
+	$ vi ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 		<key>KeepAlive</key>
 		<false/>
 		#trueからfalseに変更。stopできなくなるから
-	$ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist 
+	$ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 	$ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 

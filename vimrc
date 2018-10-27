@@ -100,21 +100,21 @@ let mapleader = ","
 map <Leader>R :e doc/README_FOR_APP<CR>
 
 " Leader shortcuts for Rails commands
-map <Leader>m :Rmodel 
-map <Leader>c :Rcontroller 
-map <Leader>v :Rview 
-map <Leader>u :Runittest 
-map <Leader>f :Rfunctionaltest 
-map <Leader>tm :RTmodel 
-map <Leader>tc :RTcontroller 
-map <Leader>tv :RTview 
-map <Leader>tu :RTunittest 
-map <Leader>tf :RTfunctionaltest 
-map <Leader>sm :RSmodel 
-map <Leader>sc :RScontroller 
-map <Leader>sv :RSview 
-map <Leader>su :RSunittest 
-map <Leader>sf :RSfunctionaltest 
+map <Leader>m :Rmodel
+map <Leader>c :Rcontroller
+map <Leader>v :Rview
+map <Leader>u :Runittest
+map <Leader>f :Rfunctionaltest
+map <Leader>tm :RTmodel
+map <Leader>tc :RTcontroller
+map <Leader>tv :RTview
+map <Leader>tu :RTunittest
+map <Leader>tf :RTfunctionaltest
+map <Leader>sm :RSmodel
+map <Leader>sc :RScontroller
+map <Leader>sv :RSview
+map <Leader>su :RSunittest
+map <Leader>sf :RSfunctionaltest
 
 " Hide search highlighting
 map <Leader>h :set invhls <CR>
@@ -231,6 +231,8 @@ set hlsearch "検索マッチをhighlight
 set tabstop=2 shiftwidth=2 softtabstop=2 "インデント幅を2文字に
 set backspace=2 " バックスペースでインデントや改行を削除できるようにする
 set expandtab " タブをスペースに展開 (expandtab:展開する)
+autocmd BufWritePre * :%s/\s\+$//ge
+
 "
 "set wildmenu " コマンドライン補完するときに強化されたものを使う(参照 :help
 "wildmenu)
@@ -286,7 +288,7 @@ map <F7> :e ++enc=utf-8 ++ff=unix<CR>
 imap <F7> :e ++enc=utf-8 ++ff=unix<CR>
 ""NG:　:nmap <C-Tab> <ESC>>gt
 
-" diff mode toggle 
+" diff mode toggle
 function! ToggleDiff()
   if &diff
     windo diffoff
@@ -297,7 +299,7 @@ function! ToggleDiff()
   endif
 :endfunction
 nnoremap <silent> <F2> :call ToggleDiff()<CR>
-" number toggle 
+" number toggle
 function! ToggleLineNumber()
   if &number
     setlocal nonumber
@@ -378,7 +380,7 @@ let g:NERDTreeShowHidden=1
 "Vundle ----------------------------------------------------------------
 
 ""manual: http://kaworu.jpn.org/vim/NeoBundle
-"WINDOWS: (with normal user) 
+"WINDOWS: (with normal user)
 "$ mkdir %userprofile%\.vim\bundle
 "$ cd %userprofile%\.vim\bundle
 "$ git clone git://github.com/Shougo/neobundle.vim
@@ -440,7 +442,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     " :Regrep        - Run recursive egrep (enhanced grep)
     " :Bgrep         - Search for a pattern on all open buffers
     " :GrepArgs      - Search for a pattern on all the Vim argument filenames(:args)
-    " :Ragrep        - Run recursive agrep (ambiguous grep--- NOT BUNDLED IN centOS6.9, 
+    " :Ragrep        - Run recursive agrep (ambiguous grep--- NOT BUNDLED IN centOS6.9,
     " :上述コマンドに*Addをつけると - adds the results to the current results
 
   NeoBundle 'Drawit'
@@ -452,7 +454,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
       " また、mksessionでつくったsessionファイルよみこむと機能が動作しないみたい。
         "詳しくは、vimで:help drawitして見てくださしあ
         "1.ノーマルモードでおもむろに\diを押下
-        "2.線を書くのを辞めたいときは、\ds 
+        "2.線を書くのを辞めたいときは、\ds
         "3.十字キーで線がかける 1.空白で上書きたいときはスペースを押下
         "2.線が書きたくなれば、もう一度スペースを押下すればOk
         "3.Home, End, PgUp, UgDn キーで斜め線
@@ -480,9 +482,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     " MySQL
     "let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=whatever:dbname=mysql:extra=-t'
     " Postgres
-    let g:dbext_default_profile_PG = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog' 
-    let g:dbext_default_profile_PG_test = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog_test' 
-    let g:dbext_default_profile_usual = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog' 
+    let g:dbext_default_profile_PG = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog'
+    let g:dbext_default_profile_PG_test = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog_test'
+    let g:dbext_default_profile_usual = 'type=PGSQL:srvname=localhost:user=postgres:passwd=postgres:dbname=catalog'
     "NG let dbext_default_profile = 1
     let g:dbext_default_profile_sampleSQLite = 'type=SQLITE:dbname=./db/development.sqlite3'
 
@@ -493,9 +495,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     let g:syntastic_check_on_save = 1 "ファイル保存時にはチェックを実施
   NeoBundle 'szw/vim-tags'
     " メソッド定義元へのジャンプ : prep supkgadd ctags -y ; :TagsGenerate!
-    " re-habilli C-]: jump, 
+    " re-habilli C-]: jump,
     let g:vim_tags_auto_generate = 1
-  
+
   "vim73later
   NeoBundle 'Tagbar'
    nmap <F8> :TagbarToggle<CR>
@@ -525,7 +527,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
     NeoBundle "honza/vim-snippets"
 
-    NeoBundle 'scrooloose/nerdtree' 
+    NeoBundle 'scrooloose/nerdtree'
     NeoBundle 'fugitive.vim'
     NeoBundle 'rails.vim'
     NeoBundle 'Rename.vim'
@@ -586,13 +588,13 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " NeoBundle 'cohama/vim--endwise'
 
-  " FUTURE: irequires native lib 'lua' : $ vim --version | grep lua 
+  " FUTURE: irequires native lib 'lua' : $ vim --version | grep lua
     " NeoBundle 'Shougo/neocomplete'
   NeoBundle 'Shougo/neosnippet'
   NeoBundle 'Shougo/neosnippet-snippets'
   " ---------- neocomplecache + ragtag とあわせると insertモードで
   "  tabで候補上下移動、C-kでsnippetからの選択確定, C-nでバッファ中からの選択肢の確定、タグ＜＞は入力不要、トジタグはC-x/で自動入力
-  " 
+  "
     " Plugin key-mappings.
     " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -663,7 +665,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     " prep: supkgadd refe2 bitclust-dev ; bitclust setup; echo 'default_version: 2.1.0' >> ~/.bitclust/config
     NeoBundle 'thinca/vim-ref'
     NeoBundle 'yuku-t/vim-ref-ri'
-      " re-habilli :Ref refe [some-word otherwise no word] 
+      " re-habilli :Ref refe [some-word otherwise no word]
       let g:ref_no_default_key_mappings = 0
 
     NeoBundle 'Shougo/vimproc.vim', {
@@ -739,13 +741,13 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     " let g:bookmark_manage_per_buffer = 1
     let g:bookmark_auto_close = 1
     let g:bookmark_center = 1
-    " rehabili リハビリ mi mm ma BookmarkSave BookmarkLoad 
+    " rehabili リハビリ mi mm ma BookmarkSave BookmarkLoad
       " Add/remove bookmark at current line   mm  :BookmarkToggle
       " Show all bookmarks (toggle)   ma  :BookmarkShowAll
       " Add/edit/remove annotation at current line  mi  :BookmarkAnnotate <TEXT>
       " Save all bookmarks to a file    :BookmarkSave <FILE_PATH>
       " Load bookmarks from a file    :BookmarkLoad <FILE_PATH>
-      " 
+      "
       " Jump to next bookmark in buffer   mn  :BookmarkNext
       " Jump to previous bookmark in buffer   mp  :BookmarkPrev
       " Clear bookmarks in current buffer only  mc  :BookmarkClear
@@ -782,7 +784,7 @@ NeoBundleCheck
 "======================================================================
 "#以下の関数でuniteのincremental-search enabling
 "======================================================================
-"Unite 
+"Unite
   " The prefix key.
   nnoremap  [unite]   <Nop>
   "leader-u はundoと衝突
@@ -801,7 +803,7 @@ NeoBundleCheck
 "  nnoremap <silent> [unite]d  :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
   nnoremap <silent> [unite]ma :<C-u>Unite mapping<CR>
   nnoremap <silent> [unite]me :<C-u>Unite output:message<CR>
-  
+
   nnoremap <silent> [unite]s  :<C-u>Unite -buffer-name=files -no-split jump_point file_point buffer_tab file_rec:! file file/new file_mru<CR>
 
   if executable('jvgrep')
@@ -867,21 +869,21 @@ filetype plugin indent on
 " #  RAILS.vim #############################################
 
 " " Leader shortcuts for Rails commands
-" map <Leader>m :Rmodel 
-" map <Leader>c :Rcontroller 
-" map <Leader>v :Rview 
-" map <Leader>u :Runittest 
-" map <Leader>f :Rfunctionaltest 
-" map <Leader>tm :RTmodel 
-" map <Leader>tc :RTcontroller 
-" map <Leader>tv :RTview 
-" map <Leader>tu :RTunittest 
-" map <Leader>tf :RTfunctionaltest 
-" map <Leader>sm :RSmodel 
-" map <Leader>sc :RScontroller 
-" map <Leader>sv :RSview 
-" map <Leader>su :RSunittest 
-" map <Leader>sf :RSfunctionaltest 
+" map <Leader>m :Rmodel
+" map <Leader>c :Rcontroller
+" map <Leader>v :Rview
+" map <Leader>u :Runittest
+" map <Leader>f :Rfunctionaltest
+" map <Leader>tm :RTmodel
+" map <Leader>tc :RTcontroller
+" map <Leader>tv :RTview
+" map <Leader>tu :RTunittest
+" map <Leader>tf :RTfunctionaltest
+" map <Leader>sm :RSmodel
+" map <Leader>sc :RScontroller
+" map <Leader>sv :RSview
+" map <Leader>su :RSunittest
+" map <Leader>sf :RSfunctionaltest
 
 " " no mapping by default
 " :Renvironment					|rails-:Renvironment|

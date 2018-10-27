@@ -21,6 +21,72 @@ export POW_TIMEOUT=300
 # export POW_WORKERS=3
 # powder (config/status|restart)
 
+alias dkpadi='  docker ps -a ; docker images';
+alias dkrm='    docker rm';
+alias dkrmi='   docker rmi';
+alias dkcm='    docker commit';
+alias dktg='    docker tag';
+alias dkhs='    docker history';
+alias dksch='   docker search  --no-trunc';
+alias dkisp='   docker inspect';
+alias dkcp='    docker cp';
+alias dkpl='    docker login;                     docker pull';
+alias dkrunit=' docker run -itd'; # -d = detached
+alias dkps='    docker push'
+alias dksv='    docker save > ' # *.tar name
+alias dkld='    docker load < ' # *.tar name
+alias dkh='     docker --help '
+alias dkv='     docker --version '
+
+# # image 削除
+#  # $ docker ps -a で消したいコンテナID/image_nameしらべて、docker コンテナ消して、それからイメージをけす；
+#  $ docker rm containter_id ; docker rmi image_name/image_id
+#  # ロールバックならば docker tag {image_prefix} で
+#  $ docker commit {container_name} {適当なcontainer名}
+#
+#  # リサイズや清掃；
+#    docker build --squash
+#      サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
+#    docker system prune: (new in 1.13):
+#      ---> deletes all stopped containers, all idle volumes
+#
+# # image 作成
+#  # docker tag {image_id} docker_user_name/repo_name
+#  docker tag cb65473b7a65 belltakami/alpine-ruby
+# # 履歴確認はIMAGE-NAMEで
+#  $ docker history {適当なimage名}
+#
+#  #docker hubの既存イメージ検索 (filterでイメージが自動構築されたかどうか、公式なのかしぼれる)
+#  $ docker search --no-trunc ruby  --filter stars=3 --filter "is-automated=true" # --filter "is-official=true"
+#  # 以下のコマンドは、コンテナtestvmを、一時停止無しでDockerイメージを作成してます。
+#  $ docker commit --pause=false {container_name} {image_name:tag}
+#  #作成したコンテナcontainerXをDockerイメージ「imageX:tag」で起動
+#  $ docker run -d --name {new_container_name} image_name:tag
+#  #設定情報をJSON形式で見る：Cmd が内部で実行されているデーモン情報
+#  $docker inspect container_name |less
+#
+#  docker exec -it コンテナ名 コマンド
+#  # なんらかのコマンドを外部から注入して実行する ex. rake db:migrate など
+#  docker run container_name rake db:migrate
+#  # なんらかのコマンドを内部に入って実行する
+#  docker exec -it container_name bash
+#  #TODO: コンテナ結合＆ポートフォワーディング指定でコンテナ作成 先ほど作ったイメージでtestappコンテナを作成し起動させます。
+#    $docker run -it --name testapp --link mysql:mysql -d -p 8080:80 myuser/centos:1.0
+#  #SCP: $ docker cp
+#    $docker cp ~/Desktop/test.txt testapp:test.txt
+#  # pull-> run it -> save & load -> push
+#  # imageをファイルで授受：docker save コマンドと docker load コマンドを使うと良い。
+#    $ docker search --no-trunc rails --filter stars=3 # "is-automated=true" "is-official=true"
+#    $ docker login
+#    $ docker pull frolvlad/alpine-ruby
+#    $ docker run -it frolvlad/alpine-ruby
+#    # ^p^qで抜ける、docker attach container_id_or_name で入る
+#    $ docker push belltakami/alpine-ruby
+#    $ docker save repository:tag  > example_save.tar
+#    $ docker load < example_save.tar
+
+
+
 
 #==== ~/.rvm/bin/rvm ==========================
 if [ -f ~/.atom ] ; then
@@ -133,10 +199,10 @@ alias cp='cp -p'
 #alias mv='mv -i'
 alias ll=' ls -al'
 alias lat='ls -halt'
-alias las='ls -alSr' 
+alias las='ls -alSr'
 alias rm='rm -r'
 alias kill9='        kill -9 '
-alias killallrails5='pkill -a thin; ' 
+alias killallrails5='pkill -a thin; '
 alias myps='ps -ef  |grep -niE "\b(memcached|unicorn|ant|redis|sidekiq|rails|ruby|thin|fsevent|spring)\b" | sort -k6'
 alias duck='du -ck' #kilobyte-totalを表示
 
@@ -146,7 +212,7 @@ alias vimve=' vim +VE '
 alias vimd='  vim -d '
 alias histail='history |tail -n 50'
 #line below have to be followed by url:443 like http://192.168.25.171:443/
-alias wgetssh=' wget -d --secure-protocol=SSLv3 --no-check-certificate --keep-session-cookies --save-cookies cookies.txt ' 
+alias wgetssh=' wget -d --secure-protocol=SSLv3 --no-check-certificate --keep-session-cookies --save-cookies cookies.txt '
 alias TODAY='echo `date '+%Y%m%d'`'
 alias xvf='for i in *.tar.gz; do tar zxvf $i -C ./ ; done'
 # 特定ファイルだけ展開： $ sudo tar zxvf 対象tarball.tgz full/path/to/the/specified/file/in/the/tarball
@@ -158,9 +224,9 @@ alias sortk='  sort     -k'
 alias sortn='  sort -n'
 alias sortnr=' sort -nr'
 alias sortnrk='sort -nr -k'
-alias duhls1wcl='du -h; ls -1 ./ | wc -l ' #count files in current dir: 
+alias duhls1wcl='du -h; ls -1 ./ | wc -l ' #count files in current dir:
 alias dusbh='    du -sbh  '                #count file size under some dir
-alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir: 
+alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir:
 
 alias ksen-f='echo "^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^"'
 alias ksen-b='echo "================================================================================="'
@@ -240,7 +306,7 @@ alias gst='      git status' #Gstatus
 alias gwr='      git add' #Gwrite
 alias gdi='      git diff' #gdif
 alias gbl='      git blame' #Gblame
-alias grm='      git rm' 
+alias grm='      git rm'
 alias gcfggettmturl=' git config --get remote.origin.url'
 
 
@@ -307,18 +373,18 @@ alias fixup='gicmm "tmp" ; gishsv;  girbihd HEAD~~ ; gilono ; gishpp; '
 
 alias hgst='      hg status'
 alias hgstfile='  hg status --rev '
-#hg status --rev -3: |grepe "(apple|yml|setting|const|system)" 
+#hg status --rev -3: |grepe "(apple|yml|setting|const|system)"
 #git変更コマンド
 alias gicma='     git commit --amend'
 #git 矛盾解消コマンド
 alias gicothr='      git checkout --theirs'
 alias gicoour='      git checkout --ours'
-alias girstmg='      git reset --merge' 
+alias girstmg='      git reset --merge'
 alias girsthdHD-n='  git reset --hard HEAD~' #nを追記 :自分のコミットをN回とりけした状態にロールバック
 alias girstsftHD@n='git reset --soft HEAD@' #commitとりけし {1}など
 alias girmc='        git rm --cached'        #stagingとりけし
-alias gicostsh0='    git checkout stash@{0}' 
-alias girstHD='      git reset HEAD -- ' 
+alias gicostsh0='    git checkout stash@{0}'
+alias girstHD='      git reset HEAD -- '
 alias gicostsh0lots='git checkout stash@{0} Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore ; git reset HEAD -- Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore;'
 
 #railsコマンド
@@ -378,7 +444,7 @@ alias list_apachemod='sudo apachectl -M |sort'
 umask 002
 
 #ヘッダーフレーム修正→rail4scaf→ (routes.rb)-> モデリングとdb:migrate→　aptanaでMVCそれぞれcompare with ひながたMVC
-  #@M 
+  #@M
   #class ****** #< ActiveRecord::Base
   #  include ActiveModel::Model
   #@CFG
@@ -397,37 +463,37 @@ umask 002
 
 
 
-#変数展開コマンド ####################################################### 
+#変数展開コマンド #######################################################
 # パターン  動作  典型的な使用例
 # ${変数#パターン}  文字列先頭の最短マッチ部分を削除  単に先頭の固定文字列を削除するとき使う
 # ${変数##パターン} 文字列先頭の最長マッチ部分を削除  ${HOGE##*/}でbasename
 # ${変数%パターン}  文字列末尾の最短マッチ部分を削除  ${HOGE%/*}でdirname。単に末尾の固定文字列を削除するときにも使う
 # ${変数%%パターン} 文字列末尾の最長マッチ部分を削除  あまり使わない
-# ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換  
+# ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換
 # ${変数//検索文字列/置換文字列}  全ての文字列を置換  ${HOGE//foo/bar}
 
 function tarziprorapp {
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* --exclude=node_modules $chomped1;lat;
-  #XXX --exclude node_modules 
+  #XXX --exclude node_modules
 }
 
 function tarziprorgitonly {
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   tar zcvf $chomped1-git-`date '+%Y%m%d'`.tar.gz  $chomped1/.git;  lat;
-  #XXX --exclude node_modules 
+  #XXX --exclude node_modules
 }
 
 
 function killmyps {
-  # myps検索pid以外をgrepしてkill 
+  # myps検索pid以外をgrepしてkill
   kill -9 `myps | grep -v grep | ruby -ane 'p $F[1].to_i'`
 }
 function chomR {
   sudo chown -R $1 $3 ;  sudo chmod -R $2 $3
 }
 function nocomments {
-  # grep結果から-vでコメントや空行を除外 
+  # grep結果から-vでコメントや空行を除外
   grep -vE '\\s*\\#+.*(byebug|debugger)' | grep -v '^$'
 }
 
@@ -466,12 +532,12 @@ function atom_backup {
   cdd; gwr $target/ ; gst; lat  SI/$target/
   cd -
 }
-alias atom_restore='apm install --packages-file ~/.dotfiles/ATOM/packages.txt'
+alias atom_restore='apm install --packages-file ~/SI/ATOM/packages.txt'
 
 function openatomfromvimsession {
   local outfile=openatomfromvimsession.sh
   grep -E "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
-  vim $outfile; sh $outfile; rm  $outfile; lat; 
+  vim $outfile; sh $outfile; rm  $outfile; lat;
 }
 
 
