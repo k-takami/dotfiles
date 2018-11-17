@@ -21,9 +21,15 @@ export POW_TIMEOUT=300
 # export POW_WORKERS=3
 # powder (config/status|restart)
 
-alias dkpadi='  docker ps -a ; docker images';
+alias dkpadi='  docker ps -a ; docker images;  docker volume ls';
+#  # リサイズや清掃；
+#    docker build --squash
+#      サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
+alias dkprunesys='docker system prune'
+alias dkpruneimg='docker images prune'
 alias dkrm='    docker rm';
 alias dkrmi='   docker rmi';
+alias dkrmv='   docker volume rm';
 alias dkcm='    docker commit';
 alias dktg='    docker tag';
 alias dkhs='    docker history';
@@ -33,10 +39,26 @@ alias dkcp='    docker cp';
 alias dkpl='    docker login;                     docker pull';
 alias dkrunit=' docker run -itd'; # -d = detached
 alias dkps='    docker push'
-alias dksv='    docker save > ' # *.tar name
+#TODO  docker save 771594bd57aa > ../kikan1031.tar みたいに$1$2必要
+alias dksv='    docker save ' # image_name > ../*.tar name
 alias dkld='    docker load < ' # *.tar name
 alias dkh='     docker --help '
 alias dkv='     docker --version '
+# XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定すること
+function dkc_rdbseed {
+  docker-compose run app bin/rake db:migrate db:seed
+  echo "###NOTE: DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
+  echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
+}
+function dkc_rdbmreset {
+  docker-compose run app bin/rake db:migrate:reset db:seed;
+  echo "###NOTE: DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
+  echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
+}
+function dkc_rdbinit {
+  local options=${2:-web} ;
+  docker-compose run app bin/rake db:create db:migrate db:seed;
+}
 
 # # image 削除
 #  # $ docker ps -a で消したいコンテナID/image_nameしらべて、docker コンテナ消して、それからイメージをけす；
@@ -44,11 +66,6 @@ alias dkv='     docker --version '
 #  # ロールバックならば docker tag {image_prefix} で
 #  $ docker commit {container_name} {適当なcontainer名}
 #
-#  # リサイズや清掃；
-#    docker build --squash
-#      サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
-#    docker system prune: (new in 1.13):
-#      ---> deletes all stopped containers, all idle volumes
 #
 # # image 作成
 #  # docker tag {image_id} docker_user_name/repo_name
@@ -250,7 +267,7 @@ alias REM=' : <<"REM"' #REMで終端すること
 #  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
 #    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
 
-alias cdd=' cd ~/.dotfiles'
+alias cdd=' cd ~/dotfiles'
 alias nrnd=' --no-ri --no-rdoc '
 alias no_spec=' echo "--exclude=*spec* "'
 function includerb { echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
@@ -258,8 +275,8 @@ function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --excl
 function appfilesonly { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log "; }
 function greprc {
   local options=${@:2} ;
-  grep -niE --include=*rc $1 ~/.dotfiles/*                      $options;
-  grep -niE               $1 ~/.dotfiles/SI/pj-dependent.bashrc $options;
+  grep -niE --include=*rc $1 ~/dotfiles/*                      $options;
+  grep -niE               $1 ~/dotfiles/SI/pj-dependent.bashrc $options;
 }
 
 function greprcrbonly { greprc `includerb` `nogabage` $@ ; }
@@ -267,12 +284,12 @@ function greprcrbonly { greprc `includerb` `nogabage` $@ ; }
 function grepdf {
   # ex) greprc serchword -C1 `includerb` `nogabage`
   local options=${@:2} ;
-  grep -niE  $1 ~/.dotfiles/* --include=*rc $options;
-  grep -nirE $1 ~/.dotfiles/SI              $options;
-  grep -nirE $1 ~/.dotfiles/SCRIPTS         $options;
-  grep -nirE $1 ~/.dotfiles/CHEATSHEETS     $options;
-  grep -nirE $1 ~/.dotfiles/vim/snippets    $options;
-  # echo "grep -nirE $1 ~/.dotfiles/vim/snippets  $options ### ";
+  grep -niE  $1 ~/dotfiles/* --include=*rc $options;
+  grep -nirE $1 ~/dotfiles/SI              $options;
+  grep -nirE $1 ~/dotfiles/SCRIPTS         $options;
+  grep -nirE $1 ~/dotfiles/CHEATSHEETS     $options;
+  grep -nirE $1 ~/dotfiles/vim/snippets    $options;
+  # echo "grep -nirE $1 ~/dotfiles/vim/snippets  $options ### ";
 }
 
 function greprails {
@@ -282,6 +299,7 @@ local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 
 
 # $1検索語　$2場所 regrep の$2がなければ、./*で補完
 # alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
+function grepe    {                             grep     -niE   $@          ; }
 function greper   {                             grep     -nirE  $@          ; }
 function greperrb {                             grep     -nirE  `includerb` `nogabage` $@ ; }
 function regrep   {     local options=${2:-*} ; grep     -nirE  $1 $options ; }
@@ -293,9 +311,9 @@ function regrepc1 {     local options=${2:-*} ; grep -C1 -niE   $1 $options ; }
 function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
 function regrepc1-r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
 function regrepc3-r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
-alias vimclean='rm ~/*.sw* ; cd ~/.dotfiles ; git status ; cd - ;'
-alias ror_snip_list='sh ~/.dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
-alias ror_lns_gitignore='ln -s ~/.dotfiles/gitignore .gitignore'
+alias vimclean='rm ~/*.sw* ; cd ~/dotfiles ; git status ; cd - ;'
+alias ror_snip_list='sh ~/dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
+alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
 
 alias grepvcode='   find . |grep -viE "\.(svc|git|hg)" | grep'
 alias grepvr='   grep -viE "(\..?sv|\.yml|\..?css|\.js.+|\.erb|\.NEW|\.OLD|\.BAK|\/db\/migrate|development.rb|schema.rb)" | grep'
@@ -333,7 +351,11 @@ alias hgdi='      hg diff -c'
 alias gdic='     git diff --cached'
 alias gdiclas='  gdic --name-only |xargs ls -alSr'
 alias gdilas='   gdi  --name-only |xargs ls -alSr'
-alias gdicnp='   git diff --cached --no-prefix'
+# patch作成用  gitの場合は--no-prefixは内部的に自動付与らしい
+alias gdicnp='     git diff --cached --no-prefix'
+alias URDPDgdicnp='git diff --cached --no-prefix > ~/Downloads/patch.diff'
+alias URDPDpatchp='patchp ~/Downloads/patch.diff'
+
 alias gdinp='    git diff          --no-prefix'
 alias gdino='    gdi --name-only'
 alias diffbbq='   diff -rwBbq '
@@ -341,6 +363,8 @@ alias diffbbq='   diff -rwBbq '
 alias hgbl='      hg blame -lund'
 # cf: https://www.wikivs.com/wiki/Git_vs_Mercurial:w
 alias gplo='      git pull origin'
+alias gclone='    git clone'
+alias gcloneb='   git clone -b ' # ブランチ名 https://リポジトリのアドレス
 alias gpso='      git push origin'
 alias gpsdelo=' git push --delete origin' #[branch-name] to delete
 alias gisw='      git show'
@@ -412,8 +436,8 @@ alias gemqueryremote="     gem query -ran "
 #rubocop
 alias rbc='         ds1 rubocop'
 alias rbca='        ds1 rubocop -a'
-# alias rbc18='       rubocop -c ~/.dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8'
-# alias rbca18='      rubocop -c ~/.dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8 -a'
+# alias rbc18='       rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8'
+# alias rbca18='      rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8 -a'
 alias rbp='         rails_best_practices'
 export REGEXP_RBC_IGNORE="(app\/views|wrapper|\.js|\.coffee|\..?css|\.yml|schema.rb|structure.sql|Gemfile|.gitignore)"
 alias rbwcstaged='  gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 ruby -wc'
@@ -436,8 +460,10 @@ alias mytig='   tig     --committer=k_takami'
 alias mytigbug='tig     --committer=k_takami --grep=正 --grep=bug.fix '
 alias tigbug='  tig                          --grep=正 --grep=bug.fix '
 
+#OSS DBMS
+alias dbimportmysql='mysql -u root -h localhost < '
+alias dbloginpsql='psql -U postgres'
 
-alias mysqldbimport='mysql -u root -h localhost < '
 #apache
 alias list_apachemod='sudo apachectl -M |sort'
 
@@ -484,6 +510,13 @@ function tarziprorgitonly {
   #XXX --exclude node_modules
 }
 
+function tarzipdotfiles {
+  cdd;  mv SI ../; mv vim ../ ; mv SI.tar.zip ../ ;
+  # OSX/BSD can use --exclude-vcs option below;
+  tar zcvf ../dotfiles-`date '+%Y%m%d'`.tar.gz ./*  --exclude-vcs ;
+  mv ../SI ./ ; mv ../vim . ; mv ../SI.tar.zip ./ ;
+  lat ..; lat ; gst;
+}
 
 function killmyps {
   # myps検索pid以外をgrepしてkill
@@ -498,7 +531,7 @@ function nocomments {
 }
 
 function grepsnippets {
-  grep -nirE $1 ~/.dotfiles/vim/snippets $2;
+  grep -nirE $1 ~/dotfiles/vim/snippets $2;
 }
 function grepremotegems {
  echo 'gem list ***GEMNAME*** --remote --all';
@@ -532,7 +565,7 @@ function atom_backup {
   cdd; gwr $target/ ; gst; lat  SI/$target/
   cd -
 }
-alias atom_restore='apm install --packages-file ~/SI/ATOM/packages.txt'
+alias atom_restore='apm install --packages-file ~/dotfiles/SI/ATOM/packages.txt; cp ~/dotfiles/SI/ATOM/keymap.cson ~/.atom/'
 
 function openatomfromvimsession {
   local outfile=openatomfromvimsession.sh
@@ -545,4 +578,4 @@ function openatomfromvimsession {
 alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生成画面で表示されるbase32の文字をスペースなしで引数として入力 %s/ //  #<  sudo apt-get install oathtool
 
 # ==== PJ-dependent unixコマンド ==========================
-source ~/.dotfiles/SI/pj-dependent.bashrc
+source ~/dotfiles/SI/pj-dependent.bashrc

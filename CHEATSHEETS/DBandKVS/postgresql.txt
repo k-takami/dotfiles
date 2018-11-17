@@ -22,7 +22,7 @@
 					パス指定しないとエラー Can't find the 'libpq-fe.h header
 					sudo yum -y install ruby-devel
 					gem  install pg -- --with-pg-dir=/usr/pgsql/
-						
+
 			#peer認証:既定のpeer認証では、ユーザ名がUnixのユーザ名と一致していないとエラーになります。
 			sudo /etc/init.d/postgresql stop
 				REHL: vim /var/lib/pgsql/9.2/data/pg_hba.conf
@@ -30,12 +30,12 @@
 					--> peer を　passwordに
 						81 # local   all             all                                     peer
 						82 local   all             all                                  password
-			sudo /etc/init.d/postgresql start　 
+			sudo /etc/init.d/postgresql start　
 		　#connect t DB
 			psql redmine_pg_dev -U root
 			#db creation
 				CREATE DATABASE tkt_redmine_development;
-				\l: 
+				\l:
 			#user creation
 				createuser root;
 				SELECT * FROM pg_shadow;
@@ -43,11 +43,11 @@
 				alter user postgres with password 'root';
 		　　su - postgres
 			sudo /etc/init.d/postgresql stop
-			psql redmine_pg_dev -U postgres 
+			psql redmine_pg_dev -U postgres
 			alter user root with password '';
 			sudo /etc/init.d/postgresql start
 			select * from schema_migrations ;
-				\d issues_addtion_datat 
+				\d issues_addtion_datat
 			ALTER evacuation_advisories rename type to advisory_type;
 			root@localhost:/opt/fix/LGDIS# psql --version
 			psql (PostgreSQL) 9.2.1
@@ -57,19 +57,6 @@
 				alter table hoge alter COLUMN hoge_column TYPE varchar(10)
 			alter table issues add  mail_subject varchar(15)
 **PostgreSQLの基本的(よく使う)コマンド**
-	ref: http://qiita.com/Shitimi_613/items/bcd6a7f4134e6a8f0621
-	\c dbname               db 接続
-	\l　　　　　　　　　　　データベースの一覧
-	\d+　　　　　　　　　 　テーブル一覧
-	\d+ テーブル名|シークエンス名　　　テーブル|シークエンスの項目(フィールド)確認
-		cf: mysql の show full columns [table_name]
-	\i sqlファイル名　 　SQL(スクリプト)ファイルの実行
-	\s                     コマンド履歴表示  
-	\q　 　　　　　　　　　psqll切断 
-	\x                     検索結果タテ表示　トグルで表示切り替え
-		cf: mysql はSQL文末に \G;
-			mysql の show full columns [table_name]
-		
 	CREATE ROLE catalog WITH SUPERUSER LOGIN;
 	(role変更はALTER ROLE catalog WITH SUPERUSER LOGIN ;)
 RRRoR #postgres2mysql
@@ -102,8 +89,3 @@ $ greper "(_index|CREATE INDEX|bytea|binary|ALTER)" db/migrate/ |grep -vE "add|r
     # create_table :owner_coin_histories, { id: :bigserial } do |t|
     create_table :owner_coin_histories, id: false do |t|
       t.column   :id, "BIGINT PRIMARY KEY AUTO_INCREMENT"
-
-
-
-
-

@@ -9,7 +9,7 @@
     # view設定
     config.action_view.cache_template_loading = false
     config.reload_classes_only_on_change = true #毎回リロード　trueならば変更検出時にリロードconfig.cache_classesが「true」の場合は、無視される。
-    config.active_record.migration_error = :page_load
+    config.active_record.migration_error = false#:page_load
     config.serve_static_assets = true #<---#rails3~4 画像無効化だがunicorn/nginxとのくみあわせではサーバー付加へらすために明示false
     config.action_controller.perform_caching = false #rails4-5 's defaults
     config.assets.digest = false #digest-hash-appending
@@ -71,6 +71,3 @@
       Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
       end
 =end
-
-
-

@@ -13,14 +13,13 @@ C:
     redirect_to :back
 
 
-
 seeds.rb
 	seeds/rb3 (=basic)
 	Role.connection.execute("TRUNCATE TABLE roles;")
 Role.create([
   {id: 1, role_name: 'admin', created_user_id: 1, created_ip_address: GarnetConsts.operation_ip_address, updated_ip_address: GarnetConsts.operation_ip_address, created_program_id: 'garnet_ope', updated_user_id: 1, updated_program_id: 'garnet_ope'},
 	seeds.rb
-		require 'yaml' 
+		require 'yaml'
 		require 'rake'
 		def qa?
 			Rails.env.production? && ENV['DENA_INTERNAL_DOMAIN'] == 'qa.kenko-pf.local'
@@ -30,7 +29,7 @@ Role.create([
 		%w(Category MedCode Disorder Relationship Gift).each do |c|
 			c.constantize.delete_all
 			c.constantize.create(YAML.load_file "#{Settings.fixture.dir}/#{c.tableize}.yml")
-		end     
+		end
 		Rake::Task['update:standard_exam'].execute
 		env = qa? ? 'qa' : Rails.env
 		# XXX: 環境に関係ない初期化
@@ -69,43 +68,6 @@ end
 			common_mappings.rb'
 			# frozen_string_literal: true
 # require 'yaml'
-require 'csv'
-
-import_limit = 3000
-fixture_dir = "#{Rails.root}/scripts/mapping_master"
-
-param = {
-  extention: 'csv', headers: true, encoding: 'Shift_JIS:UTF-8',
-  col_sep: ',', row_sep: :auto
-}
-# param = {extention: 'tsv', headers: true, encoding: 'utf-8', col_sep: "\t"}
-
-Dir.entries(fixture_dir).select { |f| /^\w+\.#{param[:extention]}$/ === f }.reject { |f| f =~ /\Apasscode/ }.each do |file|
-  records = []
-  model = File.basename(file, ".#{param[:extention]}").classify.constantize
-  model.reset_column_information
-  sv_file = CSV.read(
-    "#{fixture_dir}/#{file}",
-    headers: param[:headers], col_sep: param[:col_sep],
-    row_sep: param[:row_sep], encoding: param[:encoding]
-  )
-  sv_file.each do |row|
-    obj = model.new(
-      row.to_hash.each_with_object({}) do |(k, v), stash|
-        stash[k] = v.is_a?(String) ? v.gsub(/\\n/, "\n") : v
-      end
-    )
-    # obj.expired_on = Rails.application.current.to_date if obj.is_a?(Member) && obj.expired?
-    records << obj
-
-    if records.size >= import_limit
-      model.import(records)
-      records = []
-    end
-  end
-
-  model.import(records) if records.present?
-end
 
 
 vendor/bundleのrequure
@@ -121,81 +83,39 @@ require "activerecord-import/base"
 		target_records.each do |rec| rec.instance_variable_set(:@email, "dena.co.jp") end
 			rows.map { |row| row.instance_values.values }
 		target_records.each do |rec| rec.instance_variable_get(:@email, "dena.co.jp") end
-		
-		
+
+
+
+時間計算
+	３時間ごと：work_hour_per_three = (9..24).to_a.collect { |x| ["#{x}:00"] if x % 3 == 0 }.compact.flatten
+コンバーターパターン
+
+
 		class_variable_
-	CSV
+CSV
 		よみこみread 最小パターン
 		        @outfile = Dir.glob(@bill_gpg_path+'*.csv').first
         sv_file = CSV.read(
           @outfile , headers: false, encoding: 'UTF-8:UTF-8', col_sep: ',', row_sep: :auto
         )
 		バッチ
-		require 'csv'
-# Beryl同様のSQL bulk insertをしたければBeryl同様以下のgemを活用されたし；
-# gem_path = `gem env`.match(/INSTALLATION DIRECTORY.+\n/).to_s.chomp.sub(/^.+: /,'')
-# $LOAD_PATH.unshift("#{gem_path}/gems/activerecord-import-0.16.2/lib")
-# require "activerecord-import/base"
 
-# Beryl同様のSQL bulk insertをしたければBeryl同様以下のブロックの各所をcomment in
-class ConvertZokugaraCode < ApplicationBatch
-
-  def self.run
-    # import_limit = 3000
-    fixture_dir = "#{Rails.root}/scripts/mapping_master"
-
-    param = {
-      extention: 'csv', headers: true, encoding: 'Shift_JIS:UTF-8',
-      col_sep: ',', row_sep: :auto
-    }
-    # param = {extention: 'tsv', headers: true, encoding: 'utf-8', col_sep: "\t"}
-
-    Dir.entries(fixture_dir).select { |f| /^\w+\.#{param[:extention]}$/ === f }.reject { |f| f =~ /\Apasscode/ }.each do |file|
-      # records = []
-      model = File.basename(file, ".#{param[:extention]}").classify.constantize
-      model.reset_column_information
-      sv_file = CSV.read(
-        "#{fixture_dir}/#{file}",
-        headers: param[:headers], col_sep: param[:col_sep],
-        row_sep: param[:row_sep], encoding: param[:encoding]
+  def create_kohai_csv_file
+    dravite_client_directory.create_file(
+      :hokensha,
+      'MEMBER-20151231000000.csv',
+      StringIO.new(
+        <<-DEFAULT_MEMBER_CSV.gsub(/^\s+/, '')
+        local_kumiai_code,hokensha_bango,hokensha_name
+        111,1234567,テストBB002健康保険組合
+        DEFAULT_MEMBER_CSV
       )
-      sv_file.each do |row|
-        obj = model.new(
-          row.to_hash.each_with_object({}) do |(k, v), stash|
-            stash[k] = v.is_a?(String) ? v.gsub(/\\n/, "\n") : v
-          end
-        )
-        # obj.expired_on = Rails.application.current.to_date if obj.is_a?(Member) && obj.expired?
-        obj.save
-
-        # records << obj
-        # if records.size >= import_limit
-          # model.import(records)
-          # records = []
-        # end
-      end
-      # model.import(records) if records.present?
-    end
+    )
   end
 
-  # def self.initialize
-    # # super
-    # # logger.info I18n.t('batch.info.create_kencom_file.start', {file_type: FILE_TYPE})
-  # end
 
-  # def self.finalize
-    # # super
-  # end
 
-end
 
-		FileUtils
-			FileUtils.cp(Dir.glob('spec/fixtures/files/bill/kmF/csv/*.csv'), "spec/fixtures/files/for_kencom_files/vendor/V3/csv")
-		
-
-時間計算
-	３時間ごと：work_hour_per_three = (9..24).to_a.collect { |x| ["#{x}:00"] if x % 3 == 0 }.compact.flatten
-コンバーターパターン
 	main
 	  def self.convert_to_kencom_if_file(kenpo, in_csv, statuses)
     writers = {}
@@ -209,7 +129,7 @@ end
         CSV.new(f).each do |in_csv_row|
           processed_count += 1
           processing_row += 1
-          csv_columns = self::KENCOM_CSV_COLUMNS.zip(self::KENCOM_COLUMNS_OPTIONS, in_csv_row)
+          csv_columns = self::MY_CSV_COLUMNS.zip(self::MY_COLUMNS_OPTIONS, in_csv_row)
           out_columns = create_out_csv_hash(csv_columns, kenpo['kumiai_code'])
           next if skip?(kenpo, out_columns, in_csv, processing_row)
           out_csv_row = create_out_csv_row(out_columns)
@@ -282,7 +202,7 @@ end
       render :wallet_coin
     end
 
-	
+
 	V基本
 	    - reflesh_wallet_coin if @wallet_coin_balance.errors.messages.present?
 
@@ -326,6 +246,3 @@ end
       @wallet_coin_balance = @account.wallet_coin_balances.find(params[:wallet_coin_balance_id])
       @wallet_coin_balance.errors.messages.merge!(error_messages)
     end
-イテレーション
-	基本：10.times { p "#"} ;            1.upto(10) {|i| p i}
-	区切ってインデックス付き：arr.each_slice(2).with_index { |(a, b), i| puts "#{i} - #{a}, #{b}" }

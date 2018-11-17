@@ -75,6 +75,14 @@ task :install do
   end
   #OSX 10.13はcurlだけ標準添付,alpine-linuxはwgetだけ標準添付
   system 'curl "https://drive.google.com/uc?export=download&id=1r6RDufI3w9SMWJc93qw-EmtZwkTnzdY4" -o SI.tar.zip -L'
+  # TODO: xcode-select docker & kinematic & raspell 自動化
+  # xcode-select --install
+  # atom_restore
+  # cd ~/Downloads/src
+  # system ' curl "https://drive.google.com/uc?export=download&id=1tkI_Ff1QHUfilbkuZ21tOxBZFnCJk5j4" -o DockerCE_18.06osx-EDGE.dmg -L'
+  # system curl "https://drive.google.com/uc?export=download&id=1iXTIJXfyFu63qKy6zGFyfqT4e4Qhs2MJa" -o Kitematic (Beta).app.zip -L'
+  # Google Chrome
+  # https://drive.google.com/open?id=0B6o6bFqaG4IHYV9vZU8xalJrbXM
   system "source ~/.bashrc;"
   puts "#############\n vim を起動して :NeoBundleInstall を実行してください \n #############\n"
 end
@@ -202,5 +210,3 @@ end
   git push https://k-takami@github.com/k-takami/dotfiles master
   wget https://drive.google.com/open?id=1Uz72XWoXXzm6BSPqmrkBW51jY1pM1Qaa
 =end
-
-

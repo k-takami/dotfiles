@@ -1,5 +1,5 @@
 ruby インストール compile installation
-  # wget https://www.ruby-lang.org/ja/downloads/ 
+  # wget https://www.ruby-lang.org/ja/downloads/
   $ tar zxvf ruby-1.9.3-p194.tar.gz
   $ cd ruby-1.9.3-p194
   $ ./configure
@@ -290,7 +290,7 @@ gem
       * 025 文字列の長さを得る 45
         バイト数は.length, 文字数は .split(//).size
 *h 026 文字列を検索する 46
-        出現bバイト位置は、.index(正規表現または文字列) , .rindex(正規表現または文字列) 
+        出現bバイト位置は、.index(正規表現または文字列) , .rindex(正規表現または文字列)
         str1.grep(/RE/){line| line-statement }
       * 027 正規表現が文字列の先頭・末尾にマッチするか調べる 49
         start_with?(string) <=> end_with?(string)
@@ -395,10 +395,10 @@ gem
         str1 << str2 << str3
         str1.concat "apend-str";
       * 061 文字列の一部を破壊的に削除する 102
-        str1.delete "けしたい文字列" 
+        str1.delete "けしたい文字列"
         str1[from, to] = ""
       * 062 文字列の途中に破壊的に文字列を挿入する 104
-        str1.sub(/^.{index}/){|s| s + "挿入文字列" } 
+        str1.sub(/^.{index}/){|s| s + "挿入文字列" }
       *  063 文字と文字コードを相互変換する 106
         "文字列".unpack("C*")
         # "C*"は符号なし8ビット整数。逆変換はpack
@@ -435,6 +435,9 @@ gem
       * 077 「,」で区切られたデータ（CSV）を処理する 128
         require 'csv' ; CSV.parse(   filename, delimiter_string){|line | p line.to_a } #<---readming
         require 'csv' ; CSV.generate(filename, delimiter_string){|lines| lines << some_array } #<---writing
+        変換into Hash
+           from CSV::Row   : row.to_hash.each{|k,v|puts  k ; puts v }
+
 *h 078 XMLを解析する 130
         (1)  require 'rexml/document';require'iconv'
         (2)  require 'hpricot'
@@ -449,6 +452,7 @@ gem
         #
         #cwoutputinput
         require 'yaml'; YAML.dump(hash)  #<--- ruby 18.8.xではデフォルト値つきのハッシュは出力できない
+
 *h 080 HTMLを処理する 136
         require 'uri'; URI.extract(raw_html)  #<---url文字列だけ配列で取得
 *h 081 単語を補完する 139
@@ -656,10 +660,10 @@ gem
         File.owned?(path) #<--- in case of windows, available on NTFS only
         File.grpowned?(path)
       * 139 ファイルの存在を調べる/種類を判定する 214
-        File.exist?(path) # boolean
         File.size?(path)  # nil in case of 0 === File.zero?
         File.file?(path) # boolean
         File.directory?(path) # boolean
+        File.exist?(path) # boolean 先述 .file? directory?は存在しなければfalseになる
         File.symlink?(path) # boolean
         File.socket?(path) # boolean
         File.pipe?(path) # boolean
@@ -669,10 +673,10 @@ gem
 *h 140 ファイルの属性を取得する 216
         File.stat(path).(dev|ino|mode|nlink|uid|gid|rdev|rdev_major|rdev_minor|size|blksize|blocks|atime|ntime|ctime)
       * 141 ファイルの属性を変更する 218
-        File.utaime(Time型アクセス時刻, Time型変更時刻, path1, path2 ...) 
+        File.utaime(Time型アクセス時刻, Time型変更時刻, path1, path2 ...)
         require 'fileutils'; FileUtils.chmod(0644, [file1, file2 ...])
         require 'etc';Etc.getpwnam(uid).uid,  File.chown(Etc.getpwnam(uid).gid, file1, file2, ...)
-        # Etc.getgrpnam(gid)はgid--->uid変換; 
+        # Etc.getgrpnam(gid)はgid--->uid変換;
       * 142 リンクを作成する 220
         File.symlink(target_path, sym_link_path)
         File.link(target_path, hard_link_path)
@@ -698,7 +702,7 @@ gem
           puts "\n ISOファイル一覧は以下のとおり----------------------"
           puts `ls -alt ./*iso `
         end
-        # OR, require 'find' 
+        # OR, require 'find'
       * 147 ディレクトリを削除する 227
         require 'fileutils'; FileUtils.rm_r([file1, file2 ...])
         require 'fileutils'; FileUtils.rm_r(Dir.glob "pattern*")
@@ -773,7 +777,7 @@ gem
         File.open("filename", "[rwa]+?b"){|f| f.binmode;f.write(str)}
 *a 165 固定長レコードを処理する 257
       * 166 ファイルのサイズを切り詰める 259
-        File.trancate(bytesize) 
+        File.trancate(bytesize)
 *h 167 ファイルの先頭のn行を削除する 260 ---> n行以降をtmpfileにwriteしてrename-swap
 *h 168 ファイルの末尾のn行を削除する 261
 *h 169 標準入出力をファイルにつなぎ換える 263
@@ -787,7 +791,7 @@ gem
 
     第6章 数値
 *h 172 数値をフォーマットする 270
-          
+
       * 173 ビット演算を行う 273
         ビット表現は 0b11111111 みたく0bプレフィクス
         b = 0b11110000 b2= 0b******** のとき、
@@ -821,7 +825,7 @@ gem
         Complex(3.0,4.0).abs #=> 5.0
       * 180 割り算の余りを求める 280
         %または　数.divmod(数)[1]
-        10 % -3.5 #=> -0.5 
+        10 % -3.5 #=> -0.5
         10.remainder -3.5 #=> 3 レシーバーの符号にあわせて計算
         有理数：require'rational' #<---ruby 1.8
         10.quo(3) #=>[10,3] quotient
@@ -964,7 +968,7 @@ gem
         WIN:  $ set RUBYLIB=***;***;***
         irb> $LOAD_PATH  #<--- = $:
         irb> $"  #<--- = loaded libralies
-         
+
       *h 211 Rubyスクリプトをデバッグする 327
            ruby -r debug some_path.rb
            b fullpath.rb:linenumber #<--- break
@@ -999,14 +1003,14 @@ gem
 
       * 214 Windowsレジストリにアクセスする 337
         require 'win32/registry'
-        Win32::Registry::HKEY_CURRENT_USER.open('some\parent\of\key', Win32::Registry::KEY_WRITE){|reg| 
+        Win32::Registry::HKEY_CURRENT_USER.open('some\parent\of\key', Win32::Registry::KEY_WRITE){|reg|
           reg['key'] = some_value
         end
         #上の Win32::Registry::KEY_WRITEをはぶくと、取得モードになる
     * 215 システムのライブラリ関数を呼ぶ 339
         WIN: require 'Win32API'; Win32API.new(i'user32', 'MessageBoxA', %w(P P P I), "I").call('0', 'message', 'caption', 0)
         # P=pointer, I=integer, V=void above
-        UNIX: require 'dl'; 'dl/import'; 
+        UNIX: require 'dl'; 'dl/import';
         #例）
         module Xlib
           extend Dl::Importable
@@ -1020,7 +1024,7 @@ gem
     　`cygpath -w #{path_before_conversion}`
   第9章 プロセスとプロセス間通信
     * 216 スクリプトを一時的に停止する 344
-      sleep(n.n秒) 
+      sleep(n.n秒)
       sleep #<---永久停止
     * 217 スクリプトの処理時間を計測する / ベンチマーク 345
       #ruby > 1.8
@@ -1047,7 +1051,7 @@ gem
       open("| command", "w" ){|f| f.puts }   :STDINすこしづづ処理
         #open("| command") {|msg| msg.gets } #list = open('|ls /home/hogehoge/') {|msg| msg.gets}
         #注意しなくてはいけないのがopenする際に、ブロックを与えないとバックグラウンドで実行したプロセスへのpipeがクローズされないまま、ゾンビになってしまうのです。
-        
+
     * 219 プロセスをフォークする 349
       child_pid = fork{ exec('usr/bin/ruby') }
       exit_pid, status = *Process.waitpid2(child_pid) #ruby 1.6 では status >> 8 すると終了コードを取得でる
@@ -1064,7 +1068,7 @@ gem
       require 'socket'; TCPSocket.open('localhost', 80){|f| f.print 'GET / HTTP/1.0\r\n\r\n'
         print f.read
       }
-      
+
 *h 226 TCPサーバを作る 358
     * 227 HTTPクライアントを作る 361 (NOTE: Windows版ではIOとスレッドの併用でフリーズするらしい)
       require 'net/http'
@@ -1206,7 +1210,7 @@ gem
     * 261 互換性を保ったまま引数の個数を変える 419
           def some_method(*args)
             case args.length
-            when 
+            when
             else
               rais ArgumentError, "some_message"
             end
@@ -1220,7 +1224,7 @@ gem
           #ruby内部ではクラス名は一種の定数
     * 264 互換性を保ったままライブラリ名を変える 423
           warn "obsoleted because its now ruby 1.8 later"
-          #ruby1.6 :  warn == $stderr.puts 
+          #ruby1.6 :  warn == $stderr.puts
     * 265 新しいRubyのメソッドを古いRubyでも使う 424
       (1) polyfill RAA ライブラリーshimi-ruby16_18をつかう
           作者 武者晶紀 Akinori Musha
@@ -1281,9 +1285,9 @@ gem
         </entry>
       ENDOFHEARDOC
       .from_xml(xml)
-    
+
     時間
-      .yesterday, .tomorrow, .ago, .since, .last_***, .gininning_of_***, , .local, 
+      .yesterday, .tomorrow, .ago, .since, .last_***, .gininning_of_***, , .local,
       *rails 1.2互換にするときは。.to_time <=> to_datetime
 
     JSON
@@ -1291,11 +1295,11 @@ gem
       hash変換: JSON.decode(***)
 
     Proc
-      &:*** = Proc.new{|x| x.***} 		
+      &:*** = Proc.new{|x| x.***}
       .to_proc.call(***) = Proc.new{|x| x.send(***)
 
     Array
-      .rand, .split, .split{x| 分割条件式}, .in_groups_of(要素分割単位数), 
+      .rand, .split, .split{x| 分割条件式}, .in_groups_of(要素分割単位数),
 
     Enumerable
       .index_by(&:***), .group_by(&:***), .sum(&:***)
@@ -1305,7 +1309,7 @@ gem
     Hash
     取得    ：  hash_a.slice( keys )
     除外取得：  hash_a.except( keys )
-    差分取得：  hash_a.diff{hash_b}, 
+    差分取得：  hash_a.diff{hash_b},
 
     単数複数 ActiveSupport::CoreExtentions::String::Inflections
       str1.pluralize  <---> strs1.singularize
@@ -1354,19 +1358,17 @@ users[rand(users.size)]
  users.sample
  each_with_object: ループを回しつつ、別のオブジェクトを組み立ててそれを返す　似select(&:***).map(&:***)
  def admin_names(users)
- ret = []
- users.each do |user|
-
- ret << user.name if user.admin?
- end
- ret
+   ret = []
+   users.each do |user|
+     ret << user.name if user.admin?
+   end
+   ret
  end
  ↓
  def admin_names(users)
- users.each_with_object([]) do |user, names|
-
- names << user.name if user.admin?
- end
+   users.each_with_object([]) do |user, names|
+     names << user.name if user.admin?
+   end
  end
  with_indexはカウンタの初期値を指定できます。（デフォルトはゼロ）
  users_with_index = users.map.with_index(1) do |user, counter|
@@ -1400,81 +1402,79 @@ end
 :build_requester
 
  新しいメソッドは xxx_with_xxx という名前で定義する必要がある。
-  
-正規表現にマッチしているときだけ 切り取ってキーにしてハッシュ代入　：　@generated_job_info_links[uid] = str if (uid = str.match(/uid=\w+/).to_s[4..-1])  
-Rubyではfalseとnilがfalse、それ以外の値がすべてtrueと評価されます。  
-シンボルを使うと以下のようなメリットがあります。  
-  
-{ key: value } のように簡潔なリテラルで書ける。  
-  
-文字列よりも速い。  
-  
-文字列よりもメモリの使用効率が良い。  
-参考： Why use symbols as hash keys in Ruby? - Stack Overflow  
-基本的に配列だが、nilが渡される場合もある変数を処理する場合、Array()（Kernel#Array）castを使うと条件分岐を無くせます。  
-if users  
- users.each{|user| send_direct_mail(user) }  
-end  
-↓  
-Array(users).each{|user| send_direct_mail(user) }  
-最初の見つかった要素のインデックスを返す場合はfind_index。  
-users.count(&:admin?) #条件に合う要素の数を返す  
-flat_map: mapの結果をネストしないフラットな配列として受け取る  
-[[1, 2, 3], [4, 5, 6]].flat_map {|array| array.map {|n| n * 10 } }  
-# => [10, 20, 30, 40, 50, 60]  
-sample: 任意の要素を返す  
-users[rand(users.size)]  
-↓  
-users.sample  
-each_with_object: ループを回しつつ、別のオブジェクトを組み立ててそれを返す　似select(&:***).map(&:***)  
-def admin_names(users)  
- ret = []  
- users.each do |user|  
-  
-ret << user.name if user.admin?  
- end  
- ret  
-end  
-↓  
-def admin_names(users)  
- users.each_with_object([]) do |user, names|  
-  
-names << user.name if user.admin?  
- end  
-end  
-with_indexはカウンタの初期値を指定できます。（デフォルトはゼロ）  
-users_with_index = users.map.with_index(1) do |user, counter|  
- [counter, user]  
-end  
-#例外　メソッド全体rescueの対象にするときはbegin/endを省く  
-def process_user(user)  
- send_to_mail(user)  
-rescue Exception => ex  
-# NoMemoryError等の致命的な例外まで捕捉してしまうので良くない  
-end  
-↓  
- def process_user(user)  
- send_to_mail(user)  
-rescue => ex  
-# すべての実行時エラー(＝ StandardErrorとそのサブクラス)が捕捉される  
-  
-raise  
-# 元のエラーを再度raiseする  
-end  
-#meta-programming ruby  
- def prepare_for_index_with_build_requester  
-  
-prepare_for_index_without_build_requester  
-  
-build_requester  
-  
-build_app_list  
- end  
- alias_method_chain :prepare_for_index,  
-:build_requester  
-  
-新しいメソッドは xxx_with_xxx という名前で定義する必要がある。  
-  
+
+正規表現にマッチしているときだけ 切り取ってキーにしてハッシュ代入　：　@generated_job_info_links[uid] = str if (uid = str.match(/uid=\w+/).to_s[4..-1])
+Rubyではfalseとnilがfalse、それ以外の値がすべてtrueと評価されます。
+シンボルを使うと以下のようなメリットがあります。
+
+{ key: value } のように簡潔なリテラルで書ける。
+
+文字列よりも速い。
+
+文字列よりもメモリの使用効率が良い。
+参考： Why use symbols as hash keys in Ruby? - Stack Overflow
+基本的に配列だが、nilが渡される場合もある変数を処理する場合、Array()（Kernel#Array）castを使うと条件分岐を無くせます。
+if users
+ users.each{|user| send_direct_mail(user) }
+end
+↓
+Array(users).each{|user| send_direct_mail(user) }
+最初の見つかった要素のインデックスを返す場合はfind_index。
+users.count(&:admin?) #条件に合う要素の数を返す
+flat_map: mapの結果をネストしないフラットな配列として受け取る
+[[1, 2, 3], [4, 5, 6]].flat_map {|array| array.map {|n| n * 10 } }
+# => [10, 20, 30, 40, 50, 60]
+sample: 任意の要素を返す
+users[rand(users.size)]
+↓
+users.sample
+each_with_object: ループを回しつつ、別のオブジェクトを組み立ててそれを返す　似select(&:***).map(&:***)
+def admin_names(users)
+  ret = []
+  users.each do |user|
+    ret << user.name if user.admin?
+  end
+  ret
+end
+↓
+def admin_names(users)
+  users.each_with_object([]) do |user, names|
+    names << user.name if user.admin?
+  end
+end
+with_indexはカウンタの初期値を指定できます。（デフォルトはゼロ）
+users_with_index = users.map.with_index(1) do |user, counter|
+ [counter, user]
+end
+#例外　メソッド全体rescueの対象にするときはbegin/endを省く
+def process_user(user)
+ send_to_mail(user)
+rescue Exception => ex
+# NoMemoryError等の致命的な例外まで捕捉してしまうので良くない
+end
+↓
+ def process_user(user)
+ send_to_mail(user)
+rescue => ex
+# すべての実行時エラー(＝ StandardErrorとそのサブクラス)が捕捉される
+
+raise
+# 元のエラーを再度raiseする
+end
+#meta-programming ruby
+ def prepare_for_index_with_build_requester
+
+prepare_for_index_without_build_requester
+
+build_requester
+
+build_app_list
+ end
+ alias_method_chain :prepare_for_index,
+:build_requester
+
+新しいメソッドは xxx_with_xxx という名前で定義する必要がある。
+
 オリジナルのメソッドは xxx_without_xxx という名前に置き換えられる
  #
 #irb technique
@@ -1511,3 +1511,7 @@ build_app_list
 
 #逆引き
     #Errno::ENOENT Exception: --> FileUtils.mkdir_p していないから
+
+イテレーション
+	基本：10.times { p "#"} ;            1.upto(10) {|i| p i}
+	区切ってインデックス付き：arr.each_slice(2).with_index { |(a, b), i| puts "#{i} - #{a}, #{b}" }

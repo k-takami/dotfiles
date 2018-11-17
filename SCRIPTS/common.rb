@@ -1,5 +1,5 @@
 # coding: utf-8
-# XXX: `sudo gem install debugger byebug rdebug sqlite3 pry-debugger ` 
+# XXX: `sudo gem install debugger byebug rdebug sqlite3 pry-debugger `
 require 'fileutils';  require 'nkf' ; require 'yaml';
 require "optparse"; @option_parser = OptionParser.new; @option_parser.class
 # require "getoptlong"; option_parser = GetOptLong.new; #<= before ruby 1.8
@@ -10,9 +10,10 @@ if RUBY_VERSION < "1.9"
 elsif RUBY_VERSION > "1.9.0" && RUBY_VERSION < "2.2.0"
   require 'pry'
   require 'debugger';
-elsif RUBY_VERSION < "2.4.0"
-  require 'byebug';
+# elsif RUBY_VERSION < "2.4.0"
 else
+  require 'byebug';
+  require 'pry'
   # binding.irb
 end
 
@@ -54,7 +55,7 @@ def split_array_of_file_before_the_last_ending_terminator(array_of_read_file)
   array_of_read_file.select{|i| i =~ /(bullet)/ }.each {|i| i.sub!(/^/, "# ") }
   array_of_read_file.reverse_each do |line |
     offset_from_last -= 1
-    break if line =~ /^ *end/ 
+    break if line =~ /^ *end/
   end
   [ array_of_read_file[0..offset_from_last], array_of_read_file[offset_from_last+1..-1] ]
 end
@@ -238,5 +239,4 @@ if caller_is_sctipt
   puts "---------------------------------------"
 end
 
-Dir.chdir @option[:from] 
-
+Dir.chdir @option[:from]

@@ -69,7 +69,7 @@ yarn-debug.log*
 vim/.VimballRecord
 vim/.netrwhist
 /* vim/neosnippets/ */
-/* vim/bundle/ */
+vim/bundle/
 /* vim/ */
 .DS_Store
 .dbeaver-data-sources.xml

@@ -67,6 +67,7 @@ if has("autocmd")
     \ endif
 
   " Automatically load .vimrc source when saved
+  autocmd BufWritePre * :%s/\s\+$//gec
   autocmd BufWritePost .vimrc source $MYVIMRC
 
   augroup END
@@ -231,7 +232,6 @@ set hlsearch "検索マッチをhighlight
 set tabstop=2 shiftwidth=2 softtabstop=2 "インデント幅を2文字に
 set backspace=2 " バックスペースでインデントや改行を削除できるようにする
 set expandtab " タブをスペースに展開 (expandtab:展開する)
-autocmd BufWritePre * :%s/\s\+$//ge
 
 "
 "set wildmenu " コマンドライン補完するときに強化されたものを使う(参照 :help

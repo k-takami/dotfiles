@@ -1,14 +1,16 @@
 # coding: utf-8
-require 'rubygems'; 
+require 'rubygems';
 require 'ffi/aspell'
 # INSTALLING RASPELL & mecab
+  # OSX: install homebrew if not installed;
+    # /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   #install mecab first of all
   # sudo rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm ; sudo yum makecache
   # supkgadd mecab mecab-ipadic aspell-en ; mecab --version
-  # gem install ffi-aspell 
+  # gem install ffi-aspell
   # gem install pry byebug rails_best_practices rubocop
 # INSTALL(ALTERNATIVE: chasen)
-  #supkgadd aspell libaspell-dev aspell-en chasen 
+  #supkgadd aspell libaspell-dev aspell-en chasen
 
 # require 'pry'; require 'byebug'
 speller = FFI::Aspell::Speller.new("en")
@@ -35,7 +37,7 @@ end
 ja_words.sort!.uniq!
 ja_words.each do |i|
     p `echo #{i} |mecab -Owakati`.gsub!(/(\s+|EOS|\|)/, '')
-    # p `echo #{i} |chasen -j  -F '%m ' `.gsub!(/(\s+|EOS|\|)/, '')  
+    # p `echo #{i} |chasen -j  -F '%m ' `.gsub!(/(\s+|EOS|\|)/, '')
 end
 
 #IGNORE LIST
@@ -46,5 +48,3 @@ end
 # http://www.vector.co.jp/vpack/filearea/data/writing/dic/
 # http://www.atok.com/useful/list_win.html
 # http://www.mwsoft.jp/programming/munou/ime_dictionary_link.html#special
-
-

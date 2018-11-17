@@ -1,8 +1,8 @@
-#vim差分 
+#vim差分
   " 正規表現検索は/\v で
 
-	g;    --> jump to previous editing place 
-	dap   --> delete paragraph block 
+	g;    --> jump to previous editing place
+	dap   --> delete paragraph block
 config
 	yum -y install vim-enhanced
 		vi /etc/profile || ~/bashrc
@@ -11,7 +11,7 @@ config
 	#1設定ファイル移植
 		cd ~;rm vimhomeold.tar*;tar -cvf vimhomeold.tar .vim* *vim* .ve_* MyWiki/ .*rc  ;gzip vimhomeold.tar; cd -
 		chgrp -R root .vim* *vim* .ve_* MyWiki/ .*rc
-		chown -R root .vim* *vim* .ve_* MyWiki/ .*rc    
+		chown -R root .vim* *vim* .ve_* MyWiki/ .*rc
 		vim -S ~/Session.vim +VE +MRU
 		:source ~/.vimrc
 	CTRL-W =        Make all windows (almost) equally high and wide,
@@ -19,7 +19,7 @@ config
 	#diff
 		:vertical diffsplit C:\VMstatic\SOAP\SOAPClientExample-1.2\adsoltest.xml
 		#今のペインをdiffモードにきりかえ｡左右両窓でやる
-			:diffthis 
+			:diffthis
 	#カーソル下利用
 		* 検索
 		yiw yank
@@ -30,7 +30,7 @@ config
 		[s / ]s  <--  jump prev/fwd
 		z=       <--- suggest
 		zg / zw  <--- register current word as good/wrong
-	ファイルの文字コードや、改行コードを変更 
+	ファイルの文字コードや、改行コードを変更
 		" 文字コードutf-8を指定保存。
 		:set fenc=utf-8
 		" Unixの改行形式を指定。
@@ -39,7 +39,7 @@ config
 		:set ff=dos
 		" Macの改行形式を指定。
 		:set ff=mac
-	
+
 	combo
 		「++enc」「++ff」を同時に指定する場合のコマンド例
 		:e ++ff=unix ++enc=utf-8
@@ -84,8 +84,8 @@ config
 		:ar path/to/search/dir/**
 		何度も同じ検索対象を使う場合?――>## 展開
 		:vim foo ##
-	
-#vim-command 
+
+#vim-command
 	変換
 		雑文構造化　:%s/\n\n\n*/\r/gc | %s/\t/  /gc
 		文字列比較(全角半角同一視)
@@ -113,11 +113,18 @@ config
 		rb2rspec  **rubyソースからRSpecシナリオに**
 			$ grep "^.*# "  [filename]
 			%s/\(^  *\)# \(.*\)/\1it "\2" do end/gc
-		//Excel//excel列→vim正規表現%s/\n/|/ |%s/|$// |%s/^/(/ |%s/|*// |%s/|*$/)/ //excel列→vim正規表現 括弧なし%s/\n/|/ |%s/|$// |%s/|*// |%s/|*$////vimgrep結果をTSVに%s/ */|\t/gc | %s/ */|\t/gc//Excelタテ2列をSQL横1行に%s/\t//gc | %s/\n/,/gc//vlookup常套句=IF(VLOOKUP( D167 ,'notify to'!A2:A36,1)<>"", D167 ,"ng"):%s/\t//gc Excelで文字列組み立てる 　 ="transform :"&J36&", method: transform_" & J36 &" # 設備特記"
+		//Excel//excel列→vim正規表現%s/\n/|/ |%s/|$// |%s/^/(/ |%s/|*// |%s/|*$/)/
+    excel列→vim正規表現 括弧なし%s/\n/|/ |%s/|$// |%s/|*// |%s/|*$//
+    //vimgrep結果をTSVに%s/ */|\t/gc | %s/ */|\t/gc
+    //Excelタテ2列をSQL横1行に%s/\t//gc | %s/\n/,/gc
+    //vlookup常套句=IF(VLOOKUP( D167 ,'notify to'!A2:A36,1)<>"", D167 ,"ng")
+    :%s/\t//gc
+     Excelで文字列組み立てる 　 ="transform :"&J36&", method: transform_" & J36 &" # 設備特記"
+
 		#Office365toExcel
 			go to https://outlook.office.com/owa/?path=/mail/sentitems and sort itema in time sequence
 			:%s/\(出社時間.\|退社時間.\|休憩時間.\|作業時間.\|【\|】\|■今日の作業 *\n/\)//gc
-			
+
 Vi機能別主要コマンドリファレンス
 	起動
 	% vi フォアグラウンド起動
@@ -206,7 +213,7 @@ Vi機能別主要コマンドリファレンス
 	:set nonumber 行番号表示を止める
 	:h ヘルプ表示
 	:viusage [<コマンド>] viコマンドモードのコマンド一覧表示。<コマンド>を付加するとそのコマンドの説明を表示。
-	:exusage [<コマンド>] exコマンドモードのコマンド一覧表示。<コマンド>を付加するとそのコマンドの説明を表示。 
+	:exusage [<コマンド>] exコマンドモードのコマンド一覧表示。<コマンド>を付加するとそのコマンドの説明を表示。
 よく使うコマンド†
 	h           ←
 	j           ↓
@@ -311,11 +318,11 @@ Vi機能別主要コマンドリファレンス
 	/usr/share/vim/vim71/plugin
 	#keymapping
 		F9    (vimrc-customized) reload .vimrc
-		C+]  :  rcodetool+fri help 
+		C+]  :  rcodetool+fri help
 		\r  :  rcodetool+fri fuzzy help showing andidate
 		C-XC-O : omni-completion by vim-ruby (app+gem I/F)
 		C-xC-u : user-defined-omini-completion by rcodetool
-		F7F8F12:  xmpfilter  
+		F7F8F12:  xmpfilter
 	改行をなくして連結する(各行末に空白なし） g shift + j
 	マクロ（記録開始）:qa　aは任意のアルファベット
 	マクロ（記録終了）:q
@@ -495,7 +502,7 @@ Vi機能別主要コマンドリファレンス
 			{not in Vi} {not available when compiled without the
 			|+listcmds| feature}
 			Also see |:windo|, |:argdo| and |:bufdo|.
-		=  
+		=
 	gHL  :全角半角スイッチ
 	:tabm[ove] [N]            *:tabm* *:tabmove*
 ウィンドウの分割
@@ -930,7 +937,7 @@ Vi機能別主要コマンドリファレンス
 	Download (not html): vimdoc.zip
 	Vim日本語ドキュメント
 	苦情は yukihiro.nakadaira@gmail.com まで。
-		{Google} ]> 
+		{Google} ]>
 		Google 検索
 		( ) WWW を検索 (*) vimdoc を検索
 	Vim documentation: tabpage
@@ -1268,9 +1275,9 @@ Vi機能別主要コマンドリファレンス
 			:helptags ~/.vim/doc
 	#RUBY-MACRO----------------------------------------------------------------------------------------
 		Typing "for" on a blank line will result in
-			for  in  
+			for  in
 			end
-		with the cursor positioned before the "in".  
+		with the cursor positioned before the "in".
 		The same will happen with "while", "until", and so on.  But if the line is not blank, "for" will just insert itself.
 		Also, symbols like " are inserted in matching pairs, with the cursor in between.
 		"K" runs ruby on the current buffer, and the "F1" function key puts a line #!/usr/math/bin/ruby on the first line.  (You will have to edit
@@ -1300,7 +1307,7 @@ Vi機能別主要コマンドリファレンス
 		For more help see the  documentation that comes with snipMate in ~/.vim/doc/snipMate.txt.
 		install details
 			Requires Vim 7 or higher.
-			filetype plugin on" to your .vimrc 
+			filetype plugin on" to your .vimrc
 			unzip snipMate.zip -d ~/.vim (or equivalent, e.g. $HOME\vimfiles on Windows)
 			:helptags ~/.vim/doc
 		Keep in mind this will overwrite any files included with older versions of snipMate, including the default *.snippets files for the
@@ -2212,7 +2219,7 @@ This can also be used as saving operation (:w alone will not save using the line
 And you can use it from the command-line:
 
 for file in $(ls *cpp)
-do 
+do
   vi +':w ++ff=unix' +':q' ${file}
 done
 
@@ -2428,8 +2435,8 @@ done
 		□ ISO-2022-JPとして認識した時に本当に日本語が含まれているかどうかをチェックして、日本語が含まれていなかったらencodingの値をfileencodingに使うように修正してみました。これにより日本語を含まないファイルでも eucjp がデフォの環境では eucjpが、utf-8 な環境では utf-8 で開けるようになりました。-- KaWaZ 2007-01-10 (水) 11:23:49
 	? ++encが何かは分からないのですが:view ++enc=sjisこうゆう事も出きるんですね.見れないファイルがあって参考に成りました. -- en? 2008-08-20 (水) 20:44:46
 vimからコマンドを実行し、その結果をバッファに取り込むことが可能です。
-	:r!pwd 
-	:. 
+	:r!pwd
+	:.
 	:.!date
 	:diffsplit を知った。便利だ。 -- KaWaZ 2003-10-30 (木) 18:22:17
 	colordiff    diff file1 file2 | vim -vimでdiffをカラフルにして見る方法[vim]

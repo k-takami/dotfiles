@@ -700,34 +700,6 @@
       rake adva:uninstall                       # uninstall selected adva_cms engines (pick some with engines=all plugins=all or engines=name1,na...
       rake adva:uninstall:all                   # uninstall all adva_cms engines and plugins
       rake adva:uninstall:core                  # uninstall adva_cms core engines
-    rake db:abort_if_pending_migrations       # Raises an error if there are pending migrations
-    rake db:charset                           # Retrieves the charset for the current environment's database
-    rake db:collation                         # Retrieves the collation for the current environment's database
-    rake db:create                            # Create the database defined in config/database.yml for the current RAILS_ENV
-    rake db:create:all                        # Create all the local databases defined in config/database.yml
-    rake db:migrate:prepare                   # Copy migrations from plugins to db/migrate
-    rake db:migrate                           # Migrate the database through scripts in db/migrate and update db/schema.rb by invoking db:schem...
-    rake db:drop                              # Drops the database for the current RAILS_ENV
-      rake db:drop:all                          # Drops all the local databases defined in config/database.yml
-      rake db:migrate:reset                     # Resets your database using your migrations for the current environment
-      rake db:reset                             # Drops and recreates the database from db/schema.rb for the current environment.
-    rake db:fixtures:identify                 # Search for a fixture given a LABEL or ID.
-    rake db:fixtures:load                     # Load fixtures into the current environment's database.
-    rake db:rollback                          # Rolls the schema back to the previous version.
-      rake db:migrate:down                      # Runs the "down" for a given migration VERSION.
-      rake db:migrate:up                        # Runs the "up" for a given migration VERSION.
-      rake db:migrate:redo                      # Rollbacks the database one migration and re migrate up.
-      rake db:version                           # Retrieves the current schema version number
-    rake db:schema:dump                       # Create a db/schema.rb file that can be portably used against any DB supported by AR
-    rake db:schema:load                       # Load a schema.rb file into the database
-    rake db:sessions:clear                    # Clear the sessions table
-    rake db:sessions:create                   # Creates a sessions migration for use with ActiveRecord::SessionStore
-    rake db:structure:dump                    # Dump the database structure to a SQL file
-    rake db:test:clone                        # Recreate the test database from the current environment's database schema
-    rake db:test:clone_structure              # Recreate the test databases from the development structure
-    rake db:test:load                         # Recreate the test database from the current schema.rb
-    rake db:test:prepare                      # Check for pending migrations and load the test schema
-    rake db:test:purge                        # Empty the test database
     rake deploy                               # Release the website and new gem version
     rake doc:app                              # Build the RDOC HTML Files
       rake doc:clobber_app                      # Remove rdoc products

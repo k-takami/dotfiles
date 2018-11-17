@@ -37,11 +37,11 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
                                  text-muted
                                  text-hide
                                  sr-only.sr-only-focusable
-    
+
     pull-left pull-right clearfix
     center-block
     show hidden
-    
+
     span.caret
     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
@@ -54,26 +54,26 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
     visible-*-*      hidden-*
     visible-print-*  hidden-print
 
-    
+
     Media queries
     /* Extra small devices (phones, less than 768px) */
     /* No media query since this is the default in Bootstrap */
-    
+
     /* Small devices (tablets, 768px and up) */
     @media (min-width: @screen-sm-min) {}
-    
+
     /* Medium devices (desktops, 992px and up) */
     @media (min-width: @screen-md-min) {}
-    
+
     /* Large devices (large desktops, 1200px and up) */
     @media (min-width: @screen-lg-min) {}
-    
+
 ## basic style
     h1 .h1 small .small
     body font-size: 14px; line-height: 1.428
     p margin-bottom: 10px(half line-height)
     .lead
-    
+
     mark
     del s
     ins u
@@ -87,7 +87,7 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
 
 ## nav
     ul.nav.nav-tabs nav-pills nav-stacked nav-justified
-    
+
     navbar navbar-default>container>navbar-header>navbar-toggle+navbar-brand
            navbar-fixed-top        >collapse navbar-collapse>nav navbar-nav
            navbar-fixed-bottom                              >navbar-form
@@ -113,14 +113,17 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
 ## button
     <button> <a> <input>
     btn btn-default btn-xs btn-block active
+        btn-light
         btn-primary btn-sm           disabled .disabled
         btn-success btn-lg
         btn-info
         btn-warning
         btn-danger
         btn-link
-   NOTE: bdt-defaultは背景色グラデーションなので
+   NOTE: btn-defaultは背景色グラデーションなので
   　　　平坦にしたければ <button style="border-radius:10px;" class="btn btn-lg btn-block">ボタン名</button>
+        SLIMでは：f.button 'キャプション',disabled: true, class: "btn btn-light", style: "border-radius:50px;"
+         span.label~~~ではh1~hn要素で大きさが左右される
 
 ### stateful
     <button type="button" id="example-btn" data-loading-text="Loading..." class="btn btn-primary">submit</button>
@@ -197,9 +200,9 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
                label-warning
                label-info
                label-primary
-    
+
     span.badge
-    
+
     .alert.alert-success>strong
            alert-info
            alert-warning
@@ -218,10 +221,10 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
     .collapse
     .collapse.in
     .collapsing
-    
+
     <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#demo">simple collapsible</button>
     <div id="demo" class="collapse in">collapse content</div>
-    
+
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -256,7 +259,7 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
 ## pagination
     ul.pagination pagination-lg pagination-sm
     li.active.disabled
-    
+
     ul.pager
     li.previous li.next
 
@@ -377,7 +380,7 @@ responsive design tool [https://blisk.io](https://blisk.io)
       = image_tag 'SOMEPICTURE.png' , width: "50%",
 
 ################# 語呂合わせ ########
-xssmmdlg: xs-sm-md-lg: 
+xssmmdlg: xs-sm-md-lg:
 
 ################# jQuery plugins ########
     .fluid-box.hidden-xs

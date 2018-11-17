@@ -1,5 +1,5 @@
-#!/usr/bin/ruby 
-require 'rubygems'; require 'mechanize'; require 'hpricot'; require 'nkf' #require 'logger' #$agent.log = Logger.new($stdout) 
+#!/usr/bin/ruby
+require 'rubygems'; require 'mechanize'; require 'hpricot'; require 'nkf' #require 'logger' #$agent.log = Logger.new($stdout)
 require 'kconv'
 #PG:nilがかえるとエラーになるので sub()...sub()は連続でつかうな。
   #PG:UNICODEアジア文字は2~4バイトなので正規表現では...?でマッチ
@@ -8,8 +8,8 @@ require 'kconv'
 #PG:WiFI接続きれるとここでUncaught exception: private method `gsub' called for nil:NilClass
 #PG:hash値だけの出力はprintで
 #PG:w3mは../test/のレンダリングにバグあり。
-#takamiredmine 
-#PG helper-pathは起動時にやredmineで評価できない $adminurl = r2chnns_path+"/readurl/"+$levelM+"/" 
+#takamiredmine
+#PG helper-pathは起動時にやredmineで評価できない $adminurl = r2chnns_path+"/readurl/"+$levelM+"/"
 class Scraper # module LibScraper
   def initialize
     WWW::Mechanize.html_parser = Hpricot; $agent = WWW::Mechanize.new; $outHTML=""
@@ -23,30 +23,30 @@ class Scraper # module LibScraper
   #(subtree) l1中で次のrgxが一回だけ出てくるリンクコメントを抽出ハッシュにし#(subtree)のl1元要素をnil/empty
   def hs_2chSubTree(tree)
 #opt     re=/(?:\&gt\;\&gt\;|>>|＞＞) *\d+/
-    re = /\&gt\;\&gt\;/; subtree = Hash.new; 
-    tree.each{|key, value| 
+    re = /\&gt\;\&gt\;/; subtree = Hash.new;
+    tree.each{|key, value|
       $rx_link=/(?:\&gt\;\&gt\;|>>|＞＞)[ 　]*\d+/
       aryReferrer = value.scan($rx_link)
       if aryReferrer.length > 0 then
         anchor = aryReferrer[0].slice(/\d+/).to_i   #tree.keys.index(value.scan(/\d* ：/)[0].gsub(/ ：/,"" ))
         refferedYouso=tree[anchor];refferedYousoA=refferedYouso.to_s.scan($rx_link)[0].to_s.slice(/\d+/).to_i #後続ﾚｽへのﾊﾟｽ点検用
         if anchor!=key && refferedYouso != nil && key != refferedYousoA #自己参照ｸﾛｽ参照での無限ｻﾌﾞﾂﾘｰ生成防止 && thekey != nil
-          refering = true 
+          refering = true
         end
       end
-      if refering && value =~ re && value.scan(re).length < 4 && value !~/<a name=\"[123]\"/i then #bp1 
+      if refering && value =~ re && value.scan(re).length < 4 && value !~/<a name=\"[123]\"/i then #bp1
         #opt aryreferrer.length>1 but 参照先同一もしくは>>[123]捨象後一個参照ならばhash代入
         #opt Anchor[123]との照合はl.length＜２の第一層でしかやらない
         #NG wifi-38sec/1000res加速効果なし         if $levelM >1 then value.sub!(/( *<a href="#\d+">|<\/a>)/,'') end
         #dbgpoint puts tree[key];key; anchor;puts; puts tree[anchor];
-        tree[key] =  anchor; subtree[key] = value#subtree[key] = anchor + "<--" + value 
-      end 
+        tree[key] =  anchor; subtree[key] = value#subtree[key] = anchor + "<--" + value
+      end
     }
     return subtree #     print("hfhfhf")
   end
 
   def downloadAfterBasicAuth(url,id,pw)
-    $agent.auth('', 'sweet') ;$agent.user_agent_alias = 'Linux Mozilla'; 
+    $agent.auth('', 'sweet') ;$agent.user_agent_alias = 'Linux Mozilla';
 #     url.sub!("http:","https:")
     page = $agent.get(url)
     puts `pwd`
@@ -87,7 +87,7 @@ class Scraper # module LibScraper
       Net::HTTP.start(domain, 80) {|http|
         ret = http.request(req)
         #NG:クッキーを有効にして再度ご利用下さい<br> <a href="http://sample.babyblue100.com/">こちら</a>よりご覧になれます<br>
-        File.open($outdir+"/"+links[0].split("/")[3..-2].join("/")+"/#{i}", "w+b", 0644){|f| f.write(ret.body) }	
+        File.open($outdir+"/"+links[0].split("/")[3..-2].join("/")+"/#{i}", "w+b", 0644){|f| f.write(ret.body) }
       }
     return
   end
@@ -96,16 +96,16 @@ class Scraper # module LibScraper
 # debugger
     if url !~ /file:\/\// || url =~/takami.2ch-detail-all.html/
       #下の2行はURL階層長さに依存するので、not so good
-      if mode=~/rss/ then 
-        tgt = ($agent.get(url).body) 
+      if mode=~/rss/ then
+        tgt = ($agent.get(url).body)
         return tgt
-      elsif mode=~/r2chnn/ then 
-        tgt = ($agent.get(url).root) 
+      elsif mode=~/r2chnn/ then
+        tgt = ($agent.get(url).root)
         return tgt
-      elsif mode =~ /fetch/ || url =~/takami.2ch-detail-all.html/ 
-        tgt = ($agent.get(url).root) 
-      elsif mode=~/toutf8/ then 
-        tgt =modearg1 
+      elsif mode =~ /fetch/ || url =~/takami.2ch-detail-all.html/
+        tgt = ($agent.get(url).root)
+      elsif mode=~/toutf8/ then
+        tgt =modearg1
       end
     else
       tgt=File.open(url.sub("file://",""),"r+b"){|fh|fh.read }
@@ -125,7 +125,7 @@ class Scraper # module LibScraper
       end
     end
     #URL-REWRITE-----------------------------------------------------------------------------
-    if url !~ $rx_2chNG && url !~ $rx_extNG; 
+    if url !~ $rx_2chNG && url !~ $rx_extNG;
       #"count.2ch.net"は置換しない
     # NP:受験などMILKCAFE http://www.milkcafe.net/
     # NP:be.2ch.net http://localhost/r2chnns/readurl/4/http://be.2ch.net/
@@ -141,7 +141,7 @@ class Scraper # module LibScraper
       rx_OKdomain= /http:\/+\w*.?(?:2ch.net|milkcafe.net|machi.to|bbspink.com|milkcafe.net|unkar.jp)\/[\w_\.\/]*/
         #pathizon:2ch内部のｽﾚｯﾄﾞ全部よみこみﾘﾝｸはr2chnn経由のﾘﾝｸに書き換え｡
 #         body.gsub!("<a href=\"http://2ch.net/\">",'<a href="'+"/r2chnns/readurl/#{$levelM}/http://menu.2ch.net/bbsmanu.htm\">")
-#         elsif url !~/(?:bbspink)/ 
+#         elsif url !~/(?:bbspink)/
 #           erb_header.gsub!(threadpath,'<a href="'+"/r2chnns/readurl/#{$levelM}/"+url+"/")
 #           footer.gsub!(threadpath,'<a href="'+"/r2chnns/readurl/#{$levelM}/"+url+"/")
         #dbg  body.scan(/href=.+r2chnns.+">/)
@@ -159,15 +159,15 @@ class Scraper # module LibScraper
       end
 
       (tgt/"frame[@src^='http://']").each do |link|
-        strlink = link[:src] 
+        strlink = link[:src]
         if strlink =~ rx_OKdomain && strlink !~ $rx_2chNG && strlink !~ $rx_extNG
           link[:src] = $docbase+"/readurl/#{$levelM}/"+strlink
         end
       end
 # debugger
-      #//navigation-pageHREF絶対パスのリンクかきかえ : 
+      #//navigation-pageHREF絶対パスのリンクかきかえ :
       (tgt/"a[@HREF^='http://']").each do |link|
-        strlink = link[:HREF] 
+        strlink = link[:HREF]
         if strlink =~ rx_OKdomain && strlink !~ $rx_2chNG && strlink !~ $rx_extNG
           link[:HREF] = $docbase+"/readurl/#{$levelM}/"+strlink
         end
@@ -175,7 +175,7 @@ class Scraper # module LibScraper
 # debugger
       #板トップページhref絶対パスのリンクかきかえ : ここでset.bbspinkもかわるはず
       (tgt/"a[@href^='http://']").each do |link|
-        strlink = link[:href] 
+        strlink = link[:href]
         if strlink =~ rx_OKdomain && strlink !~ $rx_2chNG && strlink !~ $rx_extNG
 #           if strlink.slice(url) !=nil
             link[:href] = $docbase+"/readurl/#{$levelM}/"+strlink
@@ -184,7 +184,7 @@ class Scraper # module LibScraper
       end
 # debugger
       ##板トップページhref相対パス
-      #残骸pinkbbs ：../test/read.cgi/adultsite/1273761039/l50" target="body">29: ここのパスわかる人いない？ 33 (259)</a><a 
+      #残骸pinkbbs ：../test/read.cgi/adultsite/1273761039/l50" target="body">29: ここのパスわかる人いない？ 33 (259)</a><a
       #dbg puts (tgt/"a").to_s.toutf8.grep(/http:..set./).to_s.split("href")
       #dbg puts (tgt/"a[@href^='.']").to_s.toutf8.grep(/..*read./).to_s.split("<a href=")
       domainOfReadCGI=url.gsub(/(http:\/+|\/.*)/,"")
@@ -192,12 +192,12 @@ class Scraper # module LibScraper
           strlink = link[:href];refrange=strlink.sub(/.+\//,"")
           if refrange !~ /[\-lnx]/ && refrange!="" then refalone = true else refalone=false end
           refthread=strlink.gsub(/(?:\.\.\/|[\w\-]+$)/,"")
-          #dbg p url;p strlink;p refrange;p refalone; p refthread 
+          #dbg p url;p strlink;p refrange;p refalone; p refthread
           if strlink.slice(refthread) !=nil && refalone
             #同一スレッド単一レスの参照はアンカーにかえる。
             link[:href] = "#"+strlink.sub(/.+\//,""); link.remove_attribute("target")
           elsif url =~/read.cgi/ && strlink =~/\/(?:l50|n|\d+n-)$/
-            #2ch l50 フォーム表示失敗 *l50 \d\+n-は生リンクかきかえダメ 最新50 新着レスの表示  
+            #2ch l50 フォーム表示失敗 *l50 \d\+n-は生リンクかきかえダメ 最新50 新着レスの表示
             link[:href]= "http://"+domainOfReadCGI+strlink.gsub("..", "")
           else
             link[:href]= $docbase+"/readurl/#{$levelM}/"+"http://"+domainOfReadCGI+strlink.gsub("..", "")
@@ -206,13 +206,13 @@ class Scraper # module LibScraper
 # debugger
       if url =~/(?:subback|2ch).htm/  #"http://gimpo.2ch.net/namazuplus/subback.html" :format=>  <a href="1249765570/l50">121:
         (tgt/"a").each do |link|
-          strlink = link[:href] 
+          strlink = link[:href]
           link[:href]= $docbase+"/readurl/#{$levelM}/"+url.sub(/(?:subback|2ch).\w+/,"")+strlink
         end
       end
       if url =~/hozen.org/
         (tgt/"a").each do |link|
-          strlink = link[:href] 
+          strlink = link[:href]
           if strlink !~ /(?:www.hozen.org|creativecommons)/
             link[:href]= $docbase+"/readurl/#{$levelM}/"+url.sub(/(?:.org)\/.+/,".org")+strlink
           else
@@ -221,18 +221,18 @@ class Scraper # module LibScraper
         end
       end
     end
-    if $kaikyuu!="" then 
-      #/home/you/RoRapps/2chnrg/lib/scraper.rb 2chdetail http://www.2nn.jp/dqnplus 4 admin 
+    if $kaikyuu!="" then
+      #/home/you/RoRapps/2chnrg/lib/scraper.rb 2chdetail http://www.2nn.jp/dqnplus 4 admin
 #       debugger
       (tgt/"a").each do |link|
-        strlink = link[:href] 
+        strlink = link[:href]
         if strlink =~ /(l50|l100|-100)/
           link[:href] = link[:href].sub!(/(l50|l100|-100)/ , "")#.to_s
         end
       end
     end
 
-    if mode=~/toutf8/ then 
+    if mode=~/toutf8/ then
       tgt =tgt.to_html.toutf8;tgt.sub!(/(?:x-sjis|Shift_JIS)/i,"utf-8")
       #XPFize
       tgt.sub!(%r(<meta content=.+Content-Type" />)i, "\n<meta http-equiv=\"content-type\" content=\"text\/html\;charset=UTF-8\" \/>" )
@@ -253,9 +253,9 @@ class Scraper # module LibScraper
 			File.readlines(ARGV[1]).each{ |line|
 				#dbg     puts line
 				if line =~ %r(#many-times-substitution-pattern-per-line-as-follows) then
-					i=2 
+					i=2
 				elsif line =~ %r(#just-once-substitution-pattern-per-line-as-follows) then
-					i=3 
+					i=3
 				end
 				if line !~ /\t/ then next end #\tなし行を無視
 				line.chomp!; tmpary= line.split(/\t/) ;tmpary[0]=tmpary[0].to_s; tmpary[1]=tmpary[1].to_s;aryPtn[i]<<tmpary #end
@@ -278,7 +278,7 @@ class Scraper # module LibScraper
         str2[y] = " ■" + x
       }
       return str2.join
-  end  
+  end
 
   def hs_2hCommentShori(rx_ptn,rx_jogai, strSectionHD, strSectionSubHD, strSpacer,valOption)#/hs_tmp)
     if valOption.class == Hash
@@ -287,17 +287,17 @@ class Scraper # module LibScraper
       aryGreped=$l[0].to_s.grep(rx_ptn); aryOrHashSize = aryGreped.length; if rx_jogai.class==Regexp then rxx=true end
       #;eee= h2.to_s.split(%(<br />)).grep(gomi) #dbg	puts tokua.to_s.split(%(<br />))
     end
-    if aryOrHashSize>0 then 
+    if aryOrHashSize>0 then
       if valOption.class == Hash
         hs_tmp=valOption#.dup
       else
-        hs_tmp=Hash.new;aryGreped.each{|el| 
+        hs_tmp=Hash.new;aryGreped.each{|el|
           key=el.slice(/\d+/).to_i;
-          if $l[0][key] != nil then 
+          if $l[0][key] != nil then
             if rxx != true
-              hs_tmp[key]=$l[0][key]; $l[0].delete(key) 
-            elsif el !~ rx_jogai #opt rxxとnostdout併用できるように、ノ　引数追加 
-              hs_tmp[key]=$l[0][key]; $l[0].delete(key) 
+              hs_tmp[key]=$l[0][key]; $l[0].delete(key)
+            elsif el !~ rx_jogai #opt rxxとnostdout併用できるように、ノ　引数追加
+              hs_tmp[key]=$l[0][key]; $l[0].delete(key)
 #dbg        else
 #             puts el + "　:valOption="+ valOption.to_s
             end
@@ -308,7 +308,7 @@ class Scraper # module LibScraper
         hs_tmp[0]="</dl><h3>"+strSectionHD+"</h3>"+strSectionSubHD+"<dl><dd>";
         if valOption !="nostdout" then
 #           hs_tmp.keys.sort.each{|key| $outHTML<< strSpacer+hs_tmp[key]}; $outHTML<<"\n</dd>\n"  #hs_tmp[key].to_s
-          hs_tmp.keys.sort.each{|key| $outHTML<< strSpacer+hs_tmp[key]}; 
+          hs_tmp.keys.sort.each{|key| $outHTML<< strSpacer+hs_tmp[key]};
           #dev090825
           #kugiri= "</dd>" #if ARGV[1]  =~/hozen.org/ then kugiri= "</blockquote></dd>" else kugiri= "</dd>"  end
           #$outHTML<<"\n#{kugiri}\n"  #hs_tmp[key].to_s
@@ -323,7 +323,7 @@ class Scraper # module LibScraper
 end #of class---------------------------
 #-----------------------------------------------------------------------------------------------------------------
 if __FILE__ == $0
-  $clm = Scraper.new; 
+  $clm = Scraper.new;
     if ARGV[0] =="help" || ARGV[0] =="--help" || ARGV[0] =="-h"
        puts "---USAGE----
 #        usage: ruby scraper.rb 2nn (local|ive) [rails]    > ../app/views/r2chnns/index.html.erb
@@ -337,38 +337,38 @@ if __FILE__ == $0
 #        usage: ruby scraper.rb watchRefresh [local]
 #-----------------------------------------------------------------------------------------------------------------
        "
-    elsif ARGV[0] =~ /2nn/ # 
+    elsif ARGV[0] =~ /2nn/ #
     #2NN hotentry scraper 時間につれてレス数はふえ、瞬間投稿速度はおちていくので、それを一々取得しないことにした。気になる人は2NNを利用。
       #opt 解析ロジック実装後、2nn-mobile(ソースと記者名なし)->2chdomain-conv-table 加速URL変換 PC33sec--->mobile7sec
       #   http://www.2nn.jp/m/bizplus/1245743319/
       #     http://orz.2ch.io/p/1!...2/anchorage.2ch.net/bizplus/1245743319/
       #       http://anchorage.2ch.net/test/read.cgi/bizplus/1245743319/
-      #opt     "index.cgi?"から始まるリンクを全て探す	doc/"a[@href^='index.cgi?']"	: (doc/"a[@href^='index.cgi?']").each do |link| 
+      #opt     "index.cgi?"から始まるリンクを全て探す	doc/"a[@href^='index.cgi?']"	: (doc/"a[@href^='index.cgi?']").each do |link|
       #     テキストに"new"という文字列が入っているリンクを全て探す(※version 0.5以降) doc/"a[text()*='new']"
       dpage="2chnrg";#"remix2ch"
 #       dpage=="2chnrg"? newhref="http://localhost:3000/r2chnns/readurl=": newhref="http://contents-factory.net/remix2ch/read.php?url="
       dpage=="2chnrg"? newhref="readurl=": newhref="http://contents-factory.net/remix2ch/read.php?url="
       ARGV[1] =~ /local$/?  url='http://localhost/takami/': url=ARGV[3].to_s
-      if url=="" then url = 'http://www.2nn.jp/' end #page = $agent.get('http://localhost:3000/craps/') 
+      if url=="" then url = 'http://www.2nn.jp/' end #page = $agent.get('http://localhost:3000/craps/')
       doc =($agent.get(url).root);
       #HTMLERBize#1 除去
       (doc/:meta).remove;(doc/:title).remove; #buggy:	(doc/:head).remove
       #C-HTMLize#1	<script	の除去連結
-      (doc/:script).remove;                                                                       
+      (doc/:script).remove;
       #2NN support-menu隠蔽
       (doc/'#SmallMenu').remove;(doc/'#cloud').remove;(doc/'#LatestNews').remove;(doc/'#PageBodySub').remove;(doc/'#boardspeed').remove;
-      #(doc/'#toolnews').remove ;(doc/'#toolothers').remove; 
+      #(doc/'#toolnews').remove ;(doc/'#toolothers').remove;
       #2NN crappythread隠蔽
 #       (doc/"li.newsbox"/"a[@href*='takeshima']").each{|el| el.parent.parent.inner_html =nil} #"東アジアニュース速報
       (doc/"li.newsbox"/"a[@href*='tsushima']").each{|el| el.parent.parent.inner_html =nil} #news sokuhou
       (doc/"#Mnewsplus").each{|el| el.parent.inner_html =nil}                               #gei-spo
       (doc/'div.NewsRankHead').remove ; (doc/'div.NewsImage').remove ;
 
-      (doc/:a).each do |link| 
-        strlink = link[:href]; strlink.sub!(%r((l50|l100|-100)/?$) , "") 
+      (doc/:a).each do |link|
+        strlink = link[:href]; strlink.sub!(%r((l50|l100|-100)/?$) , "")
         #remix2chは/, /-100, /l50しか表示不能 http://contents-factory.net/remix2ch/read.php?url=http...
         #//--remix2ch経由でのツリー表示型閲覧にhref書き換える//本家URL	http://mamono.2ch.net/test/read.cgi/newsplus/1214022204/l50
-        if strlink =~ %r(.net/test/read.cgi/) || strlink =~ %r(.2ch.net/) #//絶対パスのリンクかきかえ : 
+        if strlink =~ %r(.net/test/read.cgi/) || strlink =~ %r(.2ch.net/) #//絶対パスのリンクかきかえ :
             link[:href]= newhref+strlink #dbg print link[:href]
         elsif strlink =~ %r(../test/read.cgi/) #//相対パスの内部リンクかきかえ :(例) ../test/read.cgi/newsplus/1213863381/l100
             link[:href]= newhref+"http://" #+ doc.domain + strlink.gsub(%r(../), "");
@@ -382,17 +382,17 @@ if __FILE__ == $0
         strdoc.gsub!(/(\[img:.+photo|2NNのURL|.+javascript|\[#.+\]|<.+>).*\n/,"") #.+2nn\.jp|
         strdoc.gsub!(%r(\n[\s]+), "\n") ;
         $outHTML<< strdoc;
-				$outHTML<< "\n"	
+				$outHTML<< "\n"
 
 				#SBIsecurities rate quote
 				ARGV[1] =~ /local$/?  url='http://localhost/takami/sbisec-forex-chart.html': url='https://site2.sbisec.co.jp/ETGate/?_ControlID=WPLETmkR001Control&_DataStoreID=DSWPLETmkR001Control&_PageID=WPLETmkR001Edtl20&getFlg=on&_ActionID=createChartForDollar&PER=1'
 				doc =($agent.get(url).root); #         page=$agent.get(url).root;
 				zzz= (doc/"td.stockMod0101") ;(zzz/"td.mbody").remove;(zzz/:a).remove;(zzz/:div).remove; (zzz/"img").remove;(zzz/"font").remove
-				tmphtml = NKF.nkf("-S -x -w -m0" , zzz.to_s); #dbg print remixpageHTML 
+				tmphtml = NKF.nkf("-S -x -w -m0" , zzz.to_s); #dbg print remixpageHTML
 				strforex=tmphtml.gsub(/<\/\w+>/,'|').gsub(/ ?(td|mtext|class|nowrap|align|colspan|width|height|right|center|&nbsp\;|\")=?/,'')
         strforex=strforex.gsub(/(<\w+>|<table.+=0>|<fm01 \w+>|blue>|red>|<\d*%?>|< bg\w+\W+[\w\d]+>|<font |color=|\d+:\d+|[ \t]+)/,'').gsub(/[\s\|]/,'')
         $outHTML<< strforex; #.split(/\|/)	#PG*putsは配列要素ごと改行出力、printは連結出力
-				$outHTML<< "\n"	
+				$outHTML<< "\n"
           #read a[1..3]
           #     (rdb:194) puts a[3]
           #     津川雅彦ブログ】「日本人の誇りを踏みにじるテポドンは迎撃してほしい!」「小沢さんは民主党党主で居座れるのかな?」 [http://localhost:3000/r2chnns/readurl=http://takeshima.2ch.net/test/read.cgi/news4plus/1241416396/]
@@ -406,12 +406,12 @@ if __FILE__ == $0
       else
         #HTMLERBize#2
         strdoc = doc.to_html;strdoc.gsub!(%r(</?(li|ul)>),"");
-        #C-HTMLize#2	
+        #C-HTMLize#2
         strdoc.gsub!(/<\/?span(..?class.?.?=".+".?>?)?>/,"") # <span	<class # <html lang="ja"> # </body> # </html> # </head><body>
         #2NN support-menu隠蔽
         strdoc.gsub!(%r((<a.+2nn.jp/\w+/\d+/.+>|</body>|</html>)),"")#もっと見る　リライト
   #       strdoc.grep(%r(<a.+2nn.jp/.+>)){|line| line.sub!( line.slice(%r(<a.+2nn.jp/.+>),1)," " }
-  #       strdoc.gsub!(%r(<(.?DOCTYPE.+".+".+".+"|html\slang.?=".+"|/?(html|body|))>?), "")       
+  #       strdoc.gsub!(%r(<(.?DOCTYPE.+".+".+".+"|html\slang.?=".+"|/?(html|body|))>?), "")
             # <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
           #opt css-replace strdoc.grep(/ class.?.?=".+".?>)/     font-size=
             # strdoc.grep(/%r(\n[\s]+\d*){|line| line.sub!( line.slice(\d*,1)," " }
@@ -419,22 +419,22 @@ if __FILE__ == $0
         $outHTML<< strdoc;
       end
 #-----------------------------------------------------------------------------------------------------------------
-    elsif ARGV[0] =~ /2chdetail/ 
+    elsif ARGV[0] =~ /2chdetail/
 #yobi ARGV[1] =~ /local$/? url='http://localhost/takami/2ch-detail-all.html': url= ARGV[1]
       ARGV[1] =~ /local$/? url='file:///usr/local/apache2/htdocs/takami/2ch-detail-all.html': url= ARGV[1]
-      if ARGV[2] != nil then 
-        $levelM=ARGV[2].sub(/K/,'').to_i 
+      if ARGV[2] != nil then
+        $levelM=ARGV[2].sub(/K/,'').to_i
         if ARGV[2] =~ /\d+K/ then spacer="\n<hr>" else spacer="\n" end
-      else 
+      else
         $levelM=2 ;spacer="\n"
       end
-      if ARGV[3] != nil then 
+      if ARGV[3] != nil then
         $kaikyuu=ARGV[3]
       end
 #       ARGV[1] =~ /local$/? url='http://localhost/takami/2ch-detail-short.html': url= ARGV[1]
-      #'http://localhost'#page = $agent.get('http://localhost:3000/craps/') 
+      #'http://localhost'#page = $agent.get('http://localhost:3000/craps/')
       #DETAIL PAGE---------------------------------
-#       if url=~/2ch.net.+kako/ then exit end 
+#       if url=~/2ch.net.+kako/ then exit end
       if url =~/2ch.+kako/i
         sTmp=url.split("/");domain=sTmp[2];subpath="/"+sTmp[3..-1].join("/");
         page=String.new;require 'net/http';Net::HTTP.version_1_2;Net::HTTP.start(domain, 80) {|http| page << http.get(subpath).body }
@@ -443,15 +443,15 @@ if __FILE__ == $0
         page=$agent.get(url).root;
       end
       $docbase="/r2chnns"
-      $rx_2chNG= /(?:be|find|epg|shop|watch|irc).2ch/ 
+      $rx_2chNG= /(?:be|find|epg|shop|watch|irc).2ch/
       $rx_extNG=/(?:dummy)/
       $rx_OKurl   =/(?:2ch.net.+read.cgi|bbspink.+read.cgi|machi.to.bbs.read.cgi|unkar.jp.read.+2ch.net.\w+.\d|hozen.org.bbs.\d+\/\d)/
       if url =~/hozen.org/
         tmphtml = page.to_html
-        header = tmphtml.split(%r(<a name="R1">))[0] 
+        header = tmphtml.split(%r(<a name="R1">))[0]
         tmpstr = tmphtml.split(%r(<br />\s+<p><a href="/bbs))
         footer = '<BR>'+"\n"+'<p><a href="/bbs'+tmpstr[1]
-        body   = "<a name=\"R1\">"+tmpstr[0].split(%r(<a name="R1">))[1] 
+        body   = "<a name=\"R1\">"+tmpstr[0].split(%r(<a name="R1">))[1]
         body.gsub!(/(\n)+/,'').gsub!(/<a name=/,"\n<a name=")
 #         <a name="R143">143</a> 名前:<span class="green">
 #         <b><a href="sage" rel="nofollow">名無しさん＠お腹いっぱい。</a></b>
@@ -461,7 +461,7 @@ if __FILE__ == $0
         header = tmphtml.split(%r(<dt id="l1">))[0]
         tmpstr = tmphtml.split(%r(</dl>))
         footer = '</dl>'+tmpstr[1]
-        body   = "<dt id=\"l1\">"+tmpstr[0].split(%r(<dt id="l1">))[1] .sub!(/Shift_JIS/i,"utf-8") 
+        body   = "<dt id=\"l1\">"+tmpstr[0].split(%r(<dt id="l1">))[1] .sub!(/Shift_JIS/i,"utf-8")
       else#2ch-style-read.cgi
         if url =~/2ch.+kako/i
           tmphtml=Scraper.new.getfilefromURL(url,80,"toutf8XPF",page)
@@ -469,21 +469,21 @@ if __FILE__ == $0
           header = aryTmphtml[0]+"<dl>"  #; header.sub!(/<base href=\".+\" \/>\n/, "")
         elsif url =~/(htdocs.takami|2ch.net)/
           tmphtml=Scraper.new.getfilefromURL(url,80,"toutf8XPF",page)
-          aryTmphtml = tmphtml.split(%r(<dl class="thread">|</dl>)) 
+          aryTmphtml = tmphtml.split(%r(<dl class="thread">|</dl>))
           header = aryTmphtml[0]+ "<dl class=\"thread\">"
         elsif url =~/milkcafe.net/
           tmphtml=Scraper.new.getfilefromURL(url,80,"toutf8XPF",page)
-          aryTmphtml = tmphtml.split(%r(<dl class="commentlist">|</dl>)) 
+          aryTmphtml = tmphtml.split(%r(<dl class="commentlist">|</dl>))
           header = aryTmphtml[0]+ "<dl class=\"commentlist\">"
         else #url =~/bbspink/
           tmphtml=Scraper.new.getfilefromURL(url,80,"toutf8XPF",page)
-          aryTmphtml = tmphtml.split(%r(<dl class="thread">|</dl>)) 
+          aryTmphtml = tmphtml.split(%r(<dl class="thread">|</dl>))
           header = aryTmphtml[0]+ "<dl class=\"thread\">"
         end
         #HEADeR #<dl class="thread"> #</dl>i<font color=red face="Arial"><b>28 KB</b></font>:#FOOTER #<dt>.*<dd> TREE
         #2ch処理中絶例外-----------------------------------------
-        if url !~/(htdocs.takami|read.cgi)/ then 
-          puts tmphtml;abort("")  #navigation menuではここで終了  
+        if url !~/(htdocs.takami|read.cgi)/ then
+          puts tmphtml;abort("")  #navigation menuではここで終了
 #         else
 #           resrange =url.split("/")[-1]# "245"
 #           if resrange.length <= 4 && resrange !~/[-lnx]/  #nil
@@ -493,16 +493,16 @@ if __FILE__ == $0
         #-----------------------------------------
         body  = aryTmphtml[1]
         if aryTmphtml[2]!=nil then
-          tmpstr = "</dl>" + aryTmphtml[2] 
+          tmpstr = "</dl>" + aryTmphtml[2]
           tmpstr1=tmpstr.split(/form/)
           footer=""; uefooter= tmpstr1[0][0..-3].gsub(/(新着レスの表示|最新50)/, "\\1と追記")
 
 
 
-          if tmpstr1.length >1	#1000full対策 
+          if tmpstr1.length >1	#1000full対策
             footer=uefooter+tmpstr1[2][1..-1]  #新着レスの表示  最新50  &コメント(2ch生スレッド表示)
           else
-            footer=uefooter 
+            footer=uefooter
           end
         else
           footer="R2CHNN: NO FOOTER GENERATED<br></body></html>"
@@ -517,15 +517,15 @@ if __FILE__ == $0
         erb_header=header
       elsif url =~/unkar.jp/
         erb_header=header
-      else  
+      else
         erb_header=header.sub(%r(.+</script></div>),'')
         #.gsub(/\.\.\/test/,strDomain)  # erb_footer=footer.sub(%r(),'')
       end
 
       #WiFI接続きれるとここでUncaught exception: private method `gsub' called for nil:NilClass
 #dd       body.gsub!(/(\s)ttp/, "\\1http");body.gsub!(/(　)ttp/, "\\1http")
-      body.gsub(/＞＞/, "&gt\;&gt\;"); body.gsub!(/ (&gt\;|＞)(\d+)/, " &gt\;&gt\;\\2")      
-			body.gsub!(/((　|\s))ttp/, "\\1http") 
+      body.gsub(/＞＞/, "&gt\;&gt\;"); body.gsub!(/ (&gt\;|＞)(\d+)/, " &gt\;&gt\;\\2")
+			body.gsub!(/((　|\s))ttp/, "\\1http")
 			body.gsub!(/０/, "0"); body.gsub!(/１/, "1"); body.gsub!(/２/, "2"); body.gsub!(/３/, "3"); body.gsub!(/４/, "4");
 			body.gsub!(/５/, "5"); body.gsub!(/６/, "6"); body.gsub!(/７/, "7"); body.gsub!(/８/, "8"); body.gsub!(/９/, "9");
       #空行連続、
@@ -541,7 +541,7 @@ if __FILE__ == $0
           threadpath=header.slice(/<a href="[\w:\/\"\. _=]+read[\w:\/\"\. _=]+">.*全/m).slice(/<a href="[\w:\/\.]+/m).to_s
           if url=~/(?:machi.to|bbspink)/ then threadpath2=threadpath.gsub(/(?:<a href="|\/\w+\/$)/,"").to_s end
         end
-        if url=~/(?:machi.to)/ 
+        if url=~/(?:machi.to)/
           erb_header.gsub!(threadpath2,"/r2chnns/readurl/#{$levelM}/"+threadpath2)
               footer.gsub!(threadpath2,"/r2chnns/readurl/#{$levelM}/"+threadpath2)
         end
@@ -561,7 +561,7 @@ if __FILE__ == $0
 #         body.gsub!(/：\d+\/\d+\/\d+ \d+:\d+:\d+ ID/,'：ID')
 #opt      body.gsub!(/<.?dt>/,'')
       end
-      $l = Array.new; 
+      $l = Array.new;
 #       rx_ref=/(dd> つ |dd> つ【|\sttp|著 |著　|年.+月.+日|%.+%.+%|％.+％.+％)/ #|『
       rx_ref=/(?:dd> つ |dd> つ【|ttp|著 |著　|年.+月.+日|%.+%.+%|％.+％.+％)/ #|『
       #<br> (\-|+|\\|\/#$<>:) ----> no gsub! of <br>
@@ -569,8 +569,8 @@ if __FILE__ == $0
       rx_kajo=/(?:a>.+=.+=.+<|＝.+＝|\*.+br.+\*.+\*|･.+br.+･.+･|\-\w.+\-\w.+\-\w|・.+br.+・.+・|1\..+2\..+3\.|1\).+2\).+3\)|①.+②.+③)/
       rx_aa=/(?:＼|∧|_人|／|░|▓|▒|∩|∪|⊂|⊃|●.+●.+●|::::|\;\;\;\;)/
       rx_chart=/(?:＞\s*\D|>>\s*\D| \&gt\;\D|.+：.+：.+：|\|.+\|.+\||→.+→|↓.+↓|←.+←|┏.+┓.+┗.+┛)/ #NG:Buggy =.+=, \=.+\=.+=,
-      rx_top3= /<a name=\"[123]\"/i 
-      l0 = Hash.new; 
+      rx_top3= /<a name=\"[123]\"/i
+      l0 = Hash.new;
       #levelM>2で事前濾過
       rx_ero=/(?:レイプ|おっぱい|オッパイ|セフレ|６９し|６９す|俗嬢|プ嬢|ル嬢|ロ嬢|ピンサロ|デリヘル|フェラす|フェラし|クンニす|クンニし|レイパ-|オナホ|ガン見|ちんぽこ|チンポコ|ポコチ|ちんちん|チンチン|ティンティン|マムコ|ティムポ|ペニス|まんこ|マンコ|ホイミ-|ヴァギナ|肛門|陰核|陰茎|クリトリス|アナル|ウホッ|アッ-\s|ｱｯ-\s)/
       rx_zako=/(?:か翻訳|天誅|天罰|核の雨|逃げてー|記念カ|に酷い事したよね|記念真|！！！|おそろしや|終了のお知|イイハナシ|オワタ|なにこれ|なんだこの|キター！|ママン|忘れないであげて|ホッキアゲ|ゴルゴ|天狗の|おそロシ|誰か.+頼む|ざまあ|ザマア|まだ.*〜.?\s|三行で|涙目|死にたい|メシウマ|は勝ち組。?\s|何とか.+よ。?\s|ど.+でもいい|\(笑\)|w\s|ｗ\s|ｳﾞｫｰ|ｷﾀ—|ｵﾜﾀ|ｳﾝｺｰ|ﾏﾀﾞｰ|♪)/
@@ -593,29 +593,29 @@ if __FILE__ == $0
       #<dt>129 ：<span class="name"><a href="mailto:sage"><b>名刺は切らしておりまして</b></a> </span>：2009/08/24(月) 12:49:56 ID:F0I9FsMi (スコア1：オフトピック)
       #<input id="129" name="edit_res[]" value="129" checked="checked" type="checkbox">
       #<label for="129">このレスを掲載する</label></dt>
-      #<dd> <a href="../test/read.cgi/bizplus/1251077797/125" target="_blank">&gt;&gt;125</a> <br> 閉め <br> 安物。 <br> 結局。 <br>  
-      if url =~/hozen.org/ then 
+      #<dd> <a href="../test/read.cgi/bizplus/1251077797/125" target="_blank">&gt;&gt;125</a> <br> 閉め <br> 安物。 <br> 結局。 <br>
+      if url =~/hozen.org/ then
         kugiri= "</blockquote>";suffixR= "</blockquote>";prefixT= "<dl><dd>"
-      elsif url =~/unkar.jp/ then 
-        kugiri= "</dd>"        ;suffixR= ""             ;prefixT= "<dl>"  #kugiri= "<dt id=" 
+      elsif url =~/unkar.jp/ then
+        kugiri= "</dd>"        ;suffixR= ""             ;prefixT= "<dl>"  #kugiri= "<dt id="
       else  #read.cgi
-        if url =~/(?:2ch.+kako|machi.to)/i 
+        if url =~/(?:2ch.+kako|machi.to)/i
           kugiri= "<dt>"        ;suffixR= ""             ;prefixT= "<dl>"
         else
           kugiri= "</dd>"        ;suffixR= ""             ;prefixT= "<dl>"
         end
-      end 
+      end
       #過去ログ倉庫生 <dt>4 名前：<font color="forestgreen"><b> 名無しさん＠３周年 </b></font> 投稿日： 02/11/20 16:09 ID:x3DzCfsY<br><dd>
       #過去ログ倉庫   986 名前：<font color="forestgreen"><b> 名無しさん＠３周年 </b></font> 投稿日： 02
-      #過去ログ倉庫  ><A name="429">429</A> 名前： 名無しさん＠3周年  投稿日：  
+      #過去ログ倉庫  ><A name="429">429</A> 名前： 名無しさん＠3周年  投稿日：
       #hozen:  <b><a href="sage" rel="nofollow">クリックで救われる名無しさんがいる</a></b>
 #       print body;abort("")
       ptn1=%r(<a href="mailto:.+"><b>.+</b>.+<b></b></a>)i; ptn1sub=/◆/; #◆だけがIDあり、あとは匿名
-      body.split(%r(#{kugiri})).each{|el| 
+      body.split(%r(#{kugiri})).each{|el|
 #opt       if $levelM>3 then strsp=/<\/dt>/ else strsp=/<\/dd>/ end
           if url =~/2ch.+kako/i then el = "<dt>"+ el.to_s end
           if el !~ ptn1sub then el.sub!(ptn1, "某") end
-          #(layor1)中で次のrgxが参照するコメントをアンカーに変える(unkarはかえなくてよい）　 
+          #(layor1)中で次のrgxが参照するコメントをアンカーに変える(unkarはかえなくてよい）　
           if url !~/hozen.org/ && url !~/unkar.jp/
             if url =~ /machi.to/
               strNum_res =el.slice(/(\d*) /,1); el.sub!(/\d*/,"<dt><a name=\"#{strNum_res}\">"+strNum_res+"</a>")
@@ -625,61 +625,61 @@ if __FILE__ == $0
           end
   #opt    body.gsub!(/(<dt>)(\d*)/,"<dt><A name=\"#\\2>\\2</A>" )
           #PG:NG: 不整形タグレンダリングは意外と遅い         el.sub!(/<dt>/,"<dt><A name=\"#{el.slice(/<dt>(\d*)/,1)}\"> ")
-          if $levelM >1 && el !~ /="[123]"/ then 
+          if $levelM >1 && el !~ /="[123]"/ then
             if $ita_toua !=true
-              if $levelM>3&&(el=~rx_about||el=~rx_guess||el=~rx_hatena) 
-                el = nil 
+              if $levelM>3&&(el=~rx_about||el=~rx_guess||el=~rx_hatena)
+                el = nil
               elsif $levelM>3&&(el=~rx_yahi||el=~rx_nega||el=~rx_negaZokusei||el=~rx_akiaki||el=~rx_inori)
-                el = nil 
+                el = nil
               end
               #opt break
             end
-            if $levelM>2&&(el=~rx_zako||el=~rx_ero||el=~rx_gundam||el=~rx_label||el=~rx_tosi) 
-              el = nil 
+            if $levelM>2&&(el=~rx_zako||el=~rx_ero||el=~rx_gundam||el=~rx_label||el=~rx_tosi)
+              el = nil
             elsif el != nil
               el.gsub!(/(<a href="mailto:\w+">|某?<\/a>：?)/,'')
-              if el !~ rx_top3 && el !~ rx_ref && el !~ rx_chart && el !~ rx_kajo && el !~ rx_aa && el !~ rx_cyber #bp2 
+              if el !~ rx_top3 && el !~ rx_ref && el !~ rx_chart && el !~ rx_kajo && el !~ rx_aa && el !~ rx_cyber #bp2
                 el.gsub!(/　/,' ');el.gsub!(/<br ?\/?>/,' ');
-#dd             el.gsub!(%r(</a> <br /> ),"</a> ");el.gsub!(/<br>/,' ') 
+#dd             el.gsub!(%r(</a> <br /> ),"</a> ");el.gsub!(/<br>/,' ')
               end
             end
           end #PG:opt:これではmailto:ﾀﾞﾌﾞﾙﾊﾞｲﾄ はけせない
-          if el!=nil && el!="" then 
-            l0[el.slice(/\d+/).to_i] = el + suffixR 
+          if el!=nil && el!="" then
+            l0[el.slice(/\d+/).to_i] = el + suffixR
           end #l0[el.match(/\d* ：/).to_s] = el
-      }; 
-      if url =~/hozen.org/ || url=~/2ch.+kako/i 
-        l0.each{|key, value| 
+      };
+      if url =~/hozen.org/ || url=~/2ch.+kako/i
+        l0.each{|key, value|
           newvalue = value.sub(/<\/a> 名前 投稿日(:|： )/i," ");newvalue = newvalue.sub(/<\/a> 名前(:|： )/i," ");
           newvalue = newvalue.sub(/<\/(a|span)> ?投稿日(:|： )/i," ")
           l0[key]= newvalue
         }
       end
       $l << l0
-      #(lN) l(N-1)中で次のrgxが一回だけ出てくるリンクコメントを抽出ハッシュに, #次のrgxが一回も出なくなるまでループ  %r(&gt;&gt|＞＞) 
+      #(lN) l(N-1)中で次のrgxが一回だけ出てくるリンクコメントを抽出ハッシュに, #次のrgxが一回も出なくなるまでループ  %r(&gt;&gt|＞＞)
       $clm=Scraper.new;
       while true
-#         subtree = Scraper.new.hs_2chSubTree($l[-1]) ;subtree.keys.length == 0 ?  break : l << subtree 
+#         subtree = Scraper.new.hs_2chSubTree($l[-1]) ;subtree.keys.length == 0 ?  break : l << subtree
         subtree = $clm.hs_2chSubTree($l[-1]);
         subtree.keys.length == 0 ?  break : $l << subtree
         #;dd $l[-1].merge!(subtree){|key, val1, val2| nil }; #rescue print ("--------ERROR IN 93-SUB TREE GENERATION------------")
       end
 #dbg  puts $l.to_s.scan(/.+\&gt\;\&gt\;\d+/)
-      if $l.length > 1 
+      if $l.length > 1
         #ckpoint01:  hash.keysでl1にsubtree..Nを順次</dd>なし<dl>...</dd></dl><hr>インデント挿入していく
-        j = -1 ;layors = $l.length - 1      
+        j = -1 ;layors = $l.length - 1
         while true
           $l[j].keys.sort.each{|key|
             ataiOya =  $l[j-1][$l[j-1][key].to_i]; ataiKo = $l[j][key]
-            if ataiOya !~ /\d\d?\d?$/ && ataiKo !~ /\d\d?\d?$/ 
+            if ataiOya !~ /\d\d?\d?$/ && ataiKo !~ /\d\d?\d?$/
 #dbg          puts ataiOya+"\n"+ataiKo;$l[j-1][$l[j-1][key]] << "<dl>" + $l[j][key].to_s +"</dl>";#if ataiOya !~ %r(<hr>) then $l[j-1][$l[j-1][key]] << "<hr>" end
 #               $l[j-1][$l[j-1][key].to_i].concat
               $l[j-1][$l[j-1][key].to_i].to_s << prefixT+ $l[j][key].to_s + "</dl>" #opt  (lN)のl(N-1)元要素をnil/empty
             end
           }
-          j = j-1; 
-          if j.abs > layors then 
-            break 
+          j = j-1;
+          if j.abs > layors then
+            break
           else
       #dbg puts "="*40+"layor="+(layors+j-1).to_s;puts $l[j-1].keys;puts "-"*40+"j="+j.to_s;$l[j].keys.each{|el| puts " "*4+el };puts "-"*40
           end
@@ -689,7 +689,7 @@ if __FILE__ == $0
       end
       #------------------------------------------------------------------------------------------------------------------------------
       if $levelM >2 #参照先がフィルターずみのハッシュ要素をけす。tree構築関数でやると、HTMLみだれてむずかしい。PG:
-         $l[0].each{|key, value| 
+         $l[0].each{|key, value|
           aryReferrer = value.scan($rx_link)
           if aryReferrer.length > 0 && key >3 then
             anchor = aryReferrer[0].slice(/\d+/).to_i;#dbg puts "key-ref=" +key.to_s+aryReferrer[0]
@@ -699,11 +699,11 @@ if __FILE__ == $0
       end
 			#craps言葉遊び行別配列化#top3 themeを対比
 #       taihitop=Array.new(3);
-#         taihitop[1]=$l[0][1] #       if $l[0][2].grep(/<br \/>/).length >1 then 
-#         taihitop[2]=$l[0][2] #end #       if $l[0][3].grep(/<br \/>/).length >1 then 
+#         taihitop[1]=$l[0][1] #       if $l[0][2].grep(/<br \/>/).length >1 then
+#         taihitop[2]=$l[0][2] #end #       if $l[0][3].grep(/<br \/>/).length >1 then
 #         taihitop[3]=$l[0][3] #end
       taihifinish=$l[0][1001];$l[0].delete(1001)
-#     $clm.hs_2hCommentShori(//,//,"","",spacer,"") 
+#     $clm.hs_2hCommentShori(//,//,"","",spacer,"")
       #------------------------------------------------------------------------------------------------------------------------------
       if ARGV[4]=="mobile" && url =~/unkar.jp/
         tmpstr="<html lang=\"ja\">\n<head>\n<meta content=\"text/html\; charset=utf-8\" http-equiv=\"content-type\" \/>\n<meta content=\"text\/javascript\" http-equiv=\"content-script-type\" \/>"
@@ -714,7 +714,7 @@ if __FILE__ == $0
 #         erb_header=tmpstr.gsub!(/<br *\/>/m,'')
       end
       $outHTML<< erb_header+"\n<table width=10000><td>\n";  #PG:<table...td>じゃないとFFOXでうまく横幅広がらない。trやx-froatだとだめ。
-#       if url =~/hozen.org/ 
+#       if url =~/hozen.org/
 #       strA="<a name=\"R1\"><a name=\"R2\"><a name=\"R3\">"
 #         elsif url =~/unkar.jp/
 #       strA="<dt id=\"l1\">" #<dt id=\"l2\"><dt id=\"l3\">"
@@ -732,36 +732,36 @@ if __FILE__ == $0
 #       taihitop<< str1.slice(/<dl>.+/m).to_s #"<dl>"+str1[1]+"</dl\">" end
 #       taihitop<< str2.slice(/<dl>.+/m).to_s  #"<dl>"+str1[1]+"</dl\">" end
 #       taihitop<< str3.slice(/<dl>.+/m).to_s  #"<dl>"+str1[1]+"</dl\">" end
-      $l[0].delete(0);$l[0].delete(1) ;$l[0].delete(2);$l[0].delete(3) 
+      $l[0].delete(0);$l[0].delete(1) ;$l[0].delete(2);$l[0].delete(3)
       $outHTML<< taihitop.to_s + "\n</dd>\n" #PG:hash値だけの出力はprintで
       #------------------------------------------------------------------------------------------------------------------------------
 			if $levelM>1
-        hs_aa=$clm.hs_2hCommentShori(rx_aa,nil," ","",spacer,"nostdout") 
+        hs_aa=$clm.hs_2hCommentShori(rx_aa,nil," ","",spacer,"nostdout")
         #参考情報フィルター
-        hs_ref=$clm.hs_2hCommentShori(rx_ref,nil,"追加資料","",spacer,"nostdout") 
-        hs_chart=$clm.hs_2hCommentShori(rx_chart,/(＞＜|ノ)/,"記号で指摘・図解","",spacer,"nostdout") 
-        hs_mame=$clm.hs_2hCommentShori(/(?:ちなみに|因みに|参考ま?で?に?|まめ知識|豆知識|豆.?.?な)/,nil,"ﾏﾒ知識","",spacer,"nostdout") 
+        hs_ref=$clm.hs_2hCommentShori(rx_ref,nil,"追加資料","",spacer,"nostdout")
+        hs_chart=$clm.hs_2hCommentShori(rx_chart,/(＞＜|ノ)/,"記号で指摘・図解","",spacer,"nostdout")
+        hs_mame=$clm.hs_2hCommentShori(/(?:ちなみに|因みに|参考ま?で?に?|まめ知識|豆知識|豆.?.?な)/,nil,"ﾏﾒ知識","",spacer,"nostdout")
         #ゴミノイズフィルター
         rx_tokua=/(?:ジャップ|棒子|虫国|密入国.{1,4}人|中共|日本.+孤立化|ヒトモドキ|火病|三国人|ファビョ|ホルホル|哀号|アイゴ-|ニダ|ﾆﾀﾞ|チョン|キムチ|ニカ|ﾆｶ|HIDEYOSHI|姦国|ﾎﾙﾎﾙ|ｳｪｰﾊｯﾊｯ|白丁|倭奴|倭猪|倭豚|倭猿|チョッパリ|ﾁｮｯﾊﾟﾘ|阪民[国団]|民譚|総連|パチン|鮮玉入|嘗糞|ホンタク|病身舞|コレコレア|金朴李|テコンV|ロスケ|露助|支那|シナ|チャンコロ|｀ハ´|小日本|トンキン|頭狂[人都]|ウリナラ|シナチョン|FUC|ｱｲｺﾞ)/i
-#         hs_tokua=$clm.hs_2hCommentShori(rx_tokua,rx_ref," ","",spacer,"nostdout") 
-        hs_tokua=$clm.hs_2hCommentShori(rx_tokua,nil," ","",spacer,"nostdout") 
+#         hs_tokua=$clm.hs_2hCommentShori(rx_tokua,rx_ref," ","",spacer,"nostdout")
+        hs_tokua=$clm.hs_2hCommentShori(rx_tokua,nil," ","",spacer,"nostdout")
         if $levelM <3
-          hs_label=$clm.hs_2hCommentShori( rx_label,nil,"レッテル派","",spacer,"nostdout") 
+          hs_label=$clm.hs_2hCommentShori( rx_label,nil,"レッテル派","",spacer,"nostdout")
         end
-        if header.slice(/title>.+<\/title/).slice(/(?:中国|韓|朝|鮮|チャイナ|LG|サム.ン)/) == nil 
+        if header.slice(/title>.+<\/title/).slice(/(?:中国|韓|朝|鮮|チャイナ|LG|サム.ン)/) == nil
           rx_tokua2=/(?:中国|韓|朝鮮|特ア|特亜|特定ア|在日|コリア|チャイナ|チャイニ|三星|サムスン|LG|ヒュンダイ|ハイアール|ファーウェイ)/
-          hs_tokua_non4plus=$clm.hs_2hCommentShori(rx_tokua2,nil," ","",spacer,"nostdout") 
+          hs_tokua_non4plus=$clm.hs_2hCommentShori(rx_tokua2,nil," ","",spacer,"nostdout")
         end
 #       end
         if hs_tokua==nil then hs_tokua=Hash.new end;if hs_tokua_non4plus==nil then hs_tokua_non4plus=Hash.new end
         hs_tokua.update(hs_tokua_non4plus);
         rx_kokuzoku=/(?:バカヒ|経団連|念仏平和主義|空想的|マスゴミ|茶坊主|アカヒ|ネット朝日|侮日|売日|南京.+殺|慰安婦問題|マッチポン|ナベツネ|押し?紙|TBS|ＴＢＳ|犬HK|犬ＨＫ|9条|９条|プロ市民|売国|国賊|紅野|エロ拓|二階|歯科医師会|使途不明金)/ #団塊|
-          hs_zoku=$clm.hs_2hCommentShori(rx_kokuzoku,nil," ","",spacer,"nostdout") 
+          hs_zoku=$clm.hs_2hCommentShori(rx_kokuzoku,nil," ","",spacer,"nostdout")
 #         if $levelM <3
-          hs_ero=$clm.hs_2hCommentShori(rx_ero,nil," ","",spacer,"nostdout") 
+          hs_ero=$clm.hs_2hCommentShori(rx_ero,nil," ","",spacer,"nostdout")
           hs_zako=$clm.hs_2hCommentShori(rx_zako,nil," ","",spacer,"nostdout")#|\!\!\!
 #         end
-        rx_omoni=/(?:ジジババ|公務員|特殊法人|人天国|員天国|老害|士天国|文系|天下り)/;hs_omoni=$clm.hs_2hCommentShori(rx_omoni,nil," ","",spacer,"nostdout") 
+        rx_omoni=/(?:ジジババ|公務員|特殊法人|人天国|員天国|老害|士天国|文系|天下り)/;hs_omoni=$clm.hs_2hCommentShori(rx_omoni,nil," ","",spacer,"nostdout")
 
         #参考情報フィルター
         $clm.hs_2hCommentShori(rx_ref,nil,"追加資料","",spacer,hs_ref)
@@ -769,88 +769,88 @@ if __FILE__ == $0
         $clm.hs_2hCommentShori(/(?:ちなみに|因みに|参考ま?で?に?|まめ知識|豆知識|豆.?.?な)/,nil,"ﾏﾒ知識","",spacer,hs_mame)
         #アドバイスフィルター
         rx_point=/(?:が要点|がカギ|-完-|がミソ|が味噌|禁物|答えは|気をつけ|用心|準備|留意|そもそも|注意|がポイント|大事だ|要は.+事|要は.+こと|が結論|で結論|解決.?法|至言|名言|格言|天才|その発想はなか|名案|単に.+だけ。?\s)/#|勿体.い|もったい|はヤバ|らヤバ
-          $clm.hs_2hCommentShori(rx_point,nil,"結論と要点とidea","",spacer,"") 
+          $clm.hs_2hCommentShori(rx_point,nil,"結論と要点とidea","",spacer,"")
         rx_wake=/(?:=.+=|＝.+＝|%|％|わけで|だからである|るから|せいで|おかげで|理屈|理由|効果|効率|要素|要因|関係|原因|\*.+br.+\*.+\*|･.+br.+･.+･|・.+br.+・.+・|1\..+2\..+3\.|1\).+2\).+3\)|①.+②.+③.+|論拠)/
-          $clm.hs_2hCommentShori(rx_wake,/ｳﾝｺ/,"理路と列挙","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:廃止|撤廃|契約|約束|確約|脱退|違法|合法|許可|認可|認定|審査|監査|監督|検査|検収|予防|措置|臨検|検定|管理|不法|摘発|没収|徴収|刑|処罰|罰金|罰則|褒.金|逮捕|取り締|規則|ルール|罷免|解任|更迭|改訂|改正|制定|策定|決議|議決)/,nil,"法と体制と契約","",spacer,"") 
+          $clm.hs_2hCommentShori(rx_wake,/ｳﾝｺ/,"理路と列挙","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:廃止|撤廃|契約|約束|確約|脱退|違法|合法|許可|認可|認定|審査|監査|監督|検査|検収|予防|措置|臨検|検定|管理|不法|摘発|没収|徴収|刑|処罰|罰金|罰則|褒.金|逮捕|取り締|規則|ルール|罷免|解任|更迭|改訂|改正|制定|策定|決議|議決)/,nil,"法と体制と契約","",spacer,"")
 #         if header.slice(/bizplus/) == nil
-          $clm.hs_2hCommentShori(/(?:株|投資|値崩|経済的な|割安|割高|コスト|原価|償却|投機|価格|建値|採算|収支|安.?上)/,nil,"資金運用関係","",spacer,"") 
+          $clm.hs_2hCommentShori(/(?:株|投資|値崩|経済的な|割安|割高|コスト|原価|償却|投機|価格|建値|採算|収支|安.?上)/,nil,"資金運用関係","",spacer,"")
 #         end
-        $clm.hs_2hCommentShori(/(?:しよう.?.?.?\s|しよーぜ|ろうぜ.?.?.?\s|通報|ましょう.?.?.?\s)/,nil,"よびかけ","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:が|ら|ば|て|れ)(ほしい|欲しい|売れる|買う|くれ.?.?.?)。?\s/,nil,"要望","",spacer,"") 
+        $clm.hs_2hCommentShori(/(?:しよう.?.?.?\s|しよーぜ|ろうぜ.?.?.?\s|通報|ましょう.?.?.?\s)/,nil,"よびかけ","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:が|ら|ば|て|れ)(ほしい|欲しい|売れる|買う|くれ.?.?.?)。?\s/,nil,"要望","",spacer,"")
         rx_koji=/(?:するな|せよ.?.?.?\s|が.うな|爪の垢|お願いだから|がマシ|いいのに|なさい|ええやん|ればいい|の方が|ほうが|かったのに|次は|つぎは|のが先|優先|先決|条件|前提|まず|えろ|きろ|けろ|しろ|じろ|せろ|ぜろ|ちろ|てろ|ねろ|びろ|りろ|れろ|汁.?\s|てもらえ|てやれ.?.?.?\s|だせよ|出せ.?.?.?\s)/
         $clm.hs_2hCommentShori(/(?:マナー|モラル|礼儀|エチケット|作法|下品|品位|品格|民度)/,nil,"品行と品格","",spacer,"") #yet-in-help
-          $clm.hs_2hCommentShori(rx_koji,nil,"一言居士","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:オチ|がアップを始め|予感|期待.?\s|予測|予言|そのうち|明日|来週|来月|来年|年後|ますます|しそうだ|たりして|と化す.+ろ|になる.+ろ|に.+ペリカ|に.+ペソ)/,/そのうちの/,"予言的","",spacer,"") 
+          $clm.hs_2hCommentShori(rx_koji,nil,"一言居士","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:オチ|がアップを始め|予感|期待.?\s|予測|予言|そのうち|明日|来週|来月|来年|年後|ますます|しそうだ|たりして|と化す.+ろ|になる.+ろ|に.+ペリカ|に.+ペソ)/,/そのうちの/,"予言的","",spacer,"")
         #評価フィルター
-        $clm.hs_2hCommentShori(/(?:英断|素晴らしい|これはいい|悪くない|ありがたい|ナイス|いいことだ|いいぞもっと|うまい|上手い|いい選別|いい判断|GJ|ＧＪ|おもしろい.?.?.?\s|面白い.?.?.?\s|いいな.?.?.?\s|いいね.?.?.?\s|くやった|最高です.?.?.?\s|がんばれ.?.?.?\s|頑張れ.?.?.?\s|乙.?.?.?\s)/,nil,"Positive","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:でいいや|でいいじゃん|で十分|静観|模様眺め|様子見|以外なら.{1,10}|ただし.+、|ただし.{1,20}。|※ただし)/,nil,"静観または留保派","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:かっこ悪.*\s|だっさ|恥ずかしい|はずかしい|ナウい|デザイン.+ぎ|ダサい.?\s)/,nil,"外見・外聞派","",spacer,"") 
+        $clm.hs_2hCommentShori(/(?:英断|素晴らしい|これはいい|悪くない|ありがたい|ナイス|いいことだ|いいぞもっと|うまい|上手い|いい選別|いい判断|GJ|ＧＪ|おもしろい.?.?.?\s|面白い.?.?.?\s|いいな.?.?.?\s|いいね.?.?.?\s|くやった|最高です.?.?.?\s|がんばれ.?.?.?\s|頑張れ.?.?.?\s|乙.?.?.?\s)/,nil,"Positive","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:でいいや|でいいじゃん|で十分|静観|模様眺め|様子見|以外なら.{1,10}|ただし.+、|ただし.{1,20}。|※ただし)/,nil,"静観または留保派","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:かっこ悪.*\s|だっさ|恥ずかしい|はずかしい|ナウい|デザイン.+ぎ|ダサい.?\s)/,nil,"外見・外聞派","",spacer,"")
         if $levelM <4
-          $clm.hs_2hCommentShori( rx_nega,nil,"Negaive","",spacer,"") 
-          $clm.hs_2hCommentShori(rx_yahi,nil,"不愉快千万","",spacer,"") 
-          $clm.hs_2hCommentShori(rx_negaZokusei,nil,"経緯がNegaive","",spacer,"") 
-          $clm.hs_2hCommentShori(rx_akiaki,nil,"うんざり派","",spacer,"") 
-          $clm.hs_2hCommentShori(rx_inori,nil,"いのり","",spacer,"") 
+          $clm.hs_2hCommentShori( rx_nega,nil,"Negaive","",spacer,"")
+          $clm.hs_2hCommentShori(rx_yahi,nil,"不愉快千万","",spacer,"")
+          $clm.hs_2hCommentShori(rx_negaZokusei,nil,"経緯がNegaive","",spacer,"")
+          $clm.hs_2hCommentShori(rx_akiaki,nil,"うんざり派","",spacer,"")
+          $clm.hs_2hCommentShori(rx_inori,nil,"いのり","",spacer,"")
         end
         #
         #帰納演繹用フィルター
-#         hs_data2=$clm.hs_2hCommentShori(/(メガ|MB|GB|bps|ｂｐｓ|ギガ|テラ|ペタ|リットル|リッター|\/h|kg|キロ|社|時速|時給|換算|年|月|週).*[\d+一二三四五六七八九十百千万億兆０-９]/,nil,"Data","",spacer,"nostdout") 
-        hs_data1=$clm.hs_2hCommentShori(/<\/dt><dd>.*[\d+一二三四五六七八九十百千万億兆０-９](?:メガ|G|M|T|B|bps|ｂｐｓ|ギガ|テラ|ペタ|リットル|リッター|\/h|kg|キロ|換算|月|週)/,nil,"Data","",spacer,"nostdout") 
+#         hs_data2=$clm.hs_2hCommentShori(/(メガ|MB|GB|bps|ｂｐｓ|ギガ|テラ|ペタ|リットル|リッター|\/h|kg|キロ|社|時速|時給|換算|年|月|週).*[\d+一二三四五六七八九十百千万億兆０-９]/,nil,"Data","",spacer,"nostdout")
+        hs_data1=$clm.hs_2hCommentShori(/<\/dt><dd>.*[\d+一二三四五六七八九十百千万億兆０-９](?:メガ|G|M|T|B|bps|ｂｐｓ|ギガ|テラ|ペタ|リットル|リッター|\/h|kg|キロ|換算|月|週)/,nil,"Data","",spacer,"nostdout")
 #           if hs_data1==nil then hs_data1=Hash.new end;
 #           if hs_data2==nil then hs_data2=Hash.new end;hs_data1.update(hs_data2)
           $clm.hs_2hCommentShori(nil,nil,"Data","",spacer,hs_data1);
-        $clm.hs_2hCommentShori(/(?:アルカリ|酸性|排泄|免疫|菌|抗生|粘膜|歯周|発がん|発ガン|発癌|タンパク|蛋白|プロテイン|感染|エンザイム|酵素|ビタミン|バイオフィル)/,nil,"生化学","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:次亜|クエン酸|ハイター|炭酸水|イソジン|重曹|フッ素|水道水)/,nil,"キッチン化学","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:自分|私|俺|オレ|近所)の.*(?:周|会社|同僚|近)?.+(?:る|い|た.+た)/,nil,"みぢかな事例","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:日本だと|日本から見|ドリフ)/,/ドリフト/,"日本で例示","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:欧州|欧米|海外|外国|英米|北米|ヨーロッパ)(?:と|だと|から見|じゃ)/,nil,"海外で例示","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:ジェンガ|黒ヒゲ危|ルーレット|ドミノ|ファミコン|スーファミ|セガサターン|スーパーマリオ|チキンレース|ポーカー|麻雀|マージャン|将棋|碁|ｼﾞｪﾝｶﾞ)/,nil,"ゲームで例示","",spacer,"") 
-#template         $clm.hs_2hCommentShori(()/(だと|から見|じゃ)/,nil,"で例示","",spacer,"") 
-        $clm.hs_2hCommentShori(/(?:年|時代|古代|世代|中世|昔|上古|紀元前|\d+世紀)/,/(?:強時代|年のせい)/,"時代や年代について","",spacer,"") 
+        $clm.hs_2hCommentShori(/(?:アルカリ|酸性|排泄|免疫|菌|抗生|粘膜|歯周|発がん|発ガン|発癌|タンパク|蛋白|プロテイン|感染|エンザイム|酵素|ビタミン|バイオフィル)/,nil,"生化学","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:次亜|クエン酸|ハイター|炭酸水|イソジン|重曹|フッ素|水道水)/,nil,"キッチン化学","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:自分|私|俺|オレ|近所)の.*(?:周|会社|同僚|近)?.+(?:る|い|た.+た)/,nil,"みぢかな事例","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:日本だと|日本から見|ドリフ)/,/ドリフト/,"日本で例示","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:欧州|欧米|海外|外国|英米|北米|ヨーロッパ)(?:と|だと|から見|じゃ)/,nil,"海外で例示","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:ジェンガ|黒ヒゲ危|ルーレット|ドミノ|ファミコン|スーファミ|セガサターン|スーパーマリオ|チキンレース|ポーカー|麻雀|マージャン|将棋|碁|ｼﾞｪﾝｶﾞ)/,nil,"ゲームで例示","",spacer,"")
+#template         $clm.hs_2hCommentShori(()/(だと|から見|じゃ)/,nil,"で例示","",spacer,"")
+        $clm.hs_2hCommentShori(/(?:年|時代|古代|世代|中世|昔|上古|紀元前|\d+世紀)/,/(?:強時代|年のせい)/,"時代や年代について","",spacer,"")
         if $levelM <4
-          $clm.hs_2hCommentShori(rx_tosi,nil,"歳について","",spacer,"") 
+          $clm.hs_2hCommentShori(rx_tosi,nil,"歳について","",spacer,"")
         end
-        $clm.hs_2hCommentShori(/(?:似て|にしか見え| そういや| そう...?えば| なんという|思い出した.?.?.?\s|連想|なもんだろ|みたいなも|みたい.?.?.?\s|同レベルだ.?\s|大差ない.?\s|同等だ.?\s|と同じ|ような.?\s|様...?.?.?.?\s|ようだ.?.?.?\s)/,nil,"連想","",spacer,"") 
+        $clm.hs_2hCommentShori(/(?:似て|にしか見え| そういや| そう...?えば| なんという|思い出した.?.?.?\s|連想|なもんだろ|みたいなも|みたい.?.?.?\s|同レベルだ.?\s|大差ない.?\s|同等だ.?\s|と同じ|ような.?\s|様...?.?.?.?\s|ようだ.?.?.?\s)/,nil,"連想","",spacer,"")
         #よしなしごとフィルター
-        
-        hs_about=$clm.hs_2hCommentShori(rx_about,nil," ","",spacer,"nostdout") 
+
+        hs_about=$clm.hs_2hCommentShori(rx_about,nil," ","",spacer,"nostdout")
         if $levelM<4
-          $clm.hs_2hCommentShori(rx_guess,nil, "だろ・かも・でしょ","",spacer,"") 
-          $clm.hs_2hCommentShori(rx_hatena,nil,"疑問符つき","",spacer,"") 
-          $clm.hs_2hCommentShori(nil,nil,"<a href='http://anond.hatelabo.jp/20071204193149'>概論派</a>","",spacer,hs_about) 
+          $clm.hs_2hCommentShori(rx_guess,nil, "だろ・かも・でしょ","",spacer,"")
+          $clm.hs_2hCommentShori(rx_hatena,nil,"疑問符つき","",spacer,"")
+          $clm.hs_2hCommentShori(nil,nil,"<a href='http://anond.hatelabo.jp/20071204193149'>概論派</a>","",spacer,hs_about)
 #         else
-#           hs_hatena=$clm.hs_2hCommentShori(rx_hatena,nil,"疑問符つき","",spacer,"nostdout") 
+#           hs_hatena=$clm.hs_2hCommentShori(rx_hatena,nil,"疑問符つき","",spacer,"nostdout")
         end
-        $clm.hs_2hCommentShori(/(?:べき|べし|べからず)/,nil,"べし","",spacer,"") 
+        $clm.hs_2hCommentShori(/(?:べき|べし|べからず)/,nil,"べし","",spacer,"")
         #ざれごとフィルター
         if $ita_toua==true
-          if header.slice(/title>.+<\/title/).slice(/(?:ロシア|露|北方)/) != nil 
-            hs_putin=$clm.hs_2hCommentShori(/(?:プーチン|命がな|毒盛|医者|粛清|消され|殺され|死ぬ|KGB)/,nil,"プーチン","",spacer,"nostdout") 
+          if header.slice(/title>.+<\/title/).slice(/(?:ロシア|露|北方)/) != nil
+            hs_putin=$clm.hs_2hCommentShori(/(?:プーチン|命がな|毒盛|医者|粛清|消され|殺され|死ぬ|KGB)/,nil,"プーチン","",spacer,"nostdout")
           end
-          if header.slice(/title>.+<\/title/).slice(/(?:放火|国技|レイプ|強姦|暴行)/) == nil 
-            $clm.hs_2hCommentShori(/(?:放火|国技|レイプ|強姦|暴行)/,nil,"韓国国技","",spacer,"") 
+          if header.slice(/title>.+<\/title/).slice(/(?:放火|国技|レイプ|強姦|暴行)/) == nil
+            $clm.hs_2hCommentShori(/(?:放火|国技|レイプ|強姦|暴行)/,nil,"韓国国技","",spacer,"")
           end
         end
         if $levelM<4
-          if header.slice(/title>.+<\/title/).slice(/(?:エヴァ|ガンダム|使徒|死海文書)/) == nil 
-            hs_gundam=$clm.hs_2hCommentShori(rx_gundam,nil,"アニメ","",spacer,"nostdout") 
+          if header.slice(/title>.+<\/title/).slice(/(?:エヴァ|ガンダム|使徒|死海文書)/) == nil
+            hs_gundam=$clm.hs_2hCommentShori(rx_gundam,nil,"アニメ","",spacer,"nostdout")
           end
         end
-        hs_tubuyaki=$clm.hs_2hCommentShori(/性欲/, nil,"性欲","",spacer,"") 
-        hs_tubuyaki=$clm.hs_2hCommentShori(/./, /(?:は|が|よ、)/,"主語不明のつぶやき程度","",spacer,"nostdout") 
+        hs_tubuyaki=$clm.hs_2hCommentShori(/性欲/, nil,"性欲","",spacer,"")
+        hs_tubuyaki=$clm.hs_2hCommentShori(/./, /(?:は|が|よ、)/,"主語不明のつぶやき程度","",spacer,"nostdout")
       end
       #-----------------------------------------------------
       #         $outHTML<< "\n</dd>\n"
-      #template         $clm.hs_2hCommentShori(/(.?\s|.?\s|)/,nil,"--","",spacer,"") 
-      #template         $clm.hs_2hCommentShori(/()/,nil,"派","",spacer,"") 
+      #template         $clm.hs_2hCommentShori(/(.?\s|.?\s|)/,nil,"--","",spacer,"")
+      #template         $clm.hs_2hCommentShori(/()/,nil,"派","",spacer,"")
       #         spacer="\n<br/><br/>" #opt vim-editing-mode=no-spaeer   spacer="\n</dd>"
       #id="xxx"mode --->ARGV[n]="xxx"---> 要約
       #未分類ジャンプリンクをヘッダーに
       #show ranking checkboxes #insert ranking into DBtable & update (CRUD)
       #opt  $outHTML<< "\n<%= hidden_field_tag :referer, (params[:referer] || request.env['HTTP_REFERER']) %> "
-			#opt calc pollute-ratio into r2chnns.obj; 
-      if $l[0].length >0 
+			#opt calc pollute-ratio into r2chnns.obj;
+      if $l[0].length >0
         if $levelM >1 then $outHTML<< "\n</dd><hr><h3>未分類</h3><dd>\n"end
         h2 = $l[0].sort_by{|key,value| key}; h2.each{|key,value| $outHTML<< spacer+value}#PG*sortするとarray-colectionになりkey消滅する
         $outHTML<< "\n</dd>\n" ;h2.clear;
@@ -883,24 +883,24 @@ if __FILE__ == $0
 #               "<a href='http://seiji.rakuten.co.jp'>楽天政治献金決済代行</a> "
 			if $levelM >1
         if $levelM <4
-          $clm.hs_2hCommentShori(nil,nil,"主語不明のつぶやき程度","",spacer,hs_tubuyaki) 
+          $clm.hs_2hCommentShori(nil,nil,"主語不明のつぶやき程度","",spacer,hs_tubuyaki)
         end
         if $levelM <3
-          $clm.hs_2hCommentShori(nil,nil,"<a href='http://anond.hatelabo.jp/20071204193149'>思考停止</a>・他力本願・ｗ笑ｗ(備考:三行要約依頼は外国人かも)<br/>","",spacer,hs_zako) 
+          $clm.hs_2hCommentShori(nil,nil,"<a href='http://anond.hatelabo.jp/20071204193149'>思考停止</a>・他力本願・ｗ笑ｗ(備考:三行要約依頼は外国人かも)<br/>","",spacer,hs_zako)
           $clm.hs_2hCommentShori(nil,nil,"<a href='http://www.hi-ho.ne.jp/inverse/kibennogaidorain.htm'>レッテル派</a>","",spacer,hs_label)
-          $clm.hs_2hCommentShori(nil,nil,"Erotic<br/>","",spacer,hs_ero) 
+          $clm.hs_2hCommentShori(nil,nil,"Erotic<br/>","",spacer,hs_ero)
           $clm.hs_2hCommentShori(rx_gundam,nil,"アニメで例示","",spacer,hs_gundam)
-          $clm.hs_2hCommentShori(nil,nil,"プーチン","",spacer,hs_putin) 
+          $clm.hs_2hCommentShori(nil,nil,"プーチン","",spacer,hs_putin)
         end
-        $clm.hs_2hCommentShori(nil,nil,"UNICODE ART<br/>","",spacer,hs_aa) 
+        $clm.hs_2hCommentShori(nil,nil,"UNICODE ART<br/>","",spacer,hs_aa)
         strHeader1="font";strHeader2=" size='+1'" #        strHeader1="h2";strHeader2="" #        <a href=''></a>
         strOmoniSectionHD="\n<"+strHeader1+strHeader2+">構造問題:老人,腐敗公務員,教育</"+strHeader1+">"
           strOmoniSectionSubHD="\n<small>[情報共有:"+strCommonLink+strUtopianLink+"]</small>\n"
-          i_omoni=$clm.hs_2hCommentShori(nil,nil,strOmoniSectionHD,strOmoniSectionSubHD,spacer,hs_omoni) 
-        if $ita_toua !=true then strTokuaCaption=">敵性国がらみ(罵詈雑言あり)</" else strTokuaCaption=">罵詈雑言あり</" end  
+          i_omoni=$clm.hs_2hCommentShori(nil,nil,strOmoniSectionHD,strOmoniSectionSubHD,spacer,hs_omoni)
+        if $ita_toua !=true then strTokuaCaption=">敵性国がらみ(罵詈雑言あり)</" else strTokuaCaption=">罵詈雑言あり</" end
         strTokuaSectionHD="\n<"+strHeader1+strHeader2+strTokuaCaption+strHeader1+">"
             strTokuaSectionSubHD="\n<small>[情報共有:"+strTokuaLink+strCommonLink+"]</small>\n"
-          $clm.hs_2hCommentShori(nil,nil,strTokuaSectionHD,strTokuaSectionSubHD,spacer,hs_tokua) 
+          $clm.hs_2hCommentShori(nil,nil,strTokuaSectionHD,strTokuaSectionSubHD,spacer,hs_tokua)
         strKokuzokuSectionHD="\n<"+strHeader1+strHeader2+">外国買弁や高等遊民,虚業家について</"+strHeader1+">"
           strKokuzokuSectionSubHD="\n<small>[情報共有:"+strUtopianLink+strCommonLink+"]</small>\n"
           i_tokuaRegime=$clm.hs_2hCommentShori(nil,nil,strKokuzokuSectionHD,strKokuzokuSectionSubHD,spacer,hs_zoku)
@@ -921,15 +921,15 @@ if __FILE__ == $0
       if url !~/hozen.org/ && url !~/unkar.jp/ then $outHTML<< strdum+"\n</dt></table>\n<hr>"+footer+"\n" end #yobi $outHTML<< "\n"+erb_footer+"\n" #$outHTML<< footer
       #PG:<table...td>じゃないとFFOXでうまく横幅広がらない。trやx-froatだとだめ。
 
-      if ARGV[4]=="mobile" then 
+      if ARGV[4]=="mobile" then
 #       $outHTML.sub!(/<font size="-1"/,"</font><font size='-2'>")
-        if url =~/hozen.org/ 
-          $outHTML.sub!(/<a name="R1">/,"<font size='-2'><a name=\"R1\">"); 
+        if url =~/hozen.org/
+          $outHTML.sub!(/<a name="R1">/,"<font size='-2'><a name=\"R1\">");
         elsif url =~/unkar.jp/
-          $outHTML.sub!(/<dt id="l1">/,"<font size='-2'><dt id=\"l1\">"); 
+          $outHTML.sub!(/<dt id="l1">/,"<font size='-2'><dt id=\"l1\">");
 #           $outHTML.gsub!(/<script .+\/script>/,'')
         else  #2ch.net
-          $outHTML.sub!(/<div style=/,"<font size='-2'><div style="); 
+          $outHTML.sub!(/<div style=/,"<font size='-2'><div style=");
         end
 
         $outHTML.gsub!(/<font size=\W+1\W/,"<font ");$outHTML.sub!(/<h1 style=/,"<h6 style=");$outHTML.sub!(/<\/h1>/,"</h6>")
@@ -942,7 +942,7 @@ if __FILE__ == $0
           #/l50--->i/n /-100 --->/1-   href="./" --> href="../i"  href="http://2ch.net/" -- href="http://c.2ch.net/"
           $outHTML.gsub!(/\/+l50\">最新50/m,"/n\">最新50")
           $outHTML.gsub!(/\/+-100\">1-</m,"/1-\">1-<")
-          
+
           iurl=url.gsub(/(.+read.cgi|l50.*)/,'')
           #mae  $outHTML.gsub!(/<a href=\".+read.cgi/,'<a href="http://c.2ch.net/test/-')
           $outHTML.gsub!(%r(<a href="#{url}),'<a href="http://c.2ch.net/test/-'+iurl)
@@ -975,24 +975,24 @@ if __FILE__ == $0
         end
       end
 #-----------------------------------------------------------------------------------------------------------------
-    elsif ARGV[0] =~ /watch/ 
-      $outdir=Dir.pwd; 
+    elsif ARGV[0] =~ /watch/
+      $outdir=Dir.pwd;
       outfile=$outdir+"/miracle.html"
-      if ARGV[0] =~ /miracle/ 
+      if ARGV[0] =~ /miracle/
         inifile=$outdir+"/movie_image/initWrapper.sh"
 #opt       cnt=$clm.readINI(inifile,"r","last-counter","")
         if ARGV[1] != nil then cnt=ARGV[1].to_i else cnt=1611 end
-        File.open(outfile, "w+b", 0644){|f| f.write("<html><body>") }	
+        File.open(outfile, "w+b", 0644){|f| f.write("<html><body>") }
         dl_linkMatome=Array.new
         while true do
           #opt basic認証突破
           url="http://sample.babyblue100.com/main_files/movie/#{cnt}.htm";puts "analyzing URL:"+url
           begin
             tmp=$agent.get(url)
-          rescue #SystemCallError 
-            cnt=cnt+1; break #next 
-          end 
-          if tmp then objRoot=tmp.root end 
+          rescue #SystemCallError
+            cnt=cnt+1; break #next
+          end
+          if tmp then objRoot=tmp.root end
           page=NKF.nkf("-S -x -w -m0" , objRoot.to_html)
           page.sub!(/.*moviefiles.gif/m,%q(<table cellspacing="2" border="0" cellpadding="1" width="100%"><tr><td><img src="../../assets/moviefiles.gif"));
           page.sub!(/<tr>\s*<td>\s*<br \/><iframe.*/m,"");
@@ -1007,21 +1007,21 @@ if __FILE__ == $0
           picHTML=page.scan(/<.*image.*>/);strA="http://img.babyblue100.com/";strB="./"
           picHTMLs=[];picHTMLs<<picHTML[0].sub(strA,strB)
           dlref=page.scan(/<.*href.*>/);dlrefs=[];
-          for i in ary_i do 
-            links<<pics[i*3+1];links<<pics[i*3+2];links<<pics[i*3+3] 
+          for i in ary_i do
+            links<<pics[i*3+1];links<<pics[i*3+2];links<<pics[i*3+3]
             picHTMLs<<picHTML[i*3+1].sub(strA,strB);picHTMLs<<picHTML[i*3+2].sub(strA,strB);picHTMLs<<picHTML[i*3+3].sub(strA,strB)
             tmpstr="http://sample.babyblue100.com/main_files/movie/download.php?fn=#{cnt}_#{i+1}";dl_linkMatome<<tmpstr+"<br/>"
             dlrefs<<"<a href=\""+tmpstr+"\">DL#{i+1}　</a>"
           end
           s=[];s<< "<table><tr>"+title+plots.to_s<<(dlrefs+picHTMLs);s<<"</tr></table>"
-          File.open(outfile, "a+b", 0644){|f| f.write(s) }	
+          File.open(outfile, "a+b", 0644){|f| f.write(s) }
           #DOWLOADE THUMBNAIL
           for link in links do $clm.getfilefromURL(link,80,"write",$outdir) end
           cnt=cnt+1
         end
       s=[];s<<"\n<hr>DLlink=<br/>\n";s<< dl_linkMatome;s<<"<hr></body></html>"
-      File.open(outfile, "a+b", 0644){|f| f.write(s) }	
-    elsif ARGV[0] =~ /dailyDL/ 
+      File.open(outfile, "a+b", 0644){|f| f.write(s) }
+    elsif ARGV[0] =~ /dailyDL/
       require './VB2RB/modSTD.rb'
 			#iniファイルhotlistを標準入力からよみこむ
       tgtary=[];mod=ModSTD.new;
@@ -1031,7 +1031,7 @@ if __FILE__ == $0
       if i_lastDLURL == nil then i_lastDLURL=0 end
       yetVisitURLs=ary_babyblueHOTLIST[i_lastDLURL..-1]
       #認証mehanize突破できない
-      $agent.auth('', 'sweet') ;$agent.user_agent_alias = 'Linux Mozilla'; 
+      $agent.auth('', 'sweet') ;$agent.user_agent_alias = 'Linux Mozilla';
       yetVisitURLs.each{|url|
 #NG     doc =($agent.get("http://sample.babyblue100.com/main_files/movie/1656.htm").root) #dbg  puts doc.to_plain_text.toutf8
 #NG     doc =($agent.get(url).root) #dbg  puts doc.to_plain_text.toutf8
@@ -1040,12 +1040,12 @@ if __FILE__ == $0
         #上のどれでも　直のDLリンクをgetすると　cookieを有効にしてください、
         #上のどれでも　WWW::Mechanize::ResponseCodeError Exception: 401 => Net::HTTPUnauthorized　がかえってくる
         ret = Scraper.new.downloadAfterBasicAuth(url, "","sweet")
-        #updaate INIfile 
+        #updaate INIfile
         #http://sample.babyblue100.com/main_files/movie/download.php?fn=1586_2
       }
 #       fileary.each{|line| #         if line =~/^\./ #         else #         end #       }
       #automonitor of pw @ pinkbbs
-    elsif ARGV[0] =~ /watchRefresh/    #<----------------cron 
+    elsif ARGV[0] =~ /watchRefresh/    #<----------------cron
       url="http://mheo.moe.hm/r2chnns/refresh/1"
       doc= Scraper.new.getfilefromURL(url,80,"r2chnn","")
     elsif ARGV[0] =~ /KoiNews/    #<----------------cron ruby /home/you/RoRapps/2chnrg/lib/scraper.rb watchKoiNews
@@ -1085,7 +1085,7 @@ if __FILE__ == $0
       str2<<str3;str2=str2.sort.to_s
 
       chintaiHline=str2.gsub(/[\r\n]/,'|').gsub('||','').gsub(/(\(|（)\d+年(\)|）)/,'')
-      if str2 =~/1\.\d/ then addstar  = "★カルタ:"else addstar="" end 
+      if str2 =~/1\.\d/ then addstar  = "★カルタ:"else addstar="" end
 
       chintai=url+"\n"+url2+"\n"+str2.gsub('■',"\n■")
       spacer="\n-----------------\n"
@@ -1094,7 +1094,7 @@ if __FILE__ == $0
       require './mailer.rb'
       Mailer.new.gmail('example@some.com' ,'example@.com', addstar+forexHline+tenkiHline+chintaiHline,$outHTML,"stdout") #opt htmltoPDF
 #     Mailer.new.gmail('example@some.com' ,'example@.com','koiNews',$outHTML,"stdout")
-    elsif ARGV[0] =~ /gonekorean/ 
+    elsif ARGV[0] =~ /gonekorean/
       #wget+scraper html2denyfrom 在日コリアン会社の事務所：メーカー、本社、##船橋 鶴橋 新大久保 赤坂 池袋 tibet-turkistan-内蒙古
     end
     #readfiles html from wgotdir do
@@ -1109,14 +1109,14 @@ if __FILE__ == $0
     page = $agent.get('http://mail.google.com/mail?hl=ja')
     #order no mailshaver ord で検索する
       page.form("sf").q = "order mailshaver ord"; page = $agent.submit page.form("sf")
-      page.links_with(:href => /order.*mailshaver.*ord/ ).each{|el| # page.links.each {|el| 
+      page.links_with(:href => /order.*mailshaver.*ord/ ).each{|el| # page.links.each {|el|
         #リンクからメールアドレスがかいてある続きページまで一気にクリック＆代入
-        detailpage = el.click; detailpage = detailpage.links_with(:text => /続き/)[0]; detailpage = detailpage.click 
+        detailpage = el.click; detailpage = detailpage.links_with(:text => /続き/)[0]; detailpage = detailpage.click
         email = detailpage.links_with(:href => /cs=.*to=/)[0].text #(rdb:1) p $outhtml<< detailpage.root.to_plain_text
         #以下のプログラムはmailshaver ver.1.2 一個でもうれてからやる.
         #login to adva-cms with admin prev.  #http://localhost:3000/admin/sites/1/users/new #message"ait 30seonds!......"
         #register mail address into adva-cms #rand()  =>  randomely issue password #send greeting mail to registerer
-      }    
+      }
   end
   puts $outHTML
 end
@@ -1125,13 +1125,13 @@ end
 #   if el.text =~ /share*it/  then #   else #   end
 #(rdb:1) p puts page.root/"a#subj0"
 #(rdb:1) p puts page.root/:a
-# (rdb:1) p puts page.links.each {|el| print el.text + "\n" + el.href + "\n" if el.text =~ /toeic/  } 
-# (rdb:1) p print ptext.grep(/toeic/).each{|el| print el +"\n"  } 
+# (rdb:1) p puts page.links.each {|el| print el.text + "\n" + el.href + "\n" if el.text =~ /toeic/  }
+# (rdb:1) p print ptext.grep(/toeic/).each{|el| print el +"\n"  }
 # (rdb:1) p page.uri
 # ptext =  page.root.to_plain_text  #print page.body  #<--mechanize:   hpicot--> print page.root.to_plain_text + "\n";print page.root.to_html + "\n"
 # ptext2 = nkf.guess(ptext)
 #p puts cgi.unescapehtml(page.body)
-# ptext = "_" end #stdin.readlines.to_s.  
+# ptext = "_" end #stdin.readlines.to_s.
 #<uri::http:0xb687cad8 url:http://mail.google.com/mail/x/16a232b2vrj55-/?hl=ja&gausr=gmail_account%40gmail.com&f=1&shva=1>
 # #filebuf= filebuf.to_s.gsub!(tmpary[0], tmpary[1])
 
@@ -1139,7 +1139,7 @@ end
 #これから新規で学習する人は www::mechanize::form#click_button を submit の代わりに覚えるといいと思います。
 #dbg sleep 5;  page2 = page.to_s; print page2
 
-#opt #(クソ|糞)スレ 確率事前注意報  #重複行の強調表示 
+#opt #(クソ|糞)スレ 確率事前注意報  #重複行の強調表示
 #opt def filterStranger
 #       IDなざし検出
 #       　ID抽出
@@ -1147,4 +1147,3 @@ end
 #          チョン(は|だろ)
 #          ＞ID:\w+
 #            ID:\w+(\s|だ|は|が|よ|を|の)
-

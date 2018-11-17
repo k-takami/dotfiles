@@ -1,20 +1,3 @@
-Migration files
-	**#Generator rails generate model SINGULAR_TENSE [field[:type][:index] field[:type][:index]] [options]**
-	#vim #xls 2migrate: ExcelToGenerateModel
-		:'<,'>s/  */:/gc |'<,'>s/bigint/integer{8}/gc |'<,'>s/\n/ /gc | <,'>s/^/bx rails generate model SINGLEMODELCAMELCASE/gc
-		**decimal--->decimal{'10,0'}**  **'¥d+,¥d'にすること。数字の間に空白禁止**
-	rails generate model MemberAddress member_id:integer{8} postal_code:string{7} address:string{191} 
-
-	#bigint create_table :member_addresses, comment: "被保険者住所情報" do |t|
-		t.integer :member_id, limit: 8, null: false, unsigned: true, comment: '被保険者ID'
-	#Add after
-		$ rails generate migration AddNotificationMethodToPasscode notification_method:string{1}
-		**#手作業でafter指定
-class AddNotificationMethodToPasscode < ActiveRecord::Migration
-    def change add_column :passcodes, :notification_method, :string, limit: 1, after: :state
-    end
-end
-
 
 	インデックス追加 #add_index 例 __AddIndexToPluralClasses column:type:index__
 	 bx rails generate migration AddIndexToWalletCoinBalances account_id:integer:index
@@ -42,7 +25,6 @@ end
 		
 #add_index
 #association 
-#特定ロールバック $ bundle exec rake db:migrate:down VERSION=20161215052230 
 #class_name つけよう
 	class NotificationMethod < ActiveRecord::Base has_many :notification_method_errs, class_name: 'notification_method_err', dependent: :destroy end
 	#migration

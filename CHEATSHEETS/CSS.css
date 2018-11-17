@@ -13,6 +13,16 @@ getbase.org
 #alt text ---> </div title="..">
 <div title="ALT text here." id="CSS-class-with-background"></div>
 
+#ボタン
+  ＃リンク風表現
+    / <input type="submit" value="送信" style="border:none;background-color:transparent;color:blue;text-decoration:underline;">
+    #slim:
+      sass:
+        #linkish_button
+          border: none
+          text-decoration: underline
+          background-color: transparent
+          color: #006699
 
 #TRAVERSING
   Nokogiri::HTML.parse(html_text).css("class_name[attr*^$='value']")
@@ -60,12 +70,12 @@ Media query   #TOGGLING AND RESISING BY THRESHOLD
 
 
 #何番目系の便利なCSSまとめ"
-  種類  -of-type -child  
-  最初  :first-of-type       :first-child  
-  最後  :last-of-type        :last-child   
+  種類  -of-type -child
+  最初  :first-of-type       :first-child
+  最後  :last-of-type        :last-child
   n番目 :nth-of-type(n)    :nth-child(n)
   後ろからn番目   :nth-last-child(n)  :nth-last-of-type(n)
-  １個だけ:only-of-type  :only-child   
+  １個だけ:only-of-type  :only-child
 
   最初
   :only-of-type 1個だけある子要素がある（親要素から見て、ある子要素が1個だけある）
@@ -148,5 +158,3 @@ Media query   #TOGGLING AND RESISING BY THRESHOLD
   background: linear-gradient(to bottom, black, black);
   background-size: cover;
   background-position: center;
-
-

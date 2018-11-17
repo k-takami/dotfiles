@@ -1,5 +1,5 @@
 # coding: utf-8
-# XXX: `sudo gem install debugger byebug rdebug sqlite3 pry-debugger ` 
+# XXX: `sudo gem install debugger byebug rdebug sqlite3 pry-debugger `
 require_relative 'common'
 @apps_root = @option[:from]
 @mode      = @option[:mode]
@@ -20,7 +20,7 @@ require_relative 'common'
     # "gem 'railroady' >> Gemfile "
     # `bundle install`
     # `bundle exec rake diagram:all`
-  puts_command_under_wildcard_dir "grep -nirE '(has_|have_|belongs)_' $dir/app/models/* "
+  puts_command_under_wildcard_dir "grep -nirE '(has|have|belongs)_' $dir/app/models/* "
   puts_command_under_wildcard_dir "ls -alt                            $dir/db/* --include=*create*rb --include=schema.rb"
   puts_command_under_wildcard_dir "grep -nirE '(lock_version|lockfile)'              $dir/db/migrate/*create*rb "
   puts_command_under_wildcard_dir "grep -nirE 't.string'              $dir/db/* --include=*create*rb --include=schema.rb"

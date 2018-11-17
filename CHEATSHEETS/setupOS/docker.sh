@@ -58,11 +58,12 @@
     apt-get clean;
 
     # 3. Rails 連携
-      # 以下は"docker.yml"があるディレクトリで実行 "-d"は--detach, つまりbackground実行；
-      docker run container_name bundle install
-      docker run -d container_name rake db:create
-      docker run -d container_name rake db:migrate
-      docker run container_name rails s
+      # 以下は"docker-compose.yml"があるディレクトリで実行 "-d"は--detach, つまりbackground実行；
+      docker run image_name bundle install
+      docker-compose run image_name bundle install
+      docker-compose run -d container_name rake db:create
+      docker-compose run -d container_name rake db:migrate
+      docker-compose run container_name rails s
       # デバッグ環境：
         # Gemfile
           gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

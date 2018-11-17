@@ -12,7 +12,7 @@
       allow_any_instance_of(Yamazaki::Client).to receive(:get).and_return(response)
     end
 		なにもかえさないdeaf mock
-		
+
           # Yamazaki.config.jwt.claim.aud = "https://kp-beryl-ope.dev.kenko-pf.local"
           # Yamazaki.config.jwt.claim.iss = "https://kp-fluorite.dev.kenko-pf.local"
           # Yamazaki.config.jwt.secret = "68ba6b6Ca52_a075455314d29f2fd14BG695fd71"
@@ -47,12 +47,9 @@
           # {hokensha_bango: hokensha_bango, filename: filename_for_api}
         # ).body.to_obj
 
-      # create_kohai_csv_file
       # create_member_file(filename)
     end
 
-# CSVファイルを読みこむ
-# CSVファイルを千件ごとにAPIにわたす
 # params << tmpfile[:members]
 
 
@@ -64,67 +61,54 @@
 
 
 
-  def create_kohai_csv_file
-    dravite_client_directory.create_file(
-      :hokensha,
-      'HOKENJA_NUM_MNG-20151231000000.csv',
-      StringIO.new(
-        <<-DEFAULT_HOKENSHA_CSV.gsub(/^\s+/, '')
-        local_kumiai_code,hokensha_bango,hokensha_name
-        111,1234567,テストBB002健康保険組合
-        DEFAULT_HOKENSHA_CSV
-      )
-    )
-  end
-
 RSpecの標準matchers(マッチャー)一覧
 	禁則
 		:all  (before/after)禁止。完全に挙動せず、インスタンスが後続spec.rbをあてあずれエラーにする。
-		#不要なテストコードはかかない。 処理に時間をかけたくないから。 
-		#mockはさける。挙動の理解と共有がむずかしい。 
-		#テストインスタンス生成にはFactoryGirlをつかおう。 
-		#should禁止gem@github:　should_not, shoud_clean 
+		#不要なテストコードはかかない。 処理に時間をかけたくないから。
+		#mockはさける。挙動の理解と共有がむずかしい。
+		#テストインスタンス生成にはFactoryGirlをつかおう。
+		#should禁止gem@github:　should_not, shoud_clean
 	チートシート：https://www.anchor.com.au/wp-content/uploads/rspec_cheatsheet_attributed.pdf
-	
+
 	https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
 		http://freak-da.hatenablog.com/entry/20080124/p1
 		http://www.rubydoc.info/gems/rspec-expectations/file/README.md
 		http://morizyun.github.io/blog/rspec-builtin-matcher-rails/
-	
+
 	時間計算検証
 	  describe "#calculated_previous_reset_time" do
     before { @ordinary_reset_timing = Time.zone.today.beginning_of_day + @trigger.reset_time.seconds_since_midnight }
 
     context "トリガーにリセット時間がない" do
       it "トリガー.start_date　を前回リセット日時として返す" do
-        @trigger.reset_time = nil 
+        @trigger.reset_time = nil
         expect(described_class.new.calculated_previous_reset_time(@trigger)).to eq @trigger.start_date
-      end 
-    end 
+      end
+    end
     context "トリガーにリセット時間がある" do
       context "日本時間今日0:00:00にリセット時間を加算した時刻　が　プログラム実行時刻 以前" do
         it "日本時間今日0:00:00にリセット時間を加算した時刻　を前回リセット日時として返す" do
           Timecop.freeze(Time.zone.today.end_of_day)
           expect(described_class.new.calculated_previous_reset_time(@trigger)).to eq @ordinary_reset_timing
           Timecop.return
-        end 
-      end 
+        end
+      end
       context "日本時間今日0:00:00にリセット時間を加算した時刻　が　プログラム実行時刻よりもあと" do
         it "日本時間今日0:00:00にリセット時間を加算した時刻の1日前の時刻　を前回リセット日時として返す" do
           Timecop.freeze(Time.zone.today.beginning_of_day)
           expect(described_class.new.calculated_previous_reset_time(@trigger)).to eq @ordinary_reset_timing - 1.day
           Timecop.return
-        end 
-      end 
-    end 
-  end 
+        end
+      end
+    end
+  end
 		@M
-		
+
   def calculated_previous_reset_time(trigger)
     return trigger.start_date if trigger.reset_time.nil?
     ordinary_reset_timing = Time.zone.today.beginning_of_day + trigger.reset_time.seconds_since_midnight
     ordinary_reset_timing <= Time.zone.now ? ordinary_reset_timing : ordinary_reset_timing - 1.day
-  end 
+  end
 
 	増減・移管検証
 	     it "移動元アカウントIDのレコードが移動先のアカウントIDに書き換わっていること" do
@@ -142,7 +126,7 @@ RSpecの標準matchers(マッチャー)一覧
 
 
 		.reload.number/count
-	
+
 	raising error and rollback
 		ptn1
 		﻿﻿    context "セッションの削除に失敗した場合" do
@@ -160,15 +144,15 @@ session[:cart_id] = cart.id
 +      ProductPurchaseHistory.create_coin_products(account, cart)
 +    end
 
-	
+
 	 Time
 		TimeCope
 		    let(:current) { Time.new(2017, 4, 1).getlocal }
 +
 +    before { Timecop.freeze(current) }
 +    after { Timecop.return }
-		 
-		
+
+
 	共通処理
 		shared_examples_for '名前' {}
 		subject {}
@@ -201,7 +185,7 @@ session[:cart_id] = cart.id
 	expect(response.body).to have_css("p a", text: /[hH]ello(.+)/i) # true if there is a anchor tag with text matching regex
 	expect(response.body).to have_selector(:css, "p a#movie_edit_path")
 file upload
-	patteernA: File.puts 
+	patteernA: File.puts
 	  before do
     remove_file(test_file_path)
     File.open(test_file_path, 'a', encoding: 'UTF-8', row_sep: :auto) do |file|
@@ -223,7 +207,7 @@ not_to raise_error
       it do
         targets_in_db = Member.where( id: params[:members][offset_of_erroneous_member..-1])
         notification_methods_in_db = targets_in_db.map(&:passcode).map(&:notification_method)
-        expect(notification_methods_in_db.include? notification_method_name_new).to be_falsey 
+        expect(notification_methods_in_db.include? notification_method_name_new).to be_falsey
       end
     end
 TRAVERSING
@@ -259,7 +243,7 @@ stub(NdlLibrary).find_by_code(nil){nil}
 
 	factorygirl sample
 	build_stubbed(:user)
-create(:model) 
+create(:model)
 build(:model)
 
 
