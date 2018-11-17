@@ -71,6 +71,7 @@ vim/.netrwhist
 /* vim/neosnippets/ */
 vim/bundle/
 /* vim/ */
+/* linuxではvimを無視させ、osxでは無視させない方がよい微妙な差が有る */
 .DS_Store
 .dbeaver-data-sources.xml
 .byebug_history
