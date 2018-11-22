@@ -125,6 +125,12 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
         SLIMでは：f.button 'キャプション',disabled: true, class: "btn btn-light", style: "border-radius:50px;"
          span.label~~~ではh1~hn要素で大きさが左右される
 
+
+     f.button "CSV出力", class: "btn btn-secondary btn-lg", method: :put, data: { disable_with: "CSV出力" }
+
+
+
+
 ### stateful
     <button type="button" id="example-btn" data-loading-text="Loading..." class="btn btn-primary">submit</button>
     $('#example-btn').click(function() {

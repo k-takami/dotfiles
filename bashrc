@@ -45,20 +45,33 @@ alias dkld='    docker load < ' # *.tar name
 alias dkh='     docker --help '
 alias dkv='     docker --version '
 # XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定すること
+
 function dkc_rdbseed {
-  docker-compose run app bin/rake db:migrate db:seed
-  echo "###NOTE: DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
+  docker-compose run -u root app bundle install ;
+  docker-compose run -u root app bin/rake db:migrate db:seed
+  docker-compose run -u root app annotate --force ;
+  echo "### NOTE "
+  echo "###      bundle install失敗するときは docker exec -it -u root CONTAINERNAME bash でログインして すること"
+  echo "###    : DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
 }
 function dkc_rdbmreset {
-  docker-compose run app bin/rake db:migrate:reset db:seed;
-  echo "###NOTE: DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
+  docker-compose run -u root app bundle install ;
+  docker-compose run -u root app bin/rake db:migrate:reset db:seed;
+  docker-compose run -u root app annotate --force ;
+  echo "### NOTE "
+  echo "###      bundle install失敗するときは docker exec -it -u root CONTAINERNAME bash でログインして すること"
+  echo "###    : DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
 }
 function dkc_rdbinit {
   local options=${2:-web} ;
-  docker-compose run app bin/rake db:create db:migrate db:seed;
+  docker-compose run -u root app bundle install ;
+  docker-compose run -u root app bin/rake db:create db:migrate db:seed;
+  docker-compose run -u root app annotate --force ;
 }
+
+#migration file修正反映: gem install annotate; 　annotate --force
 
 # # image 削除
 #  # $ docker ps -a で消したいコンテナID/image_nameしらべて、docker コンテナ消して、それからイメージをけす；
@@ -273,6 +286,7 @@ alias no_spec=' echo "--exclude=*spec* "'
 function includerb { echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
 function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak "; }
 function appfilesonly { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log "; }
+# TODO: OSX/BSDならば文字中の空白を.変換、このロジックをregrepとgreperに応用して統合整理 -c3 -cr系も整理
 function greprc {
   local options=${@:2} ;
   grep -niE --include=*rc $1 ~/dotfiles/*                      $options;
@@ -339,6 +353,7 @@ alias grep-pkglist=' pkglist | grep -iE '
 #git/ mercurial / patchコマンド http://uguisu.skr.jp/Windows/diff_patch.html http://d.hatena.ne.jp/mrgoofy33/20101019/1287500809
 alias patchp=' patch    -p0 <' #[patch-name] to apply on
 alias patchrp='patch -R -p0 <' #[patch-name] to reverse(=undo)
+alias patch_cleaning='ffgrep "\.(rej|orig)" | xargs -n1 rm'
 alias gibr='      git branch'
 alias gibr-d='    git branch -D' #削除
 alias gibr-m='    git branch -m' #旧ブランチ名　新ブランチ名
@@ -351,10 +366,12 @@ alias hgdi='      hg diff -c'
 alias gdic='     git diff --cached'
 alias gdiclas='  gdic --name-only |xargs ls -alSr'
 alias gdilas='   gdi  --name-only |xargs ls -alSr'
+alias gdicgrep=' gdic --name-only |xargs grep -niE '
 # patch作成用  gitの場合は--no-prefixは内部的に自動付与らしい
 alias gdicnp='     git diff --cached --no-prefix'
-alias URDPDgdicnp='git diff --cached --no-prefix > ~/Downloads/patch.diff'
-alias URDPDpatchp='patchp ~/Downloads/patch.diff'
+alias gdilight='        git diff --no-prefix --ignore-all-space --ignore-blank-lines --ignore-cr-at-eol'
+alias gdicnpURDPD='     git diff --cached --no-prefix > ~/Downloads/gdicnpURDPD.diff'
+alias gdicnpURDPDlight='git diff --cached --no-prefix --ignore-all-space --ignore-blank-lines --ignore-cr-at-eol > ~/Downloads/gdicnpURDPD.diff'
 
 alias gdinp='    git diff          --no-prefix'
 alias gdino='    gdi --name-only'
@@ -375,6 +392,7 @@ alias gishsw='    git stash show'
 alias gishsv='    git stash save'
 alias gishpp='    git stash pop'
 #git関連検索
+alias gilo='      git log '
 alias gilos='     git log -S'
 alias gilohd='    git log |head -n 50'
 alias gilono='      git log --name-only'
@@ -506,8 +524,9 @@ function tarziprorapp {
 
 function tarziprorgitonly {
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
-  tar zcvf $chomped1-git-`date '+%Y%m%d'`.tar.gz  $chomped1/.git;  lat;
-  #XXX --exclude node_modules
+  cd $chomped1
+  tar zcvf ../$chomped1-git-`date '+%Y%m%d'`.tar.gz .git ; lat ..
+  cd -
 }
 
 function tarzipdotfiles {
@@ -566,16 +585,28 @@ function atom_backup {
   cd -
 }
 alias atom_restore='apm install --packages-file ~/dotfiles/SI/ATOM/packages.txt; cp ~/dotfiles/SI/ATOM/keymap.cson ~/.atom/'
+# TODO: .
+# ~/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee +22
+  # # default: 'bundle exec',
+  # default: 'docker exec -it PPetd_bqq',
+# ~/.atom/packages/visual-rails-generator/lib/scaffold_model_view.coffeea +170
+    # command  += before_string
+  # command += " bin/rails g "
 
 function openatomfromvimsession {
   local outfile=openatomfromvimsession.sh
   grep -E "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
   vim $outfile; sh $outfile; rm  $outfile; lat;
 }
+#保存時に空白削除
+# Under your Atom Preferences go to Packages tab and search for whitespace. Click on the whitespace package and uncheck Ensure Single Trailing Newline option
 
 
 #Google 2-Step Verification tool 'oathtool'
 alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生成画面で表示されるbase32の文字をスペースなしで引数として入力 %s/ //  #<  sudo apt-get install oathtool
+
+# ==== リハビリコマンド ==========================
+alias rehabilli='cat ~/dotfiles/SI/REHABILI/* |less'
 
 # ==== PJ-dependent unixコマンド ==========================
 source ~/dotfiles/SI/pj-dependent.bashrc
