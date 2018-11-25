@@ -1,3 +1,10 @@
+#Mojave
+	$ xcode-select --install
+	$ sudo gem install rubocop
+  # HOmeBrew
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+
 システム環境設定パネル
 	//(keyboard:
 		キーボートタブ右下　修飾キー→ disable caps-lock key,
@@ -33,11 +40,6 @@ DOCK
 	 ~/.bashrc
 		    export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
 
-#Mojave
-	$ xcode-select --install 
-
-# HOmeBrew
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 #SVN環境のためにxcodeインストール：　$svn でインストール画面ポップアップしてくれる。
 SSH-mounted-drive

@@ -209,7 +209,7 @@ function! OpenURL()
   else
 	  echo "No URI found in line."
   endif
-endfunction
+:endfunction
 map <Leader>w :call OpenURL()<CR>
 
 
@@ -307,6 +307,14 @@ function! ToggleLineNumber()
     setlocal number
   endif
 :endfunction
+" ATOM-linkage
+function! OpenInAtom()
+  " let s:aaa = system("atom -a %")
+  :silent let ret = system("atom -a " . shellescape(expand("%")))
+:endfunction
+noremap ga :call OpenInAtom()<CR>
+" TODO: atom tabs -> vim tabs へはvim -p2 tab1file tab2fie...tabNfile 形式で開ける
+
 nnoremap <silent> <F6> :call ToggleLineNumber()<CR>
 "NG: conficted with git commit vim invoking
 " たて新ペインに最近のファイル列挙読み込み(require 'FuzzyFinder.vim')
@@ -1086,4 +1094,197 @@ filetype plugin indent on
 " Save all bookmarks to a file    :BookmarkSave <FILE_PATH>
 " Load bookmarks from a file    :BookmarkLoad <FILE_PATH>
 
+" #vim-command
+	" 変換
+		" 雑文構造化　:%s/\n\n\n*/\r/gc | %s/\t/  /gc
+		" 文字列比較(全角半角同一視)
+		" 　=EXACT(LOWER(E2), LOWER(J2))
+		" 半角変換
+		" 　=ASC("ペット相談有無フラグが atbb定数")
+		" // CRLF変換@VIM
+			" :set fileformat=ファイルフォーマットの種類
+			" :set ff=ファイルフォーマットの種類 (上のコマンドの短い形式。こちらでも良い。)
+			" :set fileformat=dos (改行をWindowsの形式に変更。)
+			" :set fileformat=mac (改行をMacの形式に変更。)
+			" :set fileformat=unix (改行をUnixの形式に変更。)
+		" #SGS//vim MPE testingvimgrep /\(2507\|5002\|2606\).*31546960/ D:\temp\MPE-IDV-containingTestProducts-full\**/*#//VENUS flat 改行:%s/EO/\rEO/gc|M/\d{6}301700 
+		" #HTML-sidebar into selenium Curser
+			" :%s/.*href="/open<\/td>/gc
+			" :%s/".*/<\/td><\/td><\/tr>/gc
+			" :%s/\/e\//${site_root}\/e\//gc
+			" :%s/###/### /gc
+				" #コメントpatternは　＊＊＊＊
+		" //Excel//excel列→vim正規表現%s/\n/|/ |%s/|$// |%s/^/(/ |%s/|*// |%s/|*$/)/
+    " excel列→vim正規表現 括弧なし%s/\n/|/ |%s/|$// |%s/|*// |%s/|*$//
+    " //vimgrep結果をTSVに%s/ */|\t/gc | %s/ */|\t/gc
+    " //Excelタテ2列をSQL横1行に%s/\t//gc | %s/\n/,/gc
+    " //vlookup常套句=IF(VLOOKUP( D167 ,'notify to'!A2:A36,1)<>"", D167 ,"ng")
+    " :%s/\t//gc
+    "  Excelで文字列組み立てる 　 ="transform :"&J36&", method: transform_" & J36 &" # 設備特記"
 
+		" #Office365toExcel
+			" go to https://outlook.office.com/owa/?path=/mail/sentitems and sort itema in time sequence
+			" :%s/\(出社時間.\|退社時間.\|休憩時間.\|作業時間.\|【\|】\|■今日の作業 *\n/\)//gc
+
+	" #substitution
+	" :%s/fred/joe/igc            : 一般的な置換コマンド
+  " " 自動的に行末のDOS改行、ホワイトスペースを削除
+	" *  autocmd BufRead * silent! %s/[\r \t]\+$//
+	" *  autocmd BufEnter *.php :%s/[ \t\r]\+$//e
+		" ----------------------------------------
+	" :%s/\r//g                   : DOS の改行 ^M を削除
+	" :%s#\s*\r\?$##              : 行末の空白とDOSの改行両方を削除
+	" :%s#\s*\r*$##               : 同上
+	" " ファイルがぐちゃぐちゃになっていたらこれを使う
+	" :%s/\r/\r/g                 : DOS の改行 ^M を本当の改行に置換
+  " " DOS 改行を挿入する
+  " :%s/$/\<C-V><C-M>&/g          :  that's what you type
+  " :%s/$/\<C-Q><C-M>&/g          :  for Win32
+  " :%s/$/\^M&/g                  :  what you'll see where ^M is ONE character
+		" ----------------------------------------
+			" " ファイルに行番号を挿入
+	" *   :g/^/exec "s/^/".strpart(line(".")."    ", 0, 4)
+		" :%s/^/\=strpart(line(".")."     ", 0, 5)
+			" ━━━━━━━━━━━━━━ :%s/^/\=line('.'). ' '
+		" ----------------------------------------
+	" :%s=  *$==                  : 行末のスペースを削除
+	" :%s= \+$==                  : 同上
+	" " 空行を削除する
+	" :%s/^\n\{3}//               : 3個の連続する空行を削除
+	" :%s/^\n\+/\r/               : 空行を圧縮する
+	" :%s#<[^>]\+>##g             : テキストを残したままhtmlタグを削除(non-greedy)
+	" :%s#<\_.\{-1,}>##g          : 複数行にわたってhtmlタグを削除(non-greedy)
+	" " IF YOU ONLY WANT TO KNOW ONE THING
+	" :'a,'bg/fred/s/dick/joe/igc : VERY USEFUL
+	" " カラムを重複させる
+	" :%s= [^ ]\+$=&&=            : 最後のカラムを重複させる
+	" :%s= \f\+$=&&=              : 同上
+	" :%s= \S\+$=&&               : 普通は同上
+	" " 記憶
+	" :s/\(.*\):\(.*\)/\2 : \1/   : : で区切られるフィールドを反転
+	" :%s/^\(.*\)\n\1$/\1/        : 重複する行を削除
+	" " non-greedy matching \{-}
+	" :%s/^.\{-}pdf/new.pdf/      : 最初のpdfまでを削除
+	" " 直前の項目が0個または1個を意味するアトム \?
+	" :%s#\<[zy]\?tbl_[a-z_]\+\>#\L&#gc : lowercase with optional leading characters
+	" " 複数行に渡ることを許す
+	" :%s/<!--\_.\{-}-->//        : 複数行に渡るコメントを削除
+	" :help /\{-}                 : help non-greedy
+	" " レジスタを使った置換
+	" :s/fred/<c-r>a/g            : "fred" をレジスタ"a"の中身で置き換える
+	" :s/fred/<c-r>asome_text<c-r>s/g
+	" :s/fred/\=@a/g              : レジスタの中身が表示されないのでベター
+	" " 1行に対して複数のコマンド
+	" :%s/\f\+\.gif\>/\r&\r/g | v/\.gif$/d | %s/gif/jpg/
+	" :%s/a/but/gie|:update|:next : これを繰り返すには @: を使う
+	" " ORing（分岐）
+	" :%s/suck\|buck/loopy/gc     : ORing (パイプ記号 | をエスケープすること)
+	" " VIM の関数を呼ぶ
+	" :s/__date__/\=strftime("%c")/ : 日付を挿入する
+	" " 列を操作する。3列目の str1 を置換する
+	" :%s:\(\(\w\+\s\+\)\{2}\)str1:\1str2:
+	" " 最初と最後の列を入れ替える（4列ある場合）
+	" :%s:\(\w\+\)\(.*\s\+\)\(\w\+\)$:\3\2\1:
+	" " form の全ての要素をペーストレジスタに入れる
+	" :redir @*|sil exec 'g#<\(input\|select\|textarea\|/\=form\)\>#p'|redir END
+	" :nmap ,z :redir @*<Bar>sil exec 'g@<\(input\<Bar>select\<Bar>textarea\<Bar>/\=form\)\>@p'<Bar>redir END<CR>
+	" " 数字を3デクリメントする
+	" :%s/\d\+/\=(submatch(0)-3)/
+	" " ある行についてだけ数字を6インクリメントする
+	" :g/loc\|function/s/\d/\=submatch(0)+6/
+	" " ベター
+	" :%s#txtdev\zs\d#\=submatch(0)+1#g
+	" :h /\zs
+	" " gg\d\d の数字だけを6インクリメントする
+	" :%s/\(gg\)\@<=\d\+/\=submatch(0)+6/
+	" :h zero-width
+	" " 文字列を増加していく数字で置き換える
+	" :let i=10 | 'a,'bg/Abc/s/yy/\=i/ |let i=i+1 # yy を10,11,12 ...で置き換える
+	" " 同上。ただしより正確
+	" :let i=10 | 'a,'bg/Abc/s/xx\zsyy\ze/\=i/ |let i=i+1 # convert xxyy to xx11,xx12,xx13
+	" " 置換するテキストを見つけ、メモリにおく。それから \zs を使って単純に置換する
+	" :%s/"\([^.]\+\).*\zsxx/\1/
+	" " カーソル下の単語を置換の検索語として挿入する
+	" :nmap <leader>z :%s#\<<c-r>=expand("<cword>")<cr>\>#
+	" " 選択されたテキストを置換の検索語として挿入する
+	" :vmap <leader>z :<C-U>%s/\<<c-r>*\>/
+	" ----------------------------------------
+	" " all following performing similar task, substitute within substitution
+	" " Multiple single character substitution in a portion of line only
+	" :%s,\(all/.*\)\@<=/,_,g     : "all/" の後に現れる / をすべて _ で置換する
+	" " 同上
+	" :s#all/\zs.*#\=substitute(submatch(0), '/', '_', 'g')#
+	" " 行を分割し、再結合することによって置換
+	" :s#all/#&^M#|s#/#_#g|-j!
+	" " 置換中で置換する
+	" :%s/.*/\='cp '.submatch(0).' all/'.substitute(submatch(0),'/','_','g')/
+	" " 文の最初の文字を大文字に
+	" :%s/[.!?]\_s\+\a/\U&\E/g
+
+		" # 非アスキー文字を削除する(いくつかは不可視文字)
+		" :%s/[<C-V>128-<C-V>255]//gi       : Control-v をタイプすること
+			" :%s/[ - ]//gi                     : Should see a black square & a dotted y
+		" :%s/[<C-V>128-<C-V>255<C-V>01-<C-V>31]//gi : All pesky non-asciis
+		" :exec "norm /[\x00-\x1f\x80-\xff]/"        : same thing
+		" #Pull a non-ascii character onto search bar
+			" yl/<C-R>"                         :
+		" /[^a-zA-Z0-9_[:space:][:punct:]]  : すべての非アスキーを検索する
+		" ----------------------------------------
+		" " 2つの単語をスワップする
+	" *  :%s/\<\(on\|off\)\>/\=strpart("offon", 3 * ("off" == submatch(0)), 3)/g
+		" " swap two words
+			" :vnoremap <C-X> <Esc>`.``gvP``P
+		" ----------------------------------------
+		" " columnise a csv file for display only as may crop wide columns
+		" :let width = 20
+		" :let fill=' ' | while strlen(fill) < width | let fill=fill.fill | endwhile
+		" :%s/\([^;]*\);\=/\=strpart(submatch(1).fill, 0, width)/ge
+		" :%s/\s\+$//ge
+
+		" " vim を抜けずにファイルをリネームするシェルスクリプト
+		" $ vim
+		" :r! ls *.c
+		" :%s/\(.*\).c/mv & \1.bla
+		" :w !sh
+		" :q!
+		" ----------------------------------------
+" #CSV入力
+" 　RailsではまずCSVをUTF8保存してVIコマンド
+  " : set fenc=utf-8 | :set ff=unix | :w!
+  " | %s/^\w*,/NULL,/gc
+" #vi list -> hash コマンド
+	" :'<,'>s/\n/", \r"" => "/gc
+" #vi option tag -> hash コマンド
+	" :%s/>/=>"/gc | %s/,$/",/gc
+" #view
+	" <%= select "post", "code", hs_post_code.invert, :prompt => "選択してください" %>
+" Excel2migration
+  " int(11)	t.integer
+  " varchar(255)	t.string
+" migrationfile2xls
+	" :%s/ *\(t\.\|:\|limit *=> *\)/\t/gc
+" mysqldesc2seed.csv:
+	" :'<,'>s/  *.*\n/,/gc
+" manual-merge
+	" :<,'>s/^/db\/seeds\//gc |'<,'>s/^/db\/migrates\//gc
+	" :'<,'>s/^\(.*\)/cp -p \1 \/opt\/logilogi\/me\/realaf_admin\/\1/gc
+" Gemfile2xls
+	" %s/\n//gc | %s/gem ["']/\tgem '/gc | %s/['"]#/'\r#/gc | M/gem
+" #from HTML into seleniumIDE
+   " :%s/\(.quot\;\)*<.td>.*$/",/gc | %s/^.*<td>/"/gc
+" 総務書類変換
+	" BigTree 日報->勤務表： :%s/】*\n.*[【（]/\t/gc  | %s/..時間/\t/gc
+" #RoR
+  " JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
+
+" TODO: 1-liners
+" function rubyIntoRocketHash() :%s/:\(.*\)/\1:/gc
+"
+" ruby/JS ハッシュ
+" =LOWER(E8)& ": :" & LOWER(J8)&","
+" //before Rails STDOUT diff
+" 年月日&実行時間抽象化　:%s/\[.*\]//gc | %s/(\d\d*\.\dms)//gc
+" UUID抽象化： :%s/uid=\w*/uid=.../gc | diffthis
+" rb2rspec  **rubyソースからRSpecシナリオに**
+" $ grep "^.*# "  [filename]
+" %s/\(^  *\)# \(.*\)/\1it "\2" do end/gc

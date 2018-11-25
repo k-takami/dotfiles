@@ -4,6 +4,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific aliases and functions
+# NOTE: atom-ide-ui terminal でときどきset $LANG=ja_JP.UTF-8設定が消えてしまうので手入力する状況がある
 export LANG='ja_JP.UTF-8'
 # コマンド実行日時を記録するフォーマット
 HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
@@ -206,11 +207,11 @@ if [ $OS == 'Linux' ]; then
   fi
 elif [ "$OS" == 'Darwin' ]; then
     platform='osx'
-    alias pkgadd='brew install'                           # パッケージのインストール
-    # alias pkgrm=''                            # パッケージの削除
-    # alias pkgsearch=''                        # パッケージの検索
-    # alias pkglist=''                          # インストール済みパッケージの情報表示
-    # alias pkgcontents=''                      # パッケージ内容の表示
+    alias pkgadd='brew install'                        # パッケージのインストール
+    alias pkgrm='sudo uninstall file:///Applications/' # パッケージの削除
+    # alias pkgsearch=''                               # パッケージの検索
+    # alias pkglist=''                                 # インストール済みパッケージの情報表示
+    # alias pkgcontents=''                             # パッケージ内容の表示
     # export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
 elif [ "$OS" =~ "^MINGW" ]; then
   platform='windows'
