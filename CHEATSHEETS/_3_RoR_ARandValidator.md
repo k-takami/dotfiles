@@ -53,9 +53,9 @@
         primary_key:                       有           有                有
                                         source:         source:
         as: PVJMN                          有           有                polymorphic: true
-                                                                         (as: ***, source_type: ***)
+                                                                         (as: PVJMN, source_type: )
         counter_cache: (true|カラム名)                   有                有
-        *.sizeメソッド呼び出しでつかう。
+        .sizeメソッド呼び出しでつかう。
         SQL回避
                                                                                         association_foreign_key:
                                                                                         ＊多対多の自己結合を行いたいときに

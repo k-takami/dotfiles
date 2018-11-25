@@ -517,20 +517,20 @@ umask 002
 # ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換
 # ${変数//検索文字列/置換文字列}  全ての文字列を置換  ${HOGE//foo/bar}
 
-function tarziprorapp {
+function tarziprorapp { # 下層のRails.rootiフォルダーを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* --exclude=node_modules $chomped1;lat;
   #XXX --exclude node_modules
 }
 
-function tarziprorgitonly {
+
+function tarziprorgitonly { # 今のRails.rootで叩くと上の階に.gitを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   cd $chomped1
-  tar zcvf ../$chomped1-git-`date '+%Y%m%d'`.tar.gz .git ; lat ..
-  cd -
+  tar zcvf ../$chomped1.git-`date '+%Y%m%d'`.tar.gz .git ; lat ..
 }
 
-function tarzipdotfiles {
+function tarzipdotfiles {  # ~/dotfilesフォルダーに移動して~に圧縮
   cdd;  mv SI ../; mv vim ../ ; mv SI.tar.zip ../ ;
   # OSX/BSD can use --exclude-vcs option below;
   tar zcvf ../dotfiles-`date '+%Y%m%d'`.tar.gz ./*  --exclude-vcs ;

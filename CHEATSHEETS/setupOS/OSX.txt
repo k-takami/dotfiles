@@ -40,6 +40,7 @@ DOCK
 	 ~/.bashrc
 		    export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
 
+#App store -> preference -> アップデート自動確認 OFF
 
 #SVN環境のためにxcodeインストール：　$svn でインストール画面ポップアップしてくれる。
 SSH-mounted-drive
