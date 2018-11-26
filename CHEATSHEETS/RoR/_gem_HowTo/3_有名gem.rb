@@ -42,7 +42,7 @@
 			fastri-server       ;#invoke index server, instead you can use -L  option to be offline.
 			fri -h;fri -e NKF
 	Admin-screen
-		rails4: #typus 
+		rails4: #typus
 			#typus http://docs.typuscmf.com/index.html#installation
 				gem 'typus'
 				bundle install
@@ -51,7 +51,7 @@
 					#to_labelがrenderエラー｡列名の定義もこれらモデルごとのファイルでおこなう｡
 					# default: to_label
 					default:
-			
+
 				#uninstall
 					rails destroy typus
 				#customize view
@@ -146,8 +146,8 @@
 				Email: admin@example.com
 				Pass: password
 #debugger & help-manual installation
-	#rails2 
-		sudo gem1.8 install ruby-debug xmpfilter rcodetools 
+	#rails2
+		sudo gem1.8 install ruby-debug xmpfilter rcodetools
 		#debugger for #rails2 ;
 			#ruby-debug #rails2 debugger
 				喜ばしいことに、Rails 2.0ではruby-debug を使ったdebuggerが正式に採用されました。 これの使い方は非常に簡単です。
@@ -211,7 +211,7 @@ open-IDつかいたいならば -->  sudo gem install ruby-openid (since rails2)
 	ruby script/plugin install http://svn.robertrevans.com/gems/creator/
 	gem install creator
 	script/plugin install svn://rubyforge.org/var/svn/betternestedset/tags/stable/betternestedset
-	config        
+	config
 		sudo apt-get install libxml2-dev libxslt1-dev git-core subversion
 		sudo gem1.8 install creator
 			sudo gem1.8 install schof-searchlogic
@@ -286,7 +286,7 @@ $ queue.first
 
 #redis
 	#OSX
-		# vi /usr/local/etc/redis.conf 
+		# vi /usr/local/etc/redis.conf
 			#logfile stdout
 			logfile /var/log/redis-server.log
 			$ redis-cli
@@ -300,7 +300,7 @@ $ queue.first
 		#run/stop
 			sudo rm /var/run/redis_6379.pid
 			service redis_6379 start
-		
+
 	#config
 		less /etc/init.d/redis_6379
 		less /etc/redis/6379.conf
@@ -311,8 +311,8 @@ $ queue.first
 		redis-cli --stat
 		redis-cli --bigkeys
 		redis-cli monitor
-	
-# SymmetricEncryption:   ref: https://www.ruby-toolbox.com/categories/encryption 
+
+# SymmetricEncryption:   ref: https://www.ruby-toolbox.com/categories/encryption
 class Passclass CreateMemberAddresses < ActiveRecord::Migration
   def change
     create_table :member_addresses, comment: "被保険者住所情報" do |t|
@@ -342,8 +342,8 @@ codeNotificationHistory < ActiveRecord::Base
   )
   # encrypted_name_kana: SymmetricEncryption.encrypt("パスコードタロウ"),
   # Member.includes(:hokenshas).where(hokenshas: { hokensha_bango: [6138713]}, )
-  
-	#暗号化回避対策(symmetric-encription.gem) 
+
+	#暗号化回避対策(symmetric-encription.gem)
 	  rails c
   > u = User.last
   > u.password = "aaa" #<----変更
@@ -422,7 +422,7 @@ codeNotificationHistory < ActiveRecord::Base
           end
         end
 
-         
+
 #Grape API-class
          require 'statesman/passcode_state_machine'
          module Ope
@@ -517,23 +517,112 @@ codeNotificationHistory < ActiveRecord::Base
   post 'sso/internal/(:id)' , :to => 'sso#internal'
   delete 'sso/internal/(:id)' , :to => 'sso#internal'
 
- 
-simple_form
+
+gem simple_form #シンボルかモデル変数かで誤動作したはず
 	f.input
 	f.input :domain_id, :collection => @domains, :label_method => :url_domain, :value_method => :id, :include_blank => true
+  = f.input :creator_ids, collection: @creators, input_html: { class: "multi_select", multiple: true, selected: content.creator_ids }
+  = f.input :client_ids, required: true, collection: @clients, input_html: { class: "form-control multi_select", multiple: true, seleted: content.client_ids }
+  = f.input :tag_ids, collection: @tags, input_html: { class: "multi_select", multiple: true, selected: product.tag_ids }
 
- = f.input :creator_ids, collection: @creators, input_html: { class: "multi_select", multiple: true, selected: content.creator_ids }
 
-= f.input :client_ids, required: true, collection: @clients, input_html: { class: "form-control multi_select", multiple: true, seleted: content.client_ids }
+gem ransack (似 ~R3 meta_search)
+  # Ransackで検索フォームつき一覧画面 @V
+    - content_for :inpage_js do
+    coffee:
+      $ ->
+        $('#全部選ぶ-checkbox-all').on 'change', ->
+          $('.個別-checkbox').prop('checked', $(this).prop('checked'))
+    #ransack検索from授受obj = @q
+    = search_form_for(@q, url: hoken_tantous_path) do |f|
+      .form-section
+            .input-group
+              = f.search_field :code_gteq, class: '例は~BSのform-control'
 
-= f.input :tag_ids, collection: @tags, input_html: { class: "multi_select", multiple: true, selected: product.tag_ids }
+    #検索結果欄のsubmitができるように第二の@form_objでくるむ
+    - unless @results.empty?
+      = form_for(@form_obj, url: some_path(request.params)) do |f|
+          table
+            thead
+              tr.thead-light
+                th
+                th= sort_link(@q, :some_column_name, '柱頭文言')
+            tbody
+               #検索結果表示本体
+              - @results.each do |torihikisaki|
+                tr
+                  td= torihikisaki.name
+    - unless @form_obj.errors.messages.blank?
+      ul.invalid-feedback
+        - @form_obj.errors.full_messages.each do |msg|
+          li= msg
+
+  # Ransackで検索フォームつき一覧画面 @C
+  def index
+    set_search_data
+    @form_obj = FormObj.new #検索結果表示欄の編集用obj
+  end
+
+ def edit
+　 #検索結果表示欄の明細業から編集するためのobj
+    @form_obj = FormObj.new(strong_params)
+    @選択肢用obj = モデル.where(id: @form_obj.some_attr) # 担当者再表示に必要
+    if @form_obj.valid?
+      if @form_obj.update_モデル
+        flash[:success] = "変更しました。"
+        @form_obj = FormObj.new # フォーム初期化
+        @選択肢用obj = []
+      else
+        flash[:danger] = "変更できませんでした。"
+      end
+    end
+    set_search_data
+    render :index
+  end
+
+  def set_search_data
+    set_default_search_params
+     #RanSack検索用obj
+    @q =ModelA.includes(hoken_tantou: :master_staff).ransack(params[:q])
+    #選択肢表示obj
+    @選択肢用ob = ModelB.where(id: params[:q][:hoken_tantou_master_staff_id_eq])
+　#検索結果表示obj
+    @results = @q.result.page(params[:page])
+  end
+
+  def set_search_data
+    set_default_search_params
+    @q = RefMaster::Torihikisaki.available.hanbaitens.includes(hoken_tantou: :master_staff).ransack(params[:q])
+    @選択肢用ob = モデル.available.where(id: params[:q][:hoken_tantou_master_staff_id_eq])
+    @results = @q.result.page(params[:page])
+  end
+
+  def set_search_data
+    set_default_search_params
+   #RanSack検索用obj
+    @q = RefMaster::Torihikisaki.available.hanbaitens.includes(別モデル: :連結用カラム).ransack(params[:q])
+    @選択肢用ob = モデル.available.where(id: params[:q][:ビューで設定した何かのカラム_条件名])
+    @results = @q.result.page(params[:page])
+    params[:q] ||= {}
+      if params[:q][:チェックボックス] == "1"
+      params[:q].delete(:チェックボックス)
+    else
+      params[:q][:チェックボックス] = "0"
+    end
+  end
+  def strong_params
+    params.fetch(:モデル, {}).permit!(:属性, 配列パラメーター: []) #<---まず無条件全部許可
+    # params.fetch(:モデル, {}).permit(:属性, 配列パラメーター: [])
+  end
+end
+
 
 
 gem 'ssl_requirement'
-	くみこみ  
-	@AppC 
+	くみこみ
+	@AppC
 include SslRequirement
-@C 
+@C
 ssl_required :login, :execute_sso  # https強制
 :ssl_allowed  :some_action # http、https 共存
 #指定無し     => # http強制
@@ -553,7 +642,7 @@ ssl_required :login, :execute_sso  # https強制
 	rails s
 #devise http://www.rubydoc.info/github/plataformatec/devise/master/frames
 	sign_in(:sso, Sso.first) #result -> : session["warden.user.sso.key"] = ["Sso", 1]
-	
+
 
 ■guard-livereload
   ファイルの変更を監視して、ファイル(controler,view,stylesheeet等)に変更があると勝手にブラウザをリロードしてくれる。
