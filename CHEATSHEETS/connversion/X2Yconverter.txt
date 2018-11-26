@@ -1,5 +1,3 @@
-#from HTML into seleniumIDE
-   :%s/\(.quot\;\)*<.td>.*$/",/gc | %s/^.*<td>/"/gc    
 
 #Java2rb
 %s/    /  /gc | %s/\n*\r*$//gc | %s/\n\n*/\r/gc | %s/}/end/gc | %s/{/ do/gc | %s/\*/#/gc | %s/\//#/gc | %s/\;$//gc | %s/()//gc
@@ -80,14 +78,14 @@ Hash.from_xml(to_s)
 
 
 ATOMプラグイン改良要望だします；
-	
+
 	#ATOM-plugin おきかえ除外条件指定要望
 		before: );[¥r¥n¥s]+</script>
 		after : ); JSブロック内だから　おきかえないでほしいです。なにもさせないでいただきたい。
 		配列やハッシュの終端をendにしないで
 		https://　をhttps:#にしないで
 		{{ angular-js-tag }} はendにしないで
-		JSのなかまで}や);　をendにしないこと 
+		JSのなかまで}や);　をendにしないこと
 	コメントアウト
 		<wcm:placeholder>contents of dialog</wcm:placeholder> はHTMLコメントにしてほしい
 	rendering
@@ -102,7 +100,7 @@ ATOMプラグイン改良要望だします；
 		<c:choose>   <% case %>  におきかえてほしい
 			<c:when test="${     <% when   におきかえてほしい
 			<c:out value="${   <%= におきかえてほしい
-			}"/>    
+			}"/>
 		<c:forEach items="${snpList}" var="snp">    <% for snp in snpList do %>
 			</c:forEach>    <%end%><!--</c:forEach>-->  におきかえてほしい
 		<!-- <c:forEach items="${snp.genotypeList}" var="genotype" varStatus="status"> -->
@@ -111,7 +109,7 @@ ATOMプラグイン改良要望だします；
 		/apps/mycode/components/content/report/commons/reportUnlock"
 			/mycode/components/content/report/commons/reportUnlock/container"  におきかえてほしい
 	Java* ---> ruby
-		
+
 			before: for (i = 1; i <= 20 # int i++){
 			after : 以下のどれかに おきかえていただきたい；
 				おきかえパターンA [*1..20-1].each do |i|
@@ -119,17 +117,17 @@ ATOMプラグイン改良要望だします；
 				おきかえパターンB for i in 1..20-1 do
 			regexp下書き：
 				before: for ¥((¥w+) = (¥w+); *(¥w+) *[<>=]+ *(¥w+) *int (¥w+)(++|--) *¥){
-				after : 
+				after :
 					おきかえパターンA [*¥1..¥2-1].each do |¥1|
 					おきかえパターンB for ¥1 in ¥1..¥2-1 do
-		
+
 			before: <c:forEach items="${変数}" var="変数の要素である別の変数">
 			after : <% for 変数の要素である別の変数 in 変数 do %>  におきかえてほしい
 		instanceOf ---> instance_of?  におきかえてほしい
 		for (i = 1; i <= 20 # int i++).each do |i|
 			for i in 1..19 do または
 			for [*1..19].each do |i|　 におきかえてほしい
-		Double.valueOf(  
+		Double.valueOf(
 			''  におきかえてほしい
 endcatch (Exception e)end
 
@@ -216,7 +214,4 @@ a
 
 -rw-r--r--  1 some_body  staff  1632 10 20 16:06 app/views/mycode/components/content/parsys/_editcontext.html.erb ▲　<— edit新規作成アクションのときだけ
 -rw-r--r--  1 some_body  staff  1389 10 20 16:06 app/views/mycode/components/content/parsys/_new.html.erb　　　　　　 ▲<— new新規作成アクションのときだけ
-
-総務書類変換
-	BigTree 日報->勤務表： :%s/】*\n.*[【（]/\t/gc  | %s/..時間/\t/gc
 

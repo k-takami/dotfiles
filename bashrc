@@ -4,6 +4,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific aliases and functions
+# NOTE: atom-ide-ui terminal でときどきset $LANG=ja_JP.UTF-8設定が消えてしまうので手入力する状況がある
 export LANG='ja_JP.UTF-8'
 # コマンド実行日時を記録するフォーマット
 HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
@@ -206,11 +207,11 @@ if [ $OS == 'Linux' ]; then
   fi
 elif [ "$OS" == 'Darwin' ]; then
     platform='osx'
-    alias pkgadd='brew install'                           # パッケージのインストール
-    # alias pkgrm=''                            # パッケージの削除
-    # alias pkgsearch=''                        # パッケージの検索
-    # alias pkglist=''                          # インストール済みパッケージの情報表示
-    # alias pkgcontents=''                      # パッケージ内容の表示
+    alias pkgadd='brew install'                        # パッケージのインストール
+    alias pkgrm='sudo uninstall file:///Applications/' # パッケージの削除
+    # alias pkgsearch=''                               # パッケージの検索
+    # alias pkglist=''                                 # インストール済みパッケージの情報表示
+    # alias pkgcontents=''                             # パッケージ内容の表示
     # export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
 elif [ "$OS" =~ "^MINGW" ]; then
   platform='windows'
@@ -353,6 +354,7 @@ alias grep-pkglist=' pkglist | grep -iE '
 #git/ mercurial / patchコマンド http://uguisu.skr.jp/Windows/diff_patch.html http://d.hatena.ne.jp/mrgoofy33/20101019/1287500809
 alias patchp=' patch    -p0 <' #[patch-name] to apply on
 alias patchrp='patch -R -p0 <' #[patch-name] to reverse(=undo)
+alias patch_cleaning='ffgrep "\.(rej|orig)" | xargs -n1 rm'
 alias gibr='      git branch'
 alias gibr-d='    git branch -D' #削除
 alias gibr-m='    git branch -m' #旧ブランチ名　新ブランチ名
@@ -366,6 +368,7 @@ alias gdic='     git diff --cached'
 alias gdiclas='  gdic --name-only |xargs ls -alSr'
 alias gdicgrep=' gdic --name-only |xargs grep -niE '
 alias gdilas='   gdi  --name-only |xargs ls -alSr'
+alias gdicgrep=' gdic --name-only |xargs grep -niE '
 # patch作成用  gitの場合は--no-prefixは内部的に自動付与らしい
 alias gdicnp='          git diff --cached --no-prefix'
 alias gdilight='        git diff --no-prefix --ignore-all-space --ignore-blank-lines --ignore-cr-at-eol'
@@ -514,20 +517,20 @@ umask 002
 # ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換
 # ${変数//検索文字列/置換文字列}  全ての文字列を置換  ${HOGE//foo/bar}
 
-function tarziprorapp {
+function tarziprorapp { # 下層のRails.rootiフォルダーを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* --exclude=node_modules $chomped1;lat;
   #XXX --exclude node_modules
 }
 
-function tarziprorgitonly {
+
+function tarziprorgitonly { # 今のRails.rootで叩くと上の階に.gitを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   cd $chomped1
-  tar zcvf ../$chomped1-git-`date '+%Y%m%d'`.tar.gz .git ; lat ..
-  cd -
+  tar zcvf ../$chomped1.git-`date '+%Y%m%d'`.tar.gz .git ; lat ..
 }
 
-function tarzipdotfiles {
+function tarzipdotfiles {  # ~/dotfilesフォルダーに移動して~に圧縮
   cdd;  mv SI ../; mv vim ../ ; mv SI.tar.zip ../ ;
   # OSX/BSD can use --exclude-vcs option below;
   tar zcvf ../dotfiles-`date '+%Y%m%d'`.tar.gz ./*  --exclude-vcs ;

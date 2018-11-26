@@ -1,0 +1,753 @@
+VERSION	300
+mrucmd	data	{'word': ':qa', 'time': 1542973194}
+mrucmd	data	{'word': ':q', 'time': 1542972590}
+mrucmd	data	{'word': '/each', 'time': 1542972454}
+mrucmd	data	{'word': ':qa!', 'time': 1542972405}
+mrucmd	data	{'word': '/md', 'time': 1542940389}
+mrucmd	data	{'word': ':tabnew', 'time': 1542940317}
+mrucmd	data	{'word': ':mksession! ~/sessionATOMplugin', 'time': 1542938866}
+mrucmd	data	{'word': ':Bgrep', 'time': 1542938548}
+mrucmd	data	{'word': ':Bgrep default:', 'time': 1542938385}
+mrucmd	data	{'word': '/default', 'time': 1542938362}
+mrucmd	data	{'word': ':mksession! ~/sessionMAN', 'time': 1542937794}
+mrucmd	data	{'word': '/visual', 'time': 1542937644}
+mrucmd	data	{'word': ':colorscheme evening', 'time': 1542919102}
+mrucmd	data	{'word': ':colorscheme morning', 'time': 1542919094}
+mrucmd	data	{'word': ':colorscheme desert', 'time': 1542919088}
+mrucmd	data	{'word': ':e ~/dotfiles/vimrc', 'time': 1542919062}
+mrucmd	data	{'word': ':e .', 'time': 1542918301}
+mrucmd	data	{'word': ':e', 'time': 1542918298}
+mrucmd	data	{'word': ':e ', 'time': 1542918280}
+mrucmd	data	{'word': ':vnew', 'time': 1542918276}
+mrucmd	data	{'word': ':w', 'time': 1542918114}
+mrucmd	data	{'word': ':gw', 'time': 1542918087}
+mrucmd	data	{'word': '/atom', 'time': 1542917993}
+mrucmd	data	{'word': ':Regrep myapp', 'time': 1542917819}
+mrucmd	data	{'word': ':e /Users/user/Downloads/_to2TBHDD/tmp.sh', 'time': 1542916990}
+mrucmd	data	{'word': ':Bgrep btn', 'time': 1542916526}
+mrucmd	data	{'word': ':Brep button', 'time': 1542916518}
+mrucmd	data	{'word': ':VE', 'time': 1542915739}
+mrucmd	data	{'word': ':Gwrite', 'time': 1542915587}
+mrucmd	data	{'word': '/Fuzzy', 'time': 1542915533}
+mrucmd	data	{'word': '/Fu', 'time': 1542915481}
+mrucmd	data	{'word': '/fuf', 'time': 1542915476}
+mrucmd	data	{'word': '/Ctag', 'time': 1542915458}
+mrucmd	data	{'word': '/takami', 'time': 1542915384}
+mrucmd	data	{'word': ':Gdiff', 'time': 1542915309}
+mrucmd	data	{'word': ':e ++enc=utf-8 ++ff=unix', 'time': 1542915258}
+mrucmd	data	{'word': '/function!', 'time': 1542915166}
+mrucmd	data	{'word': '/atom/function!', 'time': 1542915154}
+mrucmd	data	{'word': ':h function', 'time': 1542915113}
+mrucmd	data	{'word': '/OpenIn', 'time': 1542914639}
+mrucmd	data	{'word': '/!atom', 'time': 1542914430}
+mrucmd	data	{'word': '/vimrc', 'time': 1542914424}
+mrucmd	data	{'word': '/bookmark', 'time': 1542914270}
+mrucmd	data	{'word': '/ut', 'time': 1542914264}
+mrucmd	data	{'word': '/\<nnoremap\>', 'time': 1542914171}
+mrucmd	data	{'word': '/mm', 'time': 1542914159}
+mrucmd	data	{'word': '/uncion', 'time': 1542913802}
+mrucmd	data	{'word': '/lim', 'time': 1542912337}
+mrucmd	data	{'word': '/色', 'time': 1542907969}
+mrucmd	data	{'word': '/CSS.', 'time': 1542907948}
+mrucmd	data	{'word': '/CSS\.', 'time': 1542907944}
+mrucmd	data	{'word': ':e ~/Downloads', 'time': 1542907929}
+mrucmd	data	{'word': '/灰', 'time': 1542907879}
+mrucmd	data	{'word': '/灰色', 'time': 1542907874}
+mrucmd	data	{'word': '/CSS', 'time': 1542907850}
+mrucmd	data	{'word': '/CSS.cs', 'time': 1542907845}
+mrucmd	data	{'word': '/CSS.css', 'time': 1542907840}
+mrucmd	data	{'word': '/btn', 'time': 1542907670}
+mrucmd	data	{'word': ':wq', 'time': 1542523669}
+mrucmd	data	{'word': ':y', 'time': 1542522812}
+mrucmd	data	{'word': ':Bgrep rails', 'time': 1542522540}
+mrucmd	data	{'word': ':Bgrep bun', 'time': 1542522526}
+mrucmd	data	{'word': ':Bgrep bund', 'time': 1542522523}
+mrucmd	data	{'word': ':Bgrep bundle', 'time': 1542522519}
+mrucmd	data	{'word': ':Bgrep bund	', 'time': 1542522516}
+mrucmd	data	{'word': '/rails g', 'time': 1542520891}
+mrucmd	data	{'word': ':Regrep rails', 'time': 1542520884}
+mrucmd	data	{'word': ':Regrep rails g', 'time': 1542520876}
+mrucmd	data	{'word': ':Regrep "rails g"', 'time': 1542520863}
+mrucmd	data	{'word': ':Regrep', 'time': 1542520667}
+mrucmd	data	{'word': ':find form', 'time': 1542440380}
+mrucmd	data	{'word': ':Bgrep render', 'time': 1542440371}
+mrucmd	data	{'word': ':n', 'time': 1542440301}
+mrucmd	data	{'word': '/vim', 'time': 1542424535}
+mrucmd	data	{'word': '/oro', 'time': 1542424361}
+mrucmd	data	{'word': '/UHD', 'time': 1542419487}
+mrucmd	data	{'word': '/URD', 'time': 1542419480}
+mrucmd	data	{'word': '/image_name', 'time': 1542419393}
+mrucmd	data	{'word': '/patchp', 'time': 1542418893}
+mrucmd	data	{'word': '/thein', 'time': 1540500829}
+mrucmd	data	{'word': ':h drawit', 'time': 1540430807}
+mrucmd	data	{'word': ':q!', 'time': 1540343879}
+mrucmd	data	{'word': '/echo', 'time': 1540106097}
+mrucmd	data	{'word': '/tarzip', 'time': 1540105994}
+mrucmd	data	{'word': '/tarzipsi', 'time': 1540105969}
+mrucmd	data	{'word': '/ ', 'time': 1540094447}
+mrucmd	data	{'word': '/ $', 'time': 1540094403}
+mrucmd	data	{'word': '/空白', 'time': 1540094235}
+mrucmd	data	{'word': '/行末', 'time': 1540094224}
+mrucmd	data	{'word': '/\vBufWriteP', 'time': 1540094215}
+mrucmd	data	{'word': '/\vBuf', 'time': 1540094203}
+mrucmd	data	{'word': '/vBuf', 'time': 1540094196}
+mrucmd	data	{'word': ':/v uf', 'time': 1540094190}
+mrucmd	data	{'word': '/v bufwrite/i', 'time': 1540094181}
+mrucmd	data	{'word': '/vbufwrite/i', 'time': 1540094177}
+mrucmd	data	{'word': '/vbufwrite', 'time': 1540094171}
+mrucmd	data	{'word': '/ite', 'time': 1540094142}
+mrucmd	data	{'word': '/ufWri', 'time': 1540094132}
+mrucmd	data	{'word': '/ufW', 'time': 1540094125}
+mrucmd	data	{'word': '/5ch', 'time': 1539752664}
+mrucmd	data	{'word': '/ffgrep', 'time': 1539752582}
+mrucmd	data	{'word': '::q', 'time': 1538849664}
+mrucmd	data	{'word': ':''<,''>Hankaku', 'time': 1538830204}
+mrucmd	data	{'word': '/OS', 'time': 1538649014}
+mrucmd	data	{'word': '/SI', 'time': 1538637317}
+mrucmd	data	{'word': '/restore', 'time': 1538636196}
+mrucmd	data	{'word': '/atom_', 'time': 1538633889}
+mrucmd	data	{'word': '/atom_ba', 'time': 1538632540}
+mrucmd	data	{'word': '/gitig', 'time': 1538632247}
+mrucmd	data	{'word': '/atom_backup', 'time': 1538631645}
+mrucmd	data	{'word': '/ln \-', 'time': 1538631580}
+mrucmd	data	{'word': '/task :', 'time': 1538631406}
+mrucmd	data	{'word': '/dotfiles', 'time': 1538631370}
+mrucmd	data	{'word': ':sort', 'time': 1538631324}
+mrucmd	data	{'word': '/fav', 'time': 1538631322}
+mrucmd	data	{'word': '/link_file', 'time': 1538631273}
+mrucmd	data	{'word': '/ln-fs', 'time': 1538631193}
+mrucmd	data	{'word': '/ln -S', 'time': 1538631150}
+mrucmd	data	{'word': '/txt', 'time': 1538525082}
+mrucmd	data	{'word': ':Unite rails/log', 'time': 1538361002}
+mrucmd	data	{'word': ':Unite rails/controller', 'time': 1538360973}
+mrucmd	data	{'word': ':Unite rails', 'time': 1538360959}
+mrucmd	data	{'word': ':Unite rails/', 'time': 1538360947}
+mrucmd	data	{'word': '/unite.rails', 'time': 1538360929}
+mrucmd	data	{'word': ':aQ', 'time': 1538354035}
+mrucmd	data	{'word': ':az', 'time': 1538354033}
+mrucmd	data	{'word': '/autofor', 'time': 1538340243}
+mrucmd	data	{'word': ':', 'time': 1538339249}
+mrucmd	data	{'word': ':NeoBundleUpdate', 'time': 1538339224}
+mrucmd	data	{'word': '/PRO', 'time': 1538339161}
+mrucmd	data	{'word': '/NeoBundle', 'time': 1538339152}
+mrucmd	data	{'word': ':TagbarToggle', 'time': 1538337293}
+mrucmd	data	{'word': '/=========', 'time': 1538237459}
+mrucmd	data	{'word': '/node', 'time': 1538237301}
+mrucmd	data	{'word': ':call setreg(''"'', getreg(''0'')) ', 'time': 1538237271}
+mrucmd	data	{'word': '/depende', 'time': 1538236749}
+mrucmd	data	{'word': '/pj-depen', 'time': 1538236735}
+mrucmd	data	{'word': '/-s', 'time': 1538236682}
+mrucmd	data	{'word': '/nvm', 'time': 1538236626}
+mrucmd	data	{'word': '/GEM_P', 'time': 1538236499}
+mrucmd	data	{'word': '/if.*f', 'time': 1538236386}
+mrucmd	data	{'word': '/-f', 'time': 1538236379}
+mrucmd	data	{'word': '/eq', 'time': 1538236246}
+mrucmd	data	{'word': '/==', 'time': 1538236238}
+mrucmd	data	{'word': '/OS=', 'time': 1538236039}
+mrucmd	data	{'word': '/check', 'time': 1538235937}
+mrucmd	data	{'word': '/if', 'time': 1538235919}
+mrucmd	data	{'word': '/command', 'time': 1538235898}
+mrucmd	data	{'word': '/コマンド', 'time': 1538235878}
+mrucmd	data	{'word': ':e ~/dotfiles/CHEATSHEETS/SH_shellscript.sh', 'time': 1538235869}
+mrucmd	data	{'word': '/rvm', 'time': 1538235677}
+mrucmd	data	{'word': '/alt', 'time': 1538233098}
+mrucmd	data	{'word': '/ctrl', 'time': 1538233097}
+mrucmd	data	{'word': '/key', 'time': 1538233080}
+mrucmd	data	{'word': ':e ~/.atom/config.cson', 'time': 1538233077}
+mrucmd	data	{'word': '/openatom', 'time': 1538217301}
+mrucmd	data	{'word': '/outfile', 'time': 1538217035}
+mrucmd	data	{'word': ':461', 'time': 1538216519}
+mrucmd	data	{'word': '/greper', 'time': 1538215109}
+mrucmd	data	{'word': '/tab.*iro', 'time': 1538214798}
+mrucmd	data	{'word': '/tab', 'time': 1538214786}
+mrucmd	data	{'word': '/badd.*irod', 'time': 1538214735}
+mrucmd	data	{'word': '/buffer.*irod', 'time': 1538214681}
+mrucmd	data	{'word': '/buffer', 'time': 1538214669}
+mrucmd	data	{'word': '/irodori\/', 'time': 1538214587}
+mrucmd	data	{'word': '/greprc', 'time': 1538213642}
+mrucmd	data	{'word': '/rorapp:qa', 'time': 1538213595}
+mrucmd	data	{'word': ':w ~/Downloads/ruby2.5とrakeをインストールで自動的に入るgem.txt', 'time': 1538160107}
+mrucmd	data	{'word': ':%s/, /\r/gc', 'time': 1538159821}
+mrucmd	data	{'word': ':%s/, /\r/', 'time': 1538159817}
+mrucmd	data	{'word': ':1', 'time': 1538142878}
+mrucmd	data	{'word': '/dotfilesp', 'time': 1538142070}
+mrucmd	data	{'word': '/dotfilespush', 'time': 1538142066}
+mrucmd	data	{'word': '/dotfilespu', 'time': 1538142050}
+mrucmd	data	{'word': ':tabnew Files.rb', 'time': 1538141476}
+mrucmd	data	{'word': ':tabnew aaa.rb', 'time': 1538141453}
+mrucmd	data	{'word': ':%s/#version#/ v0.99/', 'time': 1538141374}
+mrucmd	data	{'word': '/NeoBu', 'time': 1538141153}
+mrucmd	data	{'word': '/Neo', 'time': 1538141005}
+mrucmd	data	{'word': ':e ~/.dotfiles/CHEATSHEETS/vim.vim', 'time': 1538141000}
+mrucmd	data	{'word': '/NeoB', 'time': 1538140955}
+mrucmd	data	{'word': ':e ~/.vimrc', 'time': 1538140946}
+mrucmd	data	{'word': ':vim ~/.vimrc', 'time': 1538140939}
+mrucmd	data	{'word': '/eosni', 'time': 1538140813}
+mrucmd	data	{'word': '/im', 'time': 1538139635}
+mrucmd	data	{'word': '/snip', 'time': 1538139429}
+mrucmd	data	{'word': '/  *$', 'time': 1538130164}
+mrucmd	data	{'word': '/label', 'time': 1538126248}
+mrucmd	data	{'word': ':Bgrep .each.with_index', 'time': 1538125347}
+mrucmd	data	{'word': ':Bgrep pickup_articles.each', 'time': 1538125329}
+mrucmd	data	{'word': ':Bgrep .section-title', 'time': 1538125152}
+mrucmd	data	{'word': '/include', 'time': 1538125049}
+mrucmd	data	{'word': '/extend', 'time': 1538125043}
+mrucmd	data	{'word': ':Bgrep @extend', 'time': 1538125021}
+mrucmd	data	{'word': '/radi', 'time': 1538124044}
+mrucmd	data	{'word': '/view', 'time': 1538123662}
+mrucmd	data	{'word': '/pick', 'time': 1538122859}
+mrucmd	data	{'word': '/flex', 'time': 1538121852}
+mrucmd	data	{'word': ':Bgrep .sidebar-popular-articles__thumbnail', 'time': 1538121703}
+mrucmd	data	{'word': ':tabmove 8', 'time': 1538121670}
+mrucmd	data	{'word': ':tabmove 9', 'time': 1538121668}
+mrucmd	data	{'word': ':tabmove 10', 'time': 1538121664}
+mrucmd	data	{'word': ':Bgrep main-pane-pickup__item', 'time': 1538121386}
+mrucmd	data	{'word': '/popular', 'time': 1538121125}
+mrucmd	data	{'word': '/pupular', 'time': 1538121121}
+mrucmd	data	{'word': ':Bgrep pupular', 'time': 1538121072}
+mrucmd	data	{'word': ':Bgrep data-rank', 'time': 1538120709}
+mrucmd	data	{'word': ':Bgrep :before', 'time': 1538119829}
+mrucmd	data	{'word': ':Bgrep news', 'time': 1538118052}
+mrucmd	data	{'word': ':Bdi', 'time': 1538115560}
+mrucmd	data	{'word': ':w ~/Downloads/anken.txt', 'time': 1538103810}
+mrucmd	data	{'word': '/DB_', 'time': 1538054013}
+mrucmd	data	{'word': ':w ~/Downloads/tmp.txt', 'time': 1538053193}
+mrucmd	data	{'word': '/keep', 'time': 1538053014}
+mrucmd	data	{'word': ':e ~/.dotfiles/gitignore', 'time': 1538052740}
+mrucmd	data	{'word': '/works', 'time': 1538046394}
+mrucmd	data	{'word': '/\/.*\/', 'time': 1538046316}
+mrucmd	data	{'word': ':e ~/sessionSuganumapCategory', 'time': 1538046306}
+mrucmd	data	{'word': ':Bgrep well', 'time': 1538045605}
+mrucmd	data	{'word': ':Bgrep wells', 'time': 1538045601}
+mrucmd	data	{'word': ':Bgrep categories_top_section', 'time': 1538042450}
+mrucmd	data	{'word': ':Bgrep col-xs-12.col-sm-9', 'time': 1538042312}
+mrucmd	data	{'word': ':Bgrep col-xs-12 col-sm-9', 'time': 1538042298}
+mrucmd	data	{'word': ':Bgrep pickup', 'time': 1538035544}
+mrucmd	data	{'word': ':Bgrep pick', 'time': 1538035533}
+mrucmd	data	{'word': ':Bgrep col-xs-6', 'time': 1538035403}
+mrucmd	data	{'word': '/hidden', 'time': 1538035230}
+mrucmd	data	{'word': ':fdi', 'time': 1538034657}
+mrucmd	data	{'word': '/rebase', 'time': 1538034329}
+mrucmd	data	{'word': '/%h', 'time': 1538033326}
+mrucmd	data	{'word': ':Bgrep section-title', 'time': 1538033243}
+mrucmd	data	{'word': ':Bgrep row.wrap-contents', 'time': 1538033216}
+mrucmd	data	{'word': '/haml', 'time': 1538032852}
+mrucmd	data	{'word': ':Bgrep h4', 'time': 1538032848}
+mrucmd	data	{'word': '/overflo', 'time': 1538031688}
+mrucmd	data	{'word': '/des', 'time': 1538028672}
+mrucmd	data	{'word': '/-size', 'time': 1538027608}
+mrucmd	data	{'word': '/well', 'time': 1538027084}
+mrucmd	data	{'word': ':dfdfdf', 'time': 1538027054}
+mrucmd	data	{'word': ':fsfs', 'time': 1538027052}
+mrucmd	data	{'word': ':Rview', 'time': 1538020385}
+mrucmd	data	{'word': '/category.*item', 'time': 1538019508}
+mrucmd	data	{'word': ':Bgrep REPORT', 'time': 1538019147}
+mrucmd	data	{'word': ':32', 'time': 1538017169}
+mrucmd	data	{'word': '/navbar', 'time': 1538016966}
+mrucmd	data	{'word': ':Regrep carousel', 'time': 1538016828}
+mrucmd	data	{'word': ':Regrep category-carousel', 'time': 1538016815}
+mrucmd	data	{'word': '/color', 'time': 1538014652}
+mrucmd	data	{'word': ':mksession! ~/sessionSuganumapCategory', 'time': 1538012276}
+mrucmd	data	{'word': '/fluid', 'time': 1537978298}
+mrucmd	data	{'word': '/t(', 'time': 1537977719}
+mrucmd	data	{'word': ':tabmove 2', 'time': 1537977707}
+mrucmd	data	{'word': ':tabmove 3', 'time': 1537975579}
+mrucmd	data	{'word': ':mksession ~/sessionSuganumapCategory', 'time': 1537974324}
+mrucmd	data	{'word': '/subscribe', 'time': 1537958703}
+mrucmd	data	{'word': '/<<<<', 'time': 1537955625}
+mrucmd	data	{'word': '/>>>>', 'time': 1537955438}
+mrucmd	data	{'word': '/-10', 'time': 1537950275}
+mrucmd	data	{'word': '/@media', 'time': 1537949448}
+mrucmd	data	{'word': '/story', 'time': 1537949070}
+mrucmd	data	{'word': '/45em', 'time': 1537949066}
+mrucmd	data	{'word': '/atory', 'time': 1537948949}
+mrucmd	data	{'word': '/p\-5', 'time': 1537948290}
+mrucmd	data	{'word': '/p-5', 'time': 1537948273}
+mrucmd	data	{'word': '/nerba', 'time': 1537948114}
+mrucmd	data	{'word': '/-story', 'time': 1537947512}
+mrucmd	data	{'word': '/apps', 'time': 1537946611}
+mrucmd	data	{'word': '/nerb', 'time': 1537946391}
+mrucmd	data	{'word': '/zerba', 'time': 1537946385}
+mrucmd	data	{'word': '/30em', 'time': 1537941553}
+mrucmd	data	{'word': '/orn', 'time': 1537939596}
+mrucmd	data	{'word': '/\$', 'time': 1537939476}
+mrucmd	data	{'word': '/$', 'time': 1537939473}
+mrucmd	data	{'word': '/p-t-2', 'time': 1537938706}
+mrucmd	data	{'word': '/about-apps', 'time': 1537937199}
+mrucmd	data	{'word': '/-1', 'time': 1537937185}
+mrucmd	data	{'word': ':Bgrep gradient', 'time': 1537936180}
+mrucmd	data	{'word': '/grad', 'time': 1537936120}
+mrucmd	data	{'word': '/footer', 'time': 1537936114}
+mrucmd	data	{'word': ':Gblame', 'time': 1537935491}
+mrucmd	data	{'word': '/:\w', 'time': 1537930229}
+mrucmd	data	{'word': '/media', 'time': 1537874924}
+mrucmd	data	{'word': '/-height', 'time': 1537874616}
+mrucmd	data	{'word': ':Bgrep ', 'time': 1537873487}
+mrucmd	data	{'word': ':Bgrep p-t-2', 'time': 1537873144}
+mrucmd	data	{'word': '/scroll', 'time': 1537870277}
+mrucmd	data	{'word': ':set nolis', 'time': 1537867514}
+mrucmd	data	{'word': '/set nolist', 'time': 1537867499}
+mrucmd	data	{'word': '/set noli	', 'time': 1537867495}
+mrucmd	data	{'word': '/contain', 'time': 1537867080}
+mrucmd	data	{'word': '/conataine	', 'time': 1537867077}
+mrucmd	data	{'word': '/row', 'time': 1537867049}
+mrucmd	data	{'word': '/container', 'time': 1537866855}
+mrucmd	data	{'word': '/section-about-', 'time': 1537866456}
+mrucmd	data	{'word': '/sction-about', 'time': 1537866450}
+mrucmd	data	{'word': '/100%', 'time': 1537866441}
+mrucmd	data	{'word': '/FF', 'time': 1537863503}
+mrucmd	data	{'word': '/url', 'time': 1537862878}
+mrucmd	data	{'word': '/.section-about-nerba ', 'time': 1537860489}
+mrucmd	data	{'word': '/16%', 'time': 1537858383}
+mrucmd	data	{'word': '/text-bold', 'time': 1537857182}
+mrucmd	data	{'word': '/.section-about-apps .picture-column .text-bold', 'time': 1537857174}
+mrucmd	data	{'word': '/-t-', 'time': 1537857019}
+mrucmd	data	{'word': '/section-about-apps', 'time': 1537856226}
+mrucmd	data	{'word': '/%b', 'time': 1537855903}
+mrucmd	data	{'word': '/bold', 'time': 1537854919}
+mrucmd	data	{'word': '/max-wid', 'time': 1537852798}
+mrucmd	data	{'word': '/7777', 'time': 1537852347}
+mrucmd	data	{'word': '/777777', 'time': 1537852331}
+mrucmd	data	{'word': ':141', 'time': 1537852311}
+mrucmd	data	{'word': '/-xs', 'time': 1537852085}
+mrucmd	data	{'word': '/inquiry', 'time': 1537852043}
+mrucmd	data	{'word': ':Regrep articles-show', 'time': 1537848835}
+mrucmd	data	{'word': ':Bgrep tag', 'time': 1537845001}
+mrucmd	data	{'word': ':192', 'time': 1537835429}
+mrucmd	data	{'word': '/center-or-left', 'time': 1537835376}
+mrucmd	data	{'word': '/m-5', 'time': 1537835365}
+mrucmd	data	{'word': '/unix', 'time': 1537833238}
+mrucmd	data	{'word': '/linux', 'time': 1537833229}
+mrucmd	data	{'word': ':qq', 'time': 1537754357}
+mrucmd	data	{'word': '/RYAN', 'time': 1537753956}
+mrucmd	data	{'word': '/surroun', 'time': 1537753796}
+mrucmd	data	{'word': ':e ~/dotfiles/CHEATSHEETS/vim.vim', 'time': 1537753688}
+mrucmd	data	{'word': '/incsear', 'time': 1537753348}
+mrucmd	data	{'word': '/NeoBun.*', 'time': 1537753311}
+mrucmd	data	{'word': '/NeoBun.*(r)', 'time': 1537753306}
+mrucmd	data	{'word': ':NeoBundleCheckUpdate', 'time': 1537753212}
+mrucmd	data	{'word': '/Neo.n', 'time': 1537753097}
+mrucmd	data	{'word': '/git', 'time': 1537752483}
+mrucmd	data	{'word': '/export', 'time': 1537735164}
+mrucmd	data	{'word': ':%s/$/ ~\/.dotfiles\/SI\/BAK\/CSS\//gc', 'time': 1537547586}
+mrucmd	data	{'word': ':%s/$\n/ ~\/dotfiles\/SI\/BAK\/CSS\//gc', 'time': 1537547546}
+mrucmd	data	{'word': ':%s/$/ ~\/dotfiles\/SI\/BAK\/CSS\//gc', 'time': 1537547518}
+mrucmd	data	{'word': ':%s/png/png ~\/dotfiles\/SI\/BAK\/CSS\//gc', 'time': 1537547467}
+mrucmd	data	{'word': ':%s/$/ ~\/dotfiles\/SI\/BAK\/CSS/gc', 'time': 1537547372}
+mrucmd	data	{'word': ':%s/$/~\/dotfiles\/SI\/BAK\/CSS/gc', 'time': 1537547364}
+mrucmd	data	{'word': '/\<include\>', 'time': 1537546332}
+mrucmd	data	{'word': '/auto', 'time': 1537546308}
+mrucmd	data	{'word': '/1024', 'time': 1537546228}
+mrucmd	data	{'word': '/repeat', 'time': 1537546085}
+mrucmd	data	{'word': '/transpa', 'time': 1537545982}
+mrucmd	data	{'word': '/im.*ner', 'time': 1537542345}
+mrucmd	data	{'word': '/page-top', 'time': 1537540114}
+mrucmd	data	{'word': '/-top', 'time': 1537540102}
+mrucmd	data	{'word': '/中', 'time': 1537539685}
+mrucmd	data	{'word': '/中央', 'time': 1537539673}
+mrucmd	data	{'word': '/concept', 'time': 1537539234}
+mrucmd	data	{'word': '/p-t', 'time': 1537539091}
+mrucmd	data	{'word': '/\<assets\>', 'time': 1537538717}
+mrucmd	data	{'word': '/website_s', 'time': 1537538649}
+mrucmd	data	{'word': '/bg_ner', 'time': 1537538323}
+mrucmd	data	{'word': '/pots', 'time': 1537538302}
+mrucmd	data	{'word': '/\/\/', 'time': 1537534154}
+mrucmd	data	{'word': '/cite', 'time': 1537533413}
+mrucmd	data	{'word': ':''<,''>s/:/: /gc', 'time': 1537533325}
+mrucmd	data	{'word': '/transparent_the_pot_bg', 'time': 1537531779}
+mrucmd	data	{'word': '/oogle', 'time': 1537531407}
+mrucmd	data	{'word': '/-#', 'time': 1537531331}
+mrucmd	data	{'word': '/concep', 'time': 1537531040}
+mrucmd	data	{'word': '/p\-', 'time': 1537530357}
+mrucmd	data	{'word': '/section-about-page-top', 'time': 1537530146}
+mrucmd	data	{'word': '/\(story\|nerba\)', 'time': 1537529857}
+mrucmd	data	{'word': '/41', 'time': 1537528442}
+mrucmd	data	{'word': '/16', 'time': 1537528436}
+mrucmd	data	{'word': '/mixin', 'time': 1537528343}
+mrucmd	data	{'word': '/}.*\n  *[0-9a-z]', 'time': 1537528268}
+mrucmd	data	{'word': '/}.*\n  ', 'time': 1537528261}
+mrucmd	data	{'word': '/:[0-9a-z]', 'time': 1537528117}
+mrucmd	data	{'word': '/cc*$', 'time': 1537528024}
+mrucmd	data	{'word': ':split', 'time': 1537526953}
+mrucmd	data	{'word': '/margin.*ce', 'time': 1537525329}
+mrucmd	data	{'word': '/margin.*cent', 'time': 1537525316}
+mrucmd	data	{'word': '/margin.*auto', 'time': 1537525306}
+mrucmd	data	{'word': '/ul {', 'time': 1537524920}
+mrucmd	data	{'word': '/naviga', 'time': 1537524899}
+mrucmd	data	{'word': '/navi', 'time': 1537524886}
+mrucmd	data	{'word': '/zorn', 'time': 1537524866}
+mrucmd	data	{'word': '/max.width', 'time': 1537521391}
+mrucmd	data	{'word': '/main', 'time': 1537521199}
+mrucmd	data	{'word': '/width', 'time': 1537521176}
+mrucmd	data	{'word': '/max-width', 'time': 1537520807}
+mrucmd	data	{'word': '/p-b-', 'time': 1537519154}
+mrucmd	data	{'word': '/stopy', 'time': 1537518927}
+mrucmd	data	{'word': '/-stopy', 'time': 1537518923}
+mrucmd	data	{'word': '/relative', 'time': 1537518800}
+mrucmd	data	{'word': '/-apps', 'time': 1537518617}
+mrucmd	data	{'word': '/h2', 'time': 1537518325}
+mrucmd	data	{'word': '/indicated', 'time': 1537517909}
+mrucmd	data	{'word': '/about', 'time': 1537517750}
+mrucmd	data	{'word': '/relatice', 'time': 1537517378}
+mrucmd	data	{'word': ':%s/.col-md-12.col-lg-12/%br/gc', 'time': 1537516827}
+mrucmd	data	{'word': '/.col-md-12.col-lg-12', 'time': 1537516807}
+mrucmd	data	{'word': '/rela', 'time': 1537515950}
+mrucmd	data	{'word': '/Not Committed', 'time': 1537515932}
+mrucmd	data	{'word': '/m-l-2', 'time': 1537515460}
+mrucmd	data	{'word': ':set list', 'time': 1537515359}
+mrucmd	data	{'word': '/ユーザ', 'time': 1537515033}
+mrucmd	data	{'word': '/priv', 'time': 1537514505}
+mrucmd	data	{'word': '/copy', 'time': 1537514468}
+mrucmd	data	{'word': '/_nerba', 'time': 1537505660}
+mrufile	data	{'word': '/Users/user/dotfiles/ve_favorite', 'time': 1542973196}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3b_ARandFAT-model.rb', 'time': 1542973196}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3_RoR_ARandValidator.md', 'time': 1542973176}
+mrufile	data	{'word': '/Users/user/dotfiles/Rakefile', 'time': 1542972449}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3_RoR_ARandValidator.md.txt', 'time': 1542940395}
+mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/lib/visual-rails-generator-view.coffee', 'time': 1542938873}
+mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee', 'time': 1542938871}
+mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/lib/scaffold_model_view.coffee', 'time': 1542938827}
+mrufile	data	{'word': '/Users/user/.vimrc', 'time': 1542937553}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_1b_model_and_validation.rb', 'time': 1542937273}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_2_ARandFAT-model.rb', 'time': 1542937235}
+mrufile	data	{'word': '/Users/user/dotfiles/vimrc', 'time': 1542919062}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/pj-dependent.bashrc', 'time': 1542917983}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_1_Modeling.rb', 'time': 1542917698}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_CSS.css', 'time': 1542917697}
+mrufile	data	{'word': '/Users/user/Downloads/_to2TBHDD/tmp.sh', 'time': 1542916990}
+mrufile	data	{'word': '/Users/user/dotfiles/SCRIPTS/ror_01_analyze_app.rb', 'time': 1542916388}
+mrufile	data	{'word': '/Users/user/Downloads/gdicnpURDPD (1).diff', 'time': 1542915283}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/#ruby.rb', 'time': 1542912454}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_index.haml', 'time': 1542912315}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap.md', 'time': 1542907977}
+mrufile	data	{'word': '/Users/user/Downloads/gdicnpURDPD.diff', 'time': 1542907860}
+mrufile	data	{'word': '/Users/user/dotfiles/bashrc', 'time': 1542907541}
+mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/spec/visual-rails-generator-spec.coffee', 'time': 1542520771}
+mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/package.json', 'time': 1542520753}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_meta.html.haml', 'time': 1542440397}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/media.html.haml', 'time': 1542440392}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_sidebar.html.haml', 'time': 1542440374}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'time': 1542440356}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS.css', 'time': 1542440356}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_navbar.scss', 'time': 1542440355}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_navbar.html.haml', 'time': 1542440355}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/resource/media.ja.yml', 'time': 1542440353}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_nav_tags.scss', 'time': 1542440353}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_article.html.haml', 'time': 1542440351}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/categories/show.html.haml', 'time': 1542440351}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_news.html.haml', 'time': 1542440350}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/categories_controller.rb', 'time': 1542440349}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/article_category.rb', 'time': 1542440348}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/tag.rb', 'time': 1542440348}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/article_tag.rb', 'time': 1542440347}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/category.rb', 'time': 1542440347}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/statics/about.html.haml', 'time': 1542440334}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/devise.ja.yml', 'time': 1542440334}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_footer.html.haml', 'time': 1542440333}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'time': 1542440331}
+mrufile	data	{'word': '/Users/user/sessionSuganumapNavBars', 'time': 1542440322}
+mrufile	data	{'word': '/Users/user/sessionSuganumapCategory', 'time': 1542440312}
+mrufile	data	{'word': '/Users/user/sessionENV_IRODORI', 'time': 1542440281}
+mrufile	data	{'word': '/Users/user/dotfiles/gitignore', 'time': 1542424533}
+mrufile	data	{'word': '/Users/user/dotfiles/.git/COMMIT_EDITMSG', 'time': 1540604927}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'time': 1540500884}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/Autofill.export', 'time': 1539883482}
+mrufile	data	{'word': '/Users/user/.dotfiles/bashrc', 'time': 1539752579}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.gitignore', 'time': 1538632145}
+mrufile	data	{'word': '/Users/user/dotfiles/.gitignore', 'time': 1538632087}
+mrufile	data	{'word': '/Users/user/.bashrc', 'time': 1538631640}
+mrufile	data	{'word': '/Users/user/.ve_favorite', 'time': 1538631326}
+mrufile	data	{'word': '/Users/user/.dotfiles/ve_favorite', 'time': 1538631124}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/ror_productivity_tools/template_generator/template_generator.rb', 'time': 1538464302}
+mrufile	data	{'word': '/Users/user/dotfiles/.git/MERGE_MSG', 'time': 1538377167}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/custom_failure_app.rb', 'time': 1538361008}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/application_controller.rb', 'time': 1538339767}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/db/schema.rb', 'time': 1538339406}
+mrufile	data	{'word': '/Users/user/dotfiles/atom/packages.txt', 'time': 1538338013}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/myapp.rb', 'time': 1538276403}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/SH_shellscript.sh', 'time': 1538236760}
+mrufile	data	{'word': '/Users/user/.atom/keymap.cson', 'time': 1538234688}
+mrufile	data	{'word': '/Users/user/.atom/config.cson', 'time': 1538233077}
+mrufile	data	{'word': '/Users/user/dotfiles/openatomfromvimsession.sh', 'time': 1538218293}
+mrufile	data	{'word': '/Users/user/src/irodori/openatomfromvimsession.sh', 'time': 1538217158}
+mrufile	data	{'word': '/Users/user/src/irodori/open_in_atom_sessionName.sh', 'time': 1538216353}
+mrufile	data	{'word': '/Users/user/Downloads/ruby2.5とrakeをインストールで自動的に入るgem.txt', 'time': 1538160107}
+mrufile	data	{'word': '/Users/user/dotfiles/vim/bundle/VimExplorer/doc/vimExplorer.txt', 'time': 1538141375}
+mrufile	data	{'word': '/Users/user/.dotfiles/CHEATSHEETS/vim.vim', 'time': 1538141124}
+mrufile	data	{'word': '/Users/user/.gitignore', 'time': 1538139632}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/otl/自己分析.otl', 'time': 1538137764}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/otl/会社.otl', 'time': 1538137683}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/otl/IMA.otl', 'time': 1538137676}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_section_title.scss', 'time': 1538137657}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_category_item.scss', 'time': 1538130276}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_sidebar-popular-articles.scss', 'time': 1538122467}
+mrufile	data	{'word': '/Users/user/Downloads/anken.txt', 'time': 1538109920}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/encrypted_vars.yml', 'time': 1538054121}
+mrufile	data	{'word': '/Users/user/.dotfiles/SI/pj-dependent.bashrc', 'time': 1538054009}
+mrufile	data	{'word': '/Users/user/Downloads/tmp.txt', 'time': 1538053193}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_sidebar-subscribe.scss', 'time': 1538034987}
+mrufile	data	{'word': '/Users/user/.dotfiles/CHEATSHEETS/setupRoR/#git.sh', 'time': 1538034187}
+mrufile	data	{'word': '/Users/user/dotfiles/RAILS_ROOT/development.rb', 'time': 1538031114}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/environments/development.rb', 'time': 1538031030}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/lib/tasks/app.rake', 'time': 1538028791}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_modal2.haml', 'time': 1538014174}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_modal.haml', 'time': 1538014152}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/views/application/_footer.html.haml', 'time': 1537954113}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/application/_footer.html.haml', 'time': 1537954095}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vk10uYg/165.fugitiveblame', 'time': 1537936088}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vk10uYg/165.fugitiveblame', 'time': 1537935491}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_footer.html.hamlBEST', 'time': 1537884543}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vgpcS19/656.fugitiveblame', 'time': 1537874954}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/assets/stylesheets/layouts/default.scss', 'time': 1537874954}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vJDtIik/384.fugitiveblame', 'time': 1537867685}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vJDtIik/384.fugitiveblame', 'time': 1537867542}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2400.fugitiveblame', 'time': 1537866413}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'time': 1537866094}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2247.fugitiveblame', 'time': 1537864308}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2103.fugitiveblame', 'time': 1537864259}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2075.fugitiveblame', 'time': 1537864183}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/1716.fugitiveblame', 'time': 1537858643}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/vim.vim', 'time': 1537754346}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/VIM_ryan_dotfiles.vim', 'time': 1537754008}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/ddd.sh', 'time': 1537547768}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/951.fugitiveblame', 'time': 1537523565}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/917.fugitiveblame', 'time': 1537521295}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/877.fugitiveblame', 'time': 1537521162}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/849.fugitiveblame', 'time': 1537521158}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/797.fugitiveblame', 'time': 1537519748}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/703.fugitiveblame', 'time': 1537516503}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.git/COMMIT_EDITMSG', 'time': 1537505378}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.git/rebase-merge/git-rebase-todo', 'time': 1537504949}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/3819.fugitiveblame', 'time': 1537503634}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/3763.fugitiveblame', 'time': 1537503128}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend-new/app/views/media/statics/about.html.haml', 'time': 1537502722}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend-new/app/views/media/_footer.html.haml', 'time': 1537502596}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.git/MERGE_MSG', 'time': 1537500675}
+mrufile	data	{'word': '/Users/user/.tigrc', 'time': 1537496427}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/routes.rb', 'time': 1537495045}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/コーティンク規約.rb', 'time': 1537443826}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/2650.fugitiveblame', 'time': 1537422259}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/base_controller.rb', 'time': 1537413387}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/1035.fugitiveblame', 'time': 1537413242}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/serializers/article_serializer.rb', 'time': 1537354807}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/serializers/tag_serializer.rb', 'time': 1537354806}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/serializers/category_serializer.rb', 'time': 1537354774}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend_new/db/seeds.rb', 'time': 1537353718}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/db/seeds.rb', 'time': 1537353684}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupRoR/#git.sh', 'time': 1537341344}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/resource/weekdays_validator.ja.yml', 'time': 1537341033}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/notification_setting/news_release_notification.rb', 'time': 1537341020}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/notification_setting/daily_review_notification.rb', 'time': 1537340997}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/validators/weekdays_validator.rb', 'time': 1537340987}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/resource/weekdays_validator.ja.ymlBAKBAK', 'time': 1537340959}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/login.html.erb', 'time': 1537340033}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/5512.fugitiveblame', 'time': 1537336849}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/5479.fugitiveblame', 'time': 1537336448}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/5387.fugitiveblame', 'time': 1537335308}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/dockerCommmitMoreTaihi.sh', 'time': 1537261871}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/statics/dockerCommmitMoreTaihi.sh', 'time': 1537261569}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/4447.fugitiveblame', 'time': 1537260865}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/4384.fugitiveblame', 'time': 1537260634}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/4254.fugitiveblame', 'time': 1537259627}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/3905.fugitiveblame', 'time': 1537259010}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/assets/stylesheets/bootstrap-variables.scss', 'time': 1537251184}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/themes/suganumap/layouts/content-sidebar.css', 'time': 1537251156}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/application.scss', 'time': 1537251120}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/variables.scss', 'time': 1537251096}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/statics_controller.rb', 'time': 1537248655}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/media_for_non_mobile.html.haml', 'time': 1537244170}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/media/about.html.haml', 'time': 1537239068}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'time': 1537238554}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1798.fugitiveblame', 'time': 1537238548}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/statics_controller.rb', 'time': 1537238348}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/welcome_controller.rb', 'time': 1537237470}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/web/users_controller.rb', 'time': 1537237365}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1127.fugitiveblame', 'time': 1537235264}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1073.fugitiveblame', 'time': 1537235201}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1015.fugitiveblame', 'time': 1537234209}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/987.fugitiveblame', 'time': 1537233741}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/873.fugitiveblame', 'time': 1537233395}
+mrufile	data	{'word': '/Users/user/Downloads/dapump_usa.txt', 'time': 1537021618}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend_new/.git/MERGE_MSG', 'time': 1536914459}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_dedicated_footer.html.haml', 'time': 1536911947}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/.gitignore', 'time': 1536911275}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/docker.sh', 'time': 1536910527}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_header.html.haml', 'time': 1536907756}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/resource/zorns.ja.yml', 'time': 1536906575}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/ja.yml', 'time': 1536906554}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/articles/show.html.haml', 'time': 1536906444}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/mailer.html.haml', 'time': 1536906295}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/welcome/blog.html.haml', 'time': 1536906285}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/media_4_nonmobile.html.haml', 'time': 1536904924}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2668.fugitiveblame', 'time': 1536824638}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2503.fugitiveblame', 'time': 1536824493}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2475.fugitiveblame', 'time': 1536824492}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2447.fugitiveblame', 'time': 1536824464}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2386.fugitiveblame', 'time': 1536823880}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/Gemfile', 'time': 1536745199}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/Gemfile', 'time': 1536745181}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/services/wordpress_api_service.rb', 'time': 1536741173}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/5151.fugitiveblame', 'time': 1536724950}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/node_modules/bootstrap/scss/_media.scss', 'time': 1536660683}
+mrufile	data	{'word': '/Users/user/.powconfig', 'time': 1536653326}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4340.fugitiveblame', 'time': 1536652681}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4294.fugitiveblame', 'time': 1536652639}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4264.fugitiveblame', 'time': 1536651351}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/media/index.html.haml', 'time': 1536650956}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4210.fugitiveblame', 'time': 1536650941}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/3317.fugitiveblame', 'time': 1536634081}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2631.fugitiveblame', 'time': 1536629773}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/welcome/index.html.haml', 'time': 1536577957}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2172.fugitiveblame', 'time': 1536576759}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2144.fugitiveblame', 'time': 1536576736}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2006.fugitiveblame', 'time': 1536576666}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/1921.fugitiveblame', 'time': 1536576423}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/1725.fugitiveblame', 'time': 1536574166}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/1697.fugitiveblame', 'time': 1536574155}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker-init.sh', 'time': 1536571246}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/articles_controller.rb', 'time': 1536570649}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/869.fugitiveblame', 'time': 1536570128}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/application.html.haml', 'time': 1536569734}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/views/application/_navbar.html.haml', 'time': 1536566655}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPomk7i/1805.fugitiveblame', 'time': 1536565917}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/application/_navbar.html.haml', 'time': 1536563429}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vMUtK6i/480.fugitiveblame', 'time': 1536557215}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vMUtK6i/480.fugitiveblame', 'time': 1536557205}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupRoR/WebBrowserAppConfig.txt', 'time': 1536551026}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/javascripts/application.js', 'time': 1536548287}
+mrufile	data	{'word': '/Users/user/dotfiles/tigrc', 'time': 1536485572}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/config/environments/development.rb', 'time': 1536351344}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/public/maintenance/maintenance.html', 'time': 1536314590}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/helpers/application_helper.rb', 'time': 1536314283}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.env', 'time': 1536314068}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/views/home/index.html.haml', 'time': 1536303254}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/.env', 'time': 1536300662}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/assets/stylesheets/application.scss', 'time': 1536219608}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/tmp/cache/bootsnap-load-path-cache', 'time': 1536219237}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/plugins/broken-link-checker/languages/broken-link-checker-ja.mo', 'time': 1536219205}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/.db/mysql/volumes/mysql/help_topic.ibd', 'time': 1536219123}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker/loohcs_wordpress/data/wordpress.dump', 'time': 1536218940}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/data/dump.sql', 'time': 1536218749}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RDBMSandDBext.txt', 'time': 1536216257}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/docker.txt', 'time': 1536216063}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker-compose.yml', 'time': 1536216004}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker-compose.yml', 'time': 1536215984}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/config/environments/test.rb', 'time': 1536213112}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker/loohcs_web/Dockerfile', 'time': 1536201781}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker/loohcs_web/entrypoint.sh', 'time': 1536201767}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/web/Dockerfile', 'time': 1536143424}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/Procfile', 'time': 1536143367}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/web/entrypoint.sh', 'time': 1536142180}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/Dockerfile', 'time': 1536142140}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/entrypoint.sh', 'time': 1536142133}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/Dockerfile', 'time': 1536141510}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/init.sh', 'time': 1536141491}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/dotenv.sample', 'time': 1536137223}
+mrufile	data	{'word': '/Users/user/.docker/config.json', 'time': 1536135199}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/db/Dockerfile', 'time': 1536134924}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker-init.sh', 'time': 1536132753}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/dotenv.test', 'time': 1536131074}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/README.md', 'time': 1536130262}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker/loohcs_wordpress/Dockerfile', 'time': 1536129503}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/v91xkdt/287.fugitiveblame', 'time': 1536129494}
+mrufile	data	{'word': '/Users/user/src/irodori/loohcs/.postcssrc.yml', 'time': 1536128856}
+mrufile	stats	{'word': '~/dotfiles/Rakefile', 'pattern': 'Rakefi'}
+mrufile	stats	{'word': '~/.ve_favorite', 'pattern': 'fa'}
+mrufile	stats	{'word': '~/.dotfiles/ve_favorite', 'pattern': 'favori'}
+mrufile	stats	{'word': '~/dotfiles/ve_favorite', 'pattern': 'favo'}
+mrufile	stats	{'word': '~/.dotfiles/ve_favorite', 'pattern': 've_fa'}
+mrufile	stats	{'word': ':q', 'pattern': ':q'}
+mrufile	stats	{'word': '~/dotfiles/vimrc', 'pattern': 'vimrc'}
+mrufile	stats	{'word': '~/dotfiles/vimrc', 'pattern': 'vimr'}
+mrufile	stats	{'word': '~/.vimrc', 'pattern': 'vimrc'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'pattern': 'OS'}
+mrufile	stats	{'word': '~/dotfiles/Rakefile', 'pattern': 'rake'}
+mrufile	stats	{'word': '~/dotfiles/gitignore', 'pattern': 'gitigno'}
+mrufile	stats	{'word': '~/dotfiles/bashrc', 'pattern': 'bashr'}
+mrufile	stats	{'word': '~/dotfiles/bashrc', 'pattern': 'bashrc'}
+mrufile	stats	{'word': '~/dotfiles/gitignore', 'pattern': 'giti'}
+mrufile	stats	{'word': '~/dotfiles/.gitignore', 'pattern': 'gitignore'}
+mrufile	stats	{'word': '~/.bashrc', 'pattern': 'bashrc'}
+mrufile	stats	{'word': '~/dotfiles/Rakefile', 'pattern': 'Rakefil'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'pattern': 'scss'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'pattern': 'media'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_category_item.scss', 'pattern': 'category_item'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_sidebar.html.haml', 'pattern': 'side'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_category_item.scss', 'pattern': 'scss'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/categories/show.html.haml', 'pattern': 'show'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/categories/show.html.haml', 'pattern': 'haml'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_article.html.haml', 'pattern': 'artic'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_category_item.scss', 'pattern': 'scs'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS_bootstrap.md', 'pattern': 'boot'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_article.html.haml', 'pattern': 'article'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/environments/development.rb', 'pattern': 'deve'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/environments/development.rb', 'pattern': 'deveo'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_category_item.scss', 'pattern': 'categori'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'pattern': 'medi'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/environments/development.rb', 'pattern': 'develop'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media/components/_navbar.scss', 'pattern': 'navba'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS.css', 'pattern': 'C'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS.css', 'pattern': 'CSS.'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/locales/resource/media.ja.yml', 'pattern': 'yml'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/application/_footer.html.haml', 'pattern': 'foot'}
+mrufile	stats	{'word': '~/src/irodori/loohcs/app/views/application/_footer.html.haml', 'pattern': 'foo'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_footer.html.haml', 'pattern': 'foot'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/statics/about.html.haml', 'pattern': 'about'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'defaul'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS.css', 'pattern': 'CSS.c'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scssdi', 'pattern': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scssdi'}
+mrufile	stats	{'word': '~/src/irodori/loohcs/app/assets/stylesheets/layouts/default.scss', 'pattern': 'scss'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'def'}
+mrufile	stats	{'word': ':qa', 'pattern': ':qa'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'defau'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'scss'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'pattern': 'stati'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS.css', 'pattern': 'CSS.cs'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'de'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'defa'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_footer.html.haml', 'pattern': 'footer'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'default'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS.css', 'pattern': 'CSS'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_navbar.html.haml', 'pattern': 'navb'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/statics/about.html.haml', 'pattern': 'haml'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/base_controller.rb', 'pattern': 'base'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/statics/about.html.haml', 'pattern': 'abou'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_article.html.haml', 'pattern': 'app/views/media/_article.html.haml'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/categories_controller.rb', 'pattern': 'app/controllers/media/categories_controller.rb'}
+mrufile	stats	{'word': '~/.bashrc', 'pattern': 'bashr'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupRoR/#git.sh', 'pattern': 'git'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'pattern': 'stat'}
+mrufile	stats	{'word': '~/dotfiles/SI/BAK/F/login.html.erb', 'pattern': 'login'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'pattern': 'media.css'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'pattern': 'app/views/layouts/statics.html.haml'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_for_non_mobile.html.haml', 'pattern': 'for_'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/statics_controller.rb', 'pattern': 'cont'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_for_non_mobile.html.haml', 'pattern': 'for'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_footer.html.haml', 'pattern': '_footer'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'pattern': 'css'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/media/about.html.haml', 'pattern': 'abou'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/routes.rb', 'pattern': 'route'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'pattern': 'osx'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'pattern': 'OSX'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/docker.sh', 'pattern': 'docker'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_navbar.html.haml', 'pattern': 'navba'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/locales/devise.ja.yml', 'pattern': 'yml'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/base_controller.rb', 'pattern': 'base_'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'pattern': 'cont'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_4_nonmobile.html.haml', 'pattern': 'non'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS_bootstrap.md', 'pattern': 'oot'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'pattern': 'contor'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/routes.rb', 'pattern': 'routes'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_4_nonmobile.html.haml', 'pattern': 'nonm'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'pattern': 'contro'}
+mrufile	stats	{'word': '~/src/irodori/loohcs/Gemfile', 'pattern': 'emfil'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/Gemfile', 'pattern': 'Gem'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'css'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/media/about.html.haml', 'pattern': 'about'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/node_modules/bootstrap/scss/_media.scss', 'pattern': 'media'}
+mrufile	stats	{'word': '~/src/irodori/loohcs/Gemfile', 'pattern': 'em'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/Gemfile', 'pattern': 'Gemfile'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/application/_footer.html.haml', 'pattern': '_footr'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media.html.haml', 'pattern': 'media.html.haml'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/welcome/index.html.haml', 'pattern': 'inde'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/lib/tasks/app.rake', 'pattern': 'rake'}
