@@ -34,7 +34,7 @@ DOCK
 		    export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
 
 #Mojave
-	$ xcode-select --install 
+	$ xcode-select --install
 
 # HOmeBrew
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

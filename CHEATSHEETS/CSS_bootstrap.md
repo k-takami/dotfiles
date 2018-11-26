@@ -113,6 +113,7 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
 ## button
     <button> <a> <input>
     btn btn-default btn-xs btn-block active
+        色はdefault灰色primary青success黄緑info空色warning橙danger赤
         btn-light
         btn-primary btn-sm           disabled .disabled
         btn-success btn-lg
@@ -124,6 +125,12 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
   　　　平坦にしたければ <button style="border-radius:10px;" class="btn btn-lg btn-block">ボタン名</button>
         SLIMでは：f.button 'キャプション',disabled: true, class: "btn btn-light", style: "border-radius:50px;"
          span.label~~~ではh1~hn要素で大きさが左右される
+
+
+     f.button "CSV出力", class: "btn btn-secondary btn-lg", method: :put, data: { disable_with: "CSV出力" }
+
+
+
 
 ### stateful
     <button type="button" id="example-btn" data-loading-text="Loading..." class="btn btn-primary">submit</button>

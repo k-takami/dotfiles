@@ -1,9 +1,7 @@
 変換into 定数
 	from シンボル ":aaa".to_s.sub(':','').camelize.constantize
-変換into Hash
-	 from CSV::Row   : row.to_hash.each{|k,v|puts  k ; puts v }
 変換into Class
-	model = File.basename(file, '.tsv').classify.constantize # > rails3 
+	model = File.basename(file, '.tsv').classify.constantize # > rails3
 	cf: File.basename(file, '.tsv').classify
 変換 into to web-measurement
 	FQDN

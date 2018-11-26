@@ -1370,6 +1370,18 @@ users[rand(users.size)]
      names << user.name if user.admin?
    end
  end
+
+  def hanbaiten_csv_generation
+    header_fields = %w(eigyou_date midashi eigyou_naiyou status)
+    output_attributes_hash = header_fields.each_with_object({}) do |key, temp_hash|
+      temp_hash[key] = Hoken::EigyouRireki.columns_hash[key].comment
+    end
+    csv = to_csv(Hoken::EigyouRireki.order(eigyou_date: :desc), output_attributes_hash, { master_hanbaiten_id: params[:id] })
+    send_data csv, filename: "eigyou-rireki-tbl-#{Time.current}.csv"
+  end
+
+
+
  with_indexはカウンタの初期値を指定できます。（デフォルトはゼロ）
  users_with_index = users.map.with_index(1) do |user, counter|
  [counter, user]
