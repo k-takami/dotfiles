@@ -67,16 +67,37 @@
                                                                         ならば関連付けMの
                                                                         validateしない
 
+| has_one(through: 結合モデル名)                                              | has_many(through: 結合モデル名) | belongs_to  | has_and_belongs_to_many                                 |                                    |
+|---------------------------------------------------------------------------|---------------------------------|-------------|-------------------------------------------------------|-----------------------------------|
+| autosave:.new, .createと同時に関連モデルも保存:destroy従属モデルがあればそれも破棄 | 有                              | 有          | 有                                                     | 有                                 |
+| class_name:                                                                | 有                              | 有          | 有                                                    | 有                                 |
+| validate:                                                                  | 有                              | 有          | 有                                                    | 有                                 |
+| foreign_key:                                                               | 有                              | 有          | 有                                                    | 有                                 |
+| inverse_of:                                                                | 有                              | 有          | 有                                                    |                                   |
+| primary_key:                                                               | 有                              | 有          | 有                                                    |                                   |
+|                                                                            | source: ???                     | source: ??? |                                                      |                                   |
+| as: ポリモーフィック関連付でつかう仮想モデル名                                     | 有                              | 有          | polymorphic: true(as: ***, source_type: ***)         |                                   |
+| counter_cache: (true|カラム名) *.sizeメソッド呼び出しでつかう。SQL回避             |                                 | 有          | 有                                                  |                                    |
+|                                                                            |                                 |             |                                                      | association_foreign_key:＊多対多の自己結合を行いたいときに |
+|                                                                            |                                 |             | touch: trueならばupdated_at=関連モデルのdestroy時刻も記録 | join_table:結合テーブルの辞書順生成名を上書き指定          |
+|                                                                            |                                 |             | optional: false*trueならば関連付けvalidateしない         |                                    |
+| dependent:                                                                 | 有                              | 有          | 有                                                     |                                    ||
 
-    #ORM設定後の自動派生メソッド
-      build_関連モデル名(attributes = {})
-      create_関連モデル名(attributes = {})
-      create_関連モデル名!(attributes = {})
-      reload_関連モデル名
-      before_add
-      after_add
-      before_remove
-      after_remove
+  *  :destroyを指定すると、関連付けられたオブジェクトも同時にdestroy
+  *  :deleteを指定すると、関連付けられたオブジェクトはデータベースから物理削除。コールバックは実行なし
+  *  :nullifyを指定すると、外部キーがNULLに設定されます。コールバックは実行なし
+  *  :restrict_with_exceptionを指定すると、関連付けられたレコードがある場合に例外が発生
+  *  :restrict_with_errorを指定すると、関連付けられたオブジェクトがある場合にエラーがオーナーに追加
+
+    #### ORM設定後の自動派生メソッド
+    + build_関連モデル名(attributes = {})
+    + create_関連モデル名(attributes = {})
+    + create_関連モデル名!(attributes = {})
+    + reload_関連モデル名
+    + before_add
+    + after_add
+    + before_remove
+    + after_remove
 
 
 ### Has many

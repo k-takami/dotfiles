@@ -39,7 +39,7 @@ task :install do
   replace_all = false
   files = Dir['*'] - %w[
     Rakefile README.rdoc LICENSE oh-my-zsh
-    ATOM AWSCLI CHEATSHEETS LICENSE RAILS_ROOT README.md SCRIPTS SI SUPPLEMENTS VM_HOST vim-neosnippet.tgz win73.vimrc SI.tar.zip WWW_20160515
+    ATOM AWSCLI CHEATSHEETS LICENSE RAILS_ROOT SCRIPTS SI SUPPLEMENTS VM_HOST HTML README.md vim-neosnippet.tgz win73.vimrc SI.tar.zip WWW_20160515
   ]
 
   unless os == :windows
