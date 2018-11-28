@@ -31,6 +31,10 @@
     ===> OSX のdocker/ Kinematicsを再起動　
     ===> それでもダメならば、docker volume remove postgresqlのボリューム で消して ; docker-compose up -d dbのサービス ; dkc_rdbmreset ;
 
+  # "error while creating volume path" "/var/lib/docker/"
+    ===> OSX のdocker/ Kinematicsを再起動　
+    ===> それでもダメならば、docker volume remove postgresqlのボリューム で消して ; docker-compose up -d dbのサービス ; dkc_rdbmreset ;
+
 # 4.Virtualbox 連携
   brew install docker-machine
 	# virtualbox連携：Dockerホストを開始・停止・環境表示・接続表示作成する。
