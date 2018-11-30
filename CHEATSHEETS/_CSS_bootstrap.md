@@ -113,6 +113,7 @@ Bootstrap的文档非常详尽, 每个组件每个示例都能够方便地在日
 ## button
     <button> <a> <input>
     btn btn-default btn-xs btn-block active
+        色はdefault灰色primary青success黄緑info空色warning橙danger赤
         btn-light
         btn-primary btn-sm           disabled .disabled
         btn-success btn-lg
@@ -411,4 +412,20 @@ xssmmdlg: xs-sm-md-lg:
 
 @media (max-width: @screen-sm-max) { ... }
 @media (min-width: @screen-md-min) { ... }
+
+
+# snippet
+    coffee:
+      $('.calenderinput').on 'click', ->
+        target_cell = $(this)
+        datepicker_options = inline: true
+        $(".bootstrap-datetimepicker-widget").remove()
+        $(target_cell).datetimepicker(datepicker_options)
+        # ここら辺はtoggle活用するとか、IDで複数対応するとか。
+
+   should be sass:
+      data-toggle="collapse" data-target=".bootstrap-datetimepicker-widget"
+
+
+
 
