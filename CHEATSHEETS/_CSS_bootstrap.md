@@ -413,3 +413,19 @@ xssmmdlg: xs-sm-md-lg:
 @media (max-width: @screen-sm-max) { ... }
 @media (min-width: @screen-md-min) { ... }
 
+
+# snippet
+    coffee:
+      $('.calenderinput').on 'click', ->
+        target_cell = $(this)
+        datepicker_options = inline: true
+        $(".bootstrap-datetimepicker-widget").remove()
+        $(target_cell).datetimepicker(datepicker_options)
+        # ここら辺はtoggle活用するとか、IDで複数対応するとか。
+
+   should be sass:
+      data-toggle="collapse" data-target=".bootstrap-datetimepicker-widget"
+
+
+
+

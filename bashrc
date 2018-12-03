@@ -290,8 +290,8 @@ function appfilesonly { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude
 # TODO: OSX/BSDならば文字中の空白を.変換、このロジックをregrepとgreperに応用して統合整理 -c3 -cr系も整理
 function greprc {
   local options=${@:2} ;
-  grep -niE --include=*rc $1 ~/dotfiles/*                      $options;
-  grep -niE               $1 ~/dotfiles/SI/pj-dependent.bashrc $options;
+  grep -niE --include=*rc $1 ~/dotfiles/*                      $options --exclude=*.htm* --exclude=*.json ;
+  grep -niE               $1 ~/dotfiles/SI/pj-dependent.bashrc $options --exclude=*.htm* --exclude=*.json ;
 }
 
 function greprcrbonly { greprc `includerb` `nogabage` $@ ; }
@@ -299,11 +299,11 @@ function greprcrbonly { greprc `includerb` `nogabage` $@ ; }
 function grepdf {
   # ex) greprc serchword -C1 `includerb` `nogabage`
   local options=${@:2} ;
-  grep -niE  $1 ~/dotfiles/* --include=*rc $options;
-  grep -nirE $1 ~/dotfiles/SI              $options;
-  grep -nirE $1 ~/dotfiles/SCRIPTS         $options;
-  grep -nirE $1 ~/dotfiles/CHEATSHEETS     $options;
-  grep -nirE $1 ~/dotfiles/vim/snippets    $options;
+  grep -niE  $1 ~/dotfiles/* --include=*rc $options --exclude=*.htm* --exclude=*.json ;
+  grep -nirE $1 ~/dotfiles/SI              $options --exclude=*.htm* --exclude=*.json ;
+  grep -nirE $1 ~/dotfiles/SCRIPTS         $options --exclude=*.htm* --exclude=*.json ;
+  grep -nirE $1 ~/dotfiles/CHEATSHEETS     $options --exclude=*.htm* --exclude=*.json ;
+  grep -nirE $1 ~/dotfiles/vim/snippets    $options --exclude=*.htm* --exclude=*.json ;
   # echo "grep -nirE $1 ~/dotfiles/vim/snippets  $options ### ";
 }
 
@@ -375,6 +375,8 @@ alias gdilight='        git diff --no-prefix --ignore-all-space --ignore-blank-l
 alias gdicnpURDPD='     git diff --cached --no-prefix > ~/Downloads/gdicnpURDPD.diff'
 alias gdicnpURDPDlight='git diff --cached --no-prefix --ignore-all-space --ignore-blank-lines --ignore-cr-at-eol > ~/Downloads/gdicnpURDPD.diff'
 alias gdinp='           git diff          --no-prefix'
+alias gdinpURDPD='      git diff          --no-prefix > ~/Downloads/gdicnpURDPD.diff'
+alias gdinpURDPDlight=' git diff          --no-prefix --ignore-all-space --ignore-blank-lines --ignore-cr-at-eol > ~/Downloads/gdicnpURDPD.diff'
 alias gdino='     gdi --name-only'
 alias diffbbq='   diff -rwBbq '
 #  diff - -x ".hg" ginger ginger_mae/ |sort
@@ -468,7 +470,7 @@ alias mytestsingle='ds1 bx rake spec:test RAILS_ENV=mobi-connect-test'
 export REGEXP_MYBUG="^\+.*(\?i|i\b|binding.pry|byebug|debugger|takami)"
 alias mybugstaged=' gdicnp |grepe $REGEXP_MYBUG -C2 '
 alias mybug='       git show |grepe $REGEXP_MYBUG -C1 ; gdicnp |grepe $REGEXP_MYBUG -C1 ; gdi |grepe $REGEXP_MYBUG --exclude=development.rb --exclude=*Gemfile* -C1'
-alias raspell=' ruby ~/.SCRIPTS/raspell.rb'
+alias raspell=' ruby ~/dotfiles/SCRIPTS/ror_02_raspell.rb'
 alias mybugallstaged='rbcrails; mybugstaged; raspell; rbwcstaged; rbprails;'
 alias mybugall='      rbcrails; mybug      ; raspell; rbwcstaged; rbprails;'
 alias mybug_migration_yyyymmdd='find db/migrate/*create_*  |xargs -n1 git blame |grep' # add /yyyy-mm-dd?/ date to find DANGEROUS MIGRATION FILE
@@ -524,7 +526,7 @@ function tarziprorapp { # 下層のRails.rootiフォルダーを圧縮
 }
 
 
-function tarziprorgitonly { # 今のRails.rootで叩くと上の階に.gitを圧縮
+function tarziprorgitonly { # 今のRails.rootフォルダー名前を引数にして呼ぶ。上階に.gitを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   cd $chomped1
   tar zcvf ../$chomped1.git-`date '+%Y%m%d'`.tar.gz .git ; lat ..
@@ -586,6 +588,7 @@ function atom_backup {
   cd -
 }
 alias atom_restore='apm install --packages-file ~/dotfiles/SI/ATOM/packages.txt; cp ~/dotfiles/SI/ATOM/keymap.cson ~/.atom/'
+alias atomvim_sync='cdd; gishsv; gplo; gishpp; cd - ; gdinpURDPD; apm -h'
 # TODO: .
 # ~/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee +22
   # # default: 'bundle exec',

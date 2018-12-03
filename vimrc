@@ -279,6 +279,7 @@ set statusline=%F%m%=%l,%c\ %{'['.(&fenc!=''?&fenc:&enc).']\ ['.&fileformat.']'}
 "map <s> <Nop>
 
 "PC標準のキー操作:-----------------------------------------------
+" default is C-wC-v
 map <C-w><C-k> :vnew<CR>
 map <C-t> :tabnew<CR>
 map <F4> :windo q!<CR>
@@ -308,11 +309,13 @@ function! ToggleLineNumber()
   endif
 :endfunction
 " ATOM-linkage
-function! OpenInAtom()
+function! AtomDeHirakuMain()
   " let s:aaa = system("atom -a %")
   :silent let ret = system("atom -a " . shellescape(expand("%")))
 :endfunction
-noremap ga :call OpenInAtom()<CR>
+noremap ga :call AtomDeHirakuMain()<CR>
+command! AtomDeHiraku call AtomDeHirakuMain()
+
 " TODO: atom tabs -> vim tabs へはvim -p2 tab1file tab2fie...tabNfile 形式で開ける
 
 nnoremap <silent> <F6> :call ToggleLineNumber()<CR>
@@ -647,6 +650,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     NeoBundle 'slim-template/vim-slim'
       autocmd FileType slim setlocal foldmethod=indent
       autocmd BufNewFile,BufRead *.slim set filetype=slim
+    " NeoBundle 'kchmck/vim-coffee-script'
+
     "RoR Refactoring
     NeoBundle 'https://github.com/ecomba/vim-ruby-refactoring.git'
       " 選択部分をメソッドに切り出す
