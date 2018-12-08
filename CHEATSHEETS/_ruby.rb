@@ -1527,3 +1527,154 @@ build_app_list
 イテレーション
 	基本：10.times { p "#"} ;            1.upto(10) {|i| p i}
 	区切ってインデックス付き：arr.each_slice(2).with_index { |(a, b), i| puts "#{i} - #{a}, #{b}" }
+
+
+[MD]
+---
+title: 【まとめ】インスタンス変数、クラス変数、クラスインスタンス変数 tags: Ruby author: mogulla3 slide: false
+---
+すっかりPHP脳になっていたため、Ruby脳に切り替えるべくクラスに関わる変数まわりをおさらいした。
+
+## 1. インスタンス変数
+インスタンスごとに独立して持つ変数。
+
+- インスタンス変数にアクセスできるのは、initializeメソッドとオブジェクトのインスタンスメソッドだけ
+- initializeメソッドで初期化されて、その後各インスタンスメソッドから参照・変更される使い方が多い（と思う）
+- PHPやJavaみたいに事前にクラス定義内で定義する必要がない
+
+### 1-1. 定義
+変数名の前に「@」をつけて定義する
+
+```ruby
+@instance_var = 'instance_var'
+```
+
+### 1-2. 使い方
+
+```ruby
+class Foo
+  # 明示的にインスタンス変数を宣言しなくて良い
+  # => 宣言した場合、それは「クラスインスタンス変数」と見なされる
+
+  # (o) initializeメソッドからアクセス
+  def initialize
+    @instance_var = 'instance_var'
+    p "#{@instance_var} at initialize"
+  end
+
+  # (o) インスタンスメソッドからアクセス
+  def xxx
+    p "#{@instance_var} at xxx"
+  end
+
+  # (x) クラスメソッドからアクセス
+  def self.yyy
+    p @instance_var
+  end
+end
+
+# initializeメソッドからはアクセスできる
+foo = Foo.new # => 'instance_var at initialize'
+
+# インスタンスメソッドからもアクセスできる
+foo.xxx # => 'instance_var at xxx'
+
+# クラスメソッドからはアクセスできない
+Foo.yyy # => nil
+```
+
+## 2. クラス変数
+そのクラスの全てのインスタンスで共有される変数
+
+- クラスとそのインスタンスがスコープになる
+- 定数と似ているがクラス変数は何度でも値を変更できる点で異なる
+- クラスメソッド、インスタンスメソッド、クラス定義式内でアクセス可能
+
+### 2-1. 定義
+変数名の前に「@@」をつけて定義する
+
+```ruby
+@@class_var = 'class_var'
+```
+
+### 2-2. 使い方
+```ruby
+class Foo
+  @@class_var = 0
+
+  def xxx
+    @@class_var += 1
+    p @@class_var
+  end
+
+  def self.yyy
+    @@class_var += 1
+    p @@class_var
+  end
+end
+
+foo = Foo.new
+
+# 同一インスタンス内で値は共有される
+foo.xxx # => 1
+foo.xxx # => 2
+
+# インスタンスが異なっても、値は共有されている
+foo2 = Foo.new
+foo2.xxx # => 3
+
+# クラスメソッドからもアクセスできるし、値も共有されている
+Foo.yyy # => 4
+```
+
+## 3. クラスインスタンス変数
+クラスオブジェクトのインスタンス変数
+個人的に非常にややこしい。見た目はインスタンス変数なのに、機能的にはクラス変数に近いため。
+
+-  一見するとクラス変数とほぼ同じように使えるが、そのクラスのみでしか参照できない。例えば、そのクラスを継承したクラスではその変数にアクセスできない。
+- クラスメソッドからはアクセスできる
+- インスタンスメソッドからアクセスすることはできない（クラスオブジェクトのインスタンス変数であるため）
+- クラス定義式内で定義される（メソッド内で初期化されない）
+- 見た目は通常のインスタンス変数と同じため、混同されやすい
+
+### 3-1. 定義
+変数名の前に「@」をつけて定義する
+**※ 見た目はインスタンス変数と同じだが、定義する場所がクラス定義式内になる**
+
+```ruby
+@class_instance_var = 'class_instance_var'
+```
+
+### 3-2. 使い方
+```ruby
+class Foo
+  # クラス定義式内で定義される
+  @class_instance_var = 'class_instance_var'
+
+  # クラスメソッド内でクラスインスタンス変数を出力
+  def self.xxx
+    p @class_instance_var
+  end
+
+  # インスタンスメソッド内でクラスインスタンス変数を出力
+  # => これはインスタンス変数扱いとなり、参照できない
+  def yyy
+    p @class_instance_var
+  end
+end
+
+# Fooを継承したBarクラスを作成
+class Bar < Foo
+end
+
+# クラスメソッドからクラスインスタンス変数は参照できる
+Foo.xxx # => 'class_instance_var'
+
+# インスタンスメソッドからクラスインスタンス変数は参照できない
+# => インスタンス変数とみなされるため
+foo = Foo.new
+foo.yyy # => nil
+
+# 継承されたクラスからクラスインスタンス変数は参照できない
+Bar.xxx # => nil
+```

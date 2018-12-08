@@ -14,14 +14,16 @@ List databases                                       -----------         SHOW DA
 Change database                                      -----------         USE <dbname>                        \c <dbname>       n/a
 List tables                                          <Leader>slt         SHOW TABLES;                        \dt               .tables
 Show table info                                      <Leader>sdt         DESCRIBE <tablename>;               \d <tablename>    .schema <tablename>
-                                                                         show full columns <tablename>
+                                                                         show full columns <tablename>       \d+ 
 Exit the client                                      *quit vim           quit (or exit)                      \q                .exit
 History                                              <Leader>sh                                              \s 
 select * from table_name under cursor                <Leader>st  
 select * from table                                  <Leader>sT  
 execute SQL of current line                          <Leader>se
 execute SQL of vim selection range                   <Leader>sea
-execute SQL たて表示(要DBI或ODBC)                    <Leader>so          <SQL> \G                            \x
+execute SQL たて表示(要DBI或ODBC)                    <Leader>so          <SQL> \G                            \x (toggleでON/OFF)
+execute SQL 列名表示ONOFF                                                                                    \t (toggleでON/OFF)
+SQL(スクリプト)ファイルの実行                                                                                \i filename.sql　 　
 
 #運用管理
 Load data                                            -----------         LOAD DATA INFILE '<file>'           \i <file>         .import <file> <table>

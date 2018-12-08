@@ -650,7 +650,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     NeoBundle 'slim-template/vim-slim'
       autocmd FileType slim setlocal foldmethod=indent
       autocmd BufNewFile,BufRead *.slim set filetype=slim
-    NeoBundle 'kchmck/vim-coffee-script'
+    "OSX不調?： NeoBundle 'kchmck/vim-coffee-script'
 
     "RoR Refactoring
     NeoBundle 'https://github.com/ecomba/vim-ruby-refactoring.git'

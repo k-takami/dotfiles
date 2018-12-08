@@ -23,6 +23,10 @@ export POW_TIMEOUT=300
 # powder (config/status|restart)
 
 alias dkpadi='  docker ps -a ; docker images;  docker volume ls';
+function dkbash { # $1 == container_name/id
+ dkpadi; docker exec -it -u root $1 bash
+}
+
 #  # リサイズや清掃；
 #    docker build --squash
 #      サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
@@ -36,6 +40,7 @@ alias dktg='    docker tag';
 alias dkhs='    docker history';
 alias dksch='   docker search  --no-trunc';
 alias dkisp='   docker inspect';
+# alias dk'sudo docker cp <コンテナID>:/etc/my.cnf my.cnf'
 alias dkcp='    docker cp';
 alias dkpl='    docker login;                     docker pull';
 alias dkrunit=' docker run -itd'; # -d = detached
@@ -45,22 +50,24 @@ alias dksv='    docker save ' # image_name > ../*.tar name
 alias dkld='    docker load < ' # *.tar name
 alias dkh='     docker --help '
 alias dkv='     docker --version '
-# XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定すること
+# XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定する
 
-function dkc_rdbseed {
+function dkc_rdbseed {  #通常のbdl方法
   docker-compose run -u root app bundle install ;
   docker-compose run -u root app bin/rake db:migrate db:seed
   docker-compose run -u root app annotate --force ;
   echo "### NOTE "
+  echo "###      rake:db:migrateが失敗しがちなのでdbのコンテナを再起動してから実行した方がいい"
   echo "###      bundle install失敗するときは docker exec -it -u root CONTAINERNAME bash でログインして すること"
   echo "###    : DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
 }
-function dkc_rdbmreset {
+function dkc_rdbmreset { #通常のbdl方法
   docker-compose run -u root app bundle install ;
   docker-compose run -u root app bin/rake db:migrate:reset db:seed;
   docker-compose run -u root app annotate --force ;
   echo "### NOTE "
+  echo "###      rake:db:migrateが失敗しがちなのでdbのコンテナを再起動してから実行した方がいい"
   echo "###      bundle install失敗するときは docker exec -it -u root CONTAINERNAME bash でログインして すること"
   echo "###    : DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
@@ -246,8 +253,6 @@ alias histail='history |tail -n 50'
 alias wgetssh=' wget -d --secure-protocol=SSLv3 --no-check-certificate --keep-session-cookies --save-cookies cookies.txt '
 alias TODAY='echo `date '+%Y%m%d'`'
 alias xvf='for i in *.tar.gz; do tar zxvf $i -C ./ ; done'
-# 特定ファイルだけ展開： $ sudo tar zxvf 対象tarball.tgz full/path/to/the/specified/file/in/the/tarball
-alias findp0x0mv0='find -print0 | xargs -0 mv -t ./ ' #一括移動 -print0と -0は呼応。NULL区切り
 #sort: nUMERIZE, rEVERSE, kOLUMN-NUMBER
 alias greptodo='greper "#TODO:" ./* --include=*.*rb* --exclude=DD*.* --exclude=NG*.* --exclude=Copy*.*  --exclude=EX*.* --exclude-dir=vendor -C1'
 alias sortnk=' sort -n  -k'
@@ -273,13 +278,6 @@ alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
 # alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
 alias REM=' : <<"REM"' #REMで終端すること
 
-#  #grep結果ファイル中文字列をかきかえ
-# $ regrepl attr_accessible app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
-
-# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
-
-#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
-#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
 
 alias cdd=' cd ~/dotfiles'
 alias nrnd=' --no-ri --no-rdoc '
@@ -307,10 +305,12 @@ function grepdf {
   # echo "grep -nirE $1 ~/dotfiles/vim/snippets  $options ### ";
 }
 
-function greprails {
+function greprails { # gempath内部のgrep
 local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 'gems') "` ;
   grep -nirE "def \w*$1" $gempath ;
 }
+
+# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
 
 # $1検索語　$2場所 regrep の$2がなければ、./*で補完
 # alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
@@ -354,7 +354,6 @@ alias grep-pkglist=' pkglist | grep -iE '
 #git/ mercurial / patchコマンド http://uguisu.skr.jp/Windows/diff_patch.html http://d.hatena.ne.jp/mrgoofy33/20101019/1287500809
 alias patchp=' patch    -p0 <' #[patch-name] to apply on
 alias patchrp='patch -R -p0 <' #[patch-name] to reverse(=undo)
-alias patch_cleaning='ffgrep "\.(rej|orig)" | xargs -n1 rm'
 alias gibr='      git branch'
 alias gibr-d='    git branch -D' #削除
 alias gibr-m='    git branch -m' #旧ブランチ名　新ブランチ名
@@ -377,7 +376,8 @@ alias gdicnpURDPDlight='git diff --cached --no-prefix --ignore-all-space --ignor
 alias gdinp='           git diff          --no-prefix'
 alias gdinpURDPD='      git diff          --no-prefix > ~/Downloads/gdicnpURDPD.diff'
 alias gdinpURDPDlight=' git diff          --no-prefix --ignore-all-space --ignore-blank-lines --ignore-cr-at-eol > ~/Downloads/gdicnpURDPD.diff'
-alias gdino='     gdi --name-only'
+alias gdino='     gdi  --name-only'
+alias gdicno='    gdic --name-only'
 alias diffbbq='   diff -rwBbq '
 #  diff - -x ".hg" ginger ginger_mae/ |sort
 alias hgbl='      hg blame -lund'
@@ -529,7 +529,7 @@ function tarziprorapp { # 下層のRails.rootiフォルダーを圧縮
 function tarziprorgitonly { # 今のRails.rootフォルダー名前を引数にして呼ぶ。上階に.gitを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   cd $chomped1
-  tar zcvf ../$chomped1.git-`date '+%Y%m%d'`.tar.gz .git ; lat ..
+  tar zcvf ../$chomped1.git-`date '+%Y%m%d_%H%M'`.tar.gz .git ; lat ..
 }
 
 function tarzipdotfiles {  # ~/dotfilesフォルダーに移動して~に圧縮
@@ -562,12 +562,6 @@ function grepremotegems {
 alias ff='    find ./* | sort | less '
 alias ffgrep='find . | grep -iE '
 
-function rmbak {
-  ffgrep .bak |xargs -n1 rm $_ ;
-  find . | grep -E "DEV$" |xargs -n1 rm $_ ;
-  find . | grep -E "`TODAY`$" |xargs -n1 rm $_ ;
-}
-
 
 #source ~/.git-prompt.sh
 #PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
@@ -576,6 +570,23 @@ function rmbak {
 # grep -nirE "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
 # find . -name "*.rb" -o -name "*.yml" | xargs wc -l
 # rake stats
+
+# 特定ファイルだけ展開： $ sudo tar zxvf 対象tarball.tgz full/path/to/the/specified/file/in/the/tarball
+alias findp0x0mv0='find -print0 | xargs -0 mv -t ./ ' #一括移動 -print0と -0は呼応。NULL区切り
+alias matchcopy="| xargs -J% cp -f % "
+# TODO function ; lat $2 にする
+#  ffgrep \/.*OLD$ |grep -v scaffold | xargs  -J% cp -f % ~/dotfiles/SI/BAK/ORO/hokenryoKanri ; lat $3
+#  #grep結果ファイル中文字列をかきかえ
+# $ regrepl attr_accessible app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
+#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
+#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
+
+alias rmpatch='ffgrep "\.(rej|orig)" | xargs -n1 rm'
+function rmbak {
+  ffgrep .bak |xargs -n1 rm $_ ;
+  find . | grep -E "DEV$" |xargs -n1 rm $_ ;
+  find . | grep -E "`TODAY`$" |xargs -n1 rm $_ ;
+}
 
 #ATOM環境
 function atom_backup {
@@ -588,8 +599,21 @@ function atom_backup {
   cd -
 }
 alias atom_restore='apm install --packages-file ~/dotfiles/SI/ATOM/packages.txt; cp ~/dotfiles/SI/ATOM/keymap.cson ~/.atom/'
-alias atomvim_sync='cdd; gishsv; gplo; gishpp; cd - ; gdinpURDPD; apm -h'
+alias atomvim_sync='cdd; gishsv; gplo; gishpp; cd - ; gdinpURDPD; apm -h; echo "### ATOMでseync sessions restoreをする ###'
+function patch_back {   # $1=git commit hash, そこからの差分ファイルをコピる
+  NEW_SRC=~/Downloads/PATCH/
+  rm -rf $NEW_SRC
+  if [ ! -d $NEW_SRC ]; then
+    mkdir $NEW_SRC
+  fi
+  gdicno $1 | xargs -J % cp -f % $NEW_SRC
+  cp ~/sessionATOMMAN $NEW_SRC
+  cd $NEW_SRC; rm SI.tar.zip ../日報.tgz
+  lat; tar zcvf ../日報.tgz ./* ; lat ..; cdd
+}
+
 # TODO: .
+# cp ~/sessionATOMMAN
 # ~/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee +22
   # # default: 'bundle exec',
   # default: 'docker exec -it PPetd_bqq',

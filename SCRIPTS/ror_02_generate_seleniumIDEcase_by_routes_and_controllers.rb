@@ -1,4 +1,9 @@
 # coding: utf-8
+# NOTE: in case of docker:
+  # dkcp ~/dotfiles/SCRIPTS/common.rb  $CONTAINER:/app/ ; dkcp ~/dotfiles/SCRIPTS/ror_02_generate_seleniumIDEcase_by_routes_and_controllers.rb $CONTAINER:/app ; dkbash
+  # (root@ container) ruby ror_02_generate_seleniumIDEcase_by_routes_and_controllers.rb
+#
+# いつかコンテナ内部からホストのdotfilesを見せたい ln -s ~/dotfiles dotfiles
 require_relative 'common'
 @apps_root = @option[:from]
 @mode      = @option[:mode]
@@ -6,6 +11,7 @@ Dir.chdir @apps_root
 
     server_name = "server_1"
     routes = `rake routes`.split("\n").map(&:split).map{|x| x.select{|y| y =~ /\// } }.flatten
+    # TODO: 上の結果は[routte/path/pattern, controller/path#action] の配列なので、さらに[0]要素だけにしないゴミが半分近く吐き出される
     loop_elements =[]
 
     header = <<-"CODE"
@@ -66,7 +72,7 @@ Dir.chdir @apps_root
       end
       # 不定個数引数にあたえたれた controllers 総なめ、各々のC内のメソッドをリストアップ
     end
-  
+
     footer = <<-"CODE"
             </tbody>
           </table>
