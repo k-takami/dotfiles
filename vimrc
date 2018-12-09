@@ -1282,7 +1282,7 @@ filetype plugin indent on
 " #RoR
   " JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
 
-" TODO: 1-liners
+" TODO: 1-liners 1ライナー
 " function rubyIntoRocketHash() :%s/:\(.*\)/\1:/gc
 "
 " ruby/JS ハッシュ
