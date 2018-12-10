@@ -22,18 +22,22 @@
     #   鍵の種類＝RSA ビット数＝2048 で鍵を生成し、 公開鍵の保存、秘密鍵の保存で 公開鍵（id_rsa.pub）と秘密鍵（rsa.pub）を保存する。
 
 # TROUBLESHOOTNG
+  #基本
+    *********************************************************
+    ===> OSX のdocker/ Kinematicsを再起動　<---important !!!
+    *********************************************************
+
   # ERROR: network docker_machine_network_name has active endpoints
     docker stop
     docker stop container_name; docker rm container_name
     docker ps
 
   # "error while creating volume path" "/var/lib/docker/"
-    ===> OSX のdocker/ Kinematicsを再起動　
     ===> それでもダメならば、docker volume remove postgresqlのボリューム で消して ; docker-compose up -d dbのサービス ; dkc_rdbmreset ;
+  # Could not find XXXX in any of the sources エラー
+    ===> host側の.bundle/configを消す。ホスト側のbundlerファイル残骸が影響
 
-  # "error while creating volume path" "/var/lib/docker/"
-    ===> OSX のdocker/ Kinematicsを再起動　
-    ===> それでもダメならば、docker volume remove postgresqlのボリューム で消して ; docker-compose up -d dbのサービス ; dkc_rdbmreset ;
+  #最終手段  docker-compose build SERVICENAME ; docker-compose up -d  SERVICENAME
 
 # 4.Virtualbox 連携
   brew install docker-machine
@@ -89,3 +93,41 @@
 
         #mysql #osx
         $ mysql.server start &
+
+  ---
+title: Dockerでホストとコンテナ間でのファイルコピー
+tags: docker
+author: gologo13
+slide: false
+---
+
+## コンテナからホストへのコピー
+
+docker cp コマンドが使えます。
+
+```sh
+$ sudo docker cp <コンテナID>:/etc/my.cnf my.cnf
+```
+
+
+## ホストからコンテナへのコピー
+
+（追記：2016/01/22）
+[Docker 1.8](http://blog.docker.com/2015/08/docker-1-8-content-trust-toolbox-registry-orchestration/)からホストからコンテナへのコピーも docker cp コマンドでサポートされるようになりました！
+https://docs.docker.com/engine/reference/commandline/cp/
+
+```
+$ sudo docker cp my.cnf <コンテナID>:/etc/my.cnf
+```
+
+~~こちらは ```docker cp``` コマンドで実現することはできません。~~
+~~現状、Dockerfile に記述して、コピーするしかないみたいです。~~
+
+~~`ADD my.cnf /etc/my.cnf`~~
+
+
+~~ちなみに、```docker cp```コマンドでホストからコンテナへのコピーをサポートしてほしいという要望がコミュニティ内でも根強くあるみたいです。~~
+
+~~[dotcloud/docker #905](https://github.com/dotcloud/docker/issues/905)~~
+
+

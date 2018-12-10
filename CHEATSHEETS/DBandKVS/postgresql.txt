@@ -89,3 +89,40 @@ $ greper "(_index|CREATE INDEX|bytea|binary|ALTER)" db/migrate/ |grep -vE "add|r
     # create_table :owner_coin_histories, { id: :bigserial } do |t|
     create_table :owner_coin_histories, id: false do |t|
       t.column   :id, "BIGINT PRIMARY KEY AUTO_INCREMENT"
+
+#CSV入力
+　RailsではまずCSVをUTF8保存してVIコマンド
+  : set fenc=utf-8 | :set ff=unix | :w!
+  | %s/^\w*,/NULL,/gc
+　注意1:ID列のようなauto incrementカラムへはNULLを挿入する｡
+        しかし時刻列にNULLをインポートするとNULLではなく0000-00-00 00:00:00 に
+化けたりして､論理削除前提の動作環境では変になる｡(取得0件)
+        Excelで空白列にNULLとかくと変なことになりうまくいかない｡
+
+  LOAD DATA LOCAL INFILE "/opt/me/oksales_unistandard/db/seeds/var_prices.csv" INTO TABLE var_prices FIELDS TERMINATED BY ',';
+　注意2:LOAD文はCSV名とtable-name二カ所なおすこと｡
+
+  結論:デフォルトでUTF8-UNIXでない環境RoRにむかない｡データ作成に手間取るだけ｡
+　-->SeedImporter.rbクラスだと､列名不整合やautoincrement対策もしてくれるのでよい｡ただしdeleted_at以降は削れ｡
+
+
+# mysqlに接続（default character set はutf8に）
+chkconfig --level 345 mysqld on
+service mysqld start
+ mysql -u root -p
+	set names utf8;
+	 show variables like "character !・>%";
+	create database bikkuri_development
+	create database bikkuri_mission_development
+	create database bikkuri_hase_development
+migrateとサーバー起動
+	bundle exec rake db:migrate ;
+	bundle exec rake db:seed
+時計上の時間で検索したい場合は
+Time.parse("2012-09-20 22:35").gmtime
+といったようにやる。 MySQL上での時間データは、時差を加味しない時間が保存され
+ているため、gmtimeで調整する/
+
+ SVN-trunkのダウンロード方法
+ ★データ仕様書とダミーデータがあるだけ。
+   svn list svn+ssh://svn.drecom.jp/svn/sg/bikkuri/doc/03_開発ドキュメント/

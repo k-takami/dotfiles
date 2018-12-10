@@ -650,7 +650,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     NeoBundle 'slim-template/vim-slim'
       autocmd FileType slim setlocal foldmethod=indent
       autocmd BufNewFile,BufRead *.slim set filetype=slim
-    " NeoBundle 'kchmck/vim-coffee-script'
+    "OSX不調?： NeoBundle 'kchmck/vim-coffee-script'
 
     "RoR Refactoring
     NeoBundle 'https://github.com/ecomba/vim-ruby-refactoring.git'
@@ -1282,7 +1282,7 @@ filetype plugin indent on
 " #RoR
   " JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
 
-" TODO: 1-liners
+" TODO: 1-liners 1ライナー
 " function rubyIntoRocketHash() :%s/:\(.*\)/\1:/gc
 "
 " ruby/JS ハッシュ
