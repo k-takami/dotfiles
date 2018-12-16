@@ -23,9 +23,6 @@ export POW_TIMEOUT=300
 # powder (config/status|restart)
 
 alias dkpadi='  docker ps -a ; docker images;  docker volume ls';
-function dkbash { # $1 == container_name/id
- dkpadi; docker exec -it -u root $1 bash
-}
 
 #  # リサイズや清掃；
 #    docker build --squash
@@ -41,16 +38,25 @@ alias dkhs='    docker history';
 alias dksch='   docker search  --no-trunc';
 alias dkisp='   docker inspect';
 # alias dk'sudo docker cp <コンテナID>:/etc/my.cnf my.cnf'
-alias dkcp='    docker cp';
-alias dkpl='    docker login;                     docker pull';
-alias dkrunit=' docker run -itd'; # -d = detached
-alias dkps='    docker push'
+alias dkcp='    docker cp'; #container
+alias dkpl='    docker login; docker pull'; #container
+alias dkrunit=' docker run -itd'; # container, -d == detached
+alias dkrst='   docker restart '; # container
+alias dkps='    docker push' # container
 #TODO  docker save 771594bd57aa > ../kikan1031.tar みたいに$1$2必要
 alias dksv='    docker save ' # image_name > ../*.tar name
 alias dkld='    docker load < ' # *.tar name
 alias dkh='     docker --help '
 alias dkv='     docker --version '
 # XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定する
+alias dkcud='   docker-compose up -d '
+
+function dkbash { # $1 == container_name/id
+ dkpadi; docker exec -it -u root $1 bash
+}
+function dkrstrails { # $1 == container_name/id
+ dkrst $1;  docker attach $_
+}
 
 function dkc_rdbseed {  #通常のbdl方法
   docker-compose run -u root app bundle install ;
@@ -62,9 +68,10 @@ function dkc_rdbseed {  #通常のbdl方法
   echo "###    : DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
 }
-function dkc_rdbmreset { #通常のbdl方法
+function dkc_rdbmreset { #通常のbdl方法 #  == dkbash app ; bundle install &&  bin/rake db:reset:with_data && annotate --force
   docker-compose run -u root app bundle install ;
-  docker-compose run -u root app bin/rake db:migrate:reset db:seed;
+  # docker-compose run -u root app bin/rake db:migrate:reset db:seed;
+  docker-compose run -u root app bin/rake db:reset:with_data;  #<---special
   docker-compose run -u root app annotate --force ;
   echo "### NOTE "
   echo "###      rake:db:migrateが失敗しがちなのでdbのコンテナを再起動してから実行した方がいい"
@@ -386,7 +393,7 @@ alias gplo='      git pull origin'
 alias gclone='    git clone'
 alias gcloneb='   git clone -b ' # ブランチ名 https://リポジトリのアドレス
 alias gpso='      git push origin'
-alias gpsdelo=' git push --delete origin' #[branch-name] to delete
+alias gpsdelo=' git push --delete origin' #[branch-name] to delete リモートブランチ削除
 alias gisw='      git show'
 alias gish='      git stash'
 alias gishcl='    git stash clear'
@@ -409,9 +416,9 @@ alias gilosmine=' git log --committer=$GIT_USERNAME -S'
 # $ git checkout master           # master ブランチへ切り替え
 # $ git pull --rebase             # 最新化(前述の設定により --rebase は省略可能)
 # $ git checkout feature/xxxxxx   # push したい自分のブランチへ切り替え
-alias gplomrbs='  git pull --rebase origin master'  # 本来はマージ履歴をのこさない --ff をつけるべきかも？
+alias girbplo='   git pull --rebase origin'  # 引数にリモートブランチ名。1rebase後になにか消失ファイルがないか点検。本来はマージ履歴をのこさない --ff をつけるべきかも？
 alias girbmst='   git rebase master --no-ff'  # 最新化した master ブランチに対して自分のブランチをリベース
-alias girbcntne=' git rebase --continue'
+alias girbcntn='  git rebase --continue'
 alias girbabt='   git rebase --abort'
 alias girbihd='   git rebase -i' # to be follwed by HEAD~~ or HEAD~~~~~~回数分
 alias fixup='gicmm "tmp" ; gishsv;  girbihd HEAD~~ ; gilono ; gishpp; '

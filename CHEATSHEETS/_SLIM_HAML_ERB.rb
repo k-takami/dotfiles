@@ -1,5 +1,6 @@
 $ sudo gem install html2haml haml2slim
 
+
 #相互変換と運用性
   #RAILSCOMPOSER対応状況
     prefs[:templates] = "haml" #NG hamlにすると、gemの個別変換バグがある。

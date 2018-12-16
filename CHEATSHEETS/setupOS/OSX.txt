@@ -1,3 +1,5 @@
+shortcut [[https://support.apple.com/ja-jp/HT201236]]
+
 #Mojave
 	$ xcode-select --install
 	$ sudo gem install rubocop
