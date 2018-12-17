@@ -50,6 +50,7 @@ alias dkh='     docker --help '
 alias dkv='     docker --version '
 # XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定する
 alias dkcud='   docker-compose up -d '
+<<<<<<< Updated upstream
 
 function dkbash { # $1 == container_name/id
  dkpadi; docker exec -it -u root $1 bash
@@ -57,6 +58,8 @@ function dkbash { # $1 == container_name/id
 function dkrstrails { # $1 == container_name/id
  dkrst $1;  docker attach $_
 }
+=======
+>>>>>>> Stashed changes
 
 function dkc_rdbseed {  #通常のbdl方法
   docker-compose run -u root app bundle install ;
