@@ -643,8 +643,13 @@ function openatomfromvimsession {
 #Google 2-Step Verification tool 'oathtool'
 alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生成画面で表示されるbase32の文字をスペースなしで引数として入力 %s/ //  #<  sudo apt-get install oathtool
 
+#1-liner
+# alias rorapp rails new example --skip-bundle && cd example && bundle install --path=vendor/bundle**
+
 # ==== リハビリコマンド ==========================
 alias rehabilli='cat ~/dotfiles/SI/REHABILI/* |less'
 
 # ==== PJ-dependent unixコマンド ==========================
 source ~/dotfiles/SI/pj-dependent.bashrc
+
+
