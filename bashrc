@@ -42,6 +42,7 @@ alias dkcp='    docker cp'; #container
 alias dkpl='    docker login; docker pull'; #container
 alias dkrunit=' docker run -itd'; # container, -d == detached
 alias dkrst='   docker restart '; # container
+alias dkat='    docker attach' # container
 alias dkps='    docker push' # container
 #TODO  docker save 771594bd57aa > ../kikan1031.tar みたいに$1$2必要
 alias dksv='    docker save ' # image_name > ../*.tar name
@@ -52,10 +53,11 @@ alias dkv='     docker --version '
 alias dkcud='   docker-compose up -d '
 
 function dkbash { # $1 == container_name/id
- dkpadi; docker exec -it -u root $1 bash
+  dkpadi; docker exec -it -u root $1 bash
 }
 function dkrstrails { # $1 == container_name/id
- dkrst $1;  docker attach $_
+  rm tmp/pids/server.pid
+  dkrst $1;  docker attach $_
 }
 
 function dkc_rdbseed {  #通常のbdl方法
@@ -79,6 +81,8 @@ function dkc_rdbmreset { #通常のbdl方法 #  == dkbash app ; bundle install &
   echo "###    : DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
 }
+
+
 function dkc_rdbinit {
   local options=${2:-web} ;
   docker-compose run -u root app bundle install ;
@@ -235,7 +239,7 @@ if [ $platform == 'osx' ] || [ $platform == 'linuxRHEL' ] ; then
 fi
 
 
-#==== unixコマンド ==========================
+#==== unix UNIX コマンド ==========================
 # User specific aliases and functions
 alias rm='rm -i'
 alias cp='cp -p'
@@ -246,6 +250,7 @@ alias ll=' ls -al'
 alias lat='ls -halt'
 alias las='ls -alSr'
 alias rm='rm -r'
+alias portps='lsof -i:' #-i:3000みたく空文字なしに入力
 alias kill9='        kill -9 '
 alias killallrails5='pkill -a thin; '
 alias myps='ps -ef  |grep -niE "\b(memcached|unicorn|ant|redis|sidekiq|rails|ruby|thin|fsevent|spring)\b" | sort -k6'
@@ -289,20 +294,42 @@ alias REM=' : <<"REM"' #REMで終端すること
 alias cdd=' cd ~/dotfiles'
 alias nrnd=' --no-ri --no-rdoc '
 alias no_spec=' echo "--exclude=*spec* "'
-function includerb { echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
+function inclrb { echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
 function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak "; }
-function appfilesonly { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log "; }
-# TODO: OSX/BSDならば文字中の空白を.変換、このロジックをregrepとgreperに応用して統合整理 -c3 -cr系も整理
+function exclnonapp { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log "; }
+
+# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
+
+# $1検索語　$2場所 regrep の$2がなければ、./*で補完
+# alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
+function grepe    {                             grep     -niE   $@          ; }
+# function greper   {                             grep     -nirE  $@          ; }
+# function greperrb {                             grep     -nirE  `inclrb` `nogabage` $@ ; }
+function regrep   {     local options=${2:-*} ; grep     -nirE  $1 $options ; }
+function regreprb {     local options=${2:-*} ; grep     -nirE  `inclrb` `nogabage` $1 $options ; }
+function regrep_nosub { local options=${2:-*} ; grep     -niE   $1 $options ; }
+function regrepl  {     local options=${2:-*} ; grep     -lnirE $1 $options ; }
+function regrepl-r {    local options=${2:-*} ; grep     -lniE  $1 $options ; }
+function regrepc1 {     local options=${2:-*} ; grep -C1 -niE   $1 $options ; }
+function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
+function regrepc1-r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
+function regrepc3-r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
+
 function greprc {
   local options=${@:2} ;
   grep -niE --include=*rc $1 ~/dotfiles/*                      $options --exclude=*.htm* --exclude=*.json ;
   grep -niE               $1 ~/dotfiles/SI/pj-dependent.bashrc $options --exclude=*.htm* --exclude=*.json ;
 }
-
-function greprcrbonly { greprc `includerb` `nogabage` $@ ; }
+function greprcrbonly { greprc `inclrb` `nogabage` $@ ; }
+# TODO function ; lat $2 にする
+#  ffgrep \/.*OLD$ |grep -v scaffold | xargs  -J% cp -f % ~/dotfiles/SI/BAK/ORO/hokenryoKanri ; lat $3
+#  #grep結果ファイル中文字列をかきかえ
+# $ regrepl attr_accessible app nogabage exclnonapp |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
+#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
+#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
 
 function grepdf {
-  # ex) greprc serchword -C1 `includerb` `nogabage`
+  # ex) greprc serchword -C1 `inclrb` `nogabage`
   local options=${@:2} ;
   grep -niE  $1 ~/dotfiles/* --include=*rc $options --exclude=*.htm* --exclude=*.json ;
   grep -nirE $1 ~/dotfiles/SI              $options --exclude=*.htm* --exclude=*.json ;
@@ -317,22 +344,6 @@ local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 
   grep -nirE "def \w*$1" $gempath ;
 }
 
-# ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
-
-# $1検索語　$2場所 regrep の$2がなければ、./*で補完
-# alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
-function grepe    {                             grep     -niE   $@          ; }
-function greper   {                             grep     -nirE  $@          ; }
-function greperrb {                             grep     -nirE  `includerb` `nogabage` $@ ; }
-function regrep   {     local options=${2:-*} ; grep     -nirE  $1 $options ; }
-function regreprb {     local options=${2:-*} ; grep     -nirE  `includerb` `nogabage` $1 $options ; }
-function regrep_nosub { local options=${2:-*} ; grep     -niE   $1 $options ; }
-function regrepl  {     local options=${2:-*} ; grep     -lnirE $1 $options ; }
-function regrepl-r {    local options=${2:-*} ; grep     -lniE  $1 $options ; }
-function regrepc1 {     local options=${2:-*} ; grep -C1 -niE   $1 $options ; }
-function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
-function regrepc1-r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
-function regrepc3-r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
 alias vimclean='rm ~/*.sw* ; cd ~/dotfiles ; git status ; cd - ;'
 alias ror_snip_list='sh ~/dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
 alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
@@ -453,6 +464,7 @@ alias bxs='            ds1 bx rspec'
 alias bxrdbm='         ds1 bx rake db:migrate'
 alias bxrdbs='         ds1 bx rake db:seed'
 alias gplombxrdbmrdbs='git pull; bxrdbm; bxrdbs'
+
 alias bxrdbmtest='     ds1 bx rake db:migrate RAILS_ENV=test'
 alias bxrdbmdown='     ds1 bx rake db:migrate:down'
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
@@ -533,10 +545,18 @@ function tarziprorapp { # 下層のRails.rootiフォルダーを圧縮
 }
 
 
-function tarziprorgitonly { # 今のRails.rootフォルダー名前を引数にして呼ぶ。上階に.gitを圧縮
+function tarzipgitonly { # 今のRails.rootフォルダー名を引数にして呼ぶ。上階に.gitを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   cd $chomped1
   tar zcvf ../$chomped1.git-`date '+%Y%m%d_%H%M'`.tar.gz .git ; lat ..
+}
+
+function tarzipgirbplodkrakeannotate { #Rails.rootで実行 引数= girreponameリモートブランチ名 docker-container名
+  cd .. ;
+  tarziprorgitonly $1;
+  girbplo $2
+  echo " ###TODO: bundle install &&  bin/rake db:reset:with_data && annotate --force をコンテナで実行してください"
+  docker exec -it -u root $3 bash;
 }
 
 function tarzipdotfiles {  # ~/dotfilesフォルダーに移動して~に圧縮
@@ -551,11 +571,10 @@ function killmyps {
   # myps検索pid以外をgrepしてkill
   kill -9 `myps | grep -v grep | ruby -ane 'p $F[1].to_i'`
 }
-function chomR {
+function chomR { #引数 group:owner 777 targetdir
   sudo chown -R $1 $3 ;  sudo chmod -R $2 $3
 }
-function nocomments {
-  # grep結果から-vでコメントや空行を除外
+function nocomments { # grep結果から-vでコメントや空行を除外
   grep -vE '\\s*\\#+.*(byebug|debugger)' | grep -v '^$'
 }
 
@@ -581,12 +600,6 @@ alias ffgrep='find . | grep -iE '
 # 特定ファイルだけ展開： $ sudo tar zxvf 対象tarball.tgz full/path/to/the/specified/file/in/the/tarball
 alias findp0x0mv0='find -print0 | xargs -0 mv -t ./ ' #一括移動 -print0と -0は呼応。NULL区切り
 alias matchcopy="| xargs -J% cp -f % "
-# TODO function ; lat $2 にする
-#  ffgrep \/.*OLD$ |grep -v scaffold | xargs  -J% cp -f % ~/dotfiles/SI/BAK/ORO/hokenryoKanri ; lat $3
-#  #grep結果ファイル中文字列をかきかえ
-# $ regrepl attr_accessible app nogabage appfilesonly |xargs -n1 ruby  -pi.bak -e  '$_.gsub!(/attr_accessible/, "attr_accessor")'
-#  #URL Query-stringsクエリー文字列 抽象化：Percona pt-query-digest fingerprint/distill互換
-#    ls some*_log.201* |xargs  ruby -p -e  '$_.gsub!(/=[%\s\w]+( |&)/, "=?\\1")'  -i
 
 alias rmpatch='ffgrep "\.(rej|orig)" | xargs -n1 rm'
 function rmbak {
@@ -616,10 +629,11 @@ function patch_back {   # $1=git commit hash, そこからの差分ファイル�
   gdicno $1 | xargs -J % cp -f % $NEW_SRC
   cp ~/sessionATOMMAN $NEW_SRC
   cd $NEW_SRC; rm SI.tar.zip ../日報.tgz
-  lat; tar zcvf ../日報.tgz ./* ; lat ..; cdd
+  lat; tar zcvf ../日報.tgz ./* ; lat ..;
+  cd -
 }
 
-# TODO: .
+# XXX: .
 # cp ~/sessionATOMMAN
 # ~/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee +22
   # # default: 'bundle exec',
@@ -627,6 +641,10 @@ function patch_back {   # $1=git commit hash, そこからの差分ファイル�
 # ~/.atom/packages/visual-rails-generator/lib/scaffold_model_view.coffeea +170
     # command  += before_string
   # command += " bin/rails g "
+
+# docker snapshot taking
+# $ docker checkpoint create dsc_app 20181228
+# Error response from daemon: checkpoint not support on containers with tty
 
 function openatomfromvimsession {
   local outfile=openatomfromvimsession.sh

@@ -678,3 +678,15 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
   rake paperclip:refresh:missing_styles  # Regenerates missing thumbnail styles for all classes using Paperclip.
   rake paperclip:refresh:thumbnails      # Regenerates thumbnails for a given CLASS (and optional ATTACHMENT and STYLES splitted by comma).
 
+
+#rubyXL
+  #セル結合ロジック
+  row_during_the_seek = 3
+  kaishiretu_atai = @worksheet[@row_during_the_seek][1].value
+  do while cell_value == 前の値
+    @row_during_the_seek += 1
+  end
+  @worksheet.merge_cells(3, 3, 3, @row_during_the_seek)
+  @row_during_the_seek += 1
+
+

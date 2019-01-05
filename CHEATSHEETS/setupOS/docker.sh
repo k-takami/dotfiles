@@ -37,6 +37,13 @@
   # Could not find XXXX in any of the sources エラー
     ===> host側の.bundle/configを消す。ホスト側のbundlerファイル残骸が影響
 
+  # ERROR: f: Error starting userland proxy: Bind for 0.0.0.0:3**** failed: port is already allocated
+
+    ===> development.rb コピペ移植ミスでコメント文がエラーになってコンテナ再起動失敗
+    　　字義通りエラーを解釈するとポート先約中なので、lsof コマンドで見つけてkillする
+      　$ lsof -i:3000
+        $ kill
+
   #最終手段  docker-compose build SERVICENAME ; docker-compose up -d  SERVICENAME
 
 # 4.Virtualbox 連携

@@ -17,12 +17,19 @@ getbase.org
   ＃リンク風表現
     / <input type="submit" value="送信" style="border:none;background-color:transparent;color:blue;text-decoration:underline;">
     #slim:
+      / コピペでカスタマイズするときは、CSS要素: 属性で１スペースあけること。SLIMはSCSSを認識できない。
       sass:
         #linkish_button
           border: none
           text-decoration: underline
           background-color: transparent
           color: #006699
+          border: 1px solid #dee2e6
+          border-radius: 5px
+          box-shadow: 0px 0px 5px #c3e1ff
+          padding: 0px 6px
+          cursor: pointer
+
 
 #TRAVERSING
   Nokogiri::HTML.parse(html_text).css("class_name[attr*^$='value']")

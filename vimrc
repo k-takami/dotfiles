@@ -1264,8 +1264,8 @@ filetype plugin indent on
 " #view
 	" <%= select "post", "code", hs_post_code.invert, :prompt => "選択してください" %>
 " Excel2migration
-  " int(11)	t.integer
-  " varchar(255)	t.string
+" :%s/\t\t*/ /gc
+  " int(11)	t.integer " varchar(255)	t.string
 " migrationfile2xls
 	" :%s/ *\(t\.\|:\|limit *=> *\)/\t/gc
 " mysqldesc2seed.csv:
@@ -1281,6 +1281,8 @@ filetype plugin indent on
 	" BigTree 日報->勤務表： :%s/】*\n.*[【（]/\t/gc  | %s/..時間/\t/gc
 " #RoR
   " JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
+
+" GREP結果uniq抽出:  %s/\d\d*: *//gc | sort u
 
 " TODO: 1-liners 1ライナー
 " function rubyIntoRocketHash() :%s/:\(.*\)/\1:/gc

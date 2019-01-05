@@ -42,7 +42,8 @@ role updating                                                                   
     C:¥> mysql  --user=USERNAME --password=PASSWORD < FILENAME.mysql
   #PostgreSQLの場合
     C:¥> pg_dump --username=USERNAME DATABASE > FILENAME.pg
-    C:¥> psql DATABASE < FILENAME.pg
+    (1) C:¥> psql DATABASE < FILENAME.pg
+    (2) zcat some_dumped_sql.gz | psql -U postgres 
 
 
 
