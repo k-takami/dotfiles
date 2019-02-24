@@ -45,6 +45,9 @@
         $ kill
 
   #最終手段  docker-compose build SERVICENAME ; docker-compose up -d  SERVICENAME
+  # docker-compose build app && docker-compose up -d app
+  #ファイルシステム見えない時など　クリーンな最終手段：
+  # docker rm CONTAINER, docker rmi IMAGE
 
 # 4.Virtualbox 連携
   brew install docker-machine

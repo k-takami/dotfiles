@@ -33,7 +33,9 @@ Finderで「初期表示は~/Download」「全拡張子表示＆リスト表示�
 
 DOCK
 	メモ帳削除：'-の文字化けをおこすし、クラッシュでリカバリーできない。
-	safari禁止：google docs１タブで500MB使う。MS-Officeもやめたほうが良い。Dynalistのキーも受け付けない
+	safari(IE/Edge emulator)
+    「Safari」環境設定」「詳細」tab-> 一番下に「メニューバーに開発を表示」チェック-> tab 閉じる-> メニューバーに「開発」出現、 「ユーザーエージェント」-> rendering engine 選ぶ
+    注意：google docs１タブで500MB使う。MS-Officeもやめたほうが良い。Dynalistのキーも受け付けない
 
 #$HOME
 	 ~/.bash_profile

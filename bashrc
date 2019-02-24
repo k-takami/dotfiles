@@ -366,7 +366,7 @@ alias grm='      git rm'
 alias gcfggettmturl=' git config --get remote.origin.url'
 
 
-#GREP everything
+#GREP everything # リモートgrep検索は gilostheir
 alias grep-hist='    history |grep -niE'
 alias grep-ps='      ps -ef  |grep -niE'
 alias grep-env='     env | grep'

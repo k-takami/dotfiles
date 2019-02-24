@@ -98,6 +98,17 @@ options_from_collection_for_select(:value列、:選択肢文言列、selected: �
     before_validation :convert_email
 
     #PASSWORD_REGEX = /^[a-zA-Z0-9_\-\+\=\!\#\$\%\&\'\@\,\.\/]+$/i
+    #SNIPPET: validates :some_attr, presence: true, numericality: true, length: { "is/maximum/inimum": 2 }, uniqueness: { scope: :deleted_at } #非削除レコードの中でunique制約
+    # gem 'validates_timeliness', '~> 5.0.0.alpha3'
+         validates_date :date_start, on_or_after: ->{ 1.month.ago.beginning_of_month.to_date }, on_or_after_message: 'は先月一日以降を入力してください', on: :create, unless: :data_import
+         validates_date :date_start, after: :today, after_message: 'は翌日以降を入力してください', on: :update, if: :date_start_changed?
+
+         def date_from_doesnt_overlap_last_period
+           return unless date_from == Master::TaxRate.where.not(id: id).order(:date_from).last.date_to.tomorrow
+           errors.add(:date_from, 'は 直前の消費税の終了日翌日の日付を入力してください。')
+         end
+
+    #
     #validates_presence_of :password, :on => :update, :if => :no_confirmed?
     #validates_presence_of :password_confirmation, :on => :update, :if => :no_confirmed?
     #validates_length_of :password, :on => :update, :minimum => 8, :allow_blank => true

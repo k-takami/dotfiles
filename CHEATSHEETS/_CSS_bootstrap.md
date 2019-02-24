@@ -415,6 +415,12 @@ xssmmdlg: xs-sm-md-lg:
 
 
 # snippet
+
+    //= require moment
+    //= require moment/ja.js
+    //= require tempusdominus-bootstrap-4.js
+    //= require "shared/datetimepicker"
+
     coffee:
       $('.calenderinput').on 'click', ->
         target_cell = $(this)

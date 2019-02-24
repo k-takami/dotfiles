@@ -415,9 +415,24 @@ Overriding accessors
 
 Callbacks
 ---------
+    ActiveRecordのコールバック早見表 | Rails
+    コールバック名	説明
+    after_find	findなどでオブジェクトが見つかった場合に実行。検索結果の数だけコールバックが実行
+    after_initialize	オブジェクトがインスタンス化されたタイミングで実行。オブジェクト分だけ実行
+    before_validation	バリデーションが行われる直前で実行。カラム値の微調整に利用
+    after_validation	バリデーションの直後に実行。バリデーションが失敗しても実行
 
-    after_create
-    after_initialize
-    after_validation
-    after_save
-    after_commit
+    before_create	オブジェクトがDBに新規保存(INSERT)される直前で実行されます
+    before_save	オブジェクトがDBに保存される直前で実行。INSERT、UPDATE両方で実行
+    before_update	オブジェクトにより、DBを更新(UPDATE)する直前で実行されます
+    before_destroy	destroyメソッドで削除される直前に実行されます
+    after_create	オブジェクトがDBに新規保存(INSERT)された直後で実行されます
+    after_save	オブジェクトをDBに保存した直後で実行。INSERT、UPDATE両方で実行
+    after_update	オブジェクトにより、DBを更新(UPDATE)した直後で実行されます
+    after_destroy	destroyメソッドで削除された直後に実行されます
+
+    after_commit	after_save後のDBにCOMMITされた直後に実行されます
+    after_rollback	バリデーションエラーやSQLエラーが発生した場合に実行されます
+    after_touch	touchメソッドが呼び出された直後に実行されます
+
+
