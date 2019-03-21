@@ -334,6 +334,8 @@ codeNotificationHistory < ActiveRecord::Base
   validates :encrypted_insurance_name, symmetric_encryption: true
 
 
+
+
 #原始的
  members = Member.where(
     encrypted_birthday: SymmetricEncryption.encrypt( Date.parse "1980-01-01" ),
@@ -525,7 +527,10 @@ gem simple_form #シンボルかモデル変数かで誤動作したはず
   = f.input :client_ids, required: true, collection: @clients, input_html: { class: "form-control multi_select", multiple: true, seleted: content.client_ids }
   = f.input :tag_ids, collection: @tags, input_html: { class: "multi_select", multiple: true, selected: product.tag_ids }
 
-
+#ransack
+  #
+  #
+  #
 gem ransack (似 ~R3 meta_search)
   # Ransackで検索フォームつき一覧画面 @V
     - content_for :inpage_js do
@@ -689,4 +694,18 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
   @worksheet.merge_cells(3, 3, 3, @row_during_the_seek)
   @row_during_the_seek += 1
 
+#enumerise
+  #@M
+  #enumerize :kubun, in: { A: 1, D: 2 }
+  #@V
+  #= f.select attr, SomeModel.kubun.options, class: 'form-control'
 
+
+  #select2 + ransack + bootstrap
+  # = f.collection_select :ransack検索シンボル, Model.all, :id, :name, {}, class: 'form-control selects-area-hoken'
+  #　これに, id: 'some-id data: {placeholder: ""} などと続ける
+  #
+  #こういう略記もあり
+  #= f.collection_select field, {}, :id, :name, {}, class: 'form-control selects-staff-hoken'
+  # 別途 CSS-classクリックに反応するJSをロードしておき、そこからAJAXでの帰り値を受け取ることは業務システム常用
+  #

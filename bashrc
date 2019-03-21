@@ -40,6 +40,7 @@ alias dkisp='   docker inspect';
 # alias dk'sudo docker cp <コンテナID>:/etc/my.cnf my.cnf'
 alias dkcp='    docker cp'; #container
 alias dkpl='    docker login; docker pull'; #container
+alias dkat='    docker attach'; #container
 alias dkrunit=' docker run -itd'; # container, -d == detached
 alias dkrst='   docker restart '; # container
 alias dkat='    docker attach' # container
@@ -56,6 +57,9 @@ function dkbash { # $1 == container_name/id
   dkpadi; docker exec -it -u root $1 bash
 }
 function dkrstrails { # $1 == container_name/id
+  docker exec -it -u root $1 bundle install
+  read -p "bunles installできて、railsが入ったdockerコンテナを再起動できる状況でしたか? (y/N): " yn
+  case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
   rm tmp/pids/server.pid
   dkrst $1;  docker attach $_
 }
@@ -70,7 +74,9 @@ function dkc_rdbseed {  #通常のbdl方法
   echo "###    : DBMSからログアウトし、ワークコンテナでerrorになるgemをGemfile*からコメントアウトしてから流すこと";
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
 }
-function dkc_rdbmreset { #通常のbdl方法 #  == dkbash app ; bundle install &&  bin/rake db:reset:with_data && annotate --force
+
+
+function dkc_rdbmreset { #通常のbdl方法 #  == dkrst db && dkbash app ; bundle install && bin/rails db:drop db:create ridgepole:apply data:migrate db:seed && annotate --force
   docker-compose run -u root app bundle install ;
   # docker-compose run -u root app bin/rake db:migrate:reset db:seed;
   docker-compose run -u root app bin/rake db:reset:with_data;  #<---special
@@ -276,30 +282,25 @@ alias duhls1wcl='du -h; ls -1 ./ | wc -l ' #count files in current dir:
 alias dusbh='    du -sbh  '                #count file size under some dir
 alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir:
 
-function ksen {
-  echo "^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^" ;
-  echo "=================================================================================" ;
-  echo "/////////////////////////////////////////////////////////////////////////////////" ;
-  echo "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★" ;
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" ;
-  echo "#################################################################################" ;
-  echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" ;
-  echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn" ;
-  echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ" ;
-  echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ;
-  echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" ;
-  echo "ใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใใ" ;
-  echo "งงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงง" ;
-  echo "แแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแแ" ;
-}
-
+alias ksen-f='echo "^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^"'
+alias ksen-b='echo "================================================================================="'
+alias ksen-a='echo "/////////////////////////////////////////////////////////////////////////////////"'
+alias ksen-s='echo "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★"'
+alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"'
+alias ksen-d='echo "#################################################################################"'
+alias ksen-e='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
+alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
+# alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
+# alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
+# alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
+# alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
 alias REM=' : <<"REM"' #REMで終端すること
 
 
 alias cdd=' cd ~/dotfiles'
 alias nrnd=' --no-ri --no-rdoc '
 alias no_spec=' echo "--exclude=*spec* "'
-function inclrb { echo "--include=*rb --include=*.yml --include=*.yml --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
+function inclrb { echo "--include=*rb --include=*.yml --include=*html* --include=*.*coffee --include=*.*js --include=*.*sass --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
 function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak "; }
 function exclnonapp { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*.log "; }
 
@@ -310,7 +311,6 @@ function exclnonapp { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*
 function grepe    {                             grep     -niE   $@          ; }
 # function greper   {                             grep     -nirE  $@          ; }
 # function greperrb {                             grep     -nirE  `inclrb` `nogabage` $@ ; }
-function regrep   {     local options=${2:-*} ; grep     -nirE  $1 $options ; }
 function regreprb {     local options=${2:-*} ; grep     -nirE  `inclrb` `nogabage` $1 $options ; }
 function regrep_nosub { local options=${2:-*} ; grep     -niE   $1 $options ; }
 function regrepl  {     local options=${2:-*} ; grep     -lnirE $1 $options ; }
@@ -320,6 +320,14 @@ function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
 function regrepc1-r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
 function regrepc3-r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
 
+function regrep {
+  local options=${@:2} ;
+  grep -nirE $1 $options ;
+}
+function regreprb {
+  local options=${@:2} ;
+  grep -nirE $1 $options `inclrb` `nogabage` ;
+}
 function greprc {
   local options=${@:2} ;
   grep -niE --include=*rc $1 ~/dotfiles/*                      $options --exclude=*.htm* --exclude=*.json ;
@@ -385,6 +393,7 @@ alias gicmm='     git commit -m' #modify
 alias gico='      git checkout'
 alias gico-='     git checkout -'
 alias gico-b='    git checkout -b'
+
 alias hgdi='      hg diff -c'
 alias gdic='     git diff --cached'
 alias gdiclas='  gdic --name-only |xargs ls -alSr'
@@ -456,13 +465,17 @@ alias girstHD='      git reset HEAD -- '
 alias gicostsh0lots='git checkout stash@{0} Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore ; git reset HEAD -- Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore;'
 
 #railsコマンド
-alias rail4scaf=' rails generate scaffold ' # branches　など複数形
+alias railscaf=' rails generate scaffold ' # branches　など複数形
+alias railscaf_docker='docker exec -it CONTAINERNAME bin/rails g scaffold Parent::ChildClass '
+alias railscaf_docker_destroy='docker exec -it CONTAINERNAME bin/rails d  scaffold Parent::ChildClass '
+
 alias bdl='            bundle install'
 # オフライン環境では --local オプションを付けることでrubygems.org等を見に行かずに、vendor/cacheフォルダを見るようになります。
 alias bdllocal='       bundle install --local'
 alias bdllikerails12=' bundle install --path vendor/bundle'
 # ローカルから普通にもどすときは
 # $ rm -rf vendor/bundle/ Gemfile.lock .bundle/config ; bdl; rails s;
+alias ror5dbdrop='DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development  rake db:drop'
 alias ds1='DISABLE_SPRING=1 '
 alias bx='             ds1 bundle exec '
 alias bxs='            ds1 bx rspec'
@@ -556,11 +569,16 @@ function tarzipgitonly { # 今のRails.rootフォルダー名を引数にして�
   tar zcvf ../$chomped1.git-`date '+%Y%m%d_%H%M'`.tar.gz .git ; lat ..
 }
 
+function gplogicob { # $1==base_branch  optional $2==new_branch_name
+  env=${2:-'fix_new'} #第2引数がなければdefault_name
+  gishsv && gico $1 && gplo $1 && gico-b $env && gishpp && gibr
+}
 function tarzipgirbplodkrakeannotate { #Rails.rootで実行 引数= girreponameリモートブランチ名 docker-container名
   cd .. ;
   tarziprorgitonly $1;
   girbplo $2
   echo " ###TODO: bundle install &&  bin/rake db:reset:with_data && annotate --force をコンテナで実行してください"
+  echo " ###TODO: bundle install &&  bundle install && bin/rails db:drop db:create ridgepole:apply data:migrate db:seed をコンテナで実行してください"
   docker exec -it -u root $3 bash;
 }
 
@@ -665,6 +683,9 @@ alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生�
 
 #1-liner
 # alias rorapp rails new example --skip-bundle && cd example && bundle install --path=vendor/bundle**
+# CSVimport      ActiveImportclass.import! (CSV.read('vendor/some.csv') )
+# #RoR " JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
+
 
 # ==== リハビリコマンド ==========================
 alias rehabilli='cat ~/dotfiles/SI/REHABILI/* |less'

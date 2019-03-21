@@ -7,13 +7,14 @@
     # config.public_file_server.enabled = false #rails5 画像無効化
     # DOCKER ENV BEST
     # view設定
-    config.action_view.cache_template_loading = false
-    config.reload_classes_only_on_change = true #毎回リロード　trueならば変更検出時にリロードconfig.cache_classesが「true」の場合は、無視される。
-    config.active_record.migration_error = false#:page_load
-    config.serve_static_assets = true #<---#rails3~4 画像無効化だがunicorn/nginxとのくみあわせではサーバー付加へらすために明示false
     config.action_controller.perform_caching = false #rails4-5 's defaults
+    config.active_record.migration_error = false#:page_load
+    config.reload_classes_only_on_change = true #毎回リロード　trueならば変更検出時にリロードconfig.cache_classesが「true」の場合は、無視される。
+    config.action_view.cache_template_loading = false
+    config.serve_static_assets = true #<---#rails3~4 画像無効化だがunicorn/nginxとのくみあわせではサーバー付加へらすために明示false
     config.assets.digest = false #digest-hash-appending
-    config.assets.debug = false #trueにすると、application.css/jsと個別のファイルの二重読み込みがされます。
+    config.assets.debug = false #trueにすると、application.css/jsと個別のファイルの二重読み込みがされます
+
     # config.public_file_server.enabled = false #rails5 画像無効化
     # config.assets.compile = false #uglify 　CSS-FW 'Foundation'では必須か coffee_script scss therubyracerつかうならばtrueに
     # config.assets.compress = false #*.gz化
