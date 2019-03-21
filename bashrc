@@ -59,9 +59,12 @@ function dkbash { # $1 == container_name/id
 function dkrstrails { # $1 == container_name/id
   docker exec -it -u root $1 bundle install
   read -p "bunles installできて、railsが入ったdockerコンテナを再起動できる状況でしたか? (y/N): " yn
-  case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
-  rm tmp/pids/server.pid
-  dkrst $1;  docker attach $_
+  # case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
+  case "$yn" in
+    [yY]) rm tmp/pids/server.pid; dkrst $1; docker attach $_ ;;
+    [nN]) exit ;;
+    *) exit ;;
+  esac
 }
 
 function dkc_rdbseed {  #通常のbdl方法
