@@ -694,6 +694,13 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
   @worksheet.merge_cells(3, 3, 3, @row_during_the_seek)
   @row_during_the_seek += 1
 
+  #worksheet 複写（セル幅などは複写されません）
+    worksheet = @workbook.add_worksheet
+    worksheet.sheet_data = @workbook[0].sheet_data
+    worksheet.sheet_name = "added"
+    return @workbook
+
+
 #enumerise
   #@M
   #enumerize :kubun, in: { A: 1, D: 2 }

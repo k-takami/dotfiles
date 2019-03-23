@@ -45,6 +45,8 @@
         $ kill
 
   #最終手段  docker-compose build SERVICENAME ; docker-compose up -d  SERVICENAME
+    # line below is DANGEROUS when docker container got broken.
+    # prune system, and checkout production branch to compose basic container, and check docker-bach login, then move back to original branch and perform bundle install
   # docker-compose build app && docker-compose up -d app
   #ファイルシステム見えない時など　クリーンな最終手段：
   # docker rm CONTAINER, docker rmi IMAGE
