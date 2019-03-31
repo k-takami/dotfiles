@@ -512,7 +512,7 @@ export REGEXP_MYBUG="^\+.*(\?i|i\b|binding.pry|byebug|debugger|takami)"
 alias mybugstaged=' gdicnp |grepe $REGEXP_MYBUG -C2 '
 alias mybug='       git show |grepe $REGEXP_MYBUG -C1 ; gdicnp |grepe $REGEXP_MYBUG -C1 ; gdi |grepe $REGEXP_MYBUG --exclude=development.rb --exclude=*Gemfile* -C1'
 alias raspell=' ruby ~/dotfiles/SCRIPTS/ror_02_raspell.rb'
-alias mybugallstaged='rbcrails; mybugstaged; raspell; rbwcstaged; rbprails;'
+alias mybugallstaged='rbcrails; mybugstaged; rbwcstaged; rbprails;' #raspell;
 alias mybugall='      rbcrails; mybug      ; raspell; rbwcstaged; rbprails;'
 alias mybug_migration_yyyymmdd='find db/migrate/*create_*  |xargs -n1 git blame |grep' # add /yyyy-mm-dd?/ date to find DANGEROUS MIGRATION FILE
 #alias mybugall_and_migrationyyyymmdd='mybugall; mybug_migration_yyyymmdd'
