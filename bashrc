@@ -391,6 +391,7 @@ alias patchrp='patch -R -p0 <' #[patch-name] to reverse(=undo)
 alias gibr='      git branch'
 alias gibr-d='    git branch -D' #削除
 alias gibr-m='    git branch -m' #旧ブランチ名　新ブランチ名
+alias gibr-a='    git branch -a'
 alias gicm='      git commit'
 alias gicmm='     git commit -m' #modify
 alias gico='      git checkout'
@@ -571,6 +572,15 @@ function tarzipgitonly { # 今のRails.rootフォルダー名を引数にして�
   cd $chomped1
   tar zcvf ../$chomped1.git-`date '+%Y%m%d_%H%M'`.tar.gz .git ; lat ..
 }
+
+function gicoto_newbranch { # $1==new_branch_name , $2==origin_name
+  env=${1:-'XXX'} #第2引数がなければdefault_name
+  env=${2:-'origin'} #第1引数がなければorigin
+  git fetch
+  gishsv ; gico-b $1 origin/$1 ; gishpp; gst; gibr;
+  # igit version 2.17仕様でgit 1.6でつかえるというstackoverflowの情報の"-t"おぷしょんが使えなかった; gishsv ; gico -t $2/$1 ; gishpp; gst; gibr;
+}
+
 
 function gplogicob { # $1==base_branch  optional $2==new_branch_name
   env=${2:-'fix_new'} #第2引数がなければdefault_name

@@ -700,6 +700,9 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
     worksheet.sheet_name = "added"
     return @workbook
 
+  #ブックおわりの不要シート削除：Macbook pro 2013で１シート削除に１０２秒ほどかかる
+    @workbook.worksheets.delete_at(-1)
+
 
 #enumerise
   #@M
