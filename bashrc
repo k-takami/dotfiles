@@ -3,6 +3,7 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
+
 # User specific aliases and functions
 # NOTE: atom-ide-ui terminal でときどきset $LANG=ja_JP.UTF-8設定が消えてしまうので手入力する状況がある
 export LANG='ja_JP.UTF-8'

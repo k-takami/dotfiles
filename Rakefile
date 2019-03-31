@@ -84,6 +84,8 @@ task :install do
   # Google Chrome
   # https://drive.google.com/open?id=0B6o6bFqaG4IHYV9vZU8xalJrbXM
   system "source ~/.bashrc;"
+  result = `mv .git/hooks/pre-commit.sample .git/hooks/pre-commit`
+  result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; #raspell;" >> .git/hooks/pre-commit `
   puts "#############\n vim を起動して :NeoBundleInstall を実行してください \n #############\n"
 end
 
