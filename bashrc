@@ -73,7 +73,7 @@ function dkrstrails { # $1 == container_name/id
 }
 
 
-function git_pubkey_osx {  #$1 == email@address
+function sshpubkey_osx {  #$1 == email@address  #, for github
   env=${1:-'belltakami@gmail.com'}
   ssh-keygen -t rsa -b 4096 -C "$1"
   ll ~/.ssh/
@@ -447,6 +447,11 @@ alias hgbl='      hg blame -lund'
 alias gplo='      git pull origin'
 alias gclone='    git clone'
 alias gcloneb='   git clone -b ' # ブランチ名 https://リポジトリのアドレス
+# TODO: .
+# .git/hooks/pre-commit
+  # result = `mv .git/hooks/pre-commit.sample .git/hooks/pre-commit`
+  # result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; #raspell;" >> .git/hooks/pre-commit `
+  # ~/dotfiles/development.rb >> config/development.rb
 alias gpso='      git push origin'
 alias gpsdelo=' git push --delete origin' #[branch-name] to delete リモートブランチ削除
 alias gisw='      git show'
