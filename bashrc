@@ -57,6 +57,10 @@ alias dkcud='   docker-compose up -d '
 function dkbash { # $1 == container_name/id
   dkpadi; docker exec -it -u root $1 bash
 }
+function dksh { # $1 == container_name/id
+  dkpadi; docker exec -it -u root $1 sh
+}
+
 function dkrstrails { # $1 == container_name/id
   docker exec -it -u root $1 bundle install
   read -p "bunles installできて、railsが入ったdockerコンテナを再起動できる状況でしたか? (y/N): " yn
@@ -67,6 +71,16 @@ function dkrstrails { # $1 == container_name/id
     *) exit ;;
   esac
 }
+
+
+function git_pubkey_osx {  #$1 == email@address
+  env=${1:-'belltakami@gmail.com'}
+  ssh-keygen -t rsa -b 4096 -C "$1"
+  ll ~/.ssh/
+  cat ~/.ssh/id_rsa.pub &&  pbcopy < ~/.ssh/id_rsa.pub
+  echo "コピーしましたよ"
+}
+
 
 function dkc_rdbseed {  #通常のbdl方法
   docker-compose run -u root app bundle install ;
@@ -79,11 +93,22 @@ function dkc_rdbseed {  #通常のbdl方法
   echo "###    : migratonファイルでundefエラーになるのはシンボルで表記されていないから" ;
 }
 
+# よくあるアプリ構築手順
+function dkcbuildup {
+  env=${1:-'app'}
+  docker-compose build $1 && docker-compose up -d $1
+  dkpadi
+}
 
 function dkc_rdbmreset { #通常のbdl方法 #  == dkrst db && dkbash app ; bundle install && bin/rails db:drop db:create ridgepole:apply data:migrate db:seed && annotate --force
-  docker-compose run -u root app bundle install ;
-  # docker-compose run -u root app bin/rake db:migrate:reset db:seed;
-  docker-compose run -u root app bin/rake db:reset:with_data;  #<---special
+  env=${1:-'app'}
+  docker-compose run -u root $1 bundle install ;
+  docker-compose run -u root $1 bundle exec yarn install #<---これがないと次のエラー： OCI runtime exec failed: exec failed: (…) executable file not found in $PATH": unknown
+  docker-compose run $1 rails db:create db:schema:load  db:seed_fu
+  #eg2 $ docker-compose run $1 rails db:create db:schema:load db:seed_fu
+    #eg1 $ docker-compose run $1 db:drop db:create ridgepole:apply data:migrate db:seed
+  # docker-compose run -u root $1 bin/rake db:migrate:reset db:seed;
+  # docker-compose run -u root $1 bin/rake db:reset:with_data;  #<---special
   docker-compose run -u root app annotate --force ;
   echo "### NOTE "
   echo "###      rake:db:migrateが失敗しがちなのでdbのコンテナを再起動してから実行した方がいい"
