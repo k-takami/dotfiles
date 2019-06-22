@@ -1,50 +1,28 @@
 {Pentabarf}
-
-Search:]> 
+Search:]>
 Search
-
   * Login
-
   * Preferences
-
   * About Trac
-
   * Timeline
-
   * Browse Source
-
   * View Tickets
-
   * Search
-
   * Roadmap
-
-
 
 Context Navigation
 ------------------
-
   * Last Change
-
   * Annotate
-
   * Revision Log
-
 ------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 root/trunk/rails/config/routes.rb @ 6084
 
-
 View revision:]> 6084
-
 Visit:[                 ] Go!
-
 Revision 6084, 2.9 KB (checked in by sven, 3 months ago)
-
 add nicer route for xml controller
-
 Line
 1 ActionController::Routing::Routes.draw do |map|
 2 # The priority is based upon order of creation: first created -> highest priority.
@@ -96,27 +74,7 @@ Line
 48 end
 
 Note: See TracBrowser for help on using the browser.
-
-View changes...
-
-
-
-Download in other formats:
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  * Plain Text
-
-  * Original Format
-
 ------------------------------------------------------------------------------------------------------------------------------------------------
-
-{Trac Powered}
-
-Powered by Trac 0.12dev-r7890
-By Edgewall Software.
-
-Pentabarf
-
 
 
 Module
@@ -139,7 +97,7 @@ Consider the following route, installed by Rails when you generate your applicat
 
 ~>
     map.connect ':controller/:action/:id'
-  
+
 <~
 
 This route states that it expects requests to consist of a :controller followed by an :action that in turn is fed some :id.
@@ -151,7 +109,7 @@ Suppose you get an incoming request for /blog/edit/22, you‘ll end up with:
                :action     => 'edit',
                :id         => '22'
             }
-  
+
 <~
 
 Think of creating routes as drawing a map for your requests. The map tells them where to go based on some predefined pattern:
@@ -162,7 +120,7 @@ Think of creating routes as drawing a map for your requests. The map tells them 
       Pattern 2 tell them to go to another
       ...
     end
-  
+
 <~
 
 The following symbols are special:
@@ -170,7 +128,7 @@ The following symbols are special:
 ~>
     :controller maps to your controller name
     :action     maps to an action with your controllers
-  
+
 <~
 
 Other names simply map to a parameter as in the case of :id.
@@ -193,7 +151,7 @@ Within blocks, the empty pattern is at the highest priority. In practice this wo
       end
       map.connect ':controller/:action/:view'
     end
-  
+
 <~
 
 In this case, invoking blog controller (with an URL like ’/blog/’) without parameters will activate the ‘list’ action by default.
@@ -211,7 +169,7 @@ Example:
     ActionController::Routing:Routes.draw do |map|
       map.connect ':controller/:action/:id', :controller => 'blog'
     end
-  
+
 <~
 
 This sets up blog as the default controller if no other is specified. This means visiting ’/’ would invoke the blog controller.
@@ -220,7 +178,7 @@ More formally, you can include arbitrary parameters in the route, thus:
 
 ~>
     map.connect ':controller/:action/:id', :action => 'show', :page => 'Dashboard'
-  
+
 <~
 
 This will pass the :page parameter to all incoming requests that match this route.
@@ -241,17 +199,17 @@ Example:
 ~>
     # In routes.rb
     map.login 'login', :controller => 'accounts', :action => 'login'
-  
+
     # With render, redirect_to, tests, etc.
     redirect_to login_url
-  
+
 <~
 
 Arguments can be passed as well.
 
 ~>
     redirect_to show_item_path(:id => 25)
-  
+
 <~
 
 Use map.root as a shorthand to name a route for the root path "".
@@ -259,14 +217,14 @@ Use map.root as a shorthand to name a route for the root path "".
 ~>
     # In routes.rb
     map.root :controller => 'blogs'
-  
+
     # would recognize http://www.example.com/ as
     params = { :controller => 'blogs', :action => 'index' }
-  
+
     # and provide these named routes
     root_url   # => 'http://www.example.com/'
     root_path  # => ''
-  
+
 <~
 
 You can also specify an already-defined named route in your map.root call:
@@ -275,7 +233,7 @@ You can also specify an already-defined named route in your map.root call:
     # In routes.rb
     map.new_session :controller => 'sessions', :action => 'new'
     map.root :new_session
-  
+
 <~
 
 Note: when using with_options, the route is simply named after the method you call on the block parameter rather than map.
@@ -287,10 +245,10 @@ Note: when using with_options, the route is simply named after the method you ca
       blog.delete  'delete/:id',  :action  => 'delete',
       blog.edit    'edit/:id',    :action  => 'edit'
     end
-  
+
     # provides named routes for show, delete, and edit
     link_to @article.title, show_path(:id => @article.id)
-  
+
 <~
 
 
@@ -307,14 +265,14 @@ Routes can generate pretty URLs. For example:
                 :year       => /\d{4}/,
                 :month      => /\d{1,2}/,
                 :day        => /\d{1,2}/
-  
+
 <~
 
 Using the route above, the URL "localhost:3000/articles/2005/11/06" maps to
 
 ~>
     params = {:year => '2005', :month => '11', :day => '06'}
-  
+
 <~
 
 
@@ -327,7 +285,7 @@ You can specify a regular expression to define a format for a parameter.
 ~>
     map.geocode 'geocode/:postalcode', :controller => 'geocode',
                 :action => 'show', :postalcode => /\d{5}(-\d{4})?/
-  
+
 <~
 
 or, more formally:
@@ -335,7 +293,7 @@ or, more formally:
 ~>
     map.geocode 'geocode/:postalcode', :controller => 'geocode',
                 :action => 'show', :requirements => { :postalcode => /\d{5}(-\d{4})?/ }
-  
+
 <~
 
 Formats can include the ‘ignorecase’ and ‘extended syntax’ regular expression modifiers:
@@ -343,7 +301,7 @@ Formats can include the ‘ignorecase’ and ‘extended syntax’ regular expre
 ~>
     map.geocode 'geocode/:postalcode', :controller => 'geocode',
                 :action => 'show', :postalcode => /hx\d\d\s\d[a-z]{2}/i
-  
+
     map.geocode 'geocode/:postalcode', :controller => 'geocode',
                 :action => 'show',:requirements => {
                   :postalcode => /# Postcode format
@@ -351,7 +309,7 @@ Formats can include the ‘ignorecase’ and ‘extended syntax’ regular expre
                                   (-\d{4})? #Suffix
                                   /x
                 }
-  
+
 <~
 
 Using the multiline match modifier will raise an ArgumentError. Encoding regular expression modifiers are silently ignored. The match will always
@@ -366,7 +324,7 @@ Specifying *[string] as part of a rule like:
 
 ~>
     map.connect '*path' , :controller => 'blog' , :action => 'unrecognized?'
-  
+
 <~
 
 will glob all remaining parts of the route that were not recognized earlier. The globbed values are in params[:path] as an array of path
@@ -389,7 +347,7 @@ Example:
                 :conditions => { :method => :get }
     map.connect 'post/:id', :controller => 'posts', :action => 'create_comment',
                 :conditions => { :method => :post }
-  
+
 <~
 
 Now, if you POST to /posts/:id, it will route to the create_comment action. A GET on the same URL will route to the show action.
@@ -403,7 +361,7 @@ You can reload routes if you feel you must:
 
 ~>
     ActionController::Routing::Routes.reload
-  
+
 <~
 
 This will clear all named routes and reload routes.rb if the file has been modified from last load. To absolutely force reloading, use reload!.
@@ -425,7 +383,7 @@ assert_routing
      opts = {:controller => "plugin", :action => "checkout", :id => "2"}
      assert_routing "plugin/checkout/2", opts
     end
-  
+
 <~
 
 assert_routing lets you test whether or not the route properly resolves into options.
@@ -440,7 +398,7 @@ assert_recognizes
      opts = {:controller => "plugin", :action => "show", :id => "12"}
      assert_recognizes opts, "/plugins/show/12"
     end
-  
+
 <~
 
 Note the subtle difference between the two: assert_routing tests that a URL fits options while assert_recognizes tests that a URL breaks into
@@ -454,12 +412,12 @@ In tests you can simply pass the URL or named route to get or post.
       assert_response :success
       assert_template "jail/front"
     end
-  
+
     def goes_to_login
       get login_url
       #...
     end
-  
+
 <~
 
 
@@ -504,25 +462,25 @@ Returns a controller path for a new controller based on a previous controller pa
   * stay in the previous controller:
     ~>
         controller_relative_to( nil, "groups/discussion" ) # => "groups/discussion"
-      
+
 <~
 
   * stay in the previous namespace:
     ~>
         controller_relative_to( "posts", "groups/discussion" ) # => "groups/posts"
-      
+
 <~
 
   * forced move to the root namespace:
     ~>
         controller_relative_to( "/posts", "groups/discussion" ) # => "posts"
-      
+
 <~
 
   * previous namespace is root:
     ~>
         controller_relative_to( "posts", "anything_with_no_slashes" ) # =>"posts"
-      
+
 <~
 
 [ show source ]
@@ -536,7 +494,7 @@ Returns a controller path for a new controller based on a previous controller pa
   367:         else controller
   368:         end
   369:       end
-  
+
 <~
 
 normalize_paths(paths)
@@ -560,17 +518,17 @@ The returned array is sorted by length, descending.
   303:             gsub("//", "/").           # replace double / chars with a single
   304:             gsub("\\\\", "\\").        # replace double \ chars with a single
   305:             gsub(%r{(.)[\\/]$}, '\1')  # drop final / or \ if path ends with it
-  306: 
+  306:
   307:           # eliminate .. paths where possible
   308:           re = %r{[^/\\]+[/\\]\.\.[/\\]}
   309:           path.gsub!(re, "") while path.match(re)
   310:           path
   311:         end
-  312: 
+  312:
   313:         # start with longest path, first
   314:         paths = paths.uniq.sort_by { |path| - path.length }
   315:       end
-  
+
 <~
 
 possible_controllers()
@@ -584,27 +542,27 @@ Returns the array of controller names currently available to ActionController::R
   318:       def possible_controllers
   319:         unless @possible_controllers
   320:           @possible_controllers = []
-  321: 
+  321:
   322:           paths = controller_paths.select { |path| File.directory?(path) && path != "." }
-  323: 
+  323:
   324:           seen_paths = Hash.new {|h, k| h[k] = true; false}
   325:           normalize_paths(paths).each do |load_path|
   326:             Dir["#{load_path}/**/*_controller.rb"].collect do |path|
   327:               next if seen_paths[path.gsub(%r{^\.[/\\]}, "")]
-  328: 
+  328:
   329:               controller_name = path[(load_path.length + 1)..-1]
-  330: 
+  330:
   331:               controller_name.gsub!(/_controller\.rb\Z/, '')
   332:               @possible_controllers << controller_name
   333:             end
   334:           end
-  335: 
+  335:
   336:           # remove duplicates
   337:           @possible_controllers.uniq!
   338:         end
   339:         @possible_controllers
   340:       end
-  
+
 <~
 
 use_controllers!(controller_names)
@@ -613,7 +571,7 @@ Replaces the internal list of controllers available to ActionController::Routing
 
 ~>
     ActionController::Routing.use_controllers!([ "posts", "comments", "admin/comments" ])
-  
+
 <~
 
 [ show source ]
@@ -623,7 +581,7 @@ Replaces the internal list of controllers available to ActionController::Routing
   344:       def use_controllers!(controller_names)
   345:         @possible_controllers = controller_names
   346:       end
-  
+
 <~
 
 with_controllers(names) {|| ...}
@@ -642,7 +600,7 @@ method is used in internal Rails testing.
   291:       ensure
   292:         use_controllers! prior_controllers
   293:       end
-  
+
 <~
 
 Public Instance methods
@@ -660,6 +618,6 @@ Ensures that routes are reloaded when Rails inflections are updated.
   378:           ActionController::Routing::Routes.reload! if block_given?
   379:         }
   380:       end
-  
+
 <~
 

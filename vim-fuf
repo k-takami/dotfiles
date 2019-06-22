@@ -1,427 +1,586 @@
 VERSION	300
-mrucmd	data	{'word': ':q', 'time': 1553163415}
-mrucmd	data	{'word': ':w', 'time': 1553163386}
+mrucmd	data	{'word': ':Gwrite', 'time': 1561216066}
+mrucmd	data	{'word': '/git', 'time': 1561215708}
+mrucmd	data	{'word': '/OS', 'time': 1561215678}
+mrucmd	data	{'word': ':split', 'time': 1561215672}
+mrucmd	data	{'word': ':q', 'time': 1561215669}
+mrucmd	data	{'word': ':call setreg(''"'', getreg(''0'')) ', 'time': 1561204416}
+mrucmd	data	{'word': '/def os', 'time': 1561204360}
+mrucmd	data	{'word': ':w', 'time': 1561204119}
+mrucmd	data	{'word': '/>>', 'time': 1561203979}
+mrucmd	data	{'word': '/_commit', 'time': 1561203900}
+mrucmd	data	{'word': '/\<_commit\>', 'time': 1561203895}
+mrucmd	data	{'word': '/branch', 'time': 1561203774}
+mrucmd	data	{'word': '/\<__git_bra\>', 'time': 1561203771}
+mrucmd	data	{'word': '/\<__git_check\>', 'time': 1561203764}
+mrucmd	data	{'word': '/\<__gitk_check\>', 'time': 1561203757}
+mrucmd	data	{'word': '/gico', 'time': 1561203632}
+mrucmd	data	{'word': ':e /usr/local/etc/bash_completion.d/git-completion.bash', 'time': 1561203618}
+mrucmd	data	{'word': ':tabnew', 'time': 1561203615}
+mrucmd	data	{'word': '/reset', 'time': 1561083094}
+mrucmd	data	{'word': ':%s/input type=..hidden/\r  input hidden/gc', 'time': 1561019548}
+mrucmd	data	{'word': ':%s/id=/\r  id=/gc', 'time': 1561019482}
+mrucmd	data	{'word': ':%s/<textarea/\rtextarea/gc', 'time': 1561019446}
+mrucmd	data	{'word': ':%s/<textarea/\rtextarea/', 'time': 1561019431}
+mrucmd	data	{'word': ':qa!', 'time': 1561019381}
+mrucmd	data	{'word': ':qa', 'time': 1561019379}
+mrucmd	data	{'word': '/gplo', 'time': 1560909268}
+mrucmd	data	{'word': ':wq', 'time': 1560906833}
+mrucmd	data	{'word': '/stage', 'time': 1560904861}
+mrucmd	data	{'word': '/bugall', 'time': 1560904810}
+mrucmd	data	{'word': '/bug', 'time': 1560904808}
+mrucmd	data	{'word': '/mybugalls', 'time': 1560904796}
+mrucmd	data	{'word': '/mybugall', 'time': 1560904782}
+mrucmd	data	{'word': '/json', 'time': 1560904625}
+mrucmd	data	{'word': '/yarn', 'time': 1560904615}
+mrucmd	data	{'word': '/Command.*m', 'time': 1560471611}
+mrucmd	data	{'word': ':''<,''>s/＋/+/gc', 'time': 1560471564}
+mrucmd	data	{'word': '/サイズ', 'time': 1560471529}
+mrucmd	data	{'word': '/command', 'time': 1560471523}
+mrucmd	data	{'word': ':e a.html', 'time': 1560419630}
+mrucmd	data	{'word': ':q!', 'time': 1560394434}
+mrucmd	data	{'word': '/amount.*8', 'time': 1560322932}
+mrucmd	data	{'word': ':%s/, /\r/gc', 'time': 1560322928}
+mrucmd	data	{'word': ':set number', 'time': 1560320950}
+mrucmd	data	{'word': '/amount.*9', 'time': 1560320923}
+mrucmd	data	{'word': '/amount', 'time': 1560320709}
+mrucmd	data	{'word': '/local', 'time': 1560320695}
+mrucmd	data	{'word': '/400', 'time': 1560320689}
+mrucmd	data	{'word': ':Bgrep reject', 'time': 1560306385}
+mrucmd	data	{'word': '/is_a', 'time': 1560243033}
+mrucmd	data	{'word': '/column_', 'time': 1560243009}
+mrucmd	data	{'word': '/String', 'time': 1560242996}
+mrucmd	data	{'word': '/column', 'time': 1560242988}
+mrucmd	data	{'word': '/HELP1', 'time': 1560128502}
+mrucmd	data	{'word': '/htlp', 'time': 1560128498}
+mrucmd	data	{'word': ':Bgrep 再起動', 'time': 1560128372}
+mrucmd	data	{'word': ':110', 'time': 1559879230}
+mrucmd	data	{'word': ':Bgrep 237', 'time': 1559795077}
+mrucmd	data	{'word': ':Bgrep 51', 'time': 1559786568}
+mrucmd	data	{'word': ':Bgrep 59.106.222.237', 'time': 1559700125}
+mrucmd	data	{'word': '/snipp', 'time': 1559672590}
+mrucmd	data	{'word': ':Bgrep session', 'time': 1559672584}
+mrucmd	data	{'word': '/strf', 'time': 1559631989}
+mrucmd	data	{'word': ':vnew', 'time': 1559473215}
+mrucmd	data	{'word': '/aws', 'time': 1559469575}
+mrucmd	data	{'word': ':w!', 'time': 1559469146}
+mrucmd	data	{'word': ':qw', 'time': 1559469144}
+mrucmd	data	{'word': ':VE', 'time': 1559468916}
+mrucmd	data	{'word': ':e /Users/user/dotfiles/CHEATSHEETS/RoR/snippet_form_and_posting.rb', 'time': 1559396435}
+mrucmd	data	{'word': ':e /Users/user/dotfiles/CHEATSHEETS/RoR/snippet_navigation.rb', 'time': 1559389060}
+mrucmd	data	{'word': '/ddd', 'time': 1559388965}
+mrucmd	data	{'word': ':Bgrep', 'time': 1559370447}
+mrucmd	data	{'word': ':Gbrep reject', 'time': 1559370445}
+mrucmd	data	{'word': ':%s/;/;\r/gc', 'time': 1559281227}
+mrucmd	data	{'word': ':%s/</\r/gc', 'time': 1559281175}
+mrucmd	data	{'word': ':Bgrep     src: local(''Great Vibes''), local(''GreatVibes-Regular''), url(https://fonts.gstatic.com/s/greatvibes/v6/RWmMoKWR9v4ksMfaWd_JN9XLiaQoDmlrMlY.woff2) format(''woff2'');', 'time': 1559276884}
+mrucmd	data	{'word': ':w GOMI3.sh', 'time': 1559261395}
+mrucmd	data	{'word': ':''<,''>s/^/ruby -wc /', 'time': 1559261343}
+mrucmd	data	{'word': ':''<,''>s/^/ruby -wc/', 'time': 1559261337}
+mrucmd	data	{'word': '/\t', 'time': 1559229959}
+mrucmd	data	{'word': ':''<,''>Tabularize /\t/', 'time': 1559229947}
+mrucmd	data	{'word': ':''<,''>Tabularize', 'time': 1559229934}
+mrucmd	data	{'word': ':''<,''>Tabularize / /', 'time': 1559229926}
+mrucmd	data	{'word': ':''<,''>Tabularize /  */', 'time': 1559229916}
+mrucmd	data	{'word': ':Gblame', 'time': 1559215791}
+mrucmd	data	{'word': '/pry', 'time': 1559215783}
+mrucmd	data	{'word': ':Bgrep mysqldump', 'time': 1559212880}
+mrucmd	data	{'word': '/on', 'time': 1559187029}
+mrucmd	data	{'word': ':Bgrep submit', 'time': 1559187026}
+mrucmd	data	{'word': '/sbh', 'time': 1559180559}
+mrucmd	data	{'word': '/gicmm', 'time': 1559180544}
+mrucmd	data	{'word': '/map', 'time': 1559144547}
+mrucmd	data	{'word': ':Gdiff', 'time': 1559144420}
+mrucmd	data	{'word': '/myapp', 'time': 1559144331}
+mrucmd	data	{'word': '/android', 'time': 1559142435}
+mrucmd	data	{'word': ':e /Users/user/dotfiles/SI/REHABILI/自作PGリハヒリ手順.txt', 'time': 1559142428}
+mrucmd	data	{'word': ':gwq', 'time': 1559142072}
+mrucmd	data	{'word': '/VNC', 'time': 1559142067}
+mrucmd	data	{'word': '/Vista', 'time': 1559142059}
+mrucmd	data	{'word': '/iDisp', 'time': 1559141984}
+mrucmd	data	{'word': '/gishs', 'time': 1559117169}
+mrucmd	data	{'word': ':gw', 'time': 1559111018}
+mrucmd	data	{'word': '/app', 'time': 1559108856}
+mrucmd	data	{'word': '/sort', 'time': 1559108800}
+mrucmd	data	{'word': '/order', 'time': 1559108780}
+mrucmd	data	{'word': ':Bgrep ソート', 'time': 1559108231}
+mrucmd	data	{'word': '/sorted', 'time': 1559108201}
+mrucmd	data	{'word': ':Bgrep sort', 'time': 1559108171}
+mrucmd	data	{'word': ':Bgrep include*join', 'time': 1559107343}
+mrucmd	data	{'word': ':Bgrep 語呂', 'time': 1559107316}
+mrucmd	data	{'word': '/ksen', 'time': 1559055169}
+mrucmd	data	{'word': '/else', 'time': 1559053863}
+mrucmd	data	{'word': '/if ', 'time': 1559053632}
+mrucmd	data	{'word': '/function', 'time': 1559053282}
+mrucmd	data	{'word': '/REM', 'time': 1559034782}
+mrucmd	data	{'word': '/<<', 'time': 1559034267}
+mrucmd	data	{'word': '/FUMIDAI', 'time': 1559033979}
+mrucmd	data	{'word': '/reject', 'time': 1559003011}
+mrucmd	data	{'word': '/module', 'time': 1559002028}
+mrucmd	data	{'word': '/space', 'time': 1558862630}
+mrucmd	data	{'word': '/blank', 'time': 1558862627}
+mrucmd	data	{'word': '/logger', 'time': 1558862458}
+mrucmd	data	{'word': '/mubugall', 'time': 1558861471}
+mrucmd	data	{'word': ':Bgrep has_one', 'time': 1558856969}
+mrucmd	data	{'word': ':%s/\n\n/\r/gc', 'time': 1558806527}
+mrucmd	data	{'word': '/rake', 'time': 1558718518}
+mrucmd	data	{'word': '/compile', 'time': 1558718517}
+mrucmd	data	{'word': '/asset', 'time': 1558718503}
+mrucmd	data	{'word': '/rails', 'time': 1558718474}
+mrucmd	data	{'word': '/ror_', 'time': 1558718472}
+mrucmd	data	{'word': '/ror', 'time': 1558718468}
+mrucmd	data	{'word': '/REGEXP', 'time': 1558672311}
+mrucmd	data	{'word': '/extn', 'time': 1558611688}
+mrucmd	data	{'word': '/auto', 'time': 1558593463}
+mrucmd	data	{'word': '/load', 'time': 1558593458}
+mrucmd	data	{'word': '/dele', 'time': 1558534519}
+mrucmd	data	{'word': ':%s/implementing_organization1/some_attr_name/gc', 'time': 1558495032}
+mrucmd	data	{'word': '/select2', 'time': 1558494870}
+mrucmd	data	{'word': ':Bgrep name^=', 'time': 1558492329}
+mrucmd	data	{'word': '/seed_fu', 'time': 1558416017}
+mrucmd	data	{'word': '/gilohd', 'time': 1558406714}
+mrucmd	data	{'word': '/gst', 'time': 1558406642}
+mrucmd	data	{'word': ':mksession! ~/sessionATOMMAN', 'time': 1558340262}
+mrucmd	data	{'word': '/pole', 'time': 1558340119}
+mrucmd	data	{'word': '/ridge', 'time': 1558340105}
+mrucmd	data	{'word': '/ridgepo', 'time': 1558340102}
+mrucmd	data	{'word': ':Bgrep user.*agent', 'time': 1558264118}
+mrucmd	data	{'word': ':Bgrep Vladimir', 'time': 1558262896}
+mrucmd	data	{'word': ':set wrap', 'time': 1558262882}
+mrucmd	data	{'word': '/vim', 'time': 1558227207}
+mrucmd	data	{'word': '/extract', 'time': 1558226815}
+mrucmd	data	{'word': '/abula', 'time': 1558226567}
+mrucmd	data	{'word': '/dotfiles', 'time': 1558226546}
+mrucmd	data	{'word': '/tpope', 'time': 1558226492}
+mrucmd	data	{'word': '/vim.rails', 'time': 1558226486}
+mrucmd	data	{'word': '/concern', 'time': 1558226057}
+mrucmd	data	{'word': ':help rails.vim', 'time': 1558226054}
+mrucmd	data	{'word': ':NeoBundleUpdate', 'time': 1558226023}
+mrucmd	data	{'word': ':help rails-:Extract', 'time': 1558225814}
+mrucmd	data	{'word': ':''<,''>Tabularize /:/', 'time': 1558154750}
+mrucmd	data	{'word': ':''<,''>Tabularize /:/ l0c0r0', 'time': 1558154740}
+mrucmd	data	{'word': ':%s/, value//gc', 'time': 1558154698}
+mrucmd	data	{'word': ':%s/ %.*//gc', 'time': 1558154674}
+mrucmd	data	{'word': ':%s/ \%.*//gc', 'time': 1558154669}
+mrucmd	data	{'word': ':%s/, class.*//gc', 'time': 1558154601}
+mrucmd	data	{'word': '/class', 'time': 1558154544}
+mrucmd	data	{'word': '/bye', 'time': 1558088067}
+mrucmd	data	{'word': '::', 'time': 1558069423}
+mrucmd	data	{'word': ':Bgrep build_', 'time': 1558013019}
+mrucmd	data	{'word': '/_help', 'time': 1558000323}
+mrucmd	data	{'word': '/_stg', 'time': 1558000317}
+mrucmd	data	{'word': ':e .', 'time': 1557981478}
+mrucmd	data	{'word': '/staged', 'time': 1557980728}
+mrucmd	data	{'word': '/my', 'time': 1557898999}
+mrucmd	data	{'word': ':f', 'time': 1557887624}
+mrucmd	data	{'word': '/aw3', 'time': 1557825985}
+mrucmd	data	{'word': '/data', 'time': 1557817415}
+mrucmd	data	{'word': '/data_with', 'time': 1557817409}
+mrucmd	data	{'word': '/session', 'time': 1557802536}
+mrucmd	data	{'word': ':''<,''>s/$/\\n/gc', 'time': 1557802360}
+mrucmd	data	{'word': ':''<,''>s/$/\n/gc', 'time': 1557802342}
+mrucmd	data	{'word': ':''<,''>s/$/\n/g', 'time': 1557802337}
+mrucmd	data	{'word': '/myapp1', 'time': 1557801325}
+mrucmd	data	{'word': ':e ~/.ssh/', 'time': 1557727271}
+mrucmd	data	{'word': '/resources', 'time': 1557641930}
+mrucmd	data	{'word': '/resources:', 'time': 1557641927}
+mrucmd	data	{'word': '/params', 'time': 1557641912}
+mrucmd	data	{'word': '/scope', 'time': 1557590548}
+mrucmd	data	{'word': ':tabmove 0', 'time': 1557546790}
+mrucmd	data	{'word': ':e /Users/user/dotfiles/CHEATSHEETS/_2b_en_rails_routing_en.rb', 'time': 1557546762}
+mrucmd	data	{'word': ':tabmove 1', 'time': 1557503612}
+mrucmd	data	{'word': ':tabmove -1', 'time': 1557503543}
+mrucmd	data	{'word': ':tabmove 10', 'time': 1557503529}
+mrucmd	data	{'word': ':tabmove 14', 'time': 1557503525}
+mrucmd	data	{'word': ':tabmove 3', 'time': 1557503393}
+mrucmd	data	{'word': ':mksession ~/sessionMYAPPROOT_BASIC', 'time': 1557503099}
+mrucmd	data	{'word': '/rubo', 'time': 1557503078}
+mrucmd	data	{'word': '/validate', 'time': 1557500920}
+mrucmd	data	{'word': '/has_one', 'time': 1557500811}
+mrucmd	data	{'word': ':''<,''>sort', 'time': 1557499957}
+mrucmd	data	{'word': '/js', 'time': 1557484476}
+mrucmd	data	{'word': ':Bgrep load', 'time': 1557480232}
+mrucmd	data	{'word': '/vendor', 'time': 1557371992}
+mrucmd	data	{'word': '/wys', 'time': 1557370783}
+mrucmd	data	{'word': '/NEW', 'time': 1557291107}
+mrucmd	data	{'word': ':sort', 'time': 1557291103}
+mrucmd	data	{'word': '/svg', 'time': 1557290666}
+mrucmd	data	{'word': ':58', 'time': 1557290572}
+mrucmd	data	{'word': '/view', 'time': 1557289411}
+mrucmd	data	{'word': '/pn_mana', 'time': 1557288651}
+mrucmd	data	{'word': '/participants.js', 'time': 1557288136}
+mrucmd	data	{'word': '/app/assets/javascripts/participants.js', 'time': 1557288123}
+mrucmd	data	{'word': '/partcipant', 'time': 1557287885}
+mrucmd	data	{'word': '/partcipants', 'time': 1557287883}
+mrucmd	data	{'word': '/partici', 'time': 1557287105}
+mrucmd	data	{'word': '/NEW$', 'time': 1557286843}
+mrucmd	data	{'word': '/ability.rbNEW', 'time': 1557286593}
+mrucmd	data	{'word': '/ffgrep', 'time': 1557285700}
+mrucmd	data	{'word': ':''<,''>s/^/# /', 'time': 1557285572}
+mrucmd	data	{'word': ':''<,''>s/NEW$//gc', 'time': 1557285514}
+mrucmd	data	{'word': ':''<,''>s/^/cp -p /gc', 'time': 1557285498}
+mrucmd	data	{'word': ':''<,''>s/$/NEW/gc', 'time': 1557285420}
+mrucmd	data	{'word': ':w GOMI2', 'time': 1557285336}
+mrucmd	data	{'word': '/certi', 'time': 1557284995}
+mrucmd	data	{'word': '/LAC', 'time': 1557284990}
+mrucmd	data	{'word': ':''<,''>s/^# //', 'time': 1557284608}
+mrucmd	data	{'word': ':''<,''>s/^/# /gc', 'time': 1557284474}
+mrucmd	data	{'word': '/workflow', 'time': 1557284084}
+mrucmd	data	{'word': ':''<,''>s/^# //gc', 'time': 1557283756}
+mrucmd	data	{'word': '/workflow_helper', 'time': 1557283359}
+mrucmd	data	{'word': ':50', 'time': 1557282049}
+mrucmd	data	{'word': '/$', 'time': 1557281362}
+mrucmd	data	{'word': ':%s/^/cp -p /gc', 'time': 1557281281}
+mrucmd	data	{'word': ':%s/$/NEW/gc', 'time': 1557281259}
+mrucmd	data	{'word': '/match', 'time': 1557225080}
+mrucmd	data	{'word': '/update', 'time': 1557217693}
+mrucmd	data	{'word': '/hex', 'time': 1557217232}
+mrucmd	data	{'word': '/16', 'time': 1557217102}
+mrucmd	data	{'word': ':mksession! ~/sessionCOOKIEandSESSION', 'time': 1557213587}
+mrucmd	data	{'word': '/cookie\|session', 'time': 1557213050}
+mrucmd	data	{'word': '/cookie|session', 'time': 1557213046}
+mrucmd	data	{'word': '/def.*', 'time': 1557212924}
+mrucmd	data	{'word': '/session.*dele', 'time': 1557212825}
+mrucmd	data	{'word': '/表示', 'time': 1557212807}
+mrucmd	data	{'word': '/def ', 'time': 1557212706}
+mrucmd	data	{'word': ':e ./F/login.html.erb', 'time': 1557212585}
+mrucmd	data	{'word': ':e ++enc=utf-8 ++ff=unix', 'time': 1557212392}
+mrucmd	data	{'word': ':TagbarToggle', 'time': 1557212389}
+mrucmd	data	{'word': '/cookie', 'time': 1557212210}
+mrucmd	data	{'word': '/commit', 'time': 1557201918}
+mrucmd	data	{'word': '/regrepl', 'time': 1557201808}
+mrucmd	data	{'word': '/rbcrails', 'time': 1557201686}
+mrucmd	data	{'word': '/white', 'time': 1557201604}
+mrucmd	data	{'word': '/rbcrai', 'time': 1557201395}
+mrucmd	data	{'word': '/REGEXP_MYBUG', 'time': 1557201332}
+mrucmd	data	{'word': '/asse', 'time': 1557201051}
+mrucmd	data	{'word': '/im', 'time': 1557201045}
+mrucmd	data	{'word': '/css', 'time': 1557118540}
+mrucmd	data	{'word': '/add', 'time': 1557118521}
+mrucmd	data	{'word': '/style cl', 'time': 1557117082}
+mrucmd	data	{'word': ':92', 'time': 1557117069}
+mrucmd	data	{'word': '/instance_eval', 'time': 1556698317}
+mrucmd	data	{'word': '/unescap', 'time': 1556543552}
+mrucmd	data	{'word': '/raw', 'time': 1556543542}
+mrucmd	data	{'word': '/unes', 'time': 1556543498}
+mrucmd	data	{'word': '/html_safe', 'time': 1556543494}
+mrucmd	data	{'word': '/gsub', 'time': 1556542432}
+mrucmd	data	{'word': '/sub', 'time': 1556542396}
+mrucmd	data	{'word': '/kai', 'time': 1556425117}
+mrucmd	data	{'word': '/uo', 'time': 1556339301}
+mrucmd	data	{'word': '/rbwc', 'time': 1556339040}
+mrucmd	data	{'word': ':w ~/Downloads/aaa.md', 'time': 1556249117}
+mrucmd	data	{'word': '/git pul', 'time': 1556104370}
+mrucmd	data	{'word': '/git merge', 'time': 1556104365}
+mrucmd	data	{'word': '/frm_destroy_record_hoken_', 'time': 1556083841}
+mrucmd	data	{'word': '/target_model', 'time': 1556083324}
+mrucmd	data	{'word': '/id', 'time': 1556082182}
+mrucmd	data	{'word': '/index', 'time': 1556026205}
+mrucmd	data	{'word': '/読', 'time': 1555835683}
+mrucmd	data	{'word': '/ファイル', 'time': 1555835665}
+mrucmd	data	{'word': '/別ファイル', 'time': 1555835619}
+mrucmd	data	{'word': '/_with_object', 'time': 1555811569}
+mrucmd	data	{'word': ':%s/:.*$//gc', 'time': 1555810160}
+mrucmd	data	{'word': '/時間計算', 'time': 1555791465}
+mrucmd	data	{'word': '/gdino', 'time': 1555570908}
+mrucmd	data	{'word': '/ranke', 'time': 1555477931}
+mrucmd	data	{'word': '/rigde', 'time': 1555382449}
+mrucmd	data	{'word': '/export', 'time': 1555357776}
+mrucmd	data	{'word': '/update_this', 'time': 1555315602}
+mrucmd	data	{'word': '/dee2e6', 'time': 1555315159}
+mrucmd	data	{'word': '/app/views//hoken/kobaikai_data/index.html.slim', 'time': 1555315149}
+mrucmd	data	{'word': '/linkish', 'time': 1555315043}
+mrucmd	data	{'word': '/prune', 'time': 1555298075}
+mrucmd	data	{'word': ':w! ~/Downloads/GOMI.txt', 'time': 1555291569}
+mrucmd	data	{'word': ':w ~/Downloads/GOMI.txt', 'time': 1555291504}
+mrucmd	data	{'word': '/yum', 'time': 1555168538}
+mrucmd	data	{'word': '/ent', 'time': 1555168514}
+mrucmd	data	{'word': '/$OS', 'time': 1555167899}
+mrucmd	data	{'word': '/wkhtmltoimage', 'time': 1555166602}
+mrucmd	data	{'word': '/status', 'time': 1555164267}
+mrucmd	data	{'word': '//status', 'time': 1555164265}
+mrucmd	data	{'word': '/gilos', 'time': 1555141563}
+mrucmd	data	{'word': '/bundle install', 'time': 1555139526}
+mrucmd	data	{'word': '/sh bun', 'time': 1555139518}
+mrucmd	data	{'word': ':n', 'time': 1555139499}
+mrucmd	data	{'word': '/install', 'time': 1555139496}
+mrucmd	data	{'word': '/pdf', 'time': 1555095473}
+mrucmd	data	{'word': '/pdg', 'time': 1555095470}
+mrucmd	data	{'word': '/unix', 'time': 1555094932}
+mrucmd	data	{'word': '/mac', 'time': 1555094890}
+mrucmd	data	{'word': '/centos', 'time': 1555094863}
+mrucmd	data	{'word': '/04-', 'time': 1555094818}
+mrucmd	data	{'word': '/debug', 'time': 1555094801}
+mrucmd	data	{'word': '/ENV', 'time': 1555094796}
+mrucmd	data	{'word': ':rew', 'time': 1555094598}
+mrucmd	data	{'word': '/ridgepole', 'time': 1555093755}
+mrucmd	data	{'word': '/ridgeplo', 'time': 1555093751}
+mrucmd	data	{'word': '/erb', 'time': 1555090359}
+mrucmd	data	{'word': '/popo', 'time': 1555090335}
+mrucmd	data	{'word': '/リハビリ', 'time': 1555090310}
+mrucmd	data	{'word': ':tabnew a.erb', 'time': 1555090186}
+mrucmd	data	{'word': '/git log', 'time': 1555089960}
+mrucmd	data	{'word': '::q', 'time': 1554915514}
+mrucmd	data	{'word': '/devis', 'time': 1554915487}
+mrucmd	data	{'word': '/emf', 'time': 1554915482}
+mrucmd	data	{'word': '/devise', 'time': 1554915435}
+mrucmd	data	{'word': '/Gemf', 'time': 1554915425}
+mrucmd	data	{'word': '/30.mi', 'time': 1554915358}
+mrucmd	data	{'word': '/timeo', 'time': 1554915176}
+mrucmd	data	{'word': ':e app/models/user.rb', 'time': 1554862060}
+mrucmd	data	{'word': '/timeout', 'time': 1554861947}
+mrucmd	data	{'word': '/:load', 'time': 1554785705}
+mrucmd	data	{'word': '/better_', 'time': 1554688032}
+mrucmd	data	{'word': '/better_err', 'time': 1554687997}
+mrucmd	data	{'word': '/gicoto', 'time': 1554458306}
+mrucmd	data	{'word': '/rstrails', 'time': 1554433781}
+mrucmd	data	{'word': '/yn', 'time': 1554433767}
+mrucmd	data	{'word': '/ssh', 'time': 1554433751}
+mrucmd	data	{'word': '/pkey', 'time': 1554433744}
+mrucmd	data	{'word': ':e ~/dotfiles/CHEATSHEETS/', 'time': 1554427685}
+mrucmd	data	{'word': '/ready', 'time': 1554427646}
+mrucmd	data	{'word': '/excel', 'time': 1554261808}
+mrucmd	data	{'word': '/zip', 'time': 1554260821}
+mrucmd	data	{'word': '/ext', 'time': 1554260775}
+mrucmd	data	{'word': '/dotfi', 'time': 1554260742}
+mrucmd	data	{'word': '/clone', 'time': 1554202152}
+mrucmd	data	{'word': '/gicl', 'time': 1554202142}
+mrucmd	data	{'word': '/pre', 'time': 1554202044}
+mrucmd	data	{'word': '/ake', 'time': 1554202037}
+mrucmd	data	{'word': '/1:-', 'time': 1554200862}
+mrucmd	data	{'word': '/fetch', 'time': 1554200827}
+mrucmd	data	{'word': '/$1', 'time': 1554200742}
+mrucmd	data	{'word': '/dkbash', 'time': 1554175743}
+mrucmd	data	{'word': '/compose', 'time': 1554173088}
+mrucmd	data	{'word': '/bash', 'time': 1554172768}
+mrucmd	data	{'word': '/docker.*bundle', 'time': 1554172664}
+mrucmd	data	{'word': '/docker', 'time': 1554172645}
+mrucmd	data	{'word': '/I18.n', 'time': 1554106366}
+mrucmd	data	{'word': '/18n', 'time': 1554106307}
+mrucmd	data	{'word': '/vie', 'time': 1554106293}
+mrucmd	data	{'word': '/asafa', 'time': 1554039861}
+mrucmd	data	{'word': '/ ', 'time': 1554039811}
+mrucmd	data	{'word': '/if', 'time': 1554039319}
+mrucmd	data	{'word': '/gibr', 'time': 1554035009}
+mrucmd	data	{'word': '/190', 'time': 1553409183}
+mrucmd	data	{'word': '/1903', 'time': 1553406704}
+mrucmd	data	{'word': '/zone', 'time': 1553380531}
+mrucmd	data	{'word': '/Time.', 'time': 1553380527}
+mrucmd	data	{'word': '/while', 'time': 1553379128}
+mrucmd	data	{'word': '/uby', 'time': 1553378735}
+mrucmd	data	{'word': '/XL', 'time': 1553374570}
+mrucmd	data	{'word': ':e ~/test_data/staging本番データ/アーカイブ/', 'time': 1553184651}
+mrucmd	data	{'word': ':e /Users/user/test_data/staging本番データ/アーカイブ/KOJYO1903tanki.DAT', 'time': 1553181697}
+mrucmd	data	{'word': '/J646580169', 'time': 1553181229}
+mrucmd	data	{'word': '/2108', 'time': 1553177939}
+mrucmd	data	{'word': '/333333', 'time': 1553175300}
+mrucmd	data	{'word': '/^..............................', 'time': 1553174681}
+mrucmd	data	{'word': '/26290', 'time': 1553174271}
+mrucmd	data	{'word': '/25020', 'time': 1553174142}
+mrucmd	data	{'word': '/190\d1', 'time': 1553174045}
+mrucmd	data	{'word': '/19\d\d1', 'time': 1553173824}
+mrucmd	data	{'word': ':mksession! ~/sessionDOCKERBASIC', 'time': 1553173352}
+mrucmd	data	{'word': '/QUIT', 'time': 1553172693}
+mrucmd	data	{'word': '/sh', 'time': 1553172685}
+mrucmd	data	{'word': '/--force', 'time': 1553171901}
+mrucmd	data	{'word': '/prun', 'time': 1553170335}
+mrucmd	data	{'word': '/esac', 'time': 1553170155}
+mrucmd	data	{'word': '/run//esac', 'time': 1553170150}
+mrucmd	data	{'word': ':Bgrep graph', 'time': 1553170077}
+mrucmd	data	{'word': ':e Dockerfile', 'time': 1553168464}
+mrucmd	data	{'word': '/bundle-', 'time': 1553168393}
+mrucmd	data	{'word': ':Bgrep retry', 'time': 1553168362}
+mrucmd	data	{'word': '/retry', 'time': 1553168359}
+mrucmd	data	{'word': '/jobs', 'time': 1553168311}
+mrucmd	data	{'word': '/dkrm', 'time': 1553167979}
+mrucmd	data	{'word': ':e /', 'time': 1553165767}
+mrucmd	data	{'word': '/iz', 'time': 1553165758}
+mrucmd	data	{'word': '/grap', 'time': 1553165754}
+mrucmd	data	{'word': '/graph', 'time': 1553165751}
+mrucmd	data	{'word': '/raph', 'time': 1553165745}
 mrucmd	data	{'word': '/rstra', 'time': 1553163067}
-mrucmd	data	{'word': '/docker', 'time': 1553162935}
-mrucmd	data	{'word': ':vnew', 'time': 1553162928}
-mrucmd	data	{'word': '/exec', 'time': 1553162926}
-mrucmd	data	{'word': '/run', 'time': 1553162906}
-mrucmd	data	{'word': '/bundle', 'time': 1553162876}
-mrucmd	data	{'word': '/docke', 'time': 1553162871}
-mrucmd	data	{'word': ':VE', 'time': 1553162823}
-mrucmd	data	{'word': ':tabnew', 'time': 1553162801}
-mrucmd	data	{'word': '/19\d\d1', 'time': 1553161929}
-mrucmd	data	{'word': ':Gblame', 'time': 1553160345}
-mrucmd	data	{'word': '/ridge', 'time': 1553160330}
-mrucmd	data	{'word': '/proxy', 'time': 1553160065}
-mrucmd	data	{'word': ':qa', 'time': 1553160055}
-mrucmd	data	{'word': '/lock', 'time': 1553159862}
-mrucmd	data	{'word': ':e .', 'time': 1553159854}
-mrucmd	data	{'word': ':wq', 'time': 1553132163}
-mrucmd	data	{'word': ':q!', 'time': 1553131036}
-mrucmd	data	{'word': ':''<,''>s/^# #* */cp -p /gc', 'time': 1552831912}
-mrucmd	data	{'word': ':''<,''>s/^/# /gc', 'time': 1552831873}
-mrucmd	data	{'word': ':''<,''>s/^/ruby -wc /gc', 'time': 1552831796}
-mrucmd	data	{'word': '/slim', 'time': 1552831742}
-mrucmd	data	{'word': '/coffee', 'time': 1552831724}
-mrucmd	data	{'word': '/keiri', 'time': 1552830414}
-mrucmd	data	{'word': ':qa!', 'time': 1552825081}
-mrucmd	data	{'word': ':', 'time': 1552822942}
-mrucmd	data	{'word': ':call setreg(''"'', getreg(''0'')) ', 'time': 1552818852}
-mrucmd	data	{'word': ':sort u', 'time': 1552817597}
-mrucmd	data	{'word': '/uni', 'time': 1552817589}
-mrucmd	data	{'word': ':h sort', 'time': 1552817585}
-mrucmd	data	{'word': ':sort', 'time': 1552817581}
-mrucmd	data	{'word': ':h uniq', 'time': 1552817566}
-mrucmd	data	{'word': ':uniq', 'time': 1552817563}
-mrucmd	data	{'word': ':sort K', 'time': 1552817552}
-mrucmd	data	{'word': ':sort -k', 'time': 1552817547}
-mrucmd	data	{'word': ':Gwrite', 'time': 1552817025}
-mrucmd	data	{'word': '/model', 'time': 1552816857}
-mrucmd	data	{'word': ':%s/array_staff/array_torihikisaki/gc', 'time': 1552816110}
-mrucmd	data	{'word': ':gb', 'time': 1552813667}
-mrucmd	data	{'word': '/480', 'time': 1552734944}
-mrucmd	data	{'word': '/8480', 'time': 1552734893}
-mrucmd	data	{'word': '/11200', 'time': 1552734880}
-mrucmd	data	{'word': '/1437924169', 'time': 1552732879}
-mrucmd	data	{'word': '/4760460818', 'time': 1552732242}
-mrucmd	data	{'word': '/222222', 'time': 1552732065}
-mrucmd	data	{'word': '/333333', 'time': 1552731148}
-mrucmd	data	{'word': '/http://localhost:3000/hoken/kobaikai_data?utf8=%E2%9C%93&q%5Bpolicy_number_gteq%5D=1300403673&q%5Bpolicy_number_lteq%5D=1300403673&q%5Bdate_start_gteq%5D=&q%5Bdate_end_lteq%5D=&q%5Bkojo_yymm_gteq%5D=2019-03-01&q%5Bkojo_yymm_lteq%5D=2019-03-01&q%5Bkobaikai_quantity%5D=6&q%5Btotal_price%5D=72%2C840&commit=%E6%A4%9C%E7%B4%A2', 'time': 1552731129}
-mrucmd	data	{'word': '/^....................................................', 'time': 1552730507}
-mrucmd	data	{'word': '/1902', 'time': 1552730480}
-mrucmd	data	{'word': '/test', 'time': 1552730092}
-mrucmd	data	{'word': '/Down', 'time': 1552729938}
-mrucmd	data	{'word': '::q', 'time': 1552729843}
-mrucmd	data	{'word': '/location', 'time': 1552228758}
-mrucmd	data	{'word': '/diff', 'time': 1550994014}
-mrucmd	data	{'word': '/loc', 'time': 1550994011}
-mrucmd	data	{'word': '/dif', 'time': 1550994004}
-mrucmd	data	{'word': ':mksession! ~/sessionATOMMAN', 'time': 1549875485}
-mrucmd	data	{'word': '/depende', 'time': 1549875368}
-mrucmd	data	{'word': ':Bgrep diff ', 'time': 1549712565}
-mrucmd	data	{'word': ':e ~/Downloads/revision1_購買会改変④_zengetsu', 'time': 1549583285}
-mrucmd	data	{'word': ':''<,''>Hankaku', 'time': 1549187630}
-mrucmd	data	{'word': '/19', 'time': 1549183972}
-mrucmd	data	{'word': ':e ~/Downloads/kobaikai_kaihenn4購買会改変④', 'time': 1549178920}
-mrucmd	data	{'word': ':tabmove 0', 'time': 1549178885}
-mrucmd	data	{'word': '/greprc', 'time': 1549171037}
-mrucmd	data	{'word': ':Bgrep prune', 'time': 1549099193}
-mrucmd	data	{'word': '/prune', 'time': 1549099184}
-mrucmd	data	{'word': '/compoe', 'time': 1549098903}
-mrucmd	data	{'word': ':''<,''>sort', 'time': 1549027691}
-mrucmd	data	{'word': '/belongs_to', 'time': 1548802531}
-mrucmd	data	{'word': '/reng', 'time': 1548771395}
-mrucmd	data	{'word': ':Regrep NKF', 'time': 1548683233}
-mrucmd	data	{'word': ':Regrep transaction', 'time': 1548502307}
-mrucmd	data	{'word': '/grep e', 'time': 1548489948}
-mrucmd	data	{'word': '/git.*all', 'time': 1548489858}
-mrucmd	data	{'word': '/git.*g', 'time': 1548489847}
-mrucmd	data	{'word': '/grep.*b', 'time': 1548489803}
-mrucmd	data	{'word': '/dock', 'time': 1548267003}
-mrucmd	data	{'word': '/s5', 'time': 1548266990}
-mrucmd	data	{'word': ':qqa', 'time': 1548266952}
-mrucmd	data	{'word': '/>>>>>', 'time': 1548260939}
-mrucmd	data	{'word': '/<<<', 'time': 1548260936}
-mrucmd	data	{'word': '/<<', 'time': 1548260920}
-mrucmd	data	{'word': '/===', 'time': 1548260893}
-mrucmd	data	{'word': '/>>>', 'time': 1548260885}
-mrucmd	data	{'word': '/<<<<<', 'time': 1548260847}
-mrucmd	data	{'word': ':''<,''>s/$/ ;/gc', 'time': 1547282728}
-mrucmd	data	{'word': '/sen', 'time': 1547282388}
-mrucmd	data	{'word': '/k-sen', 'time': 1547282385}
-mrucmd	data	{'word': '/ksen', 'time': 1547282377}
-mrucmd	data	{'word': ':%s/\d\d*: *// | sort u | %s/\ncurrent_/|/', 'time': 1546747319}
-mrucmd	data	{'word': ':%s/\d\d*: *// | sort u | %s/\ncurrent_/q:', 'time': 1546747275}
-mrucmd	data	{'word': ':%s/\d\d*: *// | sort u | %s/\ncurrent_//gc', 'time': 1546747173}
-mrucmd	data	{'word': ':%s/\d\d*: *//gc | sort u', 'time': 1546747118}
-mrucmd	data	{'word': ':%s/\d\d*: *//gc | sort', 'time': 1546746693}
-mrucmd	data	{'word': ':%s/\d\d*: *//gc', 'time': 1546746673}
-mrucmd	data	{'word': ':%s/\d\d*://gc', 'time': 1546746656}
-mrucmd	data	{'word': ':%s/\\d\d*://gc', 'time': 1546746649}
-mrucmd	data	{'word': ':%s/ /|/gc', 'time': 1546746428}
-mrucmd	data	{'word': ':%s/\d\d*:/gc', 'time': 1546746210}
-mrucmd	data	{'word': '/each', 'time': 1542972454}
-mrucmd	data	{'word': '/md', 'time': 1542940389}
-mrucmd	data	{'word': ':mksession! ~/sessionATOMplugin', 'time': 1542938866}
-mrucmd	data	{'word': ':Bgrep', 'time': 1542938548}
-mrucmd	data	{'word': ':Bgrep default:', 'time': 1542938385}
-mrucmd	data	{'word': '/default', 'time': 1542938362}
-mrucmd	data	{'word': ':mksession! ~/sessionMAN', 'time': 1542937794}
-mrucmd	data	{'word': '/visual', 'time': 1542937644}
-mrucmd	data	{'word': ':colorscheme evening', 'time': 1542919102}
-mrucmd	data	{'word': ':colorscheme morning', 'time': 1542919094}
-mrucmd	data	{'word': ':colorscheme desert', 'time': 1542919088}
-mrucmd	data	{'word': ':e ~/dotfiles/vimrc', 'time': 1542919062}
-mrucmd	data	{'word': ':e', 'time': 1542918298}
-mrucmd	data	{'word': ':e ', 'time': 1542918280}
-mrucmd	data	{'word': ':gw', 'time': 1542918087}
-mrucmd	data	{'word': '/atom', 'time': 1542917993}
-mrucmd	data	{'word': ':Regrep myapp', 'time': 1542917819}
-mrucmd	data	{'word': ':e /Users/user/Downloads/_to2TBHDD/tmp.sh', 'time': 1542916990}
-mrucmd	data	{'word': ':Bgrep btn', 'time': 1542916526}
-mrucmd	data	{'word': ':Brep button', 'time': 1542916518}
-mrucmd	data	{'word': '/Fuzzy', 'time': 1542915533}
-mrucmd	data	{'word': '/Fu', 'time': 1542915481}
-mrucmd	data	{'word': '/fuf', 'time': 1542915476}
-mrucmd	data	{'word': '/Ctag', 'time': 1542915458}
-mrucmd	data	{'word': '/takami', 'time': 1542915384}
-mrucmd	data	{'word': ':Gdiff', 'time': 1542915309}
-mrucmd	data	{'word': ':e ++enc=utf-8 ++ff=unix', 'time': 1542915258}
-mrucmd	data	{'word': '/function!', 'time': 1542915166}
-mrucmd	data	{'word': '/atom/function!', 'time': 1542915154}
-mrucmd	data	{'word': ':h function', 'time': 1542915113}
-mrucmd	data	{'word': '/OpenIn', 'time': 1542914639}
-mrucmd	data	{'word': '/!atom', 'time': 1542914430}
-mrucmd	data	{'word': '/vimrc', 'time': 1542914424}
-mrucmd	data	{'word': '/bookmark', 'time': 1542914270}
-mrucmd	data	{'word': '/ut', 'time': 1542914264}
-mrucmd	data	{'word': '/\<nnoremap\>', 'time': 1542914171}
-mrucmd	data	{'word': '/mm', 'time': 1542914159}
-mrucmd	data	{'word': '/uncion', 'time': 1542913802}
-mrucmd	data	{'word': '/lim', 'time': 1542912337}
-mrucmd	data	{'word': '/色', 'time': 1542907969}
-mrucmd	data	{'word': '/CSS.', 'time': 1542907948}
-mrucmd	data	{'word': '/CSS\.', 'time': 1542907944}
-mrucmd	data	{'word': ':e ~/Downloads', 'time': 1542907929}
-mrucmd	data	{'word': '/灰', 'time': 1542907879}
-mrucmd	data	{'word': '/灰色', 'time': 1542907874}
-mrucmd	data	{'word': '/CSS', 'time': 1542907850}
-mrucmd	data	{'word': '/CSS.cs', 'time': 1542907845}
-mrucmd	data	{'word': '/CSS.css', 'time': 1542907840}
-mrucmd	data	{'word': '/btn', 'time': 1542907670}
-mrucmd	data	{'word': ':y', 'time': 1542522812}
-mrucmd	data	{'word': ':Bgrep rails', 'time': 1542522540}
-mrucmd	data	{'word': ':Bgrep bun', 'time': 1542522526}
-mrucmd	data	{'word': ':Bgrep bund', 'time': 1542522523}
-mrucmd	data	{'word': ':Bgrep bundle', 'time': 1542522519}
-mrucmd	data	{'word': ':Bgrep bund	', 'time': 1542522516}
-mrucmd	data	{'word': '/rails g', 'time': 1542520891}
-mrucmd	data	{'word': ':Regrep rails', 'time': 1542520884}
-mrucmd	data	{'word': ':Regrep rails g', 'time': 1542520876}
-mrucmd	data	{'word': ':Regrep "rails g"', 'time': 1542520863}
-mrucmd	data	{'word': ':Regrep', 'time': 1542520667}
-mrucmd	data	{'word': ':find form', 'time': 1542440380}
-mrucmd	data	{'word': ':Bgrep render', 'time': 1542440371}
-mrucmd	data	{'word': ':n', 'time': 1542440301}
-mrucmd	data	{'word': '/vim', 'time': 1542424535}
-mrucmd	data	{'word': '/oro', 'time': 1542424361}
-mrucmd	data	{'word': '/UHD', 'time': 1542419487}
-mrucmd	data	{'word': '/URD', 'time': 1542419480}
-mrucmd	data	{'word': '/image_name', 'time': 1542419393}
-mrucmd	data	{'word': '/patchp', 'time': 1542418893}
-mrucmd	data	{'word': '/thein', 'time': 1540500829}
-mrucmd	data	{'word': ':h drawit', 'time': 1540430807}
-mrucmd	data	{'word': '/echo', 'time': 1540106097}
-mrucmd	data	{'word': '/tarzip', 'time': 1540105994}
-mrucmd	data	{'word': '/tarzipsi', 'time': 1540105969}
-mrucmd	data	{'word': '/ ', 'time': 1540094447}
-mrucmd	data	{'word': '/ $', 'time': 1540094403}
-mrucmd	data	{'word': '/空白', 'time': 1540094235}
-mrucmd	data	{'word': '/行末', 'time': 1540094224}
-mrucmd	data	{'word': '/\vBufWriteP', 'time': 1540094215}
-mrucmd	data	{'word': '/\vBuf', 'time': 1540094203}
-mrucmd	data	{'word': '/vBuf', 'time': 1540094196}
-mrucmd	data	{'word': ':/v uf', 'time': 1540094190}
-mrucmd	data	{'word': '/v bufwrite/i', 'time': 1540094181}
-mrucmd	data	{'word': '/vbufwrite/i', 'time': 1540094177}
-mrucmd	data	{'word': '/vbufwrite', 'time': 1540094171}
-mrucmd	data	{'word': '/ite', 'time': 1540094142}
-mrucmd	data	{'word': '/ufWri', 'time': 1540094132}
-mrucmd	data	{'word': '/ufW', 'time': 1540094125}
-mrucmd	data	{'word': '/5ch', 'time': 1539752664}
-mrucmd	data	{'word': '/ffgrep', 'time': 1539752582}
-mrucmd	data	{'word': '/OS', 'time': 1538649014}
-mrucmd	data	{'word': '/SI', 'time': 1538637317}
-mrucmd	data	{'word': '/restore', 'time': 1538636196}
-mrucmd	data	{'word': '/atom_', 'time': 1538633889}
-mrucmd	data	{'word': '/atom_ba', 'time': 1538632540}
-mrucmd	data	{'word': '/gitig', 'time': 1538632247}
-mrucmd	data	{'word': '/atom_backup', 'time': 1538631645}
-mrucmd	data	{'word': '/ln \-', 'time': 1538631580}
-mrucmd	data	{'word': '/task :', 'time': 1538631406}
-mrucmd	data	{'word': '/dotfiles', 'time': 1538631370}
-mrucmd	data	{'word': '/fav', 'time': 1538631322}
-mrucmd	data	{'word': '/link_file', 'time': 1538631273}
-mrucmd	data	{'word': '/ln-fs', 'time': 1538631193}
-mrucmd	data	{'word': '/ln -S', 'time': 1538631150}
-mrucmd	data	{'word': '/txt', 'time': 1538525082}
-mrucmd	data	{'word': ':Unite rails/log', 'time': 1538361002}
-mrucmd	data	{'word': ':Unite rails/controller', 'time': 1538360973}
-mrucmd	data	{'word': ':Unite rails', 'time': 1538360959}
-mrucmd	data	{'word': ':Unite rails/', 'time': 1538360947}
-mrucmd	data	{'word': '/unite.rails', 'time': 1538360929}
-mrucmd	data	{'word': ':aQ', 'time': 1538354035}
-mrucmd	data	{'word': ':az', 'time': 1538354033}
-mrucmd	data	{'word': '/autofor', 'time': 1538340243}
-mrucmd	data	{'word': ':NeoBundleUpdate', 'time': 1538339224}
-mrucmd	data	{'word': '/PRO', 'time': 1538339161}
-mrucmd	data	{'word': '/NeoBundle', 'time': 1538339152}
-mrucmd	data	{'word': ':TagbarToggle', 'time': 1538337293}
-mrucmd	data	{'word': '/=========', 'time': 1538237459}
-mrucmd	data	{'word': '/node', 'time': 1538237301}
-mrucmd	data	{'word': '/pj-depen', 'time': 1538236735}
-mrucmd	data	{'word': '/-s', 'time': 1538236682}
-mrucmd	data	{'word': '/nvm', 'time': 1538236626}
-mrucmd	data	{'word': '/GEM_P', 'time': 1538236499}
-mrucmd	data	{'word': '/if.*f', 'time': 1538236386}
-mrucmd	data	{'word': '/-f', 'time': 1538236379}
-mrucmd	data	{'word': '/eq', 'time': 1538236246}
-mrucmd	data	{'word': '/==', 'time': 1538236238}
-mrucmd	data	{'word': '/OS=', 'time': 1538236039}
-mrucmd	data	{'word': '/check', 'time': 1538235937}
-mrucmd	data	{'word': '/if', 'time': 1538235919}
-mrucmd	data	{'word': '/command', 'time': 1538235898}
-mrucmd	data	{'word': '/コマンド', 'time': 1538235878}
-mrucmd	data	{'word': ':e ~/dotfiles/CHEATSHEETS/SH_shellscript.sh', 'time': 1538235869}
-mrucmd	data	{'word': '/rvm', 'time': 1538235677}
-mrucmd	data	{'word': '/alt', 'time': 1538233098}
-mrucmd	data	{'word': '/ctrl', 'time': 1538233097}
-mrucmd	data	{'word': '/key', 'time': 1538233080}
-mrucmd	data	{'word': ':e ~/.atom/config.cson', 'time': 1538233077}
-mrucmd	data	{'word': '/openatom', 'time': 1538217301}
-mrucmd	data	{'word': '/outfile', 'time': 1538217035}
-mrucmd	data	{'word': ':461', 'time': 1538216519}
-mrucmd	data	{'word': '/greper', 'time': 1538215109}
-mrucmd	data	{'word': '/tab.*iro', 'time': 1538214798}
-mrucmd	data	{'word': '/tab', 'time': 1538214786}
-mrucmd	data	{'word': '/badd.*irod', 'time': 1538214735}
-mrucmd	data	{'word': '/buffer.*irod', 'time': 1538214681}
-mrucmd	data	{'word': '/buffer', 'time': 1538214669}
-mrucmd	data	{'word': '/irodori\/', 'time': 1538214587}
-mrucmd	data	{'word': '/rorapp:qa', 'time': 1538213595}
-mrucmd	data	{'word': ':w ~/Downloads/ruby2.5とrakeをインストールで自動的に入るgem.txt', 'time': 1538160107}
-mrucmd	data	{'word': ':%s/, /\r/gc', 'time': 1538159821}
-mrucmd	data	{'word': ':%s/, /\r/', 'time': 1538159817}
-mrucmd	data	{'word': ':1', 'time': 1538142878}
-mrucmd	data	{'word': '/dotfilesp', 'time': 1538142070}
-mrucmd	data	{'word': '/dotfilespush', 'time': 1538142066}
-mrucmd	data	{'word': '/dotfilespu', 'time': 1538142050}
-mrucmd	data	{'word': ':tabnew Files.rb', 'time': 1538141476}
-mrucmd	data	{'word': ':tabnew aaa.rb', 'time': 1538141453}
-mrucmd	data	{'word': ':%s/#version#/ v0.99/', 'time': 1538141374}
-mrucmd	data	{'word': '/NeoBu', 'time': 1538141153}
-mrucmd	data	{'word': '/Neo', 'time': 1538141005}
-mrucmd	data	{'word': ':e ~/.dotfiles/CHEATSHEETS/vim.vim', 'time': 1538141000}
-mrucmd	data	{'word': '/NeoB', 'time': 1538140955}
-mrucmd	data	{'word': ':e ~/.vimrc', 'time': 1538140946}
-mrucmd	data	{'word': ':vim ~/.vimrc', 'time': 1538140939}
-mrucmd	data	{'word': '/eosni', 'time': 1538140813}
-mrucmd	data	{'word': '/im', 'time': 1538139635}
-mrucmd	data	{'word': '/snip', 'time': 1538139429}
-mrucmd	data	{'word': '/  *$', 'time': 1538130164}
-mrucmd	data	{'word': '/label', 'time': 1538126248}
-mrucmd	data	{'word': ':Bgrep .each.with_index', 'time': 1538125347}
-mrucmd	data	{'word': ':Bgrep pickup_articles.each', 'time': 1538125329}
-mrucmd	data	{'word': ':Bgrep .section-title', 'time': 1538125152}
-mrucmd	data	{'word': '/include', 'time': 1538125049}
-mrucmd	data	{'word': '/extend', 'time': 1538125043}
-mrucmd	data	{'word': ':Bgrep @extend', 'time': 1538125021}
-mrucmd	data	{'word': '/radi', 'time': 1538124044}
-mrucmd	data	{'word': '/view', 'time': 1538123662}
-mrucmd	data	{'word': '/pick', 'time': 1538122859}
-mrucmd	data	{'word': '/flex', 'time': 1538121852}
-mrucmd	data	{'word': ':Bgrep .sidebar-popular-articles__thumbnail', 'time': 1538121703}
-mrucmd	data	{'word': ':tabmove 8', 'time': 1538121670}
-mrucmd	data	{'word': ':tabmove 9', 'time': 1538121668}
-mrucmd	data	{'word': ':tabmove 10', 'time': 1538121664}
-mrucmd	data	{'word': ':Bgrep main-pane-pickup__item', 'time': 1538121386}
-mrucmd	data	{'word': '/popular', 'time': 1538121125}
-mrucmd	data	{'word': '/pupular', 'time': 1538121121}
-mrucmd	data	{'word': ':Bgrep pupular', 'time': 1538121072}
-mrucmd	data	{'word': ':Bgrep data-rank', 'time': 1538120709}
-mrucmd	data	{'word': ':Bgrep :before', 'time': 1538119829}
-mrucmd	data	{'word': ':Bgrep news', 'time': 1538118052}
-mrucmd	data	{'word': ':Bdi', 'time': 1538115560}
-mrucmd	data	{'word': ':w ~/Downloads/anken.txt', 'time': 1538103810}
-mrucmd	data	{'word': '/DB_', 'time': 1538054013}
-mrucmd	data	{'word': ':w ~/Downloads/tmp.txt', 'time': 1538053193}
-mrucmd	data	{'word': '/keep', 'time': 1538053014}
-mrucmd	data	{'word': ':e ~/.dotfiles/gitignore', 'time': 1538052740}
-mrucmd	data	{'word': '/works', 'time': 1538046394}
-mrucmd	data	{'word': '/\/.*\/', 'time': 1538046316}
-mrucmd	data	{'word': ':e ~/sessionSuganumapCategory', 'time': 1538046306}
-mrucmd	data	{'word': ':Bgrep well', 'time': 1538045605}
-mrucmd	data	{'word': ':Bgrep wells', 'time': 1538045601}
-mrucmd	data	{'word': ':Bgrep categories_top_section', 'time': 1538042450}
-mrucmd	data	{'word': ':Bgrep col-xs-12.col-sm-9', 'time': 1538042312}
-mrucmd	data	{'word': ':Bgrep col-xs-12 col-sm-9', 'time': 1538042298}
-mrucmd	data	{'word': ':Bgrep pickup', 'time': 1538035544}
-mrucmd	data	{'word': ':Bgrep pick', 'time': 1538035533}
-mrucmd	data	{'word': ':Bgrep col-xs-6', 'time': 1538035403}
-mrucmd	data	{'word': '/hidden', 'time': 1538035230}
-mrucmd	data	{'word': ':fdi', 'time': 1538034657}
-mrucmd	data	{'word': '/rebase', 'time': 1538034329}
-mrucmd	data	{'word': '/%h', 'time': 1538033326}
-mrucmd	data	{'word': ':Bgrep section-title', 'time': 1538033243}
-mrucmd	data	{'word': ':Bgrep row.wrap-contents', 'time': 1538033216}
-mrucmd	data	{'word': '/haml', 'time': 1538032852}
-mrucmd	data	{'word': ':Bgrep h4', 'time': 1538032848}
-mrucmd	data	{'word': '/overflo', 'time': 1538031688}
-mrucmd	data	{'word': '/des', 'time': 1538028672}
-mrucmd	data	{'word': '/-size', 'time': 1538027608}
-mrucmd	data	{'word': '/well', 'time': 1538027084}
-mrucmd	data	{'word': ':dfdfdf', 'time': 1538027054}
-mrucmd	data	{'word': ':fsfs', 'time': 1538027052}
-mrucmd	data	{'word': ':Rview', 'time': 1538020385}
-mrucmd	data	{'word': '/category.*item', 'time': 1538019508}
-mrucmd	data	{'word': ':Bgrep REPORT', 'time': 1538019147}
-mrucmd	data	{'word': ':32', 'time': 1538017169}
-mrucmd	data	{'word': '/navbar', 'time': 1538016966}
-mrucmd	data	{'word': ':Regrep carousel', 'time': 1538016828}
-mrucmd	data	{'word': ':Regrep category-carousel', 'time': 1538016815}
-mrucmd	data	{'word': '/color', 'time': 1538014652}
-mrucmd	data	{'word': ':mksession! ~/sessionSuganumapCategory', 'time': 1538012276}
-mrucmd	data	{'word': '/fluid', 'time': 1537978298}
-mrucmd	data	{'word': '/t(', 'time': 1537977719}
-mrucmd	data	{'word': ':tabmove 2', 'time': 1537977707}
-mrucmd	data	{'word': ':tabmove 3', 'time': 1537975579}
-mrucmd	data	{'word': ':mksession ~/sessionSuganumapCategory', 'time': 1537974324}
-mrucmd	data	{'word': '/subscribe', 'time': 1537958703}
-mrucmd	data	{'word': '/<<<<', 'time': 1537955625}
-mrucmd	data	{'word': '/>>>>', 'time': 1537955438}
-mrucmd	data	{'word': '/-10', 'time': 1537950275}
-mrucmd	data	{'word': '/@media', 'time': 1537949448}
-mrucmd	data	{'word': '/story', 'time': 1537949070}
-mrucmd	data	{'word': '/45em', 'time': 1537949066}
-mrucmd	data	{'word': '/atory', 'time': 1537948949}
-mrucmd	data	{'word': '/p\-5', 'time': 1537948290}
-mrucmd	data	{'word': '/p-5', 'time': 1537948273}
-mrucmd	data	{'word': '/nerba', 'time': 1537948114}
-mrucmd	data	{'word': '/-story', 'time': 1537947512}
-mrucmd	data	{'word': '/apps', 'time': 1537946611}
-mrucmd	data	{'word': '/nerb', 'time': 1537946391}
-mrucmd	data	{'word': '/zerba', 'time': 1537946385}
-mrucmd	data	{'word': '/30em', 'time': 1537941553}
-mrucmd	data	{'word': '/orn', 'time': 1537939596}
-mrucmd	data	{'word': '/\$', 'time': 1537939476}
-mrucmd	data	{'word': '/$', 'time': 1537939473}
-mrucmd	data	{'word': '/p-t-2', 'time': 1537938706}
-mrucmd	data	{'word': '/about-apps', 'time': 1537937199}
-mrucmd	data	{'word': '/-1', 'time': 1537937185}
-mrucmd	data	{'word': ':Bgrep gradient', 'time': 1537936180}
-mrucmd	data	{'word': '/grad', 'time': 1537936120}
-mrucmd	data	{'word': '/footer', 'time': 1537936114}
-mrucmd	data	{'word': '/:\w', 'time': 1537930229}
-mrucmd	data	{'word': '/media', 'time': 1537874924}
-mrucmd	data	{'word': '/-height', 'time': 1537874616}
-mrucmd	data	{'word': ':Bgrep ', 'time': 1537873487}
-mrucmd	data	{'word': ':Bgrep p-t-2', 'time': 1537873144}
-mrucmd	data	{'word': '/scroll', 'time': 1537870277}
-mrucmd	data	{'word': ':set nolis', 'time': 1537867514}
-mrucmd	data	{'word': '/set nolist', 'time': 1537867499}
-mrucmd	data	{'word': '/set noli	', 'time': 1537867495}
-mrucmd	data	{'word': '/contain', 'time': 1537867080}
-mrucmd	data	{'word': '/conataine	', 'time': 1537867077}
-mrucmd	data	{'word': '/row', 'time': 1537867049}
-mrucmd	data	{'word': '/container', 'time': 1537866855}
-mrucmd	data	{'word': '/section-about-', 'time': 1537866456}
-mrucmd	data	{'word': '/sction-about', 'time': 1537866450}
-mrucmd	data	{'word': '/100%', 'time': 1537866441}
-mrucmd	data	{'word': '/FF', 'time': 1537863503}
-mrucmd	data	{'word': '/url', 'time': 1537862878}
-mrucmd	data	{'word': '/.section-about-nerba ', 'time': 1537860489}
-mrucmd	data	{'word': '/16%', 'time': 1537858383}
-mrucmd	data	{'word': '/text-bold', 'time': 1537857182}
-mrucmd	data	{'word': '/.section-about-apps .picture-column .text-bold', 'time': 1537857174}
-mrucmd	data	{'word': '/-t-', 'time': 1537857019}
-mrucmd	data	{'word': '/section-about-apps', 'time': 1537856226}
-mrucmd	data	{'word': '/%b', 'time': 1537855903}
-mrucmd	data	{'word': '/bold', 'time': 1537854919}
-mrucmd	data	{'word': '/max-wid', 'time': 1537852798}
-mrucmd	data	{'word': '/7777', 'time': 1537852347}
-mrucmd	data	{'word': '/777777', 'time': 1537852331}
-mrucmd	data	{'word': ':141', 'time': 1537852311}
-mrucmd	data	{'word': '/-xs', 'time': 1537852085}
-mrucmd	data	{'word': '/inquiry', 'time': 1537852043}
-mrucmd	data	{'word': ':Regrep articles-show', 'time': 1537848835}
-mrucmd	data	{'word': ':Bgrep tag', 'time': 1537845001}
-mrucmd	data	{'word': ':192', 'time': 1537835429}
-mrucmd	data	{'word': '/center-or-left', 'time': 1537835376}
-mrucmd	data	{'word': '/m-5', 'time': 1537835365}
-mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/購買会/購買会用201903月度分.DAT', 'time': 1553163415}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoRsetup/docker.sh', 'time': 1553163414}
-mrufile	data	{'word': '/Users/user/dotfiles/bashrc', 'time': 1553163386}
-mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/KOJYO1902_into_1902.DAT', 'time': 1553161976}
-mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/KOJYO1902_into_1903.DAT', 'time': 1553161917}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/Gemfile', 'time': 1553160369}
+mrufile	data	{'word': '/Users/user/dotfiles/bashrc', 'time': 1561216066}
+mrufile	data	{'word': '/Users/user/dotfiles/Rakefile', 'time': 1561204439}
+mrufile	data	{'word': '/usr/local/etc/bash_completion.d/git-completion.bash', 'time': 1561204040}
+mrufile	data	{'word': '/Users/user/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic', 'time': 1561204039}
+mrufile	data	{'word': '/Users/user/dotfiles/vimrc', 'time': 1561203969}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_coffeescript.md', 'time': 1561082424}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/JS-study.js', 'time': 1561082424}
+mrufile	data	{'word': '/Users/user/dotfiles/vim/neosnippets/slim/bootstrap.snip', 'time': 1561082424}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_CSS_bootstrap.md', 'time': 1561082424}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_CSS.css', 'time': 1561082423}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_SLIM_HAML_ERB.rb', 'time': 1561082422}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_SLIM_README.jp.md', 'time': 1561082422}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'time': 1561082422}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/vim_RDBMSandDBext.txt', 'time': 1561082422}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_2b_en_rails_routing_en.rb', 'time': 1561082421}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3_RoR_ARandValidator.md', 'time': 1561082421}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/_gem_HowTo/3_有名gem.rb', 'time': 1561082421}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/RRRoR生産性.rb', 'time': 1561082421}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/views/hoken/kobaikai_data/import_confirm.html.slim', 'time': 1561082419}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/pj-dependent.bashrc', 'time': 1561082417}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/.git/COMMIT_EDITMSG', 'time': 1560906833}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/.gitignore', 'time': 1560904612}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_ruby.rb', 'time': 1560306398}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/migrators/ext_in_out.rb', 'time': 1560242984}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/jobs/hoken_file_import.rb', 'time': 1560242945}
+mrufile	data	{'word': '/Users/user/.gitconfig', 'time': 1559880520}
+mrufile	data	{'word': '/Users/user/dotfiles/gitconfig.erb', 'time': 1559880502}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/pms/project_lists/show.html.erb', 'time': 1559879086}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/pms/programs/projects/index.html.erb', 'time': 1559879044}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/pms/project_implementation_plan_lists/show.html.erb', 'time': 1559879026}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/pms/projects/project_implementation_plans/index.html.erb', 'time': 1559878913}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/pms/projects/npo_submit_applications/_form.html.erb', 'time': 1559878874}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/pms/projects/participants/_table.html.erb', 'time': 1559878859}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/pms/projects/basics/_form.html.erb', 'time': 1559878807}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/controllers/pms/projects/participants_controller.rb', 'time': 1559786224}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/snippet_form_and_posting.rb', 'time': 1559700128}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/DBandKVS/#mysql.txt', 'time': 1559470703}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoRsetup/git導入手順.txt', 'time': 1559469153}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/snippet_navigation.rb', 'time': 1559396587}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/views/layouts/application.html.erb', 'time': 1559354838}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/a', 'time': 1559281595}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/GOMI3.sh', 'time': 1559261446}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/sh', 'time': 1559261395}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/v7ibddP/148.fugitiveblame', 'time': 1559215792}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/models/ability.rb', 'time': 1559215780}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/node_modules/bootstrap/dist/css/bootstrap.min.css', 'time': 1559144537}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/assets/javascripts/hokenryo_kanri.coffee', 'time': 1559144424}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/Android.txt', 'time': 1559142584}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/REHABILI/自作PGリハヒリ手順.txt', 'time': 1559142509}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/centOS-config.txt', 'time': 1559142421}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/_gem_HowTo/Rails_plugin_searchdo.rb', 'time': 1559142359}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/_gem_HowTo/Rails_plugin_searchdo2.rb', 'time': 1559142343}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/.git/MERGE_MSG', 'time': 1559116240}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/controllers/hoken/kobaikai_data_controller.rb', 'time': 1559108892}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/controllers/hoken/hokenryo_kanri_controller.rb', 'time': 1559108872}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/.git/hooks/pre-commit', 'time': 1558862618}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/models/concerns/slip_approval_creator.rb', 'time': 1558862572}
+mrufile	data	{'word': '/Users/user/.bashrc', 'time': 1558672357}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/.git/rebase-merge/git-rebase-todo', 'time': 1558671608}
+mrufile	data	{'word': '/Users/user/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_strict', 'time': 1558262869}
+mrufile	data	{'word': '/Users/user/dotfiles/gitignore', 'time': 1558227205}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/controllers/pms/projects/participants/lacs_controller.rb765BEST', 'time': 1558088070}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/Gemfile', 'time': 1557975471}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/docker-compose.yml', 'time': 1557975433}
+mrufile	data	{'word': '/Users/user/.ssh/config', 'time': 1557887672}
+mrufile	data	{'word': '/Users/user/.ssh/id_rsaMINE', 'time': 1557801078}
+mrufile	data	{'word': '/Users/user/.ssh/id_rsa', 'time': 1557801052}
+mrufile	data	{'word': '/Users/user/.ssh/id_rsa_hiblead', 'time': 1557728481}
+mrufile	data	{'word': '/Users/user/Downloads/id_rsa', 'time': 1557727320}
+mrufile	data	{'word': '/Users/user/.ssh/id_rsaMYNE', 'time': 1557727275}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/.rubocop.yml', 'time': 1557503162}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/GOMI.sh', 'time': 1557503161}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/bin/yarn', 'time': 1557371995}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/config/deploy.rb', 'time': 1557371989}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/assets/stylesheets/application.scss', 'time': 1557371038}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/GOMI2', 'time': 1557288915}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/assets/javascripts/participants.js', 'time': 1557287994}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/GOMI', 'time': 1557285964}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/iss_bridge.rb', 'time': 1557276663}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/sso_controller.rb', 'time': 1557276662}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/application_controller.rb', 'time': 1557276661}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/ndl_application_helper.rb', 'time': 1557276660}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/users_controller.rb', 'time': 1557276660}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/snippet.rb', 'time': 1557230507}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/_by_object/tmp.rb', 'time': 1557227389}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/_by_component/tmp.rb', 'time': 1557227366}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/RoR-apps.rb', 'time': 1557227093}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/show.html.erb', 'time': 1557213180}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/login.html.erb', 'time': 1557213175}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/M/application_controller.rb', 'time': 1557213113}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/_ndl_header.html.erb', 'time': 1557213019}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_4_railsDBapi.rb', 'time': 1556698312}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/views/shared/_row_layout_hokenryo_kanri.html.slim', 'time': 1556425073}
+mrufile	data	{'word': '/Users/user/dotfiles/RAILS_ROOT/.rubocop.yml', 'time': 1556339242}
+mrufile	data	{'word': '/Users/user/Downloads/aaa.md', 'time': 1556249125}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/views/hoken/kobaikai_data/index.html.slim', 'time': 1556083349}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3b_ARandFAT-model.rb', 'time': 1556026167}
+mrufile	data	{'word': '/Users/user/dotfiles/ve_favorite', 'time': 1556026162}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/controllers/concerns/master_crud_feature.rb', 'time': 1555857054}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/controllers/concerns/keiri/real_records_searchable.rb', 'time': 1555856848}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/Dockerfile', 'time': 1555835637}
+mrufile	data	{'word': '/Users/user/.vimrc', 'time': 1555835634}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/Rails3later-snippets.rb', 'time': 1555791523}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/Gemfile', 'time': 1555477929}
+mrufile	data	{'word': '/Users/user/Downloads/GOMI.txt', 'time': 1555291569}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vRsWHrK/1161.fugitiveblame', 'time': 1555168546}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/docker-compose.yml', 'time': 1555168546}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/docker-compose.override.yml', 'time': 1555168546}
+mrufile	data	{'word': '/Users/user/dotfiles/RAILS_ROOT/development.rb', 'time': 1555167887}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/db/schemas/application_approval_management_tables.schema', 'time': 1555166724}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vmAIQ4h/139.fugitiveblame', 'time': 1555161911}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vmAIQ4h/139.fugitiveblame', 'time': 1555095460}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vEMetER/203.fugitiveblame', 'time': 1555094814}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vfdpET7/62.fugitiveblame', 'time': 1555093664}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/db/schemas/pms_tables.schema', 'time': 1555093661}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/db/schema.rb', 'time': 1555093622}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vB6NYaV/60.fugitiveblame', 'time': 1555093582}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_modal2.haml', 'time': 1555091095}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_modal.haml', 'time': 1555091086}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_index.haml', 'time': 1555091069}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/VIMplugin_awesome-viml.md', 'time': 1555090266}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/vim.vim', 'time': 1555090216}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/config/database.yml', 'time': 1554915575}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/Gemfile.lock', 'time': 1554915478}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vUqGlxm/391.fugitiveblame', 'time': 1554915476}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vUqGlxm/391.fugitiveblame', 'time': 1554915454}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vUqGlxm/355.fugitiveblame', 'time': 1554915438}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/config/initializers/devise.rb', 'time': 1554915353}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vDtkG60/51.fugitiveblame', 'time': 1554915196}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vDtkG60/51.fugitiveblame', 'time': 1554915170}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/v6fOwNb/114.fugitiveblame', 'time': 1554862083}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms/app/models/user.rb', 'time': 1554862062}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/v6fOwNb/114.fugitiveblame', 'time': 1554861960}
+mrufile	data	{'word': '/Users/user/dotfiles/.git/hooks/pre-commit', 'time': 1554459064}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/otl/bizidea.txt', 'time': 1554427650}
+mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/debugKOJYO1903.DAT', 'time': 1554376778}
+mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/debugKOJYO1903連合会.DAT', 'time': 1554376777}
+mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/購買会/購買会用201902月度分.DAT', 'time': 1554376775}
+mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/購買会/購買会用201903月度分.DAT', 'time': 1554376773}
+mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/debugKOJYO1903長期月払3件.DAT', 'time': 1554198702}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/Gemfile', 'time': 1554195080}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/test/models/project_test.rb', 'time': 1554195079}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/docker-compose.yml', 'time': 1554173654}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/Dockerfile', 'time': 1554173646}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/app/views/pms/program_lists/index.erb', 'time': 1554106334}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/app/views/layouts/login.html.erb', 'time': 1554106301}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/config/locales/ja.yml', 'time': 1554106282}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/test/models/user_test.rb', 'time': 1554105166}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/test/models/tmp_payment_slip_test.rb', 'time': 1554105159}
+mrufile	data	{'word': '/Users/user/src/hiblead/apo_pms-master/config/environments/development.rb', 'time': 1554104839}
+mrufile	data	{'word': '/Users/user/dotfiles/.git/COMMIT_EDITMSG', 'time': 1554040222}
+mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.git/COMMIT_EDITMSG', 'time': 1554040186}
+mrufile	data	{'word': '/Users/user/dotfiles/gomi.rb', 'time': 1554039706}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/GOMI.sh', 'time': 1554039675}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/.git/COMMIT_EDITMSG', 'time': 1553696512}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/.git/MERGE_MSG', 'time': 1553434751}
+mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/debugKOJYO1903短期.DAT', 'time': 1553408273}
+mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/連合会経理締めロック通過/連合会用201903月度分.DAT', 'time': 1553184869}
+mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/連合会経理締めロック通過/連合会用201902月度分.DAT', 'time': 1553184865}
+mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/連合会経理締めロック通過/連合会用201905月度分21行.DAT', 'time': 1553184857}
+mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/連合会経理締めロック通過/連合会用201905月度分_廃止店舗あり.DAT', 'time': 1553184700}
+mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/KOJYO1902_into_1903.DAT', 'time': 1553184493}
+mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/KOJYO1903tanki.DAT', 'time': 1553181708}
+mrufile	data	{'word': '/Users/user/test_data/staging本番データ/アーカイブ/KOJYO1902_into_1902.DAT', 'time': 1553175089}
+mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoRsetup/docker.sh', 'time': 1553173345}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/Gemfile.lock', 'time': 1553173202}
+mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/20180104_release_management_flower.sh', 'time': 1553172705}
+mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/Dockerfile', 'time': 1553171782}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vL0jHLr/438.fugitiveblame', 'time': 1553169766}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vL0jHLr/438.fugitiveblame', 'time': 1553169754}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vL0jHLr/408.fugitiveblame', 'time': 1553169685}
+mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vL0jHLr/245.fugitiveblame', 'time': 1553169008}
+mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vL0jHLr/245.fugitiveblame', 'time': 1553168947}
 mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vk7hm0n/75.fugitiveblame', 'time': 1553160345}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/Gemfile.lock', 'time': 1553160345}
-mrufile	data	{'word': '/Users/user/test_data/各種年月日とコードをクリアしたデータ/購買会/購買会用201902月度分.DAT', 'time': 1553145123}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/.git/COMMIT_EDITMSG', 'time': 1553132163}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/assets/javascripts/hokenryo_kanri.coffeeNEW', 'time': 1553131024}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/GOMI.sh', 'time': 1553131018}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/assets/javascripts/hokenryo_kanri.coffee', 'time': 1552818928}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/models/temp_import_db.rb', 'time': 1552818438}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/views/hoken/rengokai_data/import_confirm.html.slim', 'time': 1552817026}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/views/hoken/kobaikai_data/import_confirm.html.slim', 'time': 1552817025}
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vdy3tT3/280.fugitiveblame', 'time': 1552816998}
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vdy3tT3/244.fugitiveblame', 'time': 1552816985}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/views/hoken/rengokai_data/index.html.slim', 'time': 1552816739}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/views/hoken/kobaikai_data/index.html.slim', 'time': 1552816739}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/models/hoken/rengokai_datum.rb', 'time': 1552816639}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/models/hoken/kobaikai_datum.rb', 'time': 1552816635}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/controllers/hoken/kobaikai_data_controller.rb', 'time': 1552815244}
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vYyd3OQ/335.fugitiveblame', 'time': 1552814428}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/controllers/hoken/rengokai_data_controller.rb', 'time': 1552814427}
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vYyd3OQ/307.fugitiveblame', 'time': 1552814426}
@@ -429,31 +588,14 @@ mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/
 mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vYyd3OQ/270.fugitiveblame', 'time': 1552813993}
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vYyd3OQ/209.fugitiveblame', 'time': 1552813679}
 mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vYyd3OQ/209.fugitiveblame', 'time': 1552813670}
-mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/.git/MERGE_MSG', 'time': 1552804121}
 mrufile	data	{'word': '/Users/user/test_data/staging本番データ/KOJYO1902_into_1902.DAT', 'time': 1552730492}
 mrufile	data	{'word': '/Users/user/test_data/staging本番データ/KOJYO1902_into_1903.DAT', 'time': 1552730483}
 mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/selenium_and_jmeter/irodori', 'time': 1552228755}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3_RoR_ARandValidator.md', 'time': 1549875456}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/RoR-apps.rb', 'time': 1549875386}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_CSS.css', 'time': 1549875363}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3b_ARandFAT-model.rb', 'time': 1549875323}
-mrufile	data	{'word': '/Users/user/Downloads/GOMI.txt', 'time': 1549712564}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/config/environments/development.rb', 'time': 1549699809}
-mrufile	data	{'word': '/Users/user/dotfiles/RAILS_ROOT/development.rb', 'time': 1549699778}
 mrufile	data	{'word': '/Users/user/Downloads/revision1_購買会改変④', 'time': 1549583338}
 mrufile	data	{'word': '/Users/user/Downloads/revision1_購買会改変④_zengetsu', 'time': 1549583285}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/kobaikai_kaihenn4購買会改変④', 'time': 1549183992}
 mrufile	data	{'word': '/Users/user/Downloads/kobaikai_kaihenn4購買会改変④', 'time': 1549179652}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/_gem_HowTo/3_有名gem.rb', 'time': 1549178880}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_SLIM_HAML_ERB.rb', 'time': 1549178879}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/vim_RDBMSandDBext.txt', 'time': 1549178879}
-mrufile	data	{'word': '/Users/user/dotfiles/vim/neosnippets/slim/bootstrap.snip', 'time': 1549178878}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_coffeescript.md', 'time': 1549178878}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_ruby.rb', 'time': 1549178877}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_CSS_bootstrap.md', 'time': 1549178876}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'time': 1549178873}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_SLIM_README.jp.md', 'time': 1549178872}
-mrufile	data	{'word': '/Users/user/dotfiles/vimrc', 'time': 1549171023}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/docker.sh', 'time': 1549099197}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/config/routes/hoken.rb', 'time': 1548771405}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/config/routes.rb', 'time': 1548771380}
@@ -470,23 +612,17 @@ mrufile	data	{'word': '/Users/user/src/irodori/VIETNAM/doshin-sc-kikan/app/asset
 mrufile	data	{'word': '/Users/user/src/irodori/VIETNAM/doshin-sc-kikan/app/assets/javascripts/hoken/rengokai_data.coffee', 'time': 1548266954}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/db/schema.rb', 'time': 1548260943}
 mrufile	data	{'word': '/Users/user/src/irodori/doshin-sc-kikan/app/models/keiri/seikyu_detail.rb', 'time': 1548260897}
-mrufile	data	{'word': '/Users/user/dotfiles/.git/COMMIT_EDITMSG', 'time': 1547671942}
-mrufile	data	{'word': '/Users/user/dotfiles/ve_favorite', 'time': 1542973196}
-mrufile	data	{'word': '/Users/user/dotfiles/Rakefile', 'time': 1542972449}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_3_RoR_ARandValidator.md.txt', 'time': 1542940395}
 mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/lib/visual-rails-generator-view.coffee', 'time': 1542938873}
 mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee', 'time': 1542938871}
 mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/lib/scaffold_model_view.coffee', 'time': 1542938827}
-mrufile	data	{'word': '/Users/user/.vimrc', 'time': 1542937553}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_1b_model_and_validation.rb', 'time': 1542937273}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_2_ARandFAT-model.rb', 'time': 1542937235}
-mrufile	data	{'word': '/Users/user/dotfiles/SI/pj-dependent.bashrc', 'time': 1542917983}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/_1_Modeling.rb', 'time': 1542917698}
 mrufile	data	{'word': '/Users/user/Downloads/_to2TBHDD/tmp.sh', 'time': 1542916990}
 mrufile	data	{'word': '/Users/user/dotfiles/SCRIPTS/ror_01_analyze_app.rb', 'time': 1542916388}
 mrufile	data	{'word': '/Users/user/Downloads/gdicnpURDPD (1).diff', 'time': 1542915283}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/#ruby.rb', 'time': 1542912454}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_index.haml', 'time': 1542912315}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap.md', 'time': 1542907977}
 mrufile	data	{'word': '/Users/user/Downloads/gdicnpURDPD.diff', 'time': 1542907860}
 mrufile	data	{'word': '/Users/user/.atom/packages/visual-rails-generator/spec/visual-rails-generator-spec.coffee', 'time': 1542520771}
@@ -515,18 +651,15 @@ mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/styl
 mrufile	data	{'word': '/Users/user/sessionSuganumapNavBars', 'time': 1542440322}
 mrufile	data	{'word': '/Users/user/sessionSuganumapCategory', 'time': 1542440312}
 mrufile	data	{'word': '/Users/user/sessionENV_IRODORI', 'time': 1542440281}
-mrufile	data	{'word': '/Users/user/dotfiles/gitignore', 'time': 1542424533}
 mrufile	data	{'word': '/Users/user/dotfiles/SI/Autofill.export', 'time': 1539883482}
 mrufile	data	{'word': '/Users/user/.dotfiles/bashrc', 'time': 1539752579}
 mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.gitignore', 'time': 1538632145}
 mrufile	data	{'word': '/Users/user/dotfiles/.gitignore', 'time': 1538632087}
-mrufile	data	{'word': '/Users/user/.bashrc', 'time': 1538631640}
 mrufile	data	{'word': '/Users/user/.ve_favorite', 'time': 1538631326}
 mrufile	data	{'word': '/Users/user/.dotfiles/ve_favorite', 'time': 1538631124}
 mrufile	data	{'word': '/Users/user/dotfiles/SI/ror_productivity_tools/template_generator/template_generator.rb', 'time': 1538464302}
 mrufile	data	{'word': '/Users/user/dotfiles/.git/MERGE_MSG', 'time': 1538377167}
 mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/custom_failure_app.rb', 'time': 1538361008}
-mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/application_controller.rb', 'time': 1538339767}
 mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/db/schema.rb', 'time': 1538339406}
 mrufile	data	{'word': '/Users/user/dotfiles/atom/packages.txt', 'time': 1538338013}
 mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/myapp.rb', 'time': 1538276403}
@@ -554,8 +687,6 @@ mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/styl
 mrufile	data	{'word': '/Users/user/.dotfiles/CHEATSHEETS/setupRoR/#git.sh', 'time': 1538034187}
 mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/environments/development.rb', 'time': 1538031030}
 mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/lib/tasks/app.rake', 'time': 1538028791}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_modal2.haml', 'time': 1538014174}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/CSS_bootstrap_modal.haml', 'time': 1538014152}
 mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/views/application/_footer.html.haml', 'time': 1537954113}
 mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/application/_footer.html.haml', 'time': 1537954095}
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vk10uYg/165.fugitiveblame', 'time': 1537936088}
@@ -568,149 +699,64 @@ mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vJDtIik/
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2400.fugitiveblame', 'time': 1537866413}
 mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'time': 1537866094}
 mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2247.fugitiveblame', 'time': 1537864308}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2103.fugitiveblame', 'time': 1537864259}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/2075.fugitiveblame', 'time': 1537864183}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vA1omLs/1716.fugitiveblame', 'time': 1537858643}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/vim.vim', 'time': 1537754346}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/VIM_ryan_dotfiles.vim', 'time': 1537754008}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/ddd.sh', 'time': 1537547768}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/951.fugitiveblame', 'time': 1537523565}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/917.fugitiveblame', 'time': 1537521295}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/877.fugitiveblame', 'time': 1537521162}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/849.fugitiveblame', 'time': 1537521158}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/797.fugitiveblame', 'time': 1537519748}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vHaTM6C/703.fugitiveblame', 'time': 1537516503}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.git/COMMIT_EDITMSG', 'time': 1537505378}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.git/rebase-merge/git-rebase-todo', 'time': 1537504949}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/3819.fugitiveblame', 'time': 1537503634}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/3763.fugitiveblame', 'time': 1537503128}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend-new/app/views/media/statics/about.html.haml', 'time': 1537502722}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend-new/app/views/media/_footer.html.haml', 'time': 1537502596}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.git/MERGE_MSG', 'time': 1537500675}
-mrufile	data	{'word': '/Users/user/.tigrc', 'time': 1537496427}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/routes.rb', 'time': 1537495045}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RoR/コーティンク規約.rb', 'time': 1537443826}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/2650.fugitiveblame', 'time': 1537422259}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/base_controller.rb', 'time': 1537413387}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPLJ9AC/1035.fugitiveblame', 'time': 1537413242}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/serializers/article_serializer.rb', 'time': 1537354807}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/serializers/tag_serializer.rb', 'time': 1537354806}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/serializers/category_serializer.rb', 'time': 1537354774}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend_new/db/seeds.rb', 'time': 1537353718}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/db/seeds.rb', 'time': 1537353684}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupRoR/#git.sh', 'time': 1537341344}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/resource/weekdays_validator.ja.yml', 'time': 1537341033}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/notification_setting/news_release_notification.rb', 'time': 1537341020}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/models/notification_setting/daily_review_notification.rb', 'time': 1537340997}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/validators/weekdays_validator.rb', 'time': 1537340987}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/resource/weekdays_validator.ja.ymlBAKBAK', 'time': 1537340959}
-mrufile	data	{'word': '/Users/user/dotfiles/SI/BAK/F/login.html.erb', 'time': 1537340033}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/5512.fugitiveblame', 'time': 1537336849}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/5479.fugitiveblame', 'time': 1537336448}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/5387.fugitiveblame', 'time': 1537335308}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/dockerCommmitMoreTaihi.sh', 'time': 1537261871}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/statics/dockerCommmitMoreTaihi.sh', 'time': 1537261569}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/4447.fugitiveblame', 'time': 1537260865}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/4384.fugitiveblame', 'time': 1537260634}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/4254.fugitiveblame', 'time': 1537259627}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/3905.fugitiveblame', 'time': 1537259010}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/assets/stylesheets/bootstrap-variables.scss', 'time': 1537251184}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/themes/suganumap/layouts/content-sidebar.css', 'time': 1537251156}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/application.scss', 'time': 1537251120}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/stylesheets/variables.scss', 'time': 1537251096}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/statics_controller.rb', 'time': 1537248655}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/media_for_non_mobile.html.haml', 'time': 1537244170}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/media/about.html.haml', 'time': 1537239068}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'time': 1537238554}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1798.fugitiveblame', 'time': 1537238548}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/statics_controller.rb', 'time': 1537238348}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/welcome_controller.rb', 'time': 1537237470}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/web/users_controller.rb', 'time': 1537237365}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1127.fugitiveblame', 'time': 1537235264}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1073.fugitiveblame', 'time': 1537235201}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/1015.fugitiveblame', 'time': 1537234209}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/987.fugitiveblame', 'time': 1537233741}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/veRtWS4/873.fugitiveblame', 'time': 1537233395}
-mrufile	data	{'word': '/Users/user/Downloads/dapump_usa.txt', 'time': 1537021618}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend_new/.git/MERGE_MSG', 'time': 1536914459}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_dedicated_footer.html.haml', 'time': 1536911947}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/.gitignore', 'time': 1536911275}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/_header.html.haml', 'time': 1536907756}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/resource/zorns.ja.yml', 'time': 1536906575}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/config/locales/ja.yml', 'time': 1536906554}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/articles/show.html.haml', 'time': 1536906444}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/mailer.html.haml', 'time': 1536906295}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/welcome/blog.html.haml', 'time': 1536906285}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/media_4_nonmobile.html.haml', 'time': 1536904924}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2668.fugitiveblame', 'time': 1536824638}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2503.fugitiveblame', 'time': 1536824493}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2475.fugitiveblame', 'time': 1536824492}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2447.fugitiveblame', 'time': 1536824464}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vljC2FG/2386.fugitiveblame', 'time': 1536823880}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/Gemfile', 'time': 1536745199}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/Gemfile', 'time': 1536745181}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/services/wordpress_api_service.rb', 'time': 1536741173}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/5151.fugitiveblame', 'time': 1536724950}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/node_modules/bootstrap/scss/_media.scss', 'time': 1536660683}
-mrufile	data	{'word': '/Users/user/.powconfig', 'time': 1536653326}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4340.fugitiveblame', 'time': 1536652681}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4294.fugitiveblame', 'time': 1536652639}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4264.fugitiveblame', 'time': 1536651351}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/media/media/index.html.haml', 'time': 1536650956}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/4210.fugitiveblame', 'time': 1536650941}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/3317.fugitiveblame', 'time': 1536634081}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2631.fugitiveblame', 'time': 1536629773}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/welcome/index.html.haml', 'time': 1536577957}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2172.fugitiveblame', 'time': 1536576759}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2144.fugitiveblame', 'time': 1536576736}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/2006.fugitiveblame', 'time': 1536576666}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/1921.fugitiveblame', 'time': 1536576423}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/1725.fugitiveblame', 'time': 1536574166}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/1697.fugitiveblame', 'time': 1536574155}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker-init.sh', 'time': 1536571246}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/controllers/media/articles_controller.rb', 'time': 1536570649}
-mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vrzlcPP/869.fugitiveblame', 'time': 1536570128}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/layouts/application.html.haml', 'time': 1536569734}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/views/application/_navbar.html.haml', 'time': 1536566655}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vPomk7i/1805.fugitiveblame', 'time': 1536565917}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/views/application/_navbar.html.haml', 'time': 1536563429}
-mrufile	data	{'word': '/private/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vMUtK6i/480.fugitiveblame', 'time': 1536557215}
-mrufile	data	{'word': '/var/folders/kv/slc980ns48x1cyqrks40k_pw0000gn/T/vMUtK6i/480.fugitiveblame', 'time': 1536557205}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupRoR/WebBrowserAppConfig.txt', 'time': 1536551026}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/app/assets/javascripts/application.js', 'time': 1536548287}
-mrufile	data	{'word': '/Users/user/dotfiles/tigrc', 'time': 1536485572}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/public/maintenance/maintenance.html', 'time': 1536314590}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/helpers/application_helper.rb', 'time': 1536314283}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/.env', 'time': 1536314068}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/views/home/index.html.haml', 'time': 1536303254}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/.env', 'time': 1536300662}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/app/assets/stylesheets/application.scss', 'time': 1536219608}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/tmp/cache/bootsnap-load-path-cache', 'time': 1536219237}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/plugins/broken-link-checker/languages/broken-link-checker-ja.mo', 'time': 1536219205}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/.db/mysql/volumes/mysql/help_topic.ibd', 'time': 1536219123}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker/loohcs_wordpress/data/wordpress.dump', 'time': 1536218940}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/wp/data/dump.sql', 'time': 1536218749}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/RDBMSandDBext.txt', 'time': 1536216257}
-mrufile	data	{'word': '/Users/user/dotfiles/CHEATSHEETS/setupOS/docker.txt', 'time': 1536216063}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker-compose.yml', 'time': 1536216004}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker-compose.yml', 'time': 1536215984}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/config/environments/test.rb', 'time': 1536213112}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker/loohcs_web/Dockerfile', 'time': 1536201781}
-mrufile	data	{'word': '/Users/user/src/irodori/loohcs/docker/loohcs_web/entrypoint.sh', 'time': 1536201767}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/docker/web/Dockerfile', 'time': 1536143424}
-mrufile	data	{'word': '/Users/user/src/irodori/suganumap-backend/Procfile', 'time': 1536143367}
+mrufile	stats	{'word': '~/dotfiles/bashrc', 'pattern': 'bashr'}
+mrufile	stats	{'word': '~/src/irodori/doshin-sc-kikan/app/controllers/hoken/kobaikai_data_controller.rb', 'pattern': 'kobaikai'}
+mrufile	stats	{'word': 'kobaikai', 'pattern': 'kobaikai'}
+mrufile	stats	{'word': '~/dotfiles/bashrc', 'pattern': 'bash'}
 mrufile	stats	{'word': '~/dotfiles/bashrc', 'pattern': 'bashrc'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_ruby.rb', 'pattern': 'ruby'}
+mrufile	stats	{'word': '~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic', 'pattern': 'reali'}
+mrufile	stats	{'word': '~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_strict', 'pattern': 'rubo'}
+mrufile	stats	{'word': '~/dotfiles/Rakefile', 'pattern': 'Rake'}
+mrufile	stats	{'word': '~/dotfiles/vimrc', 'pattern': 'vimr'}
+mrufile	stats	{'word': '~/dotfiles/SI/pj-dependent.bashrc', 'pattern': 'depen'}
+mrufile	stats	{'word': '~/dotfiles/vim/neosnippets/slim/bootstrap.snip', 'pattern': 'boot'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_coffeescript.md', 'pattern': 'coffe'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/JS-study.js', 'pattern': 'JS-'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_SLIM_HAML_ERB.rb', 'pattern': 'HAML'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/RoR/_gem_HowTo/3_有名gem.rb', 'pattern': 'gem'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/GOMI.sh', 'pattern': 'GO'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/.gitignore', 'pattern': 'igno'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/.git/hooks/pre-commit', 'pattern': 'commi'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_CSS.css', 'pattern': 'CSS'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_CSS.css', 'pattern': '_CSS'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/GOMI', 'pattern': 'GOMI'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/RoR/RoR-apps.rb', 'pattern': 'RoR'}
+mrufile	stats	{'word': '~/dotfiles/Rakefile', 'pattern': 'akefile'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/JS-study.js', 'pattern': 'JS'}
+mrufile	stats	{'word': '~/src/irodori/doshin-sc-kikan/app/assets/javascripts/hokenryo_kanri.coffee', 'pattern': 'coffee'}
+mrufile	stats	{'word': '~/src/irodori/doshin-sc-kikan/app/views/hoken/kobaikai_data/import_confirm.html.slim', 'pattern': 'confirm'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_CSS.css', 'pattern': '_CSS.css'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/docker-compose.override.yml', 'pattern': 'over'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/docker-compose.yml', 'pattern': 'compo'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/Dockerfile', 'pattern': 'Do'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/Dockerfile', 'pattern': 'Dockerfi'}
+mrufile	stats	{'word': '~/dotfiles/RAILS_ROOT/development.rb', 'pattern': 'deve'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/Dockerfile', 'pattern': 'Docker'}
+mrufile	stats	{'word': '~/dotfiles/ve_favorite', 'pattern': 'favo'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_CSS_bootstrap.md', 'pattern': 'boot'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS_bootstrap_modal2.haml', 'pattern': 'boot'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS_bootstrap_modal.haml', 'pattern': 'boot'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS_bootstrap_index.haml', 'pattern': 'boots'}
+mrufile	stats	{'word': '~/dotfiles/vimrc', 'pattern': 'vimrc'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/vim.vim', 'pattern': 'vim'}
+mrufile	stats	{'word': '~/src/hiblead/apo_pms/config/initializers/devise.rb', 'pattern': 'devise'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/vim.vim', 'pattern': 'vim.'}
+mrufile	stats	{'word': '~/src/irodori/doshin-sc-kikan/app/controllers/hoken/kobaikai_data_controller.rb', 'pattern': 'kobai'}
+mrufile	stats	{'word': '~/dotfiles/.git/hooks/pre-commit', 'pattern': 'commit'}
+mrufile	stats	{'word': '~/src/irodori/suganumap-backend/.git/COMMIT_EDITMSG', 'pattern': 'commi'}
+mrufile	stats	{'word': '~/src/irodori/doshin-sc-kikan/GOMI.sh', 'pattern': 'gomi'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_ruby.rbby', 'pattern': '~/dotfiles/CHEATSHEETS/_ruby.rbby'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/RoR/_gem_HowTo/3_有名gem.rb', 'pattern': 'Gem'}
+mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/RoRsetup/docker.sh', 'pattern': 'docker'}
+mrufile	stats	{'word': '~/src/irodori/doshin-sc-kikan/docker-compose.yml', 'pattern': 'docker'}
 mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_3_RoR_ARandValidator.md', 'pattern': '_3_RoR_ARandValidator.md'}
 mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/_3b_ARandFAT-model.rb', 'pattern': 'RoR'}
-mrufile	stats	{'word': '~/dotfiles/bashrc', 'pattern': 'bashr'}
 mrufile	stats	{'word': '~/dotfiles/Rakefile', 'pattern': 'Rakefi'}
 mrufile	stats	{'word': '~/.ve_favorite', 'pattern': 'fa'}
 mrufile	stats	{'word': '~/.dotfiles/ve_favorite', 'pattern': 'favori'}
-mrufile	stats	{'word': '~/dotfiles/ve_favorite', 'pattern': 'favo'}
 mrufile	stats	{'word': '~/.dotfiles/ve_favorite', 'pattern': 've_fa'}
 mrufile	stats	{'word': ':q', 'pattern': ':q'}
-mrufile	stats	{'word': '~/dotfiles/vimrc', 'pattern': 'vimrc'}
-mrufile	stats	{'word': '~/dotfiles/vimrc', 'pattern': 'vimr'}
 mrufile	stats	{'word': '~/.vimrc', 'pattern': 'vimrc'}
 mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'pattern': 'OS'}
 mrufile	stats	{'word': '~/dotfiles/Rakefile', 'pattern': 'rake'}
@@ -753,49 +799,3 @@ mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/l
 mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'scss'}
 mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'pattern': 'stati'}
 mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS.css', 'pattern': 'CSS.cs'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'de'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'defa'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_footer.html.haml', 'pattern': 'footer'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'default'}
-mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS.css', 'pattern': 'CSS'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_navbar.html.haml', 'pattern': 'navb'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/statics/about.html.haml', 'pattern': 'haml'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/base_controller.rb', 'pattern': 'base'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/statics/about.html.haml', 'pattern': 'abou'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_article.html.haml', 'pattern': 'app/views/media/_article.html.haml'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/categories_controller.rb', 'pattern': 'app/controllers/media/categories_controller.rb'}
-mrufile	stats	{'word': '~/.bashrc', 'pattern': 'bashr'}
-mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupRoR/#git.sh', 'pattern': 'git'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'pattern': 'stat'}
-mrufile	stats	{'word': '~/dotfiles/SI/BAK/F/login.html.erb', 'pattern': 'login'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'pattern': 'media.css'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/statics.html.haml', 'pattern': 'app/views/layouts/statics.html.haml'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_for_non_mobile.html.haml', 'pattern': 'for_'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/statics_controller.rb', 'pattern': 'cont'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_for_non_mobile.html.haml', 'pattern': 'for'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_footer.html.haml', 'pattern': '_footer'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/media.scss', 'pattern': 'css'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/media/about.html.haml', 'pattern': 'abou'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/routes.rb', 'pattern': 'route'}
-mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'pattern': 'osx'}
-mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/OSX.txt', 'pattern': 'OSX'}
-mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/setupOS/docker.sh', 'pattern': 'docker'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/_navbar.html.haml', 'pattern': 'navba'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/locales/devise.ja.yml', 'pattern': 'yml'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/base_controller.rb', 'pattern': 'base_'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'pattern': 'cont'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_4_nonmobile.html.haml', 'pattern': 'non'}
-mrufile	stats	{'word': '~/dotfiles/CHEATSHEETS/CSS_bootstrap.md', 'pattern': 'oot'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'pattern': 'contor'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/config/routes.rb', 'pattern': 'routes'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media_4_nonmobile.html.haml', 'pattern': 'nonm'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/controllers/media/media_controller.rb', 'pattern': 'contro'}
-mrufile	stats	{'word': '~/src/irodori/loohcs/Gemfile', 'pattern': 'emfil'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/Gemfile', 'pattern': 'Gem'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/assets/stylesheets/layouts/default.scss', 'pattern': 'css'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/media/media/about.html.haml', 'pattern': 'about'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/node_modules/bootstrap/scss/_media.scss', 'pattern': 'media'}
-mrufile	stats	{'word': '~/src/irodori/loohcs/Gemfile', 'pattern': 'em'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/Gemfile', 'pattern': 'Gemfile'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/application/_footer.html.haml', 'pattern': '_footr'}
-mrufile	stats	{'word': '~/src/irodori/suganumap-backend/app/views/layouts/media.html.haml', 'pattern': 'media.html.haml'}

@@ -9,9 +9,6 @@ fi
 export LANG='ja_JP.UTF-8'
 # コマンド実行日時を記録するフォーマット
 HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
-#source ~/.git-prompt.sh
-#PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
-# git config --global color.ui true
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 export SYSTEMD_PAGER=
@@ -28,6 +25,8 @@ alias dkpadi='  docker ps -a ; docker images;  docker volume ls';
 #  # リサイズや清掃；
 #    docker build --squash
 #      サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
+# Mysql2::Error - The table 'wysiwyg_templates' is full ---> 直近変動のコンテナけす。DBのログはバイナリーじゃなければ、きえないはず
+  # dkrmi $(docker volume ls -qf dangling=true) ; dkrmv $(docker image  ls -qf dangling=true) ;
 alias dkprunesys='docker system prune'
 alias dkpruneimg='docker images prune'
 alias dkrm='    docker rm';
@@ -73,15 +72,6 @@ function dkrstrails { # $1 == container_name/id
 }
 
 
-function sshpubkey_osx {  #$1 == email@address  #, for github
-  env=${1:-'belltakami@gmail.com'}
-  ssh-keygen -t rsa -b 4096 -C "$1"
-  ll ~/.ssh/
-  cat ~/.ssh/id_rsa.pub &&  pbcopy < ~/.ssh/id_rsa.pub
-  echo "コピーしましたよ"
-}
-
-
 function dkc_rdbseed {  #通常のbdl方法
   docker-compose run -u root app bundle install ;
   docker-compose run -u root app bin/rake db:migrate db:seed
@@ -104,12 +94,13 @@ function dkc_rdbmreset { #通常のbdl方法 #  == dkrst db && dkbash app ; bund
   env=${1:-'app'}
   docker-compose run -u root $1 bundle install ;
   docker-compose run -u root $1 bundle exec yarn install #<---これがないと次のエラー： OCI runtime exec failed: exec failed: (…) executable file not found in $PATH": unknown
-  docker-compose run $1 rails db:create db:schema:load  db:seed_fu
-  #eg2 $ docker-compose run $1 rails db:create db:schema:load db:seed_fu
+  # docker-compose run $1 rails db:drop db:create db:schema:load  db:seed_fu
+  #eg2 $ docker-compose run $1 rails db:drop db:create db:schema:load db:seed_fu
     #eg1 $ docker-compose run $1 db:drop db:create ridgepole:apply data:migrate db:seed
+    #eg2 # docker-compose run $1 rake db:drop db:create ridgepole:apply db:seed_fu #全タブreload前にログインすべき
   # docker-compose run -u root $1 bin/rake db:migrate:reset db:seed;
   # docker-compose run -u root $1 bin/rake db:reset:with_data;  #<---special
-  docker-compose run -u root app annotate --force ;
+  docker-compose run -u root $1 annotat e--force ;
   echo "### NOTE "
   echo "###      rake:db:migrateが失敗しがちなのでdbのコンテナを再起動してから実行した方がいい"
   echo "###      bundle install失敗するときは docker exec -it -u root CONTAINERNAME bash でログインして すること"
@@ -206,9 +197,6 @@ alias webpacklocal='sudo node_modules/webpack/bin/webpack.js'
 
 #FIXME:  export DL_HOME=~/
 export DL_HOME=~/Download
-#export GIT_USERNAME=k_takami
-#export GIT_USERNAME=kenichi.takami
-
 
 #==== JVM ==========================
   # export ANT_HOME=$DL_HOME/apache-ant-1.9.6
@@ -311,21 +299,6 @@ alias duhls1wcl='du -h; ls -1 ./ | wc -l ' #count files in current dir:
 alias dusbh='    du -sbh  '                #count file size under some dir
 alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir:
 
-alias ksen-f='echo "^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^"'
-alias ksen-b='echo "================================================================================="'
-alias ksen-a='echo "/////////////////////////////////////////////////////////////////////////////////"'
-alias ksen-s='echo "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★"'
-alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"'
-alias ksen-d='echo "#################################################################################"'
-alias ksen-e='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
-alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
-# alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
-# alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
-# alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
-# alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
-alias REM=' : <<"REM"' #REMで終端すること
-
-
 alias cdd=' cd ~/dotfiles'
 alias nrnd=' --no-ri --no-rdoc '
 alias no_spec=' echo "--exclude=*spec* "'
@@ -343,11 +316,11 @@ function grepe    {                             grep     -niE   $@          ; }
 function regreprb {     local options=${2:-*} ; grep     -nirE  `inclrb` `nogabage` $1 $options ; }
 function regrep_nosub { local options=${2:-*} ; grep     -niE   $1 $options ; }
 function regrepl  {     local options=${2:-*} ; grep     -lnirE $1 $options ; }
-function regrepl-r {    local options=${2:-*} ; grep     -lniE  $1 $options ; }
+function regrepl_r {    local options=${2:-*} ; grep     -lniE  $1 $options ; }
 function regrepc1 {     local options=${2:-*} ; grep -C1 -niE   $1 $options ; }
 function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
-function regrepc1-r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
-function regrepc3-r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
+function regrepc1_r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
+function regrepc3_r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
 
 function regrep {
   local options=${@:2} ;
@@ -386,6 +359,35 @@ local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 
   grep -nirE "def \w*$1" $gempath ;
 }
 
+function sshpubkey_osx {  #$1 == email@address  #, for github
+  env=${1:-'belltakami@gmail.com'}
+  ssh-keygen -t rsa -b 4096 -C "$1"
+  ll ~/.ssh/
+  cat ~/.ssh/id_rsa.pub &&  pbcopy < ~/.ssh/id_rsa.pub
+  echo "コピーしましたよ"
+  read -p "vim ~/.gitconfigでname, email, user編集しますか？(y/N): " yn
+  case "$yn" in
+    [yY]) vim ~/.gitconfig ;;
+    [nN]) exit ;;
+    *) exit ;;
+  esac
+}
+
+GIT_PS1_SHOWDIRTYSTATE=true
+source /usr/local/etc/bash_completion.d/git-prompt.sh
+export PS1='\h\[\033[00m\]:\W\[\033[31m\]$(__git_ps1 [%s])\[\033[00m\]\$ '
+source /usr/local/etc/bash_completion.d/git-completion.bash
+# git config --global color.ui true
+#source ~/.git-prompt.sh
+# export PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
+#export GIT_USERNAME=k_takami
+#export GIT_USERNAME=kenichi.takami
+# TODO: .
+# .git/hooks/pre-commit
+  # result = `mv .git/hooks/pre-commit.sample .git/hooks/pre-commit`
+  # result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; #raspell;" >> .git/hooks/pre-commit `
+  # ~/dotfiles/development.rb >> config/development.rb
+
 alias vimclean='rm ~/*.sw* ; cd ~/dotfiles ; git status ; cd - ;'
 alias ror_snip_list='sh ~/dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
 alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
@@ -423,6 +425,11 @@ alias gicmm='     git commit -m' #modify
 alias gico='      git checkout'
 alias gico-='     git checkout -'
 alias gico-b='    git checkout -b'
+# alias tgstb=' gst;gibr'
+alias gstbh='gst;gibr;git log |head -n 5; echo -e "\n *** 直近コミットしたファイルは以下***"; gisw --name-only'
+alias sbh='  gstbh'
+alias precommiton=' mv .git/hooks/pre-commitMAE .git/hooks/pre-commit'
+alias precommitoff='mv .git/hooks/pre-commit .git/hooks/pre-commitMAE'
 
 alias hgdi='      hg diff -c'
 alias gdic='     git diff --cached'
@@ -445,13 +452,11 @@ alias diffbbq='   diff -rwBbq '
 alias hgbl='      hg blame -lund'
 # cf: https://www.wikivs.com/wiki/Git_vs_Mercurial:w
 alias gplo='      git pull origin'
+
+# gplo $1 && gdi $1 Gemfile db
+
 alias gclone='    git clone'
 alias gcloneb='   git clone -b ' # ブランチ名 https://リポジトリのアドレス
-# TODO: .
-# .git/hooks/pre-commit
-  # result = `mv .git/hooks/pre-commit.sample .git/hooks/pre-commit`
-  # result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; #raspell;" >> .git/hooks/pre-commit `
-  # ~/dotfiles/development.rb >> config/development.rb
 alias gpso='      git push origin'
 alias gpsdelo=' git push --delete origin' #[branch-name] to delete リモートブランチ削除
 alias gisw='      git show'
@@ -461,9 +466,12 @@ alias gishls='    git stash list'
 alias gishsw='    git stash show'
 alias gishsv='    git stash save'
 alias gishpp='    git stash pop'
+alias gishdd='    git stash drop'    # スタックの一番上にある変更を削除する
+alias gishdi='    git diff stash@{0}' #後にfile特定の引数もつけていい
 #git関連検索
 alias gilo='      git log '
-alias gilos='     git log -S'
+alias gilos_brief='git log -S'
+alias gilos='     git log -p --full-diff -S'
 alias gilohd='    git log |head -n 50'
 alias gilono='      git log --name-only'
 #alias gilogrep
@@ -482,6 +490,7 @@ alias girbcntn='  git rebase --continue'
 alias girbabt='   git rebase --abort'
 alias girbihd='   git rebase -i' # to be follwed by HEAD~~ or HEAD~~~~~~回数分
 alias fixup='gicmm "tmp" ; gishsv;  girbihd HEAD~~ ; gilono ; gishpp; '
+alias gichpi='    git cherry-pick'
 
 alias hgst='      hg status'
 alias hgstfile='  hg status --rev '
@@ -492,11 +501,10 @@ alias gicma='     git commit --amend'
 alias gicothr='      git checkout --theirs'
 alias gicoour='      git checkout --ours'
 alias girstmg='      git reset --merge'
-alias girsthdHD-n='  git reset --hard HEAD~' #nを追記 :自分のコミットをN回とりけした状態にロールバック
-alias girstsftHD@n='git reset --soft HEAD@' #commitとりけし {1}など
+alias girsthd='      git reset --hard ' #HEAD^ や　HEAD@{n}を追記 :自分のコミットをN回とりけした状態にロールバック ワークファイル破棄
+alias girstst='      git reset --soft ' #HEAD^ や　HEAD@{n}を追記 :自分のコミットをN回とりけした状態にロールバック ワークファイル保持
 alias girmc='        git rm --cached'        #stagingとりけし
 alias gicostsh0='    git checkout stash@{0}'
-alias girstHD='      git reset HEAD -- '
 alias gicostsh0lots='git checkout stash@{0} Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore ; git reset HEAD -- Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore;'
 
 #railsコマンド
@@ -521,7 +529,15 @@ alias gplombxrdbmrdbs='git pull; bxrdbm; bxrdbs'
 alias bxrdbmtest='     ds1 bx rake db:migrate RAILS_ENV=test'
 alias bxrdbmdown='     ds1 bx rake db:migrate:down'
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
-alias rrg='         ds1 bx rake routes |grep '
+alias rrg='            ds1 bx rake routes |grep '
+alias ror_asset_rebuild="RAILS_ENV=development rake assets:clean assets:precompile"
+#ステップ数概算
+# grep -nirE "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
+# find . -name "*.rb" -o -name "*.yml" | xargs wc -l
+# rake stats
+# rake -T |grep ridge
+# rake ridgepole:apply[rails_env]         # Apply Schemafile to the database
+# rake ridgepole:export[rails_env]        # Export the database schema to Schemafile
 
 # gemバージョン　正規表現検索
 alias gemquery="     gem query -ban "
@@ -532,18 +548,19 @@ alias rbca='        ds1 rubocop -a'
 # alias rbc18='       rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8'
 # alias rbca18='      rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8 -a'
 alias rbp='         rails_best_practices'
-export REGEXP_RBC_IGNORE="(app\/views|wrapper|\.js|\.coffee|\..?css|\.yml|schema.rb|structure.sql|Gemfile|.gitignore)"
+export REGEXP_RBC_IGNORE="(app\/views|wrapper|\.xlsx|\.xls|\.js|\.coffee|\..?css|\.csv|\.tsv|\.png|\.svg|\.yml|schema.rb|structure.sql|Gemfile|.gitignore)"
+export REGEXP_MYBUG="^\+.*(\?i|i\b|binding.pry|byebug|debugger|takami)"
+alias rbwc='ruby -wc'
 alias rbwcstaged='  gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 ruby -wc'
 alias rbwcdev='     gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 ruby -wc'
 alias rbcrails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rubocop '
 alias rbcrailsauto='gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rubocop -a '
 alias rbprails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rails_best_practices'
 alias mytestsingle='ds1 bx rake spec:test RAILS_ENV=mobi-connect-test'
-export REGEXP_MYBUG="^\+.*(\?i|i\b|binding.pry|byebug|debugger|takami)"
 alias mybugstaged=' gdicnp |grepe $REGEXP_MYBUG -C2 '
 alias mybug='       git show |grepe $REGEXP_MYBUG -C1 ; gdicnp |grepe $REGEXP_MYBUG -C1 ; gdi |grepe $REGEXP_MYBUG --exclude=development.rb --exclude=*Gemfile* -C1'
 alias raspell=' ruby ~/dotfiles/SCRIPTS/ror_02_raspell.rb'
-alias mybugallstaged='rbcrails; mybugstaged; rbwcstaged; rbprails;' #raspell;
+alias mybugallstaged='rbcrails; mybugstaged; rbwcstaged; echo "●Windows表示、スマホ表示、yarn.lockとpackage.jsonをproductionモードで動作確認"' #rbprails; #raspell;
 alias mybugall='      rbcrails; mybug      ; raspell; rbwcstaged; rbprails;'
 alias mybug_migration_yyyymmdd='find db/migrate/*create_*  |xargs -n1 git blame |grep' # add /yyyy-mm-dd?/ date to find DANGEROUS MIGRATION FILE
 #alias mybugall_and_migrationyyyymmdd='mybugall; mybug_migration_yyyymmdd'
@@ -604,9 +621,9 @@ function tarzipgitonly { # 今のRails.rootフォルダー名を引数にして�
   tar zcvf ../$chomped1.git-`date '+%Y%m%d_%H%M'`.tar.gz .git ; lat ..
 }
 
-function gicoto_newbranch { # $1==new_branch_name , $2==origin_name
-  env=${1:-'XXX'} #第2引数がなければdefault_name
-  env=${2:-'origin'} #第1引数がなければorigin
+function gicob_remotebranch { # $1==new_branch_name , $2==origin_name
+  env=${1:-'XXX'} #第1引数がなければdefault_name
+  env=${2:-'origin'} #第2引数がなければorigin
   git fetch
   gishsv ; gico-b $1 origin/$1 ; gishpp; gst; gibr;
   # igit version 2.17仕様でgit 1.6でつかえるというstackoverflowの情報の"-t"おぷしょんが使えなかった; gishsv ; gico -t $2/$1 ; gishpp; gst; gibr;
@@ -654,15 +671,9 @@ function grepremotegems {
 
 alias ff='    find ./* | sort | less '
 alias ffgrep='find . | grep -iE '
+#  ff | grep NEW |wc -l    <--- ファイル数
 
 
-#source ~/.git-prompt.sh
-#PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
-
-#ステップ数概算
-# grep -nirE "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
-# find . -name "*.rb" -o -name "*.yml" | xargs wc -l
-# rake stats
 
 # 特定ファイルだけ展開： $ sudo tar zxvf 対象tarball.tgz full/path/to/the/specified/file/in/the/tarball
 alias findp0x0mv0='find -print0 | xargs -0 mv -t ./ ' #一括移動 -print0と -0は呼応。NULL区切り
@@ -737,4 +748,52 @@ alias rehabilli='cat ~/dotfiles/SI/REHABILI/* |less'
 # ==== PJ-dependent unixコマンド ==========================
 source ~/dotfiles/SI/pj-dependent.bashrc
 
+
+alias REM=' : <<"REM"' #REMで終端すること
+alias ksen-f='echo "^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^"'
+alias ksen-b='echo "================================================================================="'
+alias ksen-a='echo "/////////////////////////////////////////////////////////////////////////////////"'
+alias ksen-s='echo "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★"'
+alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"'
+alias ksen-d='echo "#################################################################################"'
+alias ksen-e='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
+alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
+# alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
+# alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
+# alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
+# alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
+function ksendebug {  #debugmessage関数 引数にrb, js
+  extention=${1:-'rb'}
+  if [[ $extention == 'rb' ]]; then
+    command='Rails.logger.info'
+  elif [[ $extention == 'js' ]]; then
+    command='console.log'
+  elif [[ $extention == 'sh' ]]; then
+    command='echo'
+  fi
+  msg=$(cat <<-MSG1
+  \n
+  ${command}("=======cp1======@=========#{}");\n
+  ${command}("=======cp2======@=========#{}");\n
+  ${command}("=======cp3======@=========#{}");\n
+  ${command}("=======cp4======@=========#{}");\n
+  ${command}("=======cp5======@=========#{}");\n
+  ${command}("=======cp5======@=========#{}");\n
+  ${command}("=======cp6======@=========#{}");\n
+  ${command}("=======cp7======@=========#{}");\n
+  ${command}("=======cp8======@=========#{}");\n
+  ${command}("=======cp9======@=========#{}");\n
+MSG1)
+  if [[ $extention == 'sh' ]]; then
+    # ${extention/./_}  # 最初にマッチした対象を置換
+    # ${extention//./_} # すべてにマッチした対象を置換する
+    # ${extention#*/}   # 最初にマッチした対象（*/）を削除
+    # ${extention##*/}  # すべてにマッチした対象（*/）を削除
+    tmp1=${msg//\(/ }
+    tmp2=${tmp1//\)/ }
+    echo -e $tmp2
+  else
+    echo -e $msg
+  fi
+};
 

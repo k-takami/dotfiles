@@ -21,3 +21,32 @@
   <body>
     <a onclick="sample()">ここをクリックすると、ウィンドウサイズが幅600、高さ400となります。</a>
   </body>
+
+#onload
+  // ページの読み込み完了と同時に実行されるよう指定
+  function firstscript() {
+     alert('ページの読み込みが完了したよ！');
+  }
+  window.onload = firstscript;
+
+
+
+snippet_submit-technix
+	<%#= submit_tag l(:button_save), :kind => "save", :confirm => l(:button_curd_confirm) %>
+	<%= submit_tag l(:button_ticket), :kind => "ticket", :confirm => l(:button_ticket_confirm) %>
+	<%= javascript_tag do %>
+	  // form外の値をしこむ
+    $("#updating_form").submit( function(e) {
+      var form = $("#updating_form");
+      $('<input>').prop({ 'name': 'slider_toggle_checkbox', 'value': $('#slider_toggle_checkbox').prop("checked") }).appendTo(form);
+    });
+
+	  // Submitボタン切り替え
+	  $(document).ready(function() {
+      $(":submit").bind("click", function() {
+        $("#commit_kind").val($(this).attr("kind"));
+      });
+	  });
+	<% end %>
+
+

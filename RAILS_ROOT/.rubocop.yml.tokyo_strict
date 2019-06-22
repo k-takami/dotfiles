@@ -38,3 +38,12 @@ ColonMethodCall:
   Enabled: false
 Style/AsciiComments:
   Enabled: false
+
+# Use nested module/class definitions instead of compact style. を無視
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/RegexpLiteral:
+  Enabled: false
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+

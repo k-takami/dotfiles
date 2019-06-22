@@ -1,3 +1,12 @@
+
+●snippet_mysql_env  環境 more /etc/mysql/mysql.conf.d/mysqld.cnf
+  [mysqld]
+  pid-file	= /var/run/mysqld/mysqld.pid
+  socket		= /var/run/mysqld/mysqld.sock
+  datadir		= /var/lib/mysq
+
+
+
 UNIX:インストールから初期権限設定
 
 ▼MySQLの設定
@@ -42,16 +51,16 @@ mysql> exit;
 
 
 Mysql on Windows
-	login from GIT-BASH: 
+	login from GIT-BASH:
 		$ "/C/Program Files (x86)/MySQL/MySQL Server 5.7/bin/mysql.exe" "--defaults-file=C:\ProgramData\MySQL\MySQL Server 5.7\my.ini" "-uroot" "-p" "--default-character-set=utf8"
 		Enter password: ****
 		Welcome to the MySQL monitor. Commands end with ; or \g.
 		\q
 	IMPORTing SQL : some_body@PC275 MINGW64 /c/Apache24/_wk
 	$ "/C/Program Files (x86)/MySQL/MySQL Server 5.7/bin/mysql.exe" "--defaults-file=C:\ProgramData\MySQL\MySQL Server 5.7\my.ini" "-uroot" "-proot" "--default-character-set=utf8" mt < kss-221-import-ato.sql
-	
-	
-#config 
+
+
+#config
 	ubuntu: sudo apt-get install mysql-server mysql-client libmysqlclient15-dev libmysql-ruby1.8 -y
 	chkconfig --level 345 mysqld on
 	service mysqld start
@@ -71,7 +80,7 @@ Mysql on Windows
 	Mysql2::Error: This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery':
 	User.where(:id=>User.limit(3))じゃなくてUser.where(:id=>User.limit(3).map(&:id))で回避(rails3.2にて発生)
 ■たかやなぎSQL
-# 全状況対応のSQL、参考までに。下部日付がFrom～Toです。率は求めていません。 SELECT bd.branch_id AS id, '' AS name , SUM(IF( c.latest_number > 0, 1, 0 )) AS 全体客数 , SUM(IF( c.remaining_contacts <= 0 , 1, 0 )) AS 達成顧客数 , SUM(IF( c.actual_contacts <= 0, 1, 0 )) AS 未接触顧客数 , SUM(IF( c.latest_number = 2, 1, 0 )) AS 密度2客数 , SUM(IF( c.latest_number = 2 and c.remaining_contacts <= 0, 1, 0 )) AS 密度2達成数 , SUM(IF( c.latest_number = 2 and c.remaining_contacts = 1, 1, 0)) AS 密度2接触中数 , SUM(IF( c.latest_number = 2 and c.actual_contacts <= 0, 1, 0)) AS 密度2未接触顧客数 , SUM(IF( c.latest_number = 1, 1, 0 )) AS 密度1客数 , SUM(IF( c.latest_number = 1 and c.remaining_contacts <= 0, 1, 0)) AS 密度1達成数 , SUM(IF( c.latest_number = 1 and c.actual_contacts <= 0, 1, 0)) AS 密度1未接触顧客数 , SUM(IF( c.latest_number > 0, 1, 0 )) AS 全体客数_CHECKED , SUM(IF( c.latest_number > 0 and c.jisseki >= c.latest_number, 1, 0 )) AS 達成顧客数_CHECKED , SUM(IF( c.latest_number > 0 and c.jisseki <= 0, 1, 0 )) AS 未接触顧客数_CHECKED , SUM(IF( c.latest_number = 2, 1, 0 )) AS 密度2客数_CHECKED , SUM(IF( c.latest_number = 2 and c.jisseki >= c.latest_number, 1, 0 )) AS 密度2達成数_CHECKED , SUM(IF( c.latest_number = 2 and c.jisseki = 1, 1, 0)) AS 密度2接触中数_CHECKED , SUM(IF( c.latest_number = 2 and c.jisseki <= 0, 1, 0)) AS 密度2未接触顧客数_CHECKED , SUM(IF( c.latest_number = 1, 1, 0 )) AS 密度1客数_CHECKED , SUM(IF( c.latest_number = 1 and c.jisseki >= c.latest_number, 1, 0)) AS 密度1達成数_CHECKED , SUM(IF( c.latest_number = 1 and c.jisseki <= 0, 1, 0)) AS 密度1未接触顧客数_CHECKED   from branches_divisions as bd left join ( select id as client_id, division_id, branch_id, sales_staff_id, latest_number, actual_contacts, remaining_contacts, (select object_string from global_variables) as measured_month, ifnull(com_num.num,0) as jisseki from clients c left join ( select cc.id as client_id, count(cc.id) as num from clients cc inner join ( select * from action_histories ah where ah.contact_cd = 2 ) a on a.staff_id = cc.sales_staff_id and a.client_id = cc.id and a.action_date >= (select date_format((select object_string from global_variables),'%Y-%m-01')) and a.action_date < date_add((select date_format((select object_string from global_variables),'%Y-%m-01')),interval 1 month) group by cc.id ) com_num on c.id = com_num.client_id where division_id = 3 and valid_classification_cd = 1 and deleted_at is null UNION ALL select cch.client_id, cch.division_id, cch.branch_id, cch.sales_staff_id, cch.latest_number, cch.actual_contacts, cch.remaining_contacts, cch.measured_month, ifnull(com_num.num,0) as jisseki from client_contact_histories cch left join ( select cch.client_id, count(cch.client_id) as num, cch.measured_month from client_contact_histories cch inner join ( select * from action_histories ah where ah.contact_cd = 2 ) a on a.staff_id = cch.sales_staff_id and a.client_id = cch.client_id and a.action_date >= (select date_format(cch.measured_month,'%Y-%m-01')) and a.action_date < date_add((select date_format(cch.measured_month,'%Y-%m-01')),interval 1 month) group by cch.client_id, cch.measured_month ) com_num on cch.client_id = com_num.client_id and cch.measured_month = com_num.measured_month ) c on bd.division_id = c.division_id and bd.branch_id = c.branch_id #and c.measured_month >= '2015-02-01' #and c.measured_month < date_add('2015-03-01',interval 1 month)   and c.measured_month >= '2015-04-01' and c.measured_month < date_add('2015-04-01',interval 1 month) group by bd.branch_id order by bd.branch_id 
+# 全状況対応のSQL、参考までに。下部日付がFrom～Toです。率は求めていません。 SELECT bd.branch_id AS id, '' AS name , SUM(IF( c.latest_number > 0, 1, 0 )) AS 全体客数 , SUM(IF( c.remaining_contacts <= 0 , 1, 0 )) AS 達成顧客数 , SUM(IF( c.actual_contacts <= 0, 1, 0 )) AS 未接触顧客数 , SUM(IF( c.latest_number = 2, 1, 0 )) AS 密度2客数 , SUM(IF( c.latest_number = 2 and c.remaining_contacts <= 0, 1, 0 )) AS 密度2達成数 , SUM(IF( c.latest_number = 2 and c.remaining_contacts = 1, 1, 0)) AS 密度2接触中数 , SUM(IF( c.latest_number = 2 and c.actual_contacts <= 0, 1, 0)) AS 密度2未接触顧客数 , SUM(IF( c.latest_number = 1, 1, 0 )) AS 密度1客数 , SUM(IF( c.latest_number = 1 and c.remaining_contacts <= 0, 1, 0)) AS 密度1達成数 , SUM(IF( c.latest_number = 1 and c.actual_contacts <= 0, 1, 0)) AS 密度1未接触顧客数 , SUM(IF( c.latest_number > 0, 1, 0 )) AS 全体客数_CHECKED , SUM(IF( c.latest_number > 0 and c.jisseki >= c.latest_number, 1, 0 )) AS 達成顧客数_CHECKED , SUM(IF( c.latest_number > 0 and c.jisseki <= 0, 1, 0 )) AS 未接触顧客数_CHECKED , SUM(IF( c.latest_number = 2, 1, 0 )) AS 密度2客数_CHECKED , SUM(IF( c.latest_number = 2 and c.jisseki >= c.latest_number, 1, 0 )) AS 密度2達成数_CHECKED , SUM(IF( c.latest_number = 2 and c.jisseki = 1, 1, 0)) AS 密度2接触中数_CHECKED , SUM(IF( c.latest_number = 2 and c.jisseki <= 0, 1, 0)) AS 密度2未接触顧客数_CHECKED , SUM(IF( c.latest_number = 1, 1, 0 )) AS 密度1客数_CHECKED , SUM(IF( c.latest_number = 1 and c.jisseki >= c.latest_number, 1, 0)) AS 密度1達成数_CHECKED , SUM(IF( c.latest_number = 1 and c.jisseki <= 0, 1, 0)) AS 密度1未接触顧客数_CHECKED   from branches_divisions as bd left join ( select id as client_id, division_id, branch_id, sales_staff_id, latest_number, actual_contacts, remaining_contacts, (select object_string from global_variables) as measured_month, ifnull(com_num.num,0) as jisseki from clients c left join ( select cc.id as client_id, count(cc.id) as num from clients cc inner join ( select * from action_histories ah where ah.contact_cd = 2 ) a on a.staff_id = cc.sales_staff_id and a.client_id = cc.id and a.action_date >= (select date_format((select object_string from global_variables),'%Y-%m-01')) and a.action_date < date_add((select date_format((select object_string from global_variables),'%Y-%m-01')),interval 1 month) group by cc.id ) com_num on c.id = com_num.client_id where division_id = 3 and valid_classification_cd = 1 and deleted_at is null UNION ALL select cch.client_id, cch.division_id, cch.branch_id, cch.sales_staff_id, cch.latest_number, cch.actual_contacts, cch.remaining_contacts, cch.measured_month, ifnull(com_num.num,0) as jisseki from client_contact_histories cch left join ( select cch.client_id, count(cch.client_id) as num, cch.measured_month from client_contact_histories cch inner join ( select * from action_histories ah where ah.contact_cd = 2 ) a on a.staff_id = cch.sales_staff_id and a.client_id = cch.client_id and a.action_date >= (select date_format(cch.measured_month,'%Y-%m-01')) and a.action_date < date_add((select date_format(cch.measured_month,'%Y-%m-01')),interval 1 month) group by cch.client_id, cch.measured_month ) com_num on cch.client_id = com_num.client_id and cch.measured_month = com_num.measured_month ) c on bd.division_id = c.division_id and bd.branch_id = c.branch_id #and c.measured_month >= '2015-02-01' #and c.measured_month < date_add('2015-03-01',interval 1 month)   and c.measured_month >= '2015-04-01' and c.measured_month < date_add('2015-04-01',interval 1 month) group by bd.branch_id order by bd.branch_id
 MySQL INDEX TUNING
 	Where A = B --> ON ***(A,B)
 	Where A = ... ORDER BY B
@@ -85,7 +94,7 @@ MySQL INDEX TUNING
 		: set fenc=utf-8 | :set ff=unix | :w!
 		| %s/^\w*,/NULL,/gc
 	注意1:ID列のようなauto incrementカラムへはNULLを挿入する｡ しかし時刻列にNULLをインポートするとNULLではなく0000-00-00 00:00:00 に化けたりして､論理削除前提の動作環境では変になる｡(取得0件)
-	Excelで空白列にNULLとかくと変なことになりうまくいかない｡     
+	Excelで空白列にNULLとかくと変なことになりうまくいかない｡
 	LOAD DATA LOCAL INFILE "/opt/me/oksales_unistandard/db/seeds/var_prices.csv" INTO TABLE var_prices FIELDS TERMINATED BY ',';
 	　注意2:LOAD文はCSV名とtable-name二カ所なおすこと｡
 	結論:デフォルトでUTF8-UNIXでない環境RoRにむかない｡データ作成に手間取るだけ｡
@@ -105,6 +114,6 @@ MySQL INDEX TUNING
 		mysql列サイズ変更
 			mysql> alter table member_addresses modify  encrypted_postal_code varchar(25);
 			mysql> alter table member_addresses modify  encrypted_address  varchar(255);
-		
+
 		cf: mysqlt 列削除
 	　　　mysql> alter table categories_contents drop id;

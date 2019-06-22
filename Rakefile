@@ -85,7 +85,13 @@ task :install do
   # https://drive.google.com/open?id=0B6o6bFqaG4IHYV9vZU8xalJrbXM
   system "source ~/.bashrc;"
   result = `mv .git/hooks/pre-commit.sample .git/hooks/pre-commit`
-  result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; #raspell;" >> .git/hooks/pre-commit `
+  result = `echo "source ~/.bashrc; " >> .git/hooks/pre-commit `
+  result = `echo "rbcrails; mybugstaged; rbwcstaged; # rbprails; #raspell;  " >> .git/hooks/pre-commit `
+  if os == :macosx
+    result = `echo "__git_complete gibr _git_branch  " >> /usr/local/etc/bash_completion.d/git-completion.bash `
+    result = `echo "__git_complete gico _git_checkout" >> /usr/local/etc/bash_completion.d/git-completion.bash `
+  end
+
   puts "#############\n vim を起動して :NeoBundleInstall を実行してください \n #############\n"
 end
 

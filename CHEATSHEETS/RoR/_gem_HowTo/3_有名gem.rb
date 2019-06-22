@@ -719,3 +719,105 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
   #= f.collection_select field, {}, :id, :name, {}, class: 'form-control selects-staff-hoken'
   # 別途 CSS-classクリックに反応するJSをロードしておき、そこからAJAXでの帰り値を受け取ることは業務システム常用
   #
+
+# snippet_select2
+  Gemfile & its .lock
+    gem 'select2-rails'
+
+  app/assets/javascripts/application.js
+    //= require select2
+
+  app/assets/stylesheets/application.scss
+    @import "select2";
+    @import "select2-bootstrap";
+
+
+  @V
+    <div class="row px-3">
+      <%= f.label :some_attr_name, 'SomeLabelCaption', class: "col-xl-2 col-lg-3 col-md-4 text-primary bg-primary4 py-2" %>
+      <div class="form-group col-xl-10 col-lg-9 col-md-8 mt-1">
+        <%= f.select :some_attr_name, [], { include_blank: "❎消去前のデフォルト値" }, class: "browser-default custom-select", id: "select2_1" %>
+      </div>
+    </div>
+
+    // 基本
+    $('#select2').select2({
+      width: 'style',
+      theme: 'bootstrap',
+      placeholder: '<%= '❎消去後のデフォルト値' %>',
+      allowClear: true,
+      minimumInputLength: 1,
+    });
+
+
+    // AJAX つかうばあい
+    $('[id^="select2_"]').select2({
+      width: 'style',
+      theme: 'bootstrap',
+      placeholder: '<%= '❎消去後のデフォルト値' %>',
+      allowClear: true,
+      minimumInputLength: 1,
+      // ajaxでの表示値取得と placeholder+alloClearは両立困難でトリックが必要っぽい
+      // https://www.flatflag.nir87.com/remove-986#remove
+      // $(""select2-selection__clear").parant().nearest("span").removeClass; か。
+      ajax: {
+        cache: true,
+        url: "/pms/projects/1/basic/edit.json",
+        dataType: "json",
+        delay: 200,
+        data: function(params) {
+          return { "project[some_attr_name]": params.term };
+        },
+        processResults: function(data, params) {
+          return {
+            results: data.map( function(v) {
+              return { id: v.id, text: v.code + ": " + v.name };
+            })
+          };
+        }
+      }
+    });
+
+  @C
+    if request.xhr?
+      key = params[:project].keys.grep(/implementing_organization/).first
+      if key
+        json = ImplementingOrganization.where(
+          'name LIKE ? OR code LIKE ?', "%#{params[:project][key]}%", "%#{params[:project][key]}%"
+        ).select(:id, :code, :name).to_json
+      end
+      render json: json, status: :ok
+    end
+
+
+
+#wikechthmlpdf + tinyMCE
+  <% if controller_name == 'certificates' %>
+    <% rails_root_fqdn = (request.env["SERVER_PROTOCOL"].match(/^HTTP\//i) ? "http://" : "https://") + request.env["HTTP_HOST"] %>
+    <body style="background-image: url('<%= rails_root_fqdn %>/assets/background-img-only.png'); background-repeat: no-repeat; background-position: top left;"
+          class="hidden-sn apo" data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
+  <% else %>
+    <body class="hidden-sn apo" data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
+  <% end %>
+
+
+
+
+snippet_ror_dedign_aws_2019   AWSと添付連動
+  gem "carrierwave"
+  gem 'fog-aws'
+  OR
+  # see: https://edgeguides.rubyonrails.org/active_storage_overview.html
+  gem 'exception_notification', git: "git://github.com/smartinez87/exception_notification.git"
+  gem 'aws-sdk-core'
+  gem 'aws-sdk-sns', '~> 1.5'
+  gem 'aws-sdk-s3'
+
+
+
+  snippet_htmltoword @C
+        if %w[project_notification_documents project_implementation_plan_documents].include? params[:table_name]
+          # PJ03とPIP03ならば
+          return send_data(render_to_string( content: @export_content), filename: file_name)
+        end
+

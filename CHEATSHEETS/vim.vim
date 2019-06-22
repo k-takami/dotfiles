@@ -7517,21 +7517,6 @@ Vim日本語ドキュメント
 
 
 
-
-
-
-submit-technix
-	<%#= submit_tag l(:button_save), :kind => "save", :confirm => l(:button_curd_confirm) %>
-	<%= submit_tag l(:button_ticket), :kind => "ticket", :confirm => l(:button_ticket_confirm) %>
-	<%= javascript_tag do %>
-	  // Submitボタン切り替え
-	  $(document).ready(function() {
-		$(":submit").bind("click", function() {
-		  $("#commit_kind").val($(this).attr("kind"));
-		});
-	  });
-	<% end %>
-
 ファイルupdown
 	ベースは DB に保存で、キャッシュを使って高速化する
 G	複数アプリサーバにした場合のキャッシュ削除はキャッシュ削除用の API を用意して wget などする。

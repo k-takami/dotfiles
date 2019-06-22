@@ -5,6 +5,7 @@
 
   if Rails::VERSION::STRING >= "5"
     # config.public_file_server.enabled = false #rails5 画像無効化
+    BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
     # DOCKER ENV BEST
     # view設定
     config.action_controller.perform_caching = false #rails4-5 's defaults

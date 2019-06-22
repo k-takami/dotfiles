@@ -18,11 +18,11 @@ mytigbug; tigbug
 	ActionView::Helpers, ActionController::Base.helpers ,
 <%= debug @article %>
 
-#Rails-core 
+#Rails-core
 	template rendering = ActionView::LookupContext>
 	[32, 41] in /usr/local/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_controller/metal/implicit_render.rb
    32:     include BasicImplicitRender
-   33: 
+   33:
    34:     def default_render(*args)
    35:       if template_exists?(action_name.to_s, _prefixes, variants: request.variant)
    36:         render(*args)
@@ -72,13 +72,16 @@ From: /usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/loo
 	model, lib >> config/application.rb
 	module Myapp
   class Application < Rails::Application
+    # < rails4
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{*/}')]
-	#some_body nested loading 
+    # > rails5
+    config.paths.add 'lib', eager_load: true
+	#some_body nested loading
 		config.autoload_paths += Dir["#{Rails.root}/app/models/*"] #recursive
 		# config.autoload_paths += Dir["#{Rails.root}/app/viewmodels/*/"] #just 1 dir
 		#some_body nested loading ##################################################
 		IP判定
-		　   
+		　
 
 
 
@@ -102,7 +105,7 @@ request.env["HTTP_USER_AGENT"]
 			class MemberPasscodesDecorator < Draper::Decorator
 			delegate_all
 #validator
-	@M: 
+	@M:
 		attr_accessor :hokensha_bango, :upload_file
 		validates :hokensha_bango, presence: true, numericality: { only_integer: true }, length: { in: 7..8 }
 		...
@@ -112,7 +115,7 @@ request.env["HTTP_USER_AGENT"]
 			return if record.upload_file.blank?
 	　
 	1 orf 2
-	M 
+	M
 validate :presence_of_first_name_or_second_name
 
   private
@@ -127,7 +130,7 @@ validate :presence_of_first_name_or_second_name
     end
   end
 	regexp
-	#BUILTIN  
+	#BUILTIN
   validates :insurance_code, format: { with: /^[a-zA-Z0-9]{1,8}$/ }
   validates :number, presence: true, if: Proc.new{|_self| _self.number.to_s !~ /\A\-*\d+\z/}
 
@@ -169,11 +172,11 @@ validate :presence_of_first_name_or_second_name
 
 
 
-	
+
 #callbacks
 	prepend_before_filter ＞ before_filter
 	skip_before_filter #<---親コントローラー設定したフィルターを、子コントローラーでは無効化
-	
+
 
 
 
@@ -274,3 +277,54 @@ select_allとほぼ一緒。同じようなメソッドとしてdelete, insert�
       #before/after/around_filter do |cntroller_name|
         #--> controller.self.filter  #100  flash
     #335  validate_xxx
+
+
+
+
+
+    ### snippet_rails_controllers コントローラーにありがちな処理
+      @model = eval(controller_name.singularize.classify)
+      rails_root_fqdn = request.url.slice /^.+#{request.env["HTTP_HOST"]}/  || root_url.chop
+      possible_approval_id = request.referer&.slice(/approval_object_lists\/(\d+)/, 1)
+      Rack::Utils.parse_nested_query(format)['master_torihikisaki_id']
+
+
+
+  **snippet_cyclic連番** ---> RoR
+    / 論理削除されていない範囲でcodeに"000"~"999"連番をサイクリックにセット
+    - numerized_code = @resource&.class&.last&.code.to_i
+    - unless @resource&.code
+
+      = f.hidden_field :code, value: ((numerized_code + 1) < 999 ? (numerized_code + 1).to_s.rjust(3 , '0') : '000')
+
+  snippet_view_jquery
+  <script src="https://code.jquery.com/jquery-3.1.0.slim.min.js"></script>
+
+
+
+
+
+
+### snippet-rails-model モデルにありがちな処理
+  snippet_複数の子レコードを作成・更新する RoR . accepts_nested_attributes_for
+  =　has_*** dependent ?
+  https://qiita.com/hmuronaka/items/818c421dc632e3efb7a6
+  snippet_Rails5 FK制約テーブルドロップ ---> Rails5
+  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development  rake db:drop
+  ORM 一方向：keyは両方書かないとバギー　uniratarall
+  has_one :master_torihikisaki, class_name: 'Master::Torihikisaki', foreign_key: 'id',  primary_key: 'master_torihikisaki_id'
+  Rack::Utils.parse_nested_query(format)['master_torihikisaki_id']
+
+  validates :some_attr, presence: true, numericality: {true|false|other_than: 0 }
+  e, length: { "is/maximum/minimum": 2 }, uniqueness: { scope: :deleted_at }
+
+    # チェックが入っている場合限定;  ↓
+    with_options if: :filter_date do
+      validates :date, presence: true
+      validate :end_after_start
+    end
+
+
+
+
+

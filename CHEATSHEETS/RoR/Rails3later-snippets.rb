@@ -86,10 +86,6 @@ require "activerecord-import/base"
 
 
 
-時間計算
-	３時間ごと：work_hour_per_three = (9..24).to_a.collect { |x| ["#{x}:00"] if x % 3 == 0 }.compact.flatten
-コンバーターパターン
-
 
 		class_variable_
 CSV

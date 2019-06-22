@@ -39,33 +39,36 @@
         .new, .createと同時に関連モデルも保存
         :destroy従属モデルがあればそれも破棄    有           有                有              有
 
-        class_name:                        有           有                有              有
-        validate:                          有           有                有              有
-        foreign_key:                       有           有                有              有
-        dependent:                         有           有                有
+        class_name:                             有           有                有              有
+        validate:                               有           有                有              有
+        foreign_key:                            有           有                有              有
+        dependent:                              有           有                有
           :destroyを指定すると、関連付けられたオブジェクトも同時にdestroy
           :deleteを指定すると、関連付けられたオブジェクトはデータベースから物理削除。コールバックは実行なし
           :nullifyを指定すると、外部キーがNULLに設定されます。コールバックは実行なし
           :restrict_with_exceptionを指定すると、関連付けられたレコードがある場合に例外が発生
           :restrict_with_errorを指定すると、関連付けられたオブジェクトがある場合にエラーがオーナーに追加
 
-        inverse_of:                        有           有                有
-        primary_key:                       有           有                有
-                                        source:         source:
-        as: PVJMN                          有           有                polymorphic: true
-                                                                         (as: PVJMN, source_type: )
-        counter_cache: (true|カラム名)                   有                有
-        .sizeメソッド呼び出しでつかう。
+        inverse_of:                             有           有                有
+        primary_key:                            有           有                有
+                                             source:         source:
+        as: PVJMN                               有           有                polymorphic: true
+                                                                              (as: PVJMN, source_type: )
+        counter_cache: (true|カラム名)                        有                有
+        .sizeメソッド呼び出しでつかう。      
         SQL回避
-                                                                                        association_foreign_key:
-                                                                                        ＊多対多の自己結合を行いたいときに
-                                                                        touch: trueならば
-                                                                        updated_atに関連モデル
-                                                                        のdestroy時刻も記録
+                                                                                             association_foreign_key:
+                                                                                             ＊多対多の自己結合を行いたいときに
+                                                                             touch: trueならば
+                                                                             updated_atに関連モデル
+                                                                             のdestroy時刻も記録
 
-                                                                        optional: true
-                                                                        ならば関連付けMの
-                                                                        validateしない
+                                                                             optional: true
+                                                                             ならば関連付けMの
+                                                                             validateしない
+                                        has_one対象はbuild_すると
+　　　　　　　　　　　　　　　　　　　　ORMで自動消去される
+
 
 |                                                                                    | has_one(through: 結合モデル名)                    | has_many    | belongs_to                                                | has_and_belongs_to_many                                    |     |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------- | ----------- | --------------------------------------------------------- | ---------------------------------------------------------- | --- |
@@ -92,7 +95,7 @@
   *  :restrict_with_errorを指定すると、関連付けられたオブジェクトがある場合にエラーがオーナーに追加
 
     #### ORM設定後の自動派生メソッド
-    + build_関連モデル名(attributes = {})
+    + build_関連モデル名(attributes = {}) <--- NOTE: has_one対象はbuild_するとORMで自動消去される
     + create_関連モデル名(attributes = {})
     + create_関連モデル名!(attributes = {})
     + reload_関連モデル名
@@ -270,74 +273,27 @@ ENUM
 		﻿  enumerize :trigger_type, in: { time: 1, lot: 2, request: 3, purchase: 4, bonus: 5, consume: 6, direct_add: 7, direct_reduce: 8, expired: 9 }, scope: true
 
 
-Validation
-----------
+snippet_ar_validators
+--------------------
+  validates :some_attr, presence: true, numericality: {true|false|other_than: 0 }{only_integer: true }, length: { "is/maximum/minimum": 2, in: 6..20, too_short: " %{count} is shortness", too_log: " %{count} is exceeding",tokenizer: lambda {|str| str.scan(/\w+/)} }, uniqueness: { scope: :deleted_at }, :format => { :with => /\A[a-zA-Z]+\z/, :message => "Only letters allowed" }
+
+### Validate if and custom
+  with_options if: :filter_date do
+    validates :date, presence: true
+    validate :foo_cant_be_nil
+  end
+  def foo_cant_be_nil
+    errors.add(:foo, 'cant be nil')  if foo.nil?
+  end
 
 ### Validate checkboxes
-
-    class Person < ActiveRecord::Base
       validates :terms_of_service, :acceptance => true
-    end
-
 ### Validate associated records
-
-    class Library < ActiveRecord::Base
       has_many :books
       validates_associated :books
-    end
-
 ### Confirmations (like passwords)
-
-    class Person < ActiveRecord::Base
       validates :email, :confirmation => true
-    end
-
-### Validate format
-
-    class Product < ActiveRecord::Base
-      validates :legacy_code, :format => { :with => /\A[a-zA-Z]+\z/,
-        :message => "Only letters allowed" }
-    end
-
-### Validate length
-
-    class Person < ActiveRecord::Base
-      validates :name, :length => { :minimum => 2 }
-      validates :bio, :length => { :maximum => 500 }
-      validates :password, :length => { :in => 6..20 }
-      validates :registration_number, :length => { :is => 6 }
-
-      validates :content, :length => {
-        :minimum   => 300,
-        :maximum   => 400,
-        :tokenizer => lambda { |str| str.scan(/\w+/) },
-        :too_short => "must have at least %{count} words",
-        :too_long  => "must have at most %{count} words"
-      }
-    end
-
-### Numeric
-
-    class Player < ActiveRecord::Base
-      validates :points, :numericality => true
-      validates :games_played, :numericality => { :only_integer => true }
-    end
-
-### Non-empty
-
-    class Person < ActiveRecord::Base
-      validates :name, :login, :email, :presence => true
-    end
-
-### custom
-
-    class Person < ActiveRecord::Base
-      validate :foo_cant_be_nil
-
-      def foo_cant_be_nil
-        errors.add(:foo, 'cant be nil')  if foo.nil?
-      end
-    end
+        
 
 API
 ---
@@ -413,26 +369,26 @@ Overriding accessors
 
  * http://api.rubyonrails.org/classes/ActiveRecord/Base.html
 
-Callbacks
----------
-    ActiveRecordのコールバック早見表 | Rails
+
+snippet_ar_callbacks ActiveRecordのコールバック語呂合わせ：= _SaVaCrUD前後TouCoRoFiIn後
+--------------------
     コールバック名	説明
-    after_find	findなどでオブジェクトが見つかった場合に実行。検索結果の数だけコールバックが実行
-    after_initialize	オブジェクトがインスタンス化されたタイミングで実行。オブジェクト分だけ実行
-    before_validation	バリデーションが行われる直前で実行。カラム値の微調整に利用
-    after_validation	バリデーションの直後に実行。バリデーションが失敗しても実行
+    *ab == [avter/before] 
+    ab_save	オブジェクトがDBに保存される前後で実行。INSERT、UPDATE両方で実行
+    ab_validation	バリデーションが行われる前後で実行。カラム値の微調整に利用
+    ab_create	オブジェクトがDBに新規保存(INSERT)される前後で実行されます
+    ab_update	オブジェクトにより、DBを更新(UPDATE)する前後で実行されます
+    ab_destroy	destroyメソッドで削除される前後に実行されます
 
-    before_create	オブジェクトがDBに新規保存(INSERT)される直前で実行されます
-    before_save	オブジェクトがDBに保存される直前で実行。INSERT、UPDATE両方で実行
-    before_update	オブジェクトにより、DBを更新(UPDATE)する直前で実行されます
-    before_destroy	destroyメソッドで削除される直前に実行されます
-    after_create	オブジェクトがDBに新規保存(INSERT)された直後で実行されます
-    after_save	オブジェクトをDBに保存した直後で実行。INSERT、UPDATE両方で実行
-    after_update	オブジェクトにより、DBを更新(UPDATE)した直後で実行されます
-    after_destroy	destroyメソッドで削除された直後に実行されます
-
+    after_touch	touchメソッドが呼び出された直後に実行されます
     after_commit	after_save後のDBにCOMMITされた直後に実行されます
     after_rollback	バリデーションエラーやSQLエラーが発生した場合に実行されます
-    after_touch	touchメソッドが呼び出された直後に実行されます
+    after_find	findなどでオブジェクトが見つかった場合に実行。検索結果の数だけコールバックが実行
+    after_initialize	オブジェクトがインスタンス化されたタイミングで実行。オブジェクト分だけ実行
+
+snippet_ativerecord_debug: before_destroy { Rails.logger.info { "--------- DEBUG UNEXCPECTED CHANGE ---- " + caller.split.join("\n") } }
+
+
+snippet_ar__attributes: == Model.columns_hash
 
 

@@ -1,5 +1,4 @@
-#語呂合わせ
-  mabopako: margin/border/padding/contents
+#語呂合わせ mabopako: margin/border/padding/contents
   医者ｸラップ: .=> class, # =>ID
 `配色はオレンジとピンク中心、＋えだまめ色、背景は白`を心がける
 
@@ -165,3 +164,19 @@ Media query   #TOGGLING AND RESISING BY THRESHOLD
   background: linear-gradient(to bottom, black, black);
   background-size: cover;
   background-position: center;
+
+#font フォント追加(wikedpdf以外: wikedpdfははじめからbase64encodingで処理すべき
+
+@font-face{ font-family: Vladimir; font-weight:400;
+  src:local(Vladimir),
+      url('certificate/VLADIMIR.TTF') format("truetype");
+}
+@font-face{ font-family: Calibri; font-weight:400;
+  src:local(Calibri),
+      url('certificate/Calibri_Apple.ttf') format("truetype"),
+      url('certificate/Calibri_MicroSoft.ttf') format("truetype");
+}
+
+#Windows + tinyMCEは最初からbase64のフォントも無理だからwebfontにすべき
+
+snippet_sransparent {border: none: border: transparent;}

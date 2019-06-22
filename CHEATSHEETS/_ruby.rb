@@ -334,7 +334,7 @@ gem
 *h 041 文字列の一部を取り出す 69
       * 042 正規表現にマッチした部分を取り出す 71
         str1stMatch = str1.slice(/RE(group)/, 0)
-          slice(XXX,[0..n])にはマッチしたキャラクタークラス\0..\nが格納される
+          slice(XXX,[0..n])にはマッチしたキャラクタークラス\0..\nが格納される. .scan(/some_pattern\/(some_group)/).flatten[n]とおなじだが短文
         retary = str1.scan(/RE/)
         retaryCollection = str1.scan(/(grp1)(grpN)/)
         retary = /RE(grp1)i(grp2)(grpN)/.match("line").to_a[1..-1]
@@ -581,6 +581,9 @@ gem
         filteredHash = hash1.reject!{ |key, value| key/value-condition }
         hash1.reject!{ |key, value| key/value-condition }
         hash1.clear  #<= all
+        snippet_non_blank_and_mapped_array: 空白値を除去して変換
+          some_array = some_array.uniq.map(&:to_s).reject(&:empty?).map!{|i| SomeObj.some_method(i)}
+
       * 117 ハッシュの内容を表示する 181
         hash1.inspect  #<= into strngs
         hash1.each{ |key, value|
@@ -597,13 +600,20 @@ gem
         ruby1.8hash1["x"] << y; ruby1.8hash1["x"] << y1  ...
 *h 120 ハッシュのキーと値を入れ替える 186
         .invert
-      * 121 配列やハッシュをソートする  = sort, sort_by 187
+      * 122 配列やハッシュやActiveRecordをソートする  = sort_by, sort 187 snippet_sort
         sortedAry =  ary1.sort
         sortedAry =  ary1.sort{|a,b| a.to_f <=> b.to_f } #<= convert into float
         #以下はキー順ソート、値順ソート、キーで第一値で第二ソートする書き方
         sortedHash =  Hash.sort_by{|key,value| key}
         sortedHash =  Hash.sort_by{|key,value| value}
 #        sortedHash =  Hash.sort_by{|key,value| [key,value]}
+        # Rails 別のname配列出現順でソート
+          aryX = MemberCountry.pluck(:name)[5..-1]
+            collection = collection.sort_by{|x| aryX.index x.value }# 配列内での値出現index順
+        #Rails 別テーブルでORMソート
+          scope :ordered, -> { includes(:availabilities).order('availabilities.price') }
+
+
       * 122 ハッシュをマージする 189
         hash1.update(hash2)
 #        #値の大きい方を勇戦してマージするブロック月記述例
@@ -896,6 +906,30 @@ gem
         Time.at(nnnnn1)- Time.at(nnnnn2)
       * 197 日時をフォーマットする 304
         require"date";DateTime.[now].strftime("%[AaBcdHIjMmpSUWwXxYyZz%]")
+          フォーマット	説明
+          %A	曜日の名称(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
+          %a	曜日の省略名(Sun, Mon, Tue, Wed, Thu, Fri, Sat)
+          %B	月の名称(January, February, March, April, May, June, July, August, September, October, November, December)
+          %b	月の省略名(Jan, Feb, Mar, Aprm May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
+          %c	日付と時刻
+          %d	日(01-31)
+          %H	24時間制の時(00-23)
+          %I	12時間制の時(01-12)
+          %j	年中の通算日(001-366)
+          %M	分(00-59)
+          %m	月を表す数字(01-12)
+          %p	午前または午後(AM,PM)
+          %S	秒(00-60) (60はうるう秒)
+          %U	週を表す数。最初の日曜日が第1週の始まり(00-53)
+          %W	週を表す数。最初の月曜日が第1週の始まり(00-53)
+          %w	曜日を表す数。日曜日が0(0-6)
+          %X	時刻
+          %x	日付
+          %Y	西暦を表す数
+          %y	西暦の下2桁(00-99)
+          %Z	タイムゾーン
+          %%	パーセント文字
+
       * 198 文字列を日時に変換する 306
         require"time";Time.parse("str1")
         require"date";Date.parse("str1")
@@ -1103,6 +1137,7 @@ gem
       require'cgi'
       CGI.escape(str)
       CGI.unescape(str)
+      cf: "str".html_safe === raw "str"
     * 236 HTMLをエスケープする/エスケープを外す 376
       require'cgi';CGI.escapeHTML(str)
       require'cgi';CGI.unescapeHTML(str)
@@ -1191,8 +1226,9 @@ gem
           end
     * 254 キーワード引数(== Hash引数）を使う 408
       calling(:symbol1 => "xxx", ...:symbolN => "yyy" )
-    * 255 モジュール関数を定義する 409
+    * 255 モジュール関数を定義する 409 snippet_module_methodize
       module_function :method_name
+
     * 257 同じインスタンス変数をクラスごとにプライベートにするのは不可能 411
     * 258 オブジェクトやクラスにメソッドが存在するか調べる 413
      obj.responde_to?(:sym, [boolean] #第二引数にtrue指定だとprivateなメソッドの確認ができる

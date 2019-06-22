@@ -540,7 +540,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
     NeoBundle 'scrooloose/nerdtree'
     NeoBundle 'fugitive.vim'
-    NeoBundle 'rails.vim'
+    " NeoBundle 'rails.vim'
     NeoBundle 'Rename.vim'
     NeoBundle 'ragtag.vim'
     " diff mode ON/OFF below
@@ -628,7 +628,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
     " Tell Neosnippet about the other snippets
     let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
-    " vim-rails (tpopo) and NeoSnippets compo
+    " vim-rails (tpope) and NeoSnippets compo
     autocmd User Rails.controller*           NeoSnippetSource ~/.vim/snippets/ruby.rails.controller.snip
     autocmd User Rails.model*                NeoSnippetSource ~/.vim/snippets/ruby.rails.model.snip
     autocmd User Rails.view*                 NeoSnippetSource ~/.vim/snippets/ruby.rails.view.snip

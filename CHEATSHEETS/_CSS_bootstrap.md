@@ -1,3 +1,18 @@
+
+snippet_html5_tag_nesting: html5の入れ子タグ早見表
+div            	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+span           	 a                        	 br    	 em    	 img     	 input    	 label 	 span 	 strong 	 svg
+a              	 親要素のコンテンツモデルを継承
+h1〜h6         	 a                        	 br    	 em    	 img     	 input    	 label 	 span 	 strong 	 svg
+p              	 a                        	 br    	 em    	 img     	 input    	 label 	 span 	 strong 	 svg
+ul/ol          	 liのみ（例外：template,script）
+li             	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+table          	 tbody                    	 thead 	 tfoot 	 caption 	 colgroup
+th/th          	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+dl             	 dt                       	 dd    	 div
+dt/dd          	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+
+
 # [Bootstrap(v3.2.0) Cheat Sheet](https://github.com/ufologist/bootstrap-cheat-sheet)
 *v0.1.0 2014-8-15 by [Sun](https://github.com/ufologist)*
 
@@ -432,6 +447,6 @@ xssmmdlg: xs-sm-md-lg:
    should be sass:
       data-toggle="collapse" data-target=".bootstrap-datetimepicker-widget"
 
-
+# bootstrap色語呂合わせ：psiwd + dl(default,link)
 
 
