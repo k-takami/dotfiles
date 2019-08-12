@@ -1,7 +1,7 @@
     snippet_rails_session_basic  read/write基本（ロケットハッシュはダメ, ページ移動すると数値キーが数字に化ける）
           session['pj'] = {@project.id => {'switch' => params[:switch] == 'true'}}
           @switch   = session.to_hash.dig('pj', @project.id.to_s, 'switch')
-          @switch ||= CertificateDocument.find_by(project_id: @project.id).issued_by_manual
+          @switch ||= CertificateDocument.find_by(project_id: @project.id).issued_by_manual if @switch.nil?
 
 
     snippet_post_method_1_erb

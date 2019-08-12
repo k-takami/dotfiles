@@ -50,3 +50,15 @@ snippet_submit-technix
 	<% end %>
 
 
+
+#大項目小項目チェック連動
+    // 大項目チェックボックス整頓
+    $(document).ready(function() {
+      $("legend div .top_check_box").each(function (index) {
+        var selector = "*:checkbox[id^='f_check_" + String(index + 1) + "_']:checked"
+        if ($(this).closest('fieldset').find(selector).length == 0) {
+          $(this).prop('checked', false)
+        }
+      });
+    });
+

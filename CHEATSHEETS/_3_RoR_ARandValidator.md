@@ -277,13 +277,19 @@ snippet_ar_validators
 --------------------
   validates :some_attr, presence: true, numericality: {true|false|other_than: 0 }{only_integer: true }, length: { "is/maximum/minimum": 2, in: 6..20, too_short: " %{count} is shortness", too_log: " %{count} is exceeding",tokenizer: lambda {|str| str.scan(/\w+/)} }, uniqueness: { scope: :deleted_at }, :format => { :with => /\A[a-zA-Z]+\z/, :message => "Only letters allowed" }
 
+  参考：~/dotfiles/SI/BAK/F/users_controller.rb 
+        https://api.rubyonrails.org/classes/ActiveRecord/Validations/ClassMethods.html#M002457
+          validates_absence_of, validates_associated, validates_length_of, validates_presence_of, validates_size_of, validates_uniqueness_of
+
 ### Validate if and custom
   with_options if: :filter_date do
     validates :date, presence: true
     validate :foo_cant_be_nil
   end
   def foo_cant_be_nil
-    errors.add(:foo, 'cant be nil')  if foo.nil?
+    errors.add(:email, "Personal Data with same email address already exists.") if array_email_tel.assoc(email)
+    errors.add(:mobile_tel, "Personal Data with same mobile phone number already exists.") if array_email_tel.rassoc(mobile_tel)
+    # raise ActiveRecord::Rollback
   end
 
 ### Validate checkboxes
@@ -370,10 +376,13 @@ Overriding accessors
  * http://api.rubyonrails.org/classes/ActiveRecord/Base.html
 
 
+snippet_ar_status ARレコードの状態をチェック語呂合わせ：= NePerDesCha? (new_record?/persisted?/destroyed?/changed?)
+-----------------
+
 snippet_ar_callbacks ActiveRecordのコールバック語呂合わせ：= _SaVaCrUD前後TouCoRoFiIn後
 --------------------
     コールバック名	説明
-    *ab == [avter/before] 
+    *ab == [after/before] 
     ab_save	オブジェクトがDBに保存される前後で実行。INSERT、UPDATE両方で実行
     ab_validation	バリデーションが行われる前後で実行。カラム値の微調整に利用
     ab_create	オブジェクトがDBに新規保存(INSERT)される前後で実行されます

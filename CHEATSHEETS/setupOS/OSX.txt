@@ -14,8 +14,8 @@ shortcut [[https://support.apple.com/ja-jp/HT201236]]
 		「フルキーボードアクセス」の項目で「すべてのコントロール」を選択
     Command+Wを押して、システム環境設定ダイアログを閉じれば、OKです。
 
-    アクセシビリティ」    「ディスプレイ」「カーソルのサイズ」
-Tip:   ポインタを一時的に大きくするには、トラックパッド上で指をさっと動かすか、マウスをさっと動かします。この機能を切にするには、「アクセシビリティ」環境設定の「ディスプレイ」パネルで「マウスポインタをシェイクして見つける」を選択解除します。
+  アクセシビリティ」「ディスプレイ」「カーソルのサイズ」を最大化
+                    「マウスポインタをシェイクして見つける」 check
 
 	User & Group--> 既存ユーザーにパスワード設定
 	一般-->システムブラウザー ※OSX 10.9以降
@@ -23,6 +23,8 @@ Tip:   ポインタを一時的に大きくするには、トラックパッド�
 	mouse --> right click enabling
 	CONDITIONAL
 		Dock --> hide automatically
+  Mission Control ---> dashboardを操作スペースにする、overlay表示をセレクト
+
 //バッテリー使用時にsleepを休眠に sudo pmset -b hibernatemode 25
 Finderで「初期表示は~/Download」「全拡張子表示＆リスト表示」にして端末で以下コマンドでdotfiles表示；
 	defaults write com.apple.finder AppleShowAllFiles TRUE
@@ -61,12 +63,18 @@ map auto_home on /home (autofs, automounted, nobrowse)
 vagrant@192.168.33.10:/home/vagrant/Publus_Server on /Users/appirits_1020380/Downloads/src/Publus_Server (osxfuse, nodev, nosuid, synchronous, mounted by appirits_1020380)
 
 #shortcuts
-  ctrl+command+d: 辞書ひく
+  辞書ひく: triple-tap || ctrl+command+d:
+  siri起動: option+spaceおしっぱなし
+  dashboard: F12
 
 # ~/.gitconfig ---> [error: There was a problem with the editor 'mate -w'.]をさけるため
 git config --global core.editor vim
 cat ~/.gitconfig
 
+
+# Draw on My Screen EZ 4+ https://apps.apple.com/jp/app/draw-on-my-screen-ez/id1082177879?mt=12
+command+alt ===> draw mode
+command+ctrl ===> erase all
 
 
 #OSX ruby環境 #sidekiq はruby 2.2.0で動作不調

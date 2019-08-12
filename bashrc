@@ -636,7 +636,7 @@ function gplogicob { # $1==base_branch  optional $2==new_branch_name
 }
 function tarzipgirbplodkrakeannotate { #Rails.rootで実行 引数= girreponameリモートブランチ名 docker-container名
   cd .. ;
-  tarziprorgitonly $1;
+  tarzipgitonly $1;
   girbplo $2
   echo " ###TODO: bundle install &&  bin/rake db:reset:with_data && annotate --force をコンテナで実行してください"
   echo " ###TODO: bundle install &&  bundle install && bin/rails db:drop db:create ridgepole:apply data:migrate db:seed をコンテナで実行してください"

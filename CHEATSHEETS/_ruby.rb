@@ -541,6 +541,7 @@ gem
         Array#.values_at(n, m, o)
       * 100 配列のインデックスと要素のペアを取得する 164
         ary1.each_with_index{|el| ...}
+        ary1.each.with_index(n) {|el| ...}  #<---- 要素nからオフセットして反復する
       * 101 同じ値で配列の要素を埋める 165
         ary1.fill(value)
         ary1.new; ary1.new(kosuu, value);
@@ -609,7 +610,17 @@ gem
 #        sortedHash =  Hash.sort_by{|key,value| [key,value]}
         # Rails 別のname配列出現順でソート
           aryX = MemberCountry.pluck(:name)[5..-1]
-            collection = collection.sort_by{|x| aryX.index x.value }# 配列内での値出現index順
+          collection = collection.sort_by{|x|
+            pos = aryX.index x.value;
+            [(pos.nil? ? collection.count : pos), x.another_sortkey1, x.another_sortkey2, ...]
+          }# 配列内での値出現index順, ほかのソートキーなどを配列化してブロックでわたす
+
+          collection = collection.sort_by do |x|
+            emergence_position = names_of_countries.index x.resource_person.country_of_residence
+            [(emergence_position.nil? ? collection.count : emergence_position), x.full_name]
+        end
+
+
         #Rails 別テーブルでORMソート
           scope :ordered, -> { includes(:availabilities).order('availabilities.price') }
 
