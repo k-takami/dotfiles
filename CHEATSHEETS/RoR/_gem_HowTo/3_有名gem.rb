@@ -683,6 +683,13 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
   rake paperclip:refresh:missing_styles  # Regenerates missing thumbnail styles for all classes using Paperclip.
   rake paperclip:refresh:thumbnails      # Regenerates thumbnails for a given CLASS (and optional ATTACHMENT and STYLES splitted by comma).
 
+# papertrail
+  # pp item_in_workflow.versions.map{|a,b| a.object&.slice(/updated_at:.*0/m)}
+     (byebug) pp item_in_workflow.versions.reverse.map{|a,b| a.object&.slice(/updated_at:.*0/m)}
+     (byebug) pp item_in_workflow.versions.to_a.sort{|a,b| a.object&.slice(/updated_at:.*0/m) <=> b.object&.slice(/updated_at:.*0/m)}
+     *** ArgumentError Exception: comparison of PaperTrail::Version with PaperTrail::Version failed
+
+
 
 #rubyXL
   #セル結合ロジック
@@ -720,75 +727,6 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
   # 別途 CSS-classクリックに反応するJSをロードしておき、そこからAJAXでの帰り値を受け取ることは業務システム常用
   #
 
-# snippet_select2
-  Gemfile & its .lock
-    gem 'select2-rails'
-
-  app/assets/javascripts/application.js
-    //= require select2
-
-  app/assets/stylesheets/application.scss
-    @import "select2";
-    @import "select2-bootstrap";
-
-
-  @V
-    <div class="row px-3">
-      <%= f.label :some_attr_name, 'SomeLabelCaption', class: "col-xl-2 col-lg-3 col-md-4 text-primary bg-primary4 py-2" %>
-      <div class="form-group col-xl-10 col-lg-9 col-md-8 mt-1">
-        <%= f.select :some_attr_name, [], { include_blank: "❎消去前のデフォルト値" }, class: "browser-default custom-select", id: "select2_1" %>
-      </div>
-    </div>
-
-    // 基本
-    $('#select2').select2({
-      width: 'style',
-      theme: 'bootstrap',
-      placeholder: '<%= '❎消去後のデフォルト値' %>',
-      allowClear: true,
-      minimumInputLength: 1,
-    });
-
-
-    // AJAX つかうばあい
-    $('[id^="select2_"]').select2({
-      width: 'style',
-      theme: 'bootstrap',
-      placeholder: '<%= '❎消去後のデフォルト値' %>',
-      allowClear: true,
-      minimumInputLength: 1,
-      // ajaxでの表示値取得と placeholder+alloClearは両立困難でトリックが必要っぽい
-      // https://www.flatflag.nir87.com/remove-986#remove
-      // $(""select2-selection__clear").parant().nearest("span").removeClass; か。
-      ajax: {
-        cache: true,
-        url: "/pms/projects/1/basic/edit.json",
-        dataType: "json",
-        delay: 200,
-        data: function(params) {
-          return { "project[some_attr_name]": params.term };
-        },
-        processResults: function(data, params) {
-          return {
-            results: data.map( function(v) {
-              return { id: v.id, text: v.code + ": " + v.name };
-            })
-          };
-        }
-      }
-    });
-
-  @C
-    if request.xhr?
-      key = params[:project].keys.grep(/implementing_organization/).first
-      if key
-        json = ImplementingOrganization.where(
-          'name LIKE ? OR code LIKE ?', "%#{params[:project][key]}%", "%#{params[:project][key]}%"
-        ).select(:id, :code, :name).to_json
-      end
-      render json: json, status: :ok
-    end
-
 
 
 #wikechthmlpdf + tinyMCE
@@ -820,4 +758,11 @@ snippet_ror_dedign_aws_2019   AWSと添付連動
           # PJ03とPIP03ならば
           return send_data(render_to_string( content: @export_content), filename: file_name)
         end
+
+
+#     gem 'activerecord-import'; on_duplicate_key_update
+      .import rengokai_temps, on_duplicate_key_update: { conflict_target: [:id] }
+      「:on_duplicate_key_update」: ユニークキーが重複したカラムを更新したい場合に設定
+      「:timestamps」: falseを設定すると、自分でcreated_at,created_on,update_at,update_on を      「:validate」: falseを設定すると、モデル検証をスキップする(デフォルトはtrue)
+
 

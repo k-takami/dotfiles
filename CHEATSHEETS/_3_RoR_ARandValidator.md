@@ -395,6 +395,10 @@ snippet_ar_callbacks ActiveRecordのコールバック語呂合わせ：= _SaVaC
     after_find	findなどでオブジェクトが見つかった場合に実行。検索結果の数だけコールバックが実行
     after_initialize	オブジェクトがインスタンス化されたタイミングで実行。オブジェクト分だけ実行
 
+
+    SomeModel.skip_callback(:create, :before, :some_method); ****** ; SomeModel.set_callback(:create, :before, :some_method)  #<--- some_methodをかかないとうごかないんじゃないかなRoR5
+
+
 snippet_ativerecord_debug: before_destroy { Rails.logger.info { "--------- DEBUG UNEXCPECTED CHANGE ---- " + caller.split.join("\n") } }
 
 

@@ -62,3 +62,7 @@ snippet_submit-technix
       });
     });
 
+
+#selectbox text取得　JQ
+$('#project_implementation_plan_receiving_country_id option:selected').text()
+

@@ -8,7 +8,10 @@
     brew install caskroom/cask/brew-cask cask # virtualbox
     brew install docker docker
     # OSX　container場所(VMsizeはpreference->Disk)：　/Users/user/Library/Containers/com.docker.docker/Data/vms/0/
-
+    # Preference->Diskで64GBにしとくといい。
+      起動中のコンテナがあるなら、止めてからresizeできる。
+      そうしないとno space left on device警告が頻発する。
+        全体管理領域は/Library/Containers/com.docker.docker//Data/vms/0/Docker.raw (旧バージョンでは*.qcow2|*.dcow2)がわりあて領域。
 # 2. リポジトリのクローン
 #   コマンドプロンプト(Windows)、ターミナル(macOS)で以下を実行。
   git clone --recursive git@github-ext.dena.jp:Thelxinoe/platinum-dev-env.git

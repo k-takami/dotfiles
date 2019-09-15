@@ -142,7 +142,7 @@ function dkc_rdbinit {
 #
 #  docker exec -it コンテナ名 コマンド
 #  # なんらかのコマンドを外部から注入して実行する ex. rake db:migrate など
-#  docker run container_name rake db:migrate
+#  docker run --rm container_name rake db:migrate
 #  # なんらかのコマンドを内部に入って実行する
 #  docker exec -it container_name bash
 #  #TODO: コンテナ結合＆ポートフォワーディング指定でコンテナ作成 先ほど作ったイメージでtestappコンテナを作成し起動させます。
@@ -160,7 +160,8 @@ function dkc_rdbinit {
 #    $ docker save repository:tag  > example_save.tar
 #    $ docker load < example_save.tar
 
-
+# dockerコンテナのhost/guest mout point 確認
+  # $ docker inspect container_name | grep "Mounts" -C10
 
 
 #==== ~/.rvm/bin/rvm ==========================
@@ -300,6 +301,7 @@ alias dusbh='    du -sbh  '                #count file size under some dir
 alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir:
 
 alias cdd=' cd ~/dotfiles'
+alias myvim='cdd; vim -S ~/sessionATOMMAN'
 alias nrnd=' --no-ri --no-rdoc '
 alias no_spec=' echo "--exclude=*spec* "'
 function inclrb { echo "--include=*rb --include=*.yml --include=*html* --include=*.*coffee --include=*.*js --include=*.*sass --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }

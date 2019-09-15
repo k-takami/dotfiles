@@ -66,6 +66,7 @@ vagrant@192.168.33.10:/home/vagrant/Publus_Server on /Users/appirits_1020380/Dow
   辞書ひく: triple-tap || ctrl+command+d:
   siri起動: option+spaceおしっぱなし
   dashboard: F12
+  OSXはoption+かなやctrl+5でIME ON/OFF
 
 # ~/.gitconfig ---> [error: There was a problem with the editor 'mate -w'.]をさけるため
 git config --global core.editor vim

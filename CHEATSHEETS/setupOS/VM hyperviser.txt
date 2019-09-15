@@ -17,7 +17,7 @@
 		/etc/fstab 内のuuidを/dev/disk/by-uuid で認識されたものにかきかえ
 		hybernate-error---> /etc/initramfs-tools/conf.d もかきかえ
 		sudo dpkg-reconfigure  initramfs-tools
-		sudo swapon -a; sudo swapon -s; 
+		sudo swapon -a; sudo swapon -s;
 	Tshoot1: case :loobackアドレス以外のNIC(lo only, no eth0..ethn)
 		ipaddress missing ,DNS failure and boot message "SIOCSIFADDR no such device "
 			sudo mv /etc/udev/rules.d/70-persistent-net.rules /etc/udev/rules.d/70-persistent-net.rules.bak
@@ -27,7 +27,7 @@
 		MS標準のUSBドライバーにroll-backか削除でもどす。
 		These issues occur when unknown USB drivers are installed on a Windows machine hosting the VMware Workstation software.
 		To resolve these issues, roll back to the original Microsoft USB drivers on the host:
-			1. Right-click (My) Computer and select Manage. 
+			1. Right-click (My) Computer and select Manage.
 			2. In the left pane of the Computer Management window, select Device Manager.
 			3. Expand Universal Serial Bus Controllers.
 			4. Right-click USB Root Hub and select Properties.
@@ -47,29 +47,49 @@
 			4. Delete the usbfilter string (=string value ).
 			5. Delete this file: %system32%\drivers\usbfilter.sys.
 			6. Reboot your computer
+
+
+=================================================================================
+OFVとOVAは19.5GBと20GBほどのサイズの差しかない
+VMware WSはOVF出力 VBOXはOVA出力を標準で持っている。VMWAREにはOVF<->OVA変換ソフトとしてOVF toolsというのがあるが、2013年でリリースが止まっている
+2016年現在、VMware のOFV化ではWindows 2000 Serverはサポートしていない
+=================================================================================
+
 #Windows+VMware ---> Macbook + VirtualBox
+	物理PCをVM化するまえに､VMwareWSを管理者権限で起動しないとだめ｡
+	windows 10以降はconverter6.1で変換後 Vboxの設定 システム 起動順 でFDDをオフにしてEFIからの起動可能をチェックする。
+  # *.ovaや*.vmdkは全部~/[username]/VirtualBoxVMs/ におくとよい。
+  # ~/[username]/VirtualBoxVMs/*.xmlなどを手作業編集しても動的なUUIDが邪魔して動作しない。
+  # また、*.vmdkはOSX TImemachineでは34GBを越えるとOSXのバージョンがちがうと外部メディアからコピーできなくなるのでひごろNTFS外部ストレージなどにバックアップ取ること
+
 	+ clone current VMware volumes(*.vmdk), and copy them to Mac
 	+ create new VirtualBox machine on 'Oracle VirtualBox VM Manager' panel, and mount clone *.vmdk
 	+ settings
-		一般　：クリップボードとD&Dを「双方向」に
-		　　　システム：拡張機能の「I/O APCを有効化」にチェック
-		　　　ポート：USB (ゲストOS電源OFF状態で) USB n.0 controllerを明示的にチェックし、USBデバイス名に応じたフィルターをGUI "+"で追加。
+		一般->高度タブ　：クリップボードとD&Dを「双方向」に
+		システム->MOTHEREBOARD tab：拡張機能の「I/O APCを有効化」にチェック
+		DISPLAY: GRAMは37MG, RAM1GB
+    NETWORK: NAT
+	  ポート：USB (ゲストOS電源OFF状態で) USB n.0 controllerを明示的にチェックし、USBデバイス名に応じたフィルターをGUI "+"で追加。
 		　　　　　　　認識不調ならば「メーカー」以下を空欄にしてマッチしやすくする。
-		　+ shared folder: hostOSで定義するとゲストOSですでにroot権限でマウントされている。linux mint ならば端末から'sudo caja'で。
+		shared folder: hostOSで定義するとゲストOSですでにroot権限でマウントされている。linux mint ならば端末から'sudo caja'で。
 		　　　　　　　　ファイルコピー移動はこのroot権限つきファイラーからやらないとだめ。
-		+ settings->general-> GRAMは37MG, RAM1GB
-	windows 10以降はconverter6.1で変換後 Vboxの設定 システム 起動順 でFDDをオフにしてEFIからの起動可能をチェックする。
-	物理PCをVM化するまえに､VMwareWSを管理者権限で起動しないとだめ｡
 	guestOS起動後
-		debdrvデバドラ調整
-			VMWare Accelerated AMD PCNet Adapter.---> device managerで表示される既知の標準AMD PCNET Family PCI Ethernet Adapter　に
-			NETWORK: NAT, SYSTEM->MOTHEREBOARD: I/O APIC enabled ON
-			driver change: 標準PS2keybord--->日本語キーボード
 		VirtualBox Guest Additions のインストール
 			動作中の仮想マシンが含まれているウィンドウで、「デバイス/Devices」メニュー一番下の「Guest Additions のインストール」を選択します。
+		devdrvデバドラ調整
+      コントロール パネル\すべてのコントロール パネル項目\コンピューターの簡単操作センター\キーボードを使いやすくします -> hardware tab:
+         \: 標準PS2keybord--->ドライバー更新-> browse computer-> コンピュータのドライバー一覧から選択-> 互換性のあるハード表示のチェックオフ-> 日本語PS/2 106/109 keyboard->
+			VMWare Accelerated AMD PCNet Adapter.---> device managerで表示される既知の標準AMD PCNET Family PCI Ethernet Adapter　に
+    共有フォルダーチェック、Chrome & DVD shrink install
 		OSXはoption+かなやctrl+5でIME ON/OFF
-		
-	
+
+  guest->localhost@host の通信は http://10.0.2.2:3000/
+   Googling turned this up: http://data.agaric.com/localhost-from-virtualbox-xp-install-ubuntu
+    So, I edited the hosts file, C:\windows\system32\drivers\etc\hosts, and added this entry:
+    10.0.2.2   outer
+    If you're testing on IE8, remember to put http:// in the address bar. Just putting the ip directly will not work.
+
+
 	**VirtualBox vmdx clash "virtualbox VERR_SSM_LOAD_CONFIG_MISMATCH"**
 	** VirtualBox: after deleting snapshots, target VM is missing a device on port 0**
 		recovery?  steps
@@ -81,9 +101,9 @@
 			Select the file *.vdi created for your virtual machine, in the right folder
 			Valid with OK
 			Start your virtual machine
-			
-	
-	
+
+
+
 	#sftpnetdrive  #mount
 		**port forwarding のときはIPaddress欄にlocalhostと入力。127.0.0.1ではだめ**
 		   ※SFTP Net Drive Free: 無料版は設定可能項目の制限、Up to 10 computers in a company のライセンス制限がある

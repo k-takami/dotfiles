@@ -596,6 +596,33 @@ gem
 #      * 124 デフォルト値を設定する 191
         ary1 = Array.new(要素数){|i| デフォルト値}
         hash1 = Hash.new{|h, key| h[key] = デフォルト値}
+
+        ## 2次元 # 初期化
+          hash = Hash.new { |h,k| h[k] = {} }
+
+          hash["a"]["b"] = 1
+          p hash # => {"a"=>{"b"=>1}}
+          ```
+
+          ちなみに `hash = Hash.new( {} )` という書き方は期待した動きになりません。 この書き方だとHash#defaultに設定されてしまうからです。[^1]
+
+          hash = Hash.new( {} )
+          hash["a"]["b"] = 1
+          p hash # => {}
+          p hash.default # => {"b"=>1}
+
+
+          ## 3次元以上 # 初期化
+          hash = Hash.new { |h,k| h[k] = Hash.new(&h.default_proc) }
+
+          ## Arrayとの組み合わせ # 初期化
+          hash = Hash.new { |h, k| h[k] = [] }
+          hash["a"].push(1); hash["a"].push(2)
+          p hash # => {"a"=>[1, 2]}
+          こちらも `hash = Hash.new( [] )` だと期待した動きになりません。[^2]
+
+
+k
       * 119 1つのキーに複数の値が対応するハッシュを作る 185
         ruby1.8hash1 = Hash.new{|hash1, key| hash1[key] = []};
         ruby1.8hash1["x"] << y; ruby1.8hash1["x"] << y1  ...
@@ -918,28 +945,57 @@ gem
       * 197 日時をフォーマットする 304
         require"date";DateTime.[now].strftime("%[AaBcdHIjMmpSUWwXxYyZz%]")
           フォーマット	説明
-          %A	曜日の名称(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
-          %a	曜日の省略名(Sun, Mon, Tue, Wed, Thu, Fri, Sat)
-          %B	月の名称(January, February, March, April, May, June, July, August, September, October, November, December)
-          %b	月の省略名(Jan, Feb, Mar, Aprm May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
-          %c	日付と時刻
-          %d	日(01-31)
-          %H	24時間制の時(00-23)
-          %I	12時間制の時(01-12)
-          %j	年中の通算日(001-366)
-          %M	分(00-59)
-          %m	月を表す数字(01-12)
-          %p	午前または午後(AM,PM)
-          %S	秒(00-60) (60はうるう秒)
-          %U	週を表す数。最初の日曜日が第1週の始まり(00-53)
-          %W	週を表す数。最初の月曜日が第1週の始まり(00-53)
-          %w	曜日を表す数。日曜日が0(0-6)
-          %X	時刻
-          %x	日付
+          %C: 世紀 (2009年であれば 20)
           %Y	西暦を表す数
           %y	西暦の下2桁(00-99)
-          %Z	タイムゾーン
+          %m	月を表す数字(01-12)
+          %B	月の名称(January, February, March, April, May, June, July, August, September, October, November, December)
+          %b	月の省略名(Jan, Feb, Mar, Aprm May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
+            %e: 日。一桁の場合、半角空白で埋める ( 1..31)
+
+          %d	日(01-31)
+          %a	曜日の省略名(Sun, Mon, Tue, Wed, Thu, Fri, Sat)
+          %A	曜日の名称(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
+          %w	曜日を表す数。日曜日が0(0-6)
+            %P: 午前または午後(am,pm)
+            %p: 午前または午後(AM,PM)
+            %R: 24時間制の時刻。%H:%M と同等。
+            %r: 12時間制の時刻。%I:%M:%S %p と同等。
+
+          %H	24時間制の時(00-23)
+          %I	12時間制の時(01-12)
+          %M	分(00-59)
+          %S	秒(00-60) (60はうるう秒)
+            %N: 秒の小数点以下。桁の指定がない場合は9桁 (ナノ秒)、%6N: マイクロ秒 (6桁)、%3N: ミリ秒 (3桁)
+
+
+          %X	時刻
+            %L: ミリ秒 (000.999)
+            %Z: タイムゾーン
+            %z: タイムゾーン。UTCからのオフセット (例 +0900)
+            %:z: タイムゾーン。コロンが入ったUTCからのオフセット (例 +09:00)
+            %::z: タイムゾーン。コロンが入った秒まで含むUTCからのオフセット (例 +09:00:00)
+
+          %U	週を表す数。最初の日曜日が第1週の始まり(00-53)
+          %W	週を表す数。最初の月曜日が第1週の始まり(00-53)
+          %V: ISO 8601形式の暦週 (01..53)
+
+          %j	年中の通算日(001-366)
+          %s: 1970-01-01 00:00:00 UTC からの経過秒
+
           %%	パーセント文字
+            %n: 改行 (\n)
+            %t: タブ文字 (\t)
+            %v: VMS形式の日付 (%e-%b-%Y)
+
+          %x  日付 = %d/%m/%Y
+          %D: 日付 = %m/%d/%y
+
+          %F: %Y-%m-%d と同等 (ISO 8601の日付フォーマット)
+          %c  日付と時刻  eg) "Fri Nov  2 00:00:00 2012"
+            %X: 時刻
+          %T: 24時間制の時刻。%H:%M:%S と同等。
+
 
       * 198 文字列を日時に変換する 306
         require"time";Time.parse("str1")

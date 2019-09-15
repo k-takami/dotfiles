@@ -5,7 +5,13 @@ sudo -b  brasero
 sudo -b  asunder
 exit;
 
-##OSX ISO image creation & DVD authoring
+#
+##ISO image creation & DVD authoring on Windows
+#   DVDshrinkでtarget 8.4GB Dual layer DVDをえらび、compression: Automaticにし、D&Dでドライブや*.isoをペインにドロップ
+#   容量ゲージが赤色になっていないことを確認してから、bull-backup
+#   上の操作はshort-cut keyでctrl+i, ctrl+b でおこなえる
+
+##ISO image creation & DVD authoring on OSX (Windowsよりおとる)
 #  1.［アプリケーション］ > ［ユーティリティ］ > ディスクユーティリティ
 #  2. 左の枠内に表示されたDVDドライブ名を選択
 #  3. メニュー ［ファイル］ > ［新規イメージ］より「"ドライブ名"からイメージ作成」を選択し、下記パラメーター入力後「保存」ボタン押す；
