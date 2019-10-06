@@ -4,26 +4,26 @@
               <div class="row px-3">
                 <label class="col-md-3 text-primary bg-primary4 py-2"> Receive Honorarium: </label>
                 <div class="form-group col-md">
-                  <select class="browser-default custom-select" id="resource_person_receive_honorarium" name="resource_person[receive_honorarium]">
+                  <select class="browser-default custom-select" id="GUI1ID" name="resource_person[receive_honorarium]">
                     <!-- <option value="">-- Select --</option> -->
-                    <option value="yes_receive">Yes</option>
-                    <option value="no_receive">No</option>
+                    <option value="GUI1OPTION1">Yes</option>
+                    <option value="GUI1OPTION12">No</option>
                   </select>
                 </div>
                 <label class="col-md-3 text-primary bg-primary4 py-2"> (In case of NO)Reason: </label>
                 <div class="form-group col-md">
-                  <select class="browser-default custom-select" id="resource_person_reason" name="resource_person[reason]">
+                  <select class="browser-default custom-select" id="SOMEID" name="resource_person[reason]">
                     <!-- <option value="">-- Select --</option> -->
-                    <option data-resource_person_receive_honorarium="no_receive" value="service_received">Service Received from International Organization</option>
-                    <option data-resource_person_receive_honorarium="no_receive" value="unable_to_receive">Unable to receive</option>
-                    <option data-resource_person_receive_honorarium="yes_receive" value="not_applicable">Not applicable</option>
-                    <option data-resource_person_receive_honorarium="no_receive" value="voluntary_work">Voluntary work</option>
-                    <option data-resource_person_receive_honorarium="no_receive" value="other">Other</option>
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION1">Service Received from International Organization</option>
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION2">Unable to receive</option>
+                    <option data-GUI1ID="GUI1OPTION1" value="GUI2OPTION3">Not applicable</option>
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION4">Voluntary work</option>
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION5">Other</option>
                   </select>
                   <script type="text/javascript">
                     window.addEventListener('load', function(){
                       $(function(){
-                        $('#resource_person_receive_honorarium').narrows('#resource_person_reason', {disable_if_parent_is_null: false, allow_multiple_parent_values: true});
+                        $('#GUI1ID').narrows('#resource_person_reason', {disable_if_parent_is_null: false, allow_multiple_parent_values: true});
                       });
                     });
                   </script>
@@ -70,6 +70,8 @@
       placeholder: '<%= '❎消去後のデフォルト値' %>',
       allowClear: true,
       minimumInputLength: 1,
+      // placeholder: "選択してください",
+      //
       // ajaxでの表示値取得と placeholder+alloClearは両立困難でトリックが必要っぽい
       // https://www.flatflag.nir87.com/remove-986#remove
       // $(""select2-selection__clear").parant().nearest("span").removeClass; か。
@@ -141,6 +143,42 @@
             arr_check = []
             $(this).parents().find('.checkbox, .checkbox_rtf').each ->
               arr_check.push('1') if $(this).is(':checked')
-            return show_message_validate_custom('削除対象にチェックしてください。') unless arr_check.length 
+            return show_message_validate_custom('削除対象にチェックしてください。') unless arr_check.length
+
+# 一括更新　UI
+  $('.bulk-update').on 'click', ->
+    check_boxes = $(this).parents().find('input[name^="ids"]:checked')
+    return alert('更新対象にチェックしてください。') unless check_boxes.length > 0
+    # 一括更新レコード要素をid配列にmapし、formに input.update としてセットする
+    checked_ids = (item.value for item in check_boxes)
+    form = $("#frm_update_record_hoken_#{kai}_data")
+    $('<input>').prop({
+      'type': 'hidden', 'name': 'update', 'value': checked_ids
+    }).appendTo(form)
+    $('<input>').prop({
+      'type': 'hidden', 'name': 'target_model', 'value': target_model
+    }).appendTo(form)
+    json_data = {}
+    check_boxes.parent().parent().find('input').each ->
+      json_data[$(this).attr('att')] = $(this).val() if $(this).attr('att')
+
+    $('<input>').prop({
+      'type': 'hidden', 'name': 'data', 'value': JSON.stringify(json_data)
+    }).appendTo(form)
+    # new_json_data = {}
+    # check_boxes.each ->
+    #   new_json_data[$(this).value] = rowIntoHash($(this))
+
+    form.submit()
+
+  # rowIntoHash = (dom_node) ->
+  #   hash = {}
+  #   # tgt = dom_node.parent().parent().find('input')
+  #   # for element in tgt
+  #   dom_node.parent().parent().find('input').each ->
+  #     hash[$(this).attr('att')] = $(this).val() if $(this).attr('att')
 
 
+
+
+# DataTablesと二階建てのmodal --> Dynalist

@@ -20,7 +20,7 @@ export POW_TIMEOUT=300
 # export POW_WORKERS=3
 # powder (config/status|restart)
 
-alias dkpadi='  docker ps -a ; docker images;  docker volume ls';
+alias dkpaivl='  docker ps -a ; docker images;  docker volume ls';
 
 #  # リサイズや清掃；
 #    docker build --squash
@@ -532,7 +532,7 @@ alias bxrdbmtest='     ds1 bx rake db:migrate RAILS_ENV=test'
 alias bxrdbmdown='     ds1 bx rake db:migrate:down'
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
 alias rrg='            ds1 bx rake routes |grep '
-alias ror_asset_rebuild="RAILS_ENV=development rake assets:clean assets:precompile"
+alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
 #ステップ数概算
 # grep -nirE "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
 # find . -name "*.rb" -o -name "*.yml" | xargs wc -l
@@ -760,6 +760,19 @@ alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━
 alias ksen-d='echo "#################################################################################"'
 alias ksen-e='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
 alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
+
+alias tmls='  tmux ls'
+alias tma='   tmux a'
+alias tmat='  tmux a -t'
+alias tmks='  tmux kill-session'
+# ~/.bash_profile
+# # 初回シェル時のみ tmux実行
+# if [ $SHLVL = 1 ]; then
+#   tmux
+# fi
+i
+
+
 # alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
 # alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
 # alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
@@ -799,3 +812,25 @@ MSG1)
   fi
 };
 
+
+function ssh() {
+    # tmux起動時
+    if [[ -n $(printenv TMUX) ]] ; then
+        # 現在のペインIDを退避
+        local pane_id=$(tmux display -p '#{pane_id}')
+        # 接続先ホスト名に応じて背景色を切り替え
+        if [[   `echo $1 | grep '\.202'` ]] ; then
+            tmux select-pane -P 'bg=colour52,fg=white'
+        elif [[ `echo $1 | grep '\.237'` ]] ; then
+            tmux select-pane -P 'bg=colour58,fg=white'
+        elif [[ `echo $1 | grep '\.dev\.'` ]] ; then
+            tmux select-pane -P 'bg=colour95,fg=white'
+        fi
+        # 通常通りssh続行
+        command ssh $@
+        # デフォルトの背景色に戻す
+        tmux select-pane -t $pane_id -P 'default'
+    else
+        command ssh $@
+    fi
+}

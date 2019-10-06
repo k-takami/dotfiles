@@ -217,6 +217,16 @@ mysql
 | 「Esc」                                                                                  | キャンセル                                                   |
 
 
-
-
-
+### TImeMAchine - Restoration
+# 準備：ATOM, dockerなどupdate試験
+# command+R +power をリンゴマークまで押して、リカバリーモード突入、リストア。
+# iTunes関連はスキップ。あとで設定する、を押下。
+# TimeMachine HDD直下の_docu_diffを~/Downloadに展開。
+$ cdd; git reset HEAD -- ; gico CHEATSHEETS/ ; gico SCRIPTS/; gico vim* *rc; gst ; gishsv; gplo master; gishpp
+#TimeMachineリストアで、dockerイメージとかは全部きえます；
+$ myapp1; gplo develop; dkcud ; dksh apo_pms_ap_1;
+  $$ rake db:drop db:create db:schema:load  db:seed_fu
+#Finder
+  vnc://192.168.2.101:5900 
+  smb://192.168.2.101   1/JBC
+  

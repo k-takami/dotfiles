@@ -766,3 +766,8 @@ snippet_ror_dedign_aws_2019   AWSと添付連動
       「:timestamps」: falseを設定すると、自分でcreated_at,created_on,update_at,update_on を      「:validate」: falseを設定すると、モデル検証をスキップする(デフォルトはtrue)
 
 
+#paper_trail  時刻置き換え　JSONじゃだめ
+  Model.versions[3].object.slice(/created_at: [\d\-]+ [\d:]+/)
+  Model.versions[3].object.sub!(/created_at: [\d\-]+ [\d:]+/, "created_at: 2019-08-01 06:56:54")
+
+

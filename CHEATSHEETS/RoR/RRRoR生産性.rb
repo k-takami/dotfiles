@@ -278,6 +278,9 @@ select_allとほぼ一緒。同じようなメソッドとしてdelete, insert�
         #--> controller.self.filter  #100  flash
     #335  validate_xxx
 
+    #flash[:success|danger|alert|danger|notice]と4種つかえるが　redirect_to.*{success:|alert: ***}
+    #  https://api.rubyonrails.org/classes/ActionController/Redirecting.html
+
 
 
 

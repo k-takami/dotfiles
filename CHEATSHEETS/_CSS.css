@@ -1,3 +1,16 @@
+snippet_html5_tag_nesting: html5の入れ子タグ早見表
+div            	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+span           	 a                        	 br    	 em    	 img     	 input    	 label 	 span 	 strong 	 svg
+a              	 親要素のコンテンツモデルを継承
+h1〜h6         	 a                        	 br    	 em    	 img     	 input    	 label 	 span 	 strong 	 svg
+p              	 a                        	 br    	 em    	 img     	 input    	 label 	 span 	 strong 	 svg
+ul/ol          	 liのみ（例外：template,script）
+li             	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+table          	 tbody                    	 thead 	 tfoot 	 caption 	 colgroup
+th/th          	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+dl             	 dt                       	 dd    	 div
+dt/dd          	 a                        	 br    	 div   	 dl      	 h1〜h6    	 img   	 ul   	 ol     	 p   	 span 	 table
+
 #語呂合わせ mabopako: margin/border/padding/contents
   医者ｸラップ: .=> class, # =>ID
 `配色はオレンジとピンク中心、＋えだまめ色、背景は白`を心がける
@@ -180,3 +193,14 @@ Media query   #TOGGLING AND RESISING BY THRESHOLD
 #Windows + tinyMCEは最初からbase64のフォントも無理だからwebfontにすべき
 
 snippet_sransparent {border: none: border: transparent;}
+
+
+
+#layout配置
+左半分のdiv
+左半分のdiv
+<div>
+  <div style="float: left; width: 50%; font-family: Arial; font-size: 13.3333px; background-color: #ffff00;">LLLLLLLL</div>
+  <div style="float: right; width: 50%">RRRRR</div>
+</div>
+

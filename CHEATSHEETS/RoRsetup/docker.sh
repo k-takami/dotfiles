@@ -1,8 +1,51 @@
+※コンテナビルドで何日も時間浪費するおそれ大。：コンテナにログインできないのが最大のバッドノウハウ、。Windowsでコンテナが起動してログインできただけでもラッキー
+※UNIXとWindows Docker, Windows Docker Toolbox(=coreOS)に互換性を期待しないほうがよい。
+　DockerはGoogleのLINUX用ソフトウエア。一種のshrinkソフトウエアでしかない。
+※HDDスペースは節約しない方が賢い。コンテナのクリーンにつくるのは多大な時間と専門知識がいる。バッドノウハウの塊。
+※コンテナをイメージ化しても、そこからまた似たようなコンテナをつくることになる。
+※buildでエラーになった個所だけコメントアウト、が最適解。イメージをつかうので多分Dockerファイル、はマウントディレクトリ配下以外はコメントアウトしてよさそう。
+
+
 # G1.ツールのインストール
   # For Windows
     # Docker公式サイトからインストーラをダウンロードし、インストールする。
     # https://www.docker.com/products/docker-toolbox
-  # For macOS (old)
+      # docker toolbox はVTサポートのあるBIOS対応機種じゃないと動作せず。
+  # dockerはWin10ProでHyperVがないと動作せず 　
+  #VHDD拡張
+  $ docker-machine stop default
+  $ docker-machine rm default
+  $ docker-machine -D create -d virtualbox --virtualbox-disk-size "200000" default
+
+  Docker ToolBox MAnager:　cf: https://www.jhipster.tech/tips/020_tip_using_docker_containers_as_localhost_on_mac_and_windows.html
+    Open VirtualBox Manager
+    Select your Docker Machine VirtualBox image (e.g.: default)
+    Open Settings -> Network -> Advanced -> Port Forwarding
+    Add your app name, the desired host port and your guest port
+      127.0.0.1   3000        3000
+    $ docker-machine start default
+    $ eval $(docker-machine env default)
+    $ dkrstrails some_New_container_name
+    $ docker stats　　#<---メモリー使用量みれる Win+DockerToolBox(25MB RAM) + Rails container(400MB) くらい消費しそう
+  くらい消費しそう
+
+
+  $ dkrmi compose失敗したloadしたイメージ名
+  $ docker load -i compose失敗したイメージ名.tar
+　　 # docker tag loadしたイメージ名 compose失敗したloadしたイメージ名:TAG名 # <--- 必要に応じてrename
+  $ vi  docker-compose.yml
+ 	  FROM: compose失敗したloadしたイメージ名:TAG名 # <--- rename
+    CMD ["bash"]
+
+  $ docker-compose up -d  #<--- buildも自動実行してくれる
+    # 最初のCOPY以下の全命令が失敗するならばtar cvf all.tar ./*;  docker cp all.tar container_name:/app/ ; yarn install ;0
+     mkdir log;  chmod -R 777 ./ ; bundle exec rails assets:precompile
+  # コンテナできたら、KinematicでConfigure Volumesで共有フォルダーをenableし、そこに全部のソースをコピーし、上の手順をくりかえす
+
+
+
+
+# For macOS (old)
     # Windowsと同様、Docker公式サイトからインストーラをダウンロードするか、以下を実行する。
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install caskroom/cask/brew-cask cask # virtualbox
@@ -23,6 +66,14 @@
 
     # 設定 ＞ SSH鍵生成
     #   鍵の種類＝RSA ビット数＝2048 で鍵を生成し、 公開鍵の保存、秘密鍵の保存で 公開鍵（id_rsa.pub）と秘密鍵（rsa.pub）を保存する。
+
+
+### イメージ（snapshot）作成方法と移設方法:
+  $ docker commit some_container
+  $ docker save compose失敗したイメージ名.tar some_container
+  # tar zcvf などしてもよし、移行先PCにイメージ移送
+
+
 
 
 # TROUBLESHOOTNG
@@ -54,6 +105,11 @@
   # docker-compose build app && docker-compose up -d app
   #ファイルシステム見えない時など　クリーンな最終手段：
   # docker rm CONTAINER, docker rmi IMAGE
+
+
+  bad-knowhow: 作成したDockerイメージからコンテナ作成/単体起動
+  docker run -dit --hostname apo_mpms_ap_1 --name apo_mpms_ap_1 apo_mpms_ap_1_bak:latest -p 9000:80 --link mysql:5.7 /bin/bash --login
+
 
 # 4.Virtualbox 連携
   brew install docker-machine
