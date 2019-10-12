@@ -4,7 +4,10 @@
   config.reload_classes_only_on_change = false #毎回リロード　trueならば変更検出時にリロードconfig.cache_classesが「true」の場合は、無視される。
 
   if Rails::VERSION::STRING >= "5"
+    # 静的なファイルをRailsから返す これをしないとActionController::RoutingError (No route matches エラー出力
+    # config.public_file_server.enabled = true
     # config.public_file_server.enabled = false #rails5 画像無効化
+
     BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
     # DOCKER ENV BEST
     # view設定

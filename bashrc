@@ -34,7 +34,14 @@ alias dkrmi='   docker rmi';
 alias dkrmv='   docker volume rm';
 alias dkcm='    docker commit';
 alias dktg='    docker tag';
-alias dkhs='    docker history';
+alias dkhs='    eocker history';
+# |prefix + ?|キーバインド一覧|
+# |prefix + s|セッションの一覧表示|
+# |prefix + c|新規ウィンドウ作成・追加|
+# |prefix + w|ウィンドウの一覧|
+# |prefix + &|ウインドウの破棄|
+# |prefix + n|次のウインドウへ移動|
+# |prefix + p|前のウインドウへ移動|
 alias dksch='   docker search  --no-trunc';
 alias dkisp='   docker inspect';
 # alias dk'sudo docker cp <コンテナID>:/etc/my.cnf my.cnf'
@@ -114,6 +121,32 @@ function dkc_rdbinit {
   docker-compose run -u root app bundle install ;
   docker-compose run -u root app bin/rake db:create db:migrate db:seed;
   docker-compose run -u root app annotate --force ;
+}
+
+
+# https://stackoverflow.com/questions/35575674/how-to-save-all-docker-images-and-copy-to-another-machine
+function dki_saveall2tar {
+  # If you want to save multiples images in one .tar file:
+  # IDS=$(docker images | awk '{if ($1 ~ /^(debian|centos)/) print $3}')
+  # docker save $IDS -o ./allinone_dockersimages.tar
+  docker images | awk '{if ($1 ~ /^(.)/) print $1 " " $2 " " $3 }' | tr -c "a-z A-Z0-9_.\n-" "%" | while read REPOSITORY TAG IMAGE_ID
+  do
+    echo "== Saving $REPOSITORY $TAG $IMAGE_ID =="
+    docker  save   -o ./$REPOSITORY-$TAG-$IMAGE_ID.tar $IMAGE_ID
+  done
+
+  echo "== Docker Image Lists are as follows =="
+  echo "`docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' ` "
+  docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > dki_saveall2gtar.txt
+  lat
+}
+
+function dki_loadallfromtar {
+  while read REPOSITORY TAG IMAGE_ID
+  do
+    echo "== Tagging $REPOSITORY $TAG $IMAGE_ID =="
+    docker tag "$IMAGE_ID" "$REPOSITORY:$TAG"
+  done < dki_saveall2gtar.txt
 }
 
 #migration file修正反映: gem install annotate; 　annotate --force

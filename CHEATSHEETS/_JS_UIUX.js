@@ -182,3 +182,16 @@
 
 
 # DataTablesと二階建てのmodal --> Dynalist
+
+
+#  確認型ボタン
+  <button type="button" class="btn btn-danger btn-sm" onClick="if (confirm('Are you sure?')) location.href='<%= request.path << '?refresh=erase' %>';">
+
+
+#rails5: turbolinks+ajax
+<%= select_tag 'filt',
+options_for_select(['A', 'B, 'C', 'D, 'E']),
+class: 'custom-select col-md-4', prompt: t('pulldown.default'),
+onchange: 'Rails.fire($(this).closest("form")[0], \'submit\')' %>
+
+
