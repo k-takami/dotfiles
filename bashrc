@@ -13,7 +13,6 @@ HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 export SYSTEMD_PAGER=
 
-
 #==== DOCKER & Pow ==========================
 #eval $(docker-machine env)
 export POW_TIMEOUT=300
@@ -61,10 +60,10 @@ alias dkv='     docker --version '
 alias dkcud='   docker-compose up -d '
 
 function dkbash { # $1 == container_name/id
-  dkpadi; docker exec -it -u root $1 bash
+  dkpaivl; docker exec -it -u root $1 bash
 }
 function dksh { # $1 == container_name/id
-  dkpadi; docker exec -it -u root $1 sh
+  dkpaivl; docker exec -it -u root $1 sh
 }
 
 function dkrstrails { # $1 == container_name/id
@@ -94,7 +93,7 @@ function dkc_rdbseed {  #通常のbdl方法
 function dkcbuildup {
   env=${1:-'app'}
   docker-compose build $1 && docker-compose up -d $1
-  dkpadi
+  dkpaivl
 }
 
 function dkc_rdbmreset { #通常のbdl方法 #  == dkrst db && dkbash app ; bundle install && bin/rails db:drop db:create ridgepole:apply data:migrate db:seed && annotate --force
@@ -522,7 +521,8 @@ alias gilosmine=' git log --committer=$GIT_USERNAME -S'
 alias girbplo='   git pull --rebase origin'  # 引数にリモートブランチ名。1rebase後になにか消失ファイルがないか点検。本来はマージ履歴をのこさない --ff をつけるべきかも？
 alias girbmst='   git rebase master --no-ff'  # 最新化した master ブランチに対して自分のブランチをリベース
 alias girbcntn='  git rebase --continue'
-alias girbabt='   git rebase --abort'
+alias girbabt='   git rebase --abort' #rebase abort
+alias gimgabt='   git merge  --abort' #pull/merge abort
 alias girbihd='   git rebase -i' # to be follwed by HEAD~~ or HEAD~~~~~~回数分
 alias fixup='gicmm "tmp" ; gishsv;  girbihd HEAD~~ ; gilono ; gishpp; '
 alias gichpi='    git cherry-pick'
@@ -536,8 +536,9 @@ alias gicma='     git commit --amend'
 alias gicothr='      git checkout --theirs'
 alias gicoour='      git checkout --ours'
 alias girstmg='      git reset --merge'
-alias girsthd='      git reset --hard ' #HEAD^ や　HEAD@{n}を追記 :自分のコミットをN回とりけした状態にロールバック ワークファイル破棄
-alias girstst='      git reset --soft ' #HEAD^ や　HEAD@{n}を追記 :自分のコミットをN回とりけした状態にロールバック ワークファイル保持
+alias girstHEAD='    git reset HEAD -- '
+alias girsthard='    git reset --hard ' #HEAD^ や　HEAD@{n}を追記 :自分のコミットをN回とりけした状態にロールバック ワークファイル破棄
+alias girstsoft='    git reset --soft ' #HEAD^ や　HEAD@{n}を追記 :自分のコミットをN回とりけした状態にロールバック ワークファイル保持
 alias girmc='        git rm --cached'        #stagingとりけし
 alias gicostsh0='    git checkout stash@{0}'
 alias gicostsh0lots='git checkout stash@{0} Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore ; git reset HEAD -- Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore;'

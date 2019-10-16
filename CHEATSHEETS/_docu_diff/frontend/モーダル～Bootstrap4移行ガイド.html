@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="BootstrapのJavaScriptモーダルプラグインを使用して、ライトボックス、ユーザー通知、または完全カスタムコンテンツ用のダイアログをサイトに追加。">
+<!-- OGP -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@cccabinet">
+	<meta property="og:site_name" content="Bootstrap4移行ガイド" />
+	<meta property="og:title" content="モーダル～Bootstrap4移行ガイド" />
+	<meta property="og:url" content="https://cccabinet.jpn.org/bootstrap4/components/modal" />
+	<meta property="og:type" content="article" />
+	<meta property="og:description" content="BootstrapのJavaScriptモーダルプラグインを使用して、ライトボックス、ユーザー通知、または完全カスタムコンテンツ用のダイアログをサイトに追加。" />
+	<meta property="fb:app_id" content="2270152383309485" />
+	<meta property="og:image" content="https://cccabinet.jpn.org/bootstrap4/images/bootstrap-social-logo.png" />
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="600">
+	<meta property="og:image:height" content="600">
+	<title>モーダル～Bootstrap4移行ガイド</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-colorbox@1.6.4/example2/colorbox.css" integrity="sha256-62u5vQN/7KulWWARFuJ4hYyyNP5d8Clqg8LL9BfAuNw=" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9/build/styles/github.min.css">
+	<link rel="stylesheet" href="https://cccabinet.jpn.org/bootstrap4/css/style.css">
+	<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/js/all.min.js" data-search-pseudo-elements></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-22165357-2', 'jpn.org');
+	  ga('send', 'pageview');
+	</script>
+</head>
+
+<body data-spy="scroll" data-target="#sidebar">
+	<a href="#content" class="sr-only sr-only-focusable">メインコンテンツへスキップ</a>
+	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bs-navbar" id="bs-navbar">
+		<a class="navbar-brand mr-0 mr-md-2" href="https://cccabinet.jpn.org/bootstrap4/">Bootstrap4移行ガイド</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar" aria-controls="Navbar" aria-expanded="false" aria-label="レスポンシブ・ナビゲーションバー"><span class="navbar-toggler-icon"></span></button>
+		<div class="collapse navbar-collapse" id="Navbar">
+			<div class="collapse nav navbar-nav nav-collapse slide-down justify-content-lg-end" id="nav-collapse">
+				<form class="form-inline my-2 my-lg-1 justify-content-lg-end" action="https://cccabinet.jpn.org/bootstrap4/page" method="get">
+					<input class="form-control" type="search" name="word" value="" placeholder="検索..." autocomplete="off">
+				</form>
+			</div>
+			<ul class="navbar-nav mr-auto my-lg-1">
+				<li class="nav-item"><a class="nav-link" href="https://cccabinet.jpn.org/bootstrap4/">概要</a></li>
+				<li class="nav-item"><a class="nav-link" href="https://cccabinet.jpn.org/bootstrap4/getting-started">導入</a></li>
+				<li class="nav-item"><a class="nav-link" href="https://cccabinet.jpn.org/bootstrap4/layout">レイアウト</a></li>
+				<li class="nav-item"><a class="nav-link" href="https://cccabinet.jpn.org/bootstrap4/content">コンテンツ</a></li>
+				<li class="nav-item"><a class="nav-link active" href="https://cccabinet.jpn.org/bootstrap4/components">コンポーネント</a></li>
+				<li class="nav-item"><a class="nav-link" href="https://cccabinet.jpn.org/bootstrap4/utilities">ユーティリティ</a></li>
+				<li class="nav-item"><a class="nav-link" href="https://cccabinet.jpn.org/bootstrap4/extend">拡張</a></li>
+				<li class="nav-item"><a class="nav-link" href="https://cccabinet.jpn.org/bootstrap4/example">実例</a></li>
+			</ul>
+			<ul class="navbar-nav mr-lg-2 float-lg-right">
+				<li class="nav-item"><button class="nav-link btn btn-outline-light badge-pill collapsed my-2" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false" aria-controls="nav-collapse"><i class="fas fa-search"></i></button></li>
+			</ul>
+			<div class="collapse nav navbar-nav nav-collapse slide-down justify-content-lg-end" id="nav-collapse">
+				<form class="form-inline my-2 my-lg-1 justify-content-lg-end" action="https://cccabinet.jpn.org/bootstrap4/page" method="get">
+					<input class="form-control mr-1 mb-1 mb-sm-0" type="search" name="word" value="" placeholder="検索...">
+					<button class="btn btn-outline-light" type="submit">検索</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+	<div id="content" class="container-fluid">
+		<div class="row flex-xl-nowrap">
+			<div id="sidemenu" class="col-12 col-md-3 col-xl-2 order-xl-1 align-self-start">
+				<ul>
+					<li><a href="https://cccabinet.jpn.org/bootstrap4/components">コンポーネント</a>
+						<ul>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/alerts">アラート</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/badges">バッジ</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/breadcrumb">パンくずリスト</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/buttons">ボタン</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/button-group">ボタングループ</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/card">カード</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/carousel">カルーセル</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/collapse">折り畳み</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/dropdowns">ドロップダウン</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/forms">フォーム</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/input-group">インプットグループ</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/jumbotron">ジャンボトロン</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/list-group">リストグループ</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/media-object">メディアオブジェクト</a></li>
+							<li><span class="bg-light py-1 font-weight-bold d-block">モーダル</span>							</li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/navs">ナビゲーション</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/navbar">ナビゲーションバー</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/pagination">ページ送り</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/popovers">ポップオーバー</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/progress">プログレスバー</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/scrollspy">スクロールスパイ</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/spinners">スピナー</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/toasts">トースト</a></li>
+							<li><a href="https://cccabinet.jpn.org/bootstrap4/components/tooltips">ツールチップ</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /#sidemenu -->
+			<div id="sidebar" class="d-none d-xl-block col-xl-2 order-xl-3 align-self-start">
+				<ul id="option-contents" class="nav nav-pills flex-column">
+					
+	<li class="nav-item"><a class="nav-link active" href="#how-it-works">使い方</a></li>
+	<li class="nav-item"><a class="nav-link" href="#examples">実例</a>
+		<ul>
+			<li class="nav-item"><a class="nav-link" href="#moda-components">モーダルコンテンツ <span class="badge badge-warning">設定変更</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="#live-demo">モーダルの設定</a></li>
+			<li class="nav-item"><a class="nav-link" href="#scrolling-long-content">長いコンテンツのスクロール</a></li>
+			<li class="nav-item"><a class="nav-link" href="#vertically-centered">垂直方向に中央に配置 <span class="badge badge-danger">新設</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="#tooltips-and-popovers">ツールチップとポップオーバー</a></li>
+			<li class="nav-item"><a class="nav-link" href="#using-the-grid">グリッドを使用</a></li>
+			<li class="nav-item"><a class="nav-link" href="#varying-modal-contents">様々なモーダルコンテンツ</a></li>
+			<li class="nav-item"><a class="nav-link" href="#remove-animation">アニメーションの削除</a></li>
+			<li class="nav-item"><a class="nav-link" href="#modals-with-dynamic-heights">動的な高さのモーダル</a></li>
+			<li class="nav-item"><a class="nav-link" href="#accessibility">アクセシビリティ</a></li>
+			<li class="nav-item"><a class="nav-link" href="#embedding-youtube-videos">YouTube動画の埋め込み</a></li>
+		</ul>
+	</li>
+	<li class="nav-item"><a class="nav-link" href="#optional-sizes">モーダルの大きさ <span class="badge badge-success">一部追加</span></a> </li>
+	<li class="nav-item"><a class="nav-link" href="#usage">使用方法</a>
+		<ul>
+			<li class="nav-item"><a class="nav-link" href="#via-data-attributes">データ属性経由で</a></li>
+			<li class="nav-item"><a class="nav-link" href="#via-javascript">JavaScript経由で</a></li>
+			<li class="nav-item"><a class="nav-link" href="#options">オプション <span class="badge badge-success">一部追加</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="#methods">メソッド</a></li>
+			<li class="nav-item"><a class="nav-link" href="#events">イベント</a></li>
+		</ul>
+	</li>
+				</ul>
+				<p class="mt-4"><a class="text-muted" href="#top"><i class="fas fa-chevron-up fa-fw"></i> トップに戻る</a></p>
+			</div><!-- /#sidebar -->
+			<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 order-xl-2">
+				<ul class="breadcrumb">
+					<li class="breadcrumb-item"><a href="https://cccabinet.jpn.org/bootstrap4"><i class="fas fa-home fa-fw"></i></a></li>
+					<li class="breadcrumb-item"><a href="https://cccabinet.jpn.org/bootstrap4/components">コンポーネント</a></li>
+					<li class="breadcrumb-item active">モーダル</li>
+				</ul>
+				<p class="lead">Bootstrap4.xの使い方をBootstrap3.xからの変更箇所を交えて解説しています。</p>
+				<div id="page_view">
+					<h1 class="border-bottom pb-2 mb-3">モーダル（Modal） <span class="h3"><span class="badge badge-warning">v4.0.0設定変更</span> <span class="badge badge-success">v4.2.1追加</span></span></h1>
+					<p class="lead">BootstrapのJavaScriptモーダルプラグインを使用して、ライトボックス、ユーザー通知、または完全カスタムコンテンツ用のダイアログをサイトに追加。</p>
+					<div class="mx-auto my-3">
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<ins class="adsbygoogle"
+							style="display:block"
+							data-ad-client="ca-pub-5922383921992325"
+							data-ad-slot="6790861115"
+							data-ad-format="auto"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</div>
+					<div class="content">
+<h2 id="how-it-works">使い方（How it works）</h2>
+<p>Bootstrapモーダルコンポーネントを使い始める前に、メニューオプションが最近変更されたので、以下を読むこと。</p>
+<ul>
+	<li>モーダルは、HTML、CSS、およびJavaScriptで構築。ドキュメント内の他の部分に配置され、<code>&lt;body&gt;</code> からスクロールを削除して、代わりにモーダルコンテンツをスクロールする。</li>
+	<li>モーダルの"backdrop"（背景部分）をクリックすると、自動的にモーダルが閉じる。</li>
+	<li>Bootstrapは一度に1つのモーダルウィンドウしかサポートしない。入れ子になったモーダルは、ユーザー経験が乏しいと思われるためサポートされていない。</li>
+	<li>モーダルは、<code>position：fixed</code> を使用。これは、そのレンダリングに関してちょっと変わったことがある。可能であれば、他の要素からの干渉を避けるために、モーダルHTMLを最上位に配置すること。他の固定要素内で <code>.modal</code> を入れ子になったときに問題に遭遇する可能性がある。</li>
+	<li>再度、<code>position：fixed</code> のために、モバイルデバイス上のモーダル使用に関するいくつかの注意点がある。詳細については、<a href="../getting-started/browsers-devices/#modals-and-dropdowns-on-mobile">ブラウザ・サポートの解説</a>を参照すること。</li>
+	<li>HTML5がそのセマンティクスをどのように定義するかによって、<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input#attr-autofocus" target="_blank" rel="noopener"><code>autofocus</code> HTML属性</a>は、Bootstrapのモーダルには何の影響も与えない。</strong>同じ効果を得るためにカスタムJavaScriptを使用：</li>
+</ul>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').on('shown.bs.modal', function () {
+	$('#myInput').trigger('focus')
+})</code></pre>
+<div class="callout callout-info" role="alert">
+このコンポーネントのアニメーション効果は、<code>prefers-reduced-motion</code> メディアクエリに依存。詳細はアクセシビリティの<a href="../getting-started/accessibility#reduced-motion" target="_blank" rel="noopener">モーションを小さくする</a>を参照。
+</div><!-- /.callout -->
+<p>実例の見本と使用方法のガイドラインを参照。</p>
+<p>&nbsp;</p>
+<h2 id="examples">実例（Examples）</h2>
+<h3 id="moda-components">モーダルコンテンツ（Modal components）<span class="text-muted h5">v4.0.0設定変更</span></h3>
+<p>以下は<em>静的</em>モーダルの例（<code>position</code> と <code>display</code> が再定義されたことを意味する）。モーダルヘッダ、モーダルボディ（<code>padding</code> に必要）、モーダルフッタ（オプション）が含まれます。 可能な限り、アクションを終了するモーダルヘッダを含めるか、別の明示的な却下アクションを提供することを推奨。</p>
+<h5>見本 <small class="text-muted">モーダルを開いた状態で表示</small></h5>
+<div class="sample open-modal">
+	<div class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">モーダルのタイトル</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="閉じる"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body"><p>モーダルボディの本文。</p></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+					<button type="button" class="btn btn-primary">変更を保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- /.sample -->
+<div class="row">
+	<div class="col-md-6">
+		<h5>Bootstrap3.xの設定例 <small><span class="alert-danger">赤背景</span>が変更箇所</small></h5>
+<pre class="highlightjs"><code class="xml">&lt;div class="modal" tabindex="-1" role="dialog"&gt;
+	&lt;div class="modal-dialog" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			&lt;div class="modal-header"&gt;
+				&lt;button type="button" class="close" data-dismiss="modal" aria-label="閉じる"&gt;
+					&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+				&lt;/button&gt;
+				<span class="alert-danger">&lt;h4 class="modal-title"&gt;モーダルのタイトル&lt;/h4&gt;</span>
+			&lt;/div&gt;&lt;!-- /.modal-header --&gt;
+			&lt;div class="modal-body"&gt;
+				&lt;p&gt;モーダルボディの本文。&lt;/p&gt;
+			&lt;/div&gt;&lt;!-- /.modal-body --&gt;
+			&lt;div class="modal-footer"&gt;
+				&lt;button type="button" class="btn <span class="alert-danger">btn-default</span>" data-dismiss="modal"&gt;閉じる&lt;/button&gt;
+				&lt;button type="button" class="btn btn-primary"&gt;変更を保存&lt;/button&gt;
+			&lt;/div&gt;&lt;!-- /.modal-footer --&gt;
+		&lt;/div&gt;&lt;!-- /.modal-content --&gt;
+	&lt;/div&gt;&lt;!-- /.modal-dialog --&gt;
+&lt;/div&gt;&lt;!-- /.modal --&gt;</code></pre>
+	</div><!-- /.col-sm-6 -->
+	<div class="col-md-6">
+		<h5>Bootstrap4.xの設定例 <small><span class="alert-success">緑背景</span>が変更箇所</small></h5>
+<pre class="highlightjs"><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;div <span class="mark">class="modal" tabindex="-1" role="dialog"</span>&gt;
+	&lt;div <span class="mark">class="modal-dialog" role="document"</span>&gt;
+		&lt;div <span class="mark">class="modal-content"</span>&gt;
+			&lt;div <span class="mark">class="modal-header"</span>&gt;
+				<span class="alert-success">&lt;h5 class="modal-title"&gt;モーダルのタイトル&lt;/h5&gt;</span>
+				&lt;button type="button" <span class="mark">class="close" data-dismiss="modal" aria-label="閉じる"</span>&gt;
+					<span class="mark">&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;</span>
+				&lt;/button&gt;
+			&lt;/div&gt;&lt;!-- /.modal-header --&gt;
+			&lt;div <span class="mark">class="modal-body"</span>&gt;
+				&lt;p&gt;モーダルボディの本文。&lt;/p&gt;
+			&lt;/div&gt;&lt;!-- /.modal-body --&gt;
+			&lt;div <span class="mark">class="modal-footer"</span>&gt;
+				&lt;button type="button" class="btn <span class="alert-success">btn-secondary</span>" <span class="mark">data-dismiss="modal"</span>&gt;閉じる&lt;/button&gt;
+				&lt;button type="button" class="btn btn-primary"&gt;変更を保存&lt;/button&gt;
+			&lt;/div&gt;&lt;!-- /.modal-footer --&gt;
+		&lt;/div&gt;&lt;!-- /.modal-content --&gt;
+	&lt;/div&gt;&lt;!-- /.modal-dialog --&gt;
+&lt;/div&gt;&lt;!-- /.modal --&gt;</code></pre>
+	</div><!-- /.col-sm-6 -->
+</div><!-- /.row -->
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【設定】</p>
+	<ul>
+		<li><code>div.modal</code> &gt; <code>div.modal-dialog</code> &gt; <code>div.modal-content</code> &gt; {<code>div.modal-header</code> &gt; <code>h5.modal-title</code>《タイトル》 + [<code>button.close</code> &gt; <code>&lt;span&gt;</code> &gt; <code>&amp;times;</code>]《<a href="../utilities/close-icon" class="alert-link">閉じるアイコンボタン</a>》}《ヘッダ》 + <code>div.modal-body</code>《コンテンツ》 + <code>div.modal-footer</code>《フッタ》</li>
+		<li>ヘッダ（<code>.modal-header</code>）は、<strong>《タイトル》（<code>.modal-title</code>）⇒《閉じるアイコンボタン》（<code>button.close</code>）の順</strong>に記載</li>
+		<li>アイコンとなる <code>&times;</code> は、<code>&amp;times;</code> と記述してエスケープ処理をする</li>
+		<li>プラグインを使ってモーダルを閉じるため、閉じるアイコンボタンや閉じるボタン部分には <code>data-dismiss="modal"</code> を入れる</li>
+	</ul>
+	<p class="mb-0">【<a href="../getting-started/accessibility" class="alert-link">アクセシビリティ</a>の設定】</p>
+	<ul>
+		<li><code>div.modal</code> に、<code>role="dialog"</code> 属性（モーダルダイアログの役割を伝える）を入れる</li>
+		<li><code>div.modal-dialog</code> に、<code>role="document"</code> 属性（ドキュメントの役割を伝える）を入れる</li>
+		<li>モーダルを閉じるボタンとなる <code>&lt;button&gt;</code> に、<code>aria-label</code> 属性（アイコンボタンのラベル）を入れる</li>
+		<li>閉じるボタンアイコンの <code>&amp;times;</code> を <code>span[aria-hidden="true"]</code>（スクリーンリーダー等での読み上げをスキップさせる）で囲む</li>
+	</ul>
+	<p class="mb-0">【Bootstrap3.xとの変更箇所】</p>
+	<ul>
+		<li>モーダルのヘッダ：《閉じるアイコンボタン》⇒《タイトル》の順から《タイトル》⇒《閉じるアイコンボタン》の順に</li>
+		<li>モーダルのタイトルの大きさ：<code>&lt;h4&gt;</code> ⇒ <code>&lt;h5&gt;</code></li>
+	</ul>
+</div><!-- /.alert -->
+<h3 id="live-demo">モーダルの設定（Live demo）</h3>
+<p>下のボタンをクリックして、動作中のモーダルのデモを切り替える。ページの上からスライドしてフェードイン。</p>
+<h5>見本</h5>
+<div class="sample">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">ココを押すと表示</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>モーダルのコンテンツ文。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;!-- 切り替えボタンの設定 --&gt;
+&lt;button type="button" class="btn btn-primary" <span class="mark">data-toggle="modal" data-target="#myModal"</span>&gt;
+	ココを押すと表示
+&lt;/button&gt;
+
+&lt;!-- モーダルの設定 --&gt;
+&lt;div class="modal <span class="mark">fade</span>" <span class="mark">id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"</span>&gt;
+	&lt;div class="modal-dialog" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			&lt;div class="modal-header"&gt;
+				&lt;h5 class="modal-title" <span class="mark">id="exampleModalLabel"</span>&gt;モーダルのタイトル&lt;/h5&gt;
+				&lt;button type="button" class="close" data-dismiss="modal" aria-label="閉じる"&gt;
+					&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+				&lt;/button&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-body"&gt;
+				&lt;p&gt;モーダルのコンテンツ文。&lt;/p&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-footer"&gt;
+				&lt;button type="button" class="btn btn-secondary" data-dismiss="modal"&gt;閉じる&lt;/button&gt;
+				&lt;button type="button" class="btn btn-primary"&gt;変更を保存&lt;/button&gt;
+			&lt;/div&gt;&lt;!-- /.modal-footer --&gt;
+		&lt;/div&gt;&lt;!-- /.modal-content --&gt;
+	&lt;/div&gt;&lt;!-- /.modal-dialog --&gt;
+&lt;/div&gt;&lt;!-- /.modal --&gt;</code></pre>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【設定】</p>
+	<ul>
+		<li><code>button.btn</code>《切り替えボタン》 + 〔<code>div.modal.fade[role="dialog"]</code> &gt; <code>div.modal-dialog[role="document"]</code> &gt; <code>div.modal-content</code> &gt; {<code>div.modal-header</code> &gt; <code>h5.modal-title</code>《タイトル》 + [<code>button.close[data-dismiss="modal"][aria-label="閉じる"]</code> &gt; <code>span[aria-hidden="true"]</code> &gt; <code>&amp;times;</code>]《閉じるアイコンボタン》}《ヘッダ》 + <code>div.modal-body</code>《コンテンツ》 + <code>div.modal-footer</code>《フッタ》〕《モーダル部分》</li>
+		<li>モーダルのプラグインを使用するため、
+		<ul>
+			<li>切り替えボタンには、<code>data-toggle="modal"</code>（プラグインを有効にする）と、<code>data-target="#<em>モーダルのID</em>"</code>（または<code>href="#<em>モーダルのID</em>"</code>）</li>
+			<li><code>div.modal</code>（ボタンのリンク先）には、<code>id="<em>ID名</em>"</code>と<code>tabindex="-1"</code>（escキーを押すとモーダルが閉じるようにする）</li>
+		</ul>
+		をそれぞれ入れること</li>
+	</ul>
+	<p class="mb-0">【<a href="../getting-started/accessibility" class="alert-link">アクセシビリティ</a>の設定】</p>
+	<ul>
+		<li><code>h5.modal-title</code> に <code>id="<em>ID名</em>"</code> を入れ、<code>div.modal</code> に <code>aria-labelledby="<em>タイトルのID</em>"</code>属性（タイトルをモーダルのラベルとして関連付ける）を入れること</li>
+		<li>さらに <code>div.modal</code> に <code>aria-describedby</code>属性を入れてモーダルダイアログの説明をすることも可能</li>
+	</ul>
+</div><!-- /.alert -->
+<h3 id="scrolling-long-content">長いコンテンツのスクロール（Scrolling long content）</h3>
+<p>モーダルがユーザーのビューポートやデバイスにとって長すぎると、モーダルはページ自体とは独立してスクロール。以下の見本で試して、どういう意味か確認すること。</p>
+<h5>見本</h5>
+<div class="sample">
+<!-- 切り替えボタンの設定 -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+ ココを押すと表示
+</button>
+
+<!-- モーダルの設定 -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>木曾路はすべて山の中である。</p>
+				<p>あるところは岨づたいに行く崖の道であり、あるところは数十間の深さに臨む木曾川の岸であり、あるところは山の尾をめぐる谷の入り口である。</p>
+				<p>一筋の街道はこの深い森林地帯を貫いていた。東ざかいの桜沢から、西の十曲峠まで、木曾十一宿はこの街道に添うて、二十二里余にわたる長い谿谷の間に散在していた。道路の位置も幾たびか改まったもので、古道はいつのまにか深い山間に埋もれた。</p>
+				<p>名高い桟も、蔦のかずらを頼みにしたような危い場処ではなくなって、徳川時代の末にはすでに渡ることのできる橋であった。新規に新規にとできた道はだんだん谷の下の方の位置へと降って来た。道の狭いところには、木を伐って並べ、藤づるでからめ、それで街道の狭いのを補った。</p>
+				<p>長い間にこの木曾路に起こって来た変化は、いくらかずつでも嶮岨な山坂の多いところを歩きよくした。そのかわり、大雨ごとにやって来る河水の氾濫が旅行を困難にする。そのたびに旅人は最寄り最寄りの宿場に逗留して、道路の開通を待つこともめずらしくない。この街道の変遷は幾世紀にわたる封建時代の発達をも、その制度組織の用心深さをも語っていた。鉄砲を改め女を改めるほど旅行者の取り締まりを厳重にした時代に、これほどよい要害の地勢もないからである。この谿谷の最も深いところには木曾福島の関所も隠れていた。木曾路はすべて山の中である。あるところは岨づたいに行く崖の道であり、あるところは数十間の深さに臨む木曾川の岸であり、あるところは山の尾をめぐる谷の入り口である。</p>
+				<p>一筋の街道はこの深い森林地帯を貫いていた。東ざかいの桜沢から、西の十曲峠まで、木曾十一宿はこの街道に添うて、二十二里余にわたる長い谿谷の間に散在していた。道路の位置も幾たびか改まったもので、古道はいつのまにか深い山間に埋もれた。名高い桟も、蔦のかずらを頼みにしたような危い場処ではなくなって、徳川時...</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;!-- 切り替えボタンの設定 --&gt;
+&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"&gt;
+ ココを押すと表示
+&lt;/button&gt;
+
+&lt;!-- モーダルの設定 --&gt;
+&lt;div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"&gt;
+	&lt;div class="modal-dialog" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			&lt;div class="modal-header"&gt;
+				&lt;h5 class="modal-title" id="exampleModalLongTitle"&gt;モーダルのタイトル&lt;/h5&gt;
+				&lt;button type="button" class="close" data-dismiss="modal" aria-label="閉じる"&gt;
+					&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+				&lt;/button&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-body"&gt;
+				...
+			&lt;/div&gt;
+			&lt;div class="modal-footer"&gt;
+				&lt;button type="button" class="btn btn-secondary" data-dismiss="modal"&gt;閉じる&lt;/button&gt;
+				&lt;button type="button" class="btn btn-primary"&gt;変更を保存&lt;/button&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p><code>.modal-dialog-scrollable</code> を <code>.modal-dialog</code> に追加することでモーダル本体をスクロール可能にする。<span class="text-black-50">v4.3.0追加</span></p>
+<h5>見本</h5>
+<div class="sample">
+<!-- 切り替えボタンの設定 -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+ ココを押すと表示
+</button>
+
+<!-- モーダルの設定 -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalScrollableTitle">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>木曾路はすべて山の中である。</p>
+				<p>あるところは岨づたいに行く崖の道であり、あるところは数十間の深さに臨む木曾川の岸であり、あるところは山の尾をめぐる谷の入り口である。</p>
+				<p>一筋の街道はこの深い森林地帯を貫いていた。東ざかいの桜沢から、西の十曲峠まで、木曾十一宿はこの街道に添うて、二十二里余にわたる長い谿谷の間に散在していた。道路の位置も幾たびか改まったもので、古道はいつのまにか深い山間に埋もれた。</p>
+				<p>名高い桟も、蔦のかずらを頼みにしたような危い場処ではなくなって、徳川時代の末にはすでに渡ることのできる橋であった。新規に新規にとできた道はだんだん谷の下の方の位置へと降って来た。道の狭いところには、木を伐って並べ、藤づるでからめ、それで街道の狭いのを補った。</p>
+				<p>長い間にこの木曾路に起こって来た変化は、いくらかずつでも嶮岨な山坂の多いところを歩きよくした。そのかわり、大雨ごとにやって来る河水の氾濫が旅行を困難にする。そのたびに旅人は最寄り最寄りの宿場に逗留して、道路の開通を待つこともめずらしくない。この街道の変遷は幾世紀にわたる封建時代の発達をも、その制度組織の用心深さをも語っていた。鉄砲を改め女を改めるほど旅行者の取り締まりを厳重にした時代に、これほどよい要害の地勢もないからである。この谿谷の最も深いところには木曾福島の関所も隠れていた。木曾路はすべて山の中である。あるところは岨づたいに行く崖の道であり、あるところは数十間の深さに臨む木曾川の岸であり、あるところは山の尾をめぐる谷の入り口である。</p>
+				<p>一筋の街道はこの深い森林地帯を貫いていた。東ざかいの桜沢から、西の十曲峠まで、木曾十一宿はこの街道に添うて、二十二里余にわたる長い谿谷の間に散在していた。道路の位置も幾たびか改まったもので、古道はいつのまにか深い山間に埋もれた。名高い桟も、蔦のかずらを頼みにしたような危い場処ではなくなって、徳川時...</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;!-- 切り替えボタンの設定 --&gt;
+&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable"&gt;
+ ココを押すと表示
+&lt;/button&gt;
+
+&lt;!-- モーダルの設定 --&gt;
+&lt;div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"&gt;
+	&lt;div class="modal-dialog <span class="mark">modal-dialog-scrollable</span>" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			&lt;div class="modal-header"&gt;
+				&lt;h5 class="modal-title" id="exampleModalScrollableTitle"&gt;モーダルのタイトル&lt;/h5&gt;
+				&lt;button type="button" class="close" data-dismiss="modal" aria-label="閉じる"&gt;
+					&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+				&lt;/button&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-body"&gt;
+				...
+			&lt;/div&gt;
+			&lt;div class="modal-footer"&gt;
+				&lt;button type="button" class="btn btn-secondary" data-dismiss="modal"&gt;閉じる&lt;/button&gt;
+				&lt;button type="button" class="btn btn-primary"&gt;変更を保存&lt;/button&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<h3 id="vertically-centered">垂直方向に中央に配置（Vertically centered）<span class="text-muted h5">v4.0.0-beta.3新設</span></h3>
+<p> <code>.modal-dialog-centered</code> を <code>.modal-dialog</code> に追加して、モーダルを垂直方向に中央に配置。</p>
+<h5>見本</h5>
+<div class="sample">
+<!-- 切り替えボタンの設定 -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+	垂直方向に中央揃えのモーダル
+</button>
+
+<!-- モーダルの設定 -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>モーダルのコンテンツ文。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 切り替えボタンの設定 -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
+ 垂直方向にスクロール可能なモーダル
+</button>
+
+<!-- モーダルの設定 -->
+<div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenteredScrollableTitle">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>木曾路はすべて山の中である。</p>
+				<p>あるところは岨づたいに行く崖の道であり、あるところは数十間の深さに臨む木曾川の岸であり、あるところは山の尾をめぐる谷の入り口である。</p>
+				<p>一筋の街道はこの深い森林地帯を貫いていた。東ざかいの桜沢から、西の十曲峠まで、木曾十一宿はこの街道に添うて、二十二里余にわたる長い谿谷の間に散在していた。道路の位置も幾たびか改まったもので、古道はいつのまにか深い山間に埋もれた。</p>
+				<p>名高い桟も、蔦のかずらを頼みにしたような危い場処ではなくなって、徳川時代の末にはすでに渡ることのできる橋であった。新規に新規にとできた道はだんだん谷の下の方の位置へと降って来た。道の狭いところには、木を伐って並べ、藤づるでからめ、それで街道の狭いのを補った。</p>
+				<p>長い間にこの木曾路に起こって来た変化は、いくらかずつでも嶮岨な山坂の多いところを歩きよくした。そのかわり、大雨ごとにやって来る河水の氾濫が旅行を困難にする。そのたびに旅人は最寄り最寄りの宿場に逗留して、道路の開通を待つこともめずらしくない。この街道の変遷は幾世紀にわたる封建時代の発達をも、その制度組織の用心深さをも語っていた。鉄砲を改め女を改めるほど旅行者の取り締まりを厳重にした時代に、これほどよい要害の地勢もないからである。この谿谷の最も深いところには木曾福島の関所も隠れていた。木曾路はすべて山の中である。あるところは岨づたいに行く崖の道であり、あるところは数十間の深さに臨む木曾川の岸であり、あるところは山の尾をめぐる谷の入り口である。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><span class="title">垂直方向に中央揃えのモーダル</span><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;!-- 切り替えボタンの設定 --&gt;
+&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"&gt;
+	垂直方向に中央揃えのモーダル
+&lt;/button&gt;
+
+&lt;!-- モーダルの設定 --&gt;
+&lt;div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"&gt;
+	&lt;div class="modal-dialog <span class="mark">modal-dialog-centered</span>" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			&lt;div class="modal-header"&gt;
+				&lt;h5 class="modal-title" id="exampleModalCenterTitle"&gt;モーダルのタイトル&lt;/h5&gt;
+				&lt;button type="button" class="close" data-dismiss="modal" aria-label="閉じる"&gt;
+					&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+				&lt;/button&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-body"&gt;
+				&lt;p&gt;モーダルのコンテンツ文。&lt;/p&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-footer"&gt;
+				&lt;button type="button" class="btn btn-secondary" data-dismiss="modal"&gt;閉じる&lt;/button&gt;
+				&lt;button type="button" class="btn btn-primary"&gt;変更を保存&lt;/button&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【設定】</p>
+	<ul>
+		<li><code>.modal-dialog</code> に <code>.modal-dialog-centered</code> を追加</li>
+	</ul>
+</div><!-- /.alert -->
+<h3 id="tooltips-and-popovers">ツールチップとポップオーバー（Tooltips and popovers）</h3>
+<p><a href="../components/tooltips/">ツールチップ</a>と<a href="../components/popovers">ポップオーバ</a>ーを必要に応じてモーダル内に配置。モーダルが閉じられると、内のツールヒントやポップオーバーも自動的に閉じられる。</p>
+<h5>見本</h5>
+<div class="sample">
+<!-- 切り替えボタンの設定 -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalPopovers">
+ ココを押すと表示
+</button>
+
+<!-- モーダルの設定 -->
+<div id="exampleModalPopovers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalPopoversLabel">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h5>モーダル内のポップオーバー</h5>
+				<p>この<a href="#" role="button" class="btn btn-secondary popover-test" title="ポップオーバーのタイトル" data-content="ポップオーバーのコンテンツ。もう一度ボタンを押すと非表示になります。" data-container="#exampleModalPopovers">ボタン</a> を押すとポップオーバーが表示されます。</p>
+				<h5>モーダル内のツールチップ</h5>
+				<p><a href="#" class="tooltip-test" title="ツールチップ1の表示" data-container="#exampleModalPopovers">このリンク</a>と<a href="#" class="tooltip-test" title="ツールチップ2の表示" data-container="#exampleModalPopovers">このリンク</a>をホバーするとツールチップが表示されます。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><span class="title">HTML</span><code class="xml">&lt;div class="modal-body"&gt;
+	&lt;h5&gt;モーダル内のポップオーバー&lt;/h5&gt;
+	&lt;p&gt;この&lt;a href="#" role="button" class="btn btn-secondary <span class="mark">popover-test</span>" title="ポップオーバーのタイトル" data-content="ポップオーバーのコンテンツ。もう一度ボタンを押すと非表示になります。"&gt;ボタン&lt;/a&gt; を押すとポップオーバーが表示されます。&lt;/p&gt;
+	&lt;h5&gt;モーダル内のツールチップ&lt;/h5&gt;
+	&lt;p&gt;&lt;a href="#" <span class="mark">class="tooltip-test"</span> title="ツールチップ1の表示"&gt;このリンク&lt;/a&gt;と&lt;a href="#" <span class="mark">class="tooltip-test"</span> title="ツールチップ2の表示"&gt;このリンク&lt;/a&gt;をホバーするとツールチップが表示されます。&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<h5>実行コード</h5>
+<pre class="highlightjs"><span class="title">JSファイルの場合</span><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="javascript">$(function () {
+	$('.popover-test').popover()
+	$('.tooltip-test').tooltip()
+})</code></pre>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【設定】</p>
+	<ul>
+		<li>モーダルの切替ボタンの部分にポップオーバーまたはツールチップ用のクラスを追加し、別途Javascriptで実行コードを作成する</li>
+	</ul>
+</div><!-- /.alert -->
+<h3 id="using-the-grid">グリッドを使用（Using the grid ）</h3>
+<p><code>.modal-body</code> 内に <code>.container-fluid</code> を入れ子にして、モーダル内のBootstrapグリッドシステムを利用。次に、通常どおりのグリッドシステムクラスを使用。</p>
+<h5>見本</h5>
+<div class="sample grid">
+	<div id="gridSystemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="gridModalLabel" class="modal-title">モーダルのタイトル</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="閉じる"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<p>モーダルのコンテンツ <small class="text-muted">見やすいよう色を付けています</small></p>
+						<div class="row">
+							<div class="col-md-4">.col-md-4</div>
+							<div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 ml-auto">.col-md-3 .ml-auto</div>
+							<div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
+						</div>
+						<div class="row">
+						<div class="col-md-6 mx-auto">.col-md-6 .mx-auto</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-9">レベル 1: .col-sm-9
+								<div class="row">
+									<div class="col-8 col-sm-6">レベル 2: .col-8 .col-sm-6</div>
+									<div class="col-4 col-sm-6">レベル 2: .col-4 .col-sm-6</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+					<button type="button" class="btn btn-primary">変更を保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gridSystemModal">ココを押すと表示</button>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;div class="modal-body"&gt;
+	<span class="mark">&lt;div class="container-fluid"&gt;</span>
+		&lt;p&gt;モーダルのコンテンツ&lt;/p&gt;
+		<span class="mark">&lt;div class="row"&gt;</span>
+			&lt;div <span class="mark">class="col-md-4"</span>&gt;.col-md-4&lt;/div&gt;
+			&lt;div <span class="mark">class="col-md-4 ml-auto"</span>&gt;.col-md-4 .ml-auto&lt;/div&gt;
+		<span class="mark">&lt;/div&gt;</span>
+		<span class="mark">&lt;div class="row"&gt;</span>
+			&lt;div <span class="mark">class="col-md-3 ml-auto"</span>&gt;.col-md-3 .ml-auto&lt;/div&gt;
+			&lt;div <span class="mark">class="col-md-2 ml-auto"</span>&gt;.col-md-2 .ml-auto&lt;/div&gt;
+		<span class="mark">&lt;/div&gt;</span>
+		<span class="mark">&lt;div class="row"&gt;</span>
+			&lt;div <span class="mark">class="col-md-6 mx-auto"</span>&gt;.col-md-6 .mx-auto&lt;/div&gt;
+		<span class="mark">&lt;/div&gt;</span>
+		<span class="mark">&lt;div class="row"&gt;</span>
+			&lt;div <span class="mark">class="col-sm-9"</span>&gt;
+				レベル 1: .col-sm-9
+				<span class="mark">&lt;div class="row"&gt;</span>
+					&lt;div <span class="mark">class="col-8 col-sm-6"</span>&gt;
+						レベル 2: .col-8 .col-sm-6
+					&lt;/div&gt;
+					&lt;div <span class="mark">class="col-4 col-sm-6"</span>&gt;
+						レベル 2: .col-4 .col-sm-6
+					&lt;/div&gt;
+				&lt;/div&gt;
+			<span class="mark">&lt;/div&gt;</span>
+		<span class="mark">&lt;/div&gt;</span>
+	<span class="mark">&lt;/div&gt;</span>
+&lt;/div&gt;</code></pre>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【設定】</p>
+	<ul>
+		<li><code>div.modal-body</code> &gt; <code>div.container-fluid</code> &gt; <code>div.row</code> &gt; <code>div.col(-{breakpoint})-*</code>（<code>.m{l,r,x}(-{breakpoint})-auto</code>）</li>
+	</ul>
+</div><!-- /.alert -->
+<h3 id="varying-modal-contents">様々なモーダルコンテンツ（Varying modal contents）</h3>
+<p>若干異なる内容で同じモーダルを起動する複数のボタンが必要な場合、クリックしたボタンに応じてモーダルの内容を変更するには、<code>event.relatedTarget</code> 属性と<a href="https://developer.mozilla.org/ja/docs/Learn/HTML/Howto/Use_data_attributes" target="_blank" rel="noopener">HTML <code>data-*</code>属性</a>（おそらく<a href="https://api.jquery.com/data/" target="_blank" rel="noopener">jQuery経由</a>）を使用。</p>
+<p>以下に見本とHTMLとJavaScriptの設定例を示す。 <code>relatedTarget</code> の詳細は、<a href="#events">モーダルイベントの解説</a>に記載。</p>
+<h5>見本</h5>
+<div class="sample">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@president">社長向けモーダルを開く</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@vice-president">副社長向けモーダルを開く</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@officer">重役向けモーダルを開く</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">新メッセージ</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="recipient-name">受信者：</label>
+						<input type="text" class="form-control" id="recipient-name">
+						</div>
+					<div class="form-group">
+						<label for="message-text">メッセージ：</label>
+						<textarea class="form-control" id="message-text"></textarea>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">送信</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><span class="title">HTML</span><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" <span class="mark">data-whatever="@president"</span>&gt;社長向けモーダルを開く&lt;/button&gt;
+&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" <span class="mark">data-whatever="@vice-president"</span>&gt;副社長向けモーダルを開く&lt;/button&gt;
+&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" <span class="mark">data-whatever="@officer"</span>&gt;重役向けモーダルを開く&lt;/button&gt;
+&lt;div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"&gt;
+	&lt;div class="modal-dialog" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			&lt;div class="modal-header"&gt;
+				&lt;h5 class="modal-title" id="exampleModalLabel"&gt;新メッセージ&lt;/h5&gt;
+				&lt;button type="button" class="close" data-dismiss="modal" aria-label="閉じる"&gt;
+					&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+				&lt;/button&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-body"&gt;
+				&lt;form&gt;
+					&lt;div class="form-group"&gt;
+						&lt;label for="recipient-name"&gt;受信者：&lt;/label&gt;
+						&lt;input type="text" class="form-control" id="recipient-name"&gt;
+					&lt;/div&gt;
+					&lt;div class="form-group"&gt;
+						&lt;label for="message-text"&gt;メッセージ：&lt;/label&gt;
+						&lt;textarea class="form-control" id="message-text"&gt;&lt;/textarea&gt;
+					&lt;/div&gt;
+				&lt;/form&gt;
+			&lt;/div&gt;
+			&lt;div class="modal-footer"&gt;
+				&lt;button type="button" class="btn btn-secondary" data-dismiss="modal"&gt;閉じる&lt;/button&gt;
+				&lt;button type="button" class="btn btn-primary"&gt;送信&lt;/button&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre class="highlightjs"><span class="title">JavaScript</span><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="javascript">$('#exampleModal').on('show.bs.modal', function (event) {
+	<span class="mark">var button = $(event.relatedTarget)</span> // モーダル切替えボタン
+	<span class="mark">var recipient = button.data('whatever')</span> // data-* 属性から情報を抽出
+	// 必要に応じて、ここでAJAXリクエストを開始可能（コールバックで更新することも可能）
+	// モーダルの内容を更新。ここではjQueryを使用するが、代わりにデータ・バインディング・ライブラリまたは他のメソッドを使用することも可能
+	var modal = $(this)
+	modal.find('.modal-title').text(recipient + 'にメッセージを送る')
+	modal.find('.modal-body input').val(recipient)
+})</code></pre>
+<p>&nbsp;</p>
+<h3 id="remove-animation">アニメーションの削除（Remove animation）</h3>
+<p>フェードインではなく、いきなり表示されるモーダルにする場合は、モーダルのマークアップから <code>.fade</code> クラスを削除。</p>
+<h5>見本</h5>
+<div class="sample">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default3">ココを押すと表示</button>
+<div class="modal" id="modal-default3" tabindex="-1" role="dialog" aria-labelledby="modal-default-title" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modal-default-title3">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる"><span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span></button>
+			</div>
+			<div class="modal-body"><p>いきなりモーダルが表示されます。<br>閉じるとモーダルはただちに消えます。</p></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="..." aria-hidden="true"&gt;
+	...
+&lt;/div&gt;</code></pre>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【設定】</p>
+	<ul>
+		<li><code>.modal</code> で <code>.fade</code> をはずす</li>
+	</ul>
+</div><!-- /.alert -->
+<h3 id="modals-with-dynamic-heights">動的な高さのモーダル（Modals with dynamic heights）</h3>
+<p>モーダルの高さが開いている間に変更され、スクロールバーが表示された場合には、<code>$('#myModal').modal('handleUpdate')</code> を呼び出してモーダルの位置を再調整する必要がある。</p>
+<h3 id="accessibility">アクセシビリティ（Accessibility）</h3>
+<p>モーダルタイトルを参照する <code>role="dialog"</code> と <code>aria-labelledby="..."</code> を <code>.modal</code> に、そして <code>role="document"</code> を <code>.modal-dialog</code> 自体に必ず追加すること。さらに、モーダルダイアログの説明を <code>.modal</code> の <code>aria-describedby</code> で指定することも可能。</p>
+<h3 id="embedding-youtube-videos">YouTube動画の埋め込み（Embedding YouTube videos）<a class="btn btn-bs" href="../javascript/modals/others" target="_blank" rel="noopener" role="button">サンプル</a></h3>
+<p>YouTubeの動画をモーダルに埋め込むには、再生を自動的に停止するなどの追加のJavaScriptが必要。詳細は、この<a href="https://stackoverflow.com/questions/18622508/bootstrap-3-and-youtube-in-modal" target="_blank" rel="noopener">Stack Overflowの便利な記事</a>に記載。</p>
+<p>&nbsp;</p>
+<h2 id="optional-sizes">モーダルの大きさ（Optional sizes）<span class="text-muted h5">v4.2.1一部追加</span></h2>
+<p>モーダルには3つのオプションのサイズがあり、修飾クラスを使用して <code>.modal-dialog</code> に配置することが可能。これらのサイズは、狭いビューポートでの水平スクロールバーの出現を避けるために、特定のブレークポイントで実行される。</p>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>サイズ</th>
+			<th>クラス</th>
+			<th>モーダルの最大幅</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>小</td>
+			<td><code>.modal-sm</code></td>
+			<td><code>300px</code></td>
+		</tr>
+		<tr>
+			<td>標準（中）</td>
+			<td class="text-muted">なし</td>
+			<td><code>500px</code></td>
+		</tr>
+		<tr>
+			<td>大</td>
+			<td><code>.modal-lg</code></td>
+			<td><code>800px</code></td>
+		</tr>
+		<tr>
+			<td>特大</td>
+			<td><code>.modal-xl</code></td>
+			<td><code>1140px</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>修飾クラスを持たないデフォルトモーダルは、"中"サイズのモーダルを構成。</p>
+<h5>大きさの種類</h5>
+<div class="sample">
+<p class="content">●特大：<code>.modal-xl</code> <span class="text-black-50">v4.2.1追加</span></p>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">より大きめのモーダル</button>
+<div class="modal fade" id="modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myExtraLargeModalLabel">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span></button>
+			</div>
+			<div class="modal-body"><p>モーダルのコンテンツ</p></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<p class="content">●大きめ：<code>.modal-lg</code></p>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">大きめのモーダル</button>
+<div class="modal fade" id="modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span></button>
+			</div>
+			<div class="modal-body"><p>モーダルのコンテンツ</p></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<p class="content">●小さめ：<code>.modal-sm</code></p>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-sm">小さめのモーダル</button>
+<div class="modal fade" id="modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="mySmallModalLabel">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span></button>
+			</div>
+			<div class="modal-body"><p>モーダルのコンテンツ</p></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<p class="content">※参考：標準</p>
+<button type="button" data-toggle="modal" data-target="#modal-default2" class="btn btn-primary">標準のモーダル</button>
+<div class="modal fade" id="modal-default2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel2">モーダルのタイトル</h5>
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">閉じる</span></button>
+			</div>
+			<div class="modal-body"><p>モーダルのコンテンツ</p></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">変更を保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- /.sample -->
+<h5>設定例</h5>
+<pre class="highlightjs"><span class="title">特大</span><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"&gt;より大きめのモーダル&lt;/button&gt;
+&lt;div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"&gt;
+	&lt;div class="modal-dialog <span class="mark">modal-xl</span>" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre class="highlightjs"><span class="title">大きめ</span><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"&gt;大きめのモーダル&lt;/button&gt;
+&lt;div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"&gt;
+	&lt;div class="modal-dialog <span class="mark">modal-lg</span>" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre class="highlightjs"><span class="title">小さめ</span><button class="btn copy-btn"><i class="fas fa-clipboard fa-fw"></i>コピー</button><code class="xml">&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"&gt;小さめのモーダル&lt;/button&gt;
+&lt;div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"&gt;
+	&lt;div class="modal-dialog <span class="mark">modal-sm</span>" role="document"&gt;
+		&lt;div class="modal-content"&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【設定】</p>
+	<ul>
+		<li><code>.modal-dialog</code> に <code>.modal-{size}</code>（上記の「大きさの種類」から選択）を追加</li>
+	</ul>
+	<p class="mb-0">【変更履歴】</p>
+	<ul>
+		<li>【v4.2.1】大きさの種類に特大（<code>.modal-xl</code>）が追加</li>
+	</ul>
+</div><!-- /.alert -->
+<p>&nbsp;</p>
+<h2 id="usage">使用方法（Usage）</h2>
+<p>モーダルプラグインは、必要に応じて、データ属性やJavaScriptを使用して、非表示のコンテンツを切り替える。また、<code>&lt;body&gt;</code> に <code>.modal-open</code> を追加してデフォルトのスクロール動作を再定義し、モーダルの外側をクリックしたときに表示されたモーダルを閉じるためのクリック領域を提供する <code>.modal-backdrop</code> を生成する。</p>
+<h3 id="via-data-attributes">データ属性経由で（Via data attributes）</h3>
+<p>JavaScriptを書かずにモーダルを有効にする。特定のモーダルを起動させるためには、<code>data-target="#foo"</code> または <code>href="#foo"</code> とともに、ボタンのようなコントローラー要素に <code>data-toggle = "modal"</code> を設定すること。</p>
+<pre class="highlightjs"><span class="title">ボタンで設定</span><code class="xml">&lt;button type="button" <span class="mark">data-toggle="modal"</span> <span class="mark">data-target="#myModal"</span>&gt;モーダルを起動&lt;/button&gt;</code></pre>
+<pre class="highlightjs"><span class="title">リンクで設定</span><code class="xml">&lt;a <span class="mark">data-toggle="modal"</span> <span class="mark">href="#myModal"</span>&gt;モーダルを起動&lt;/a&gt;</code></pre>
+<h3 id="via-javascript">JavaScript経由で（Via JavaScript）</h3>
+<p>JavaScript1行でID <code>myModal</code> のモーダルを呼び出す：</p>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').modal(options)</code></pre>
+<h3 id="options">オプション（Options）<a class="btn btn-bs" href="../javascript/modals/options" target="_blank" rel="noopener" role="button">サンプル</a> <span class="text-muted h5">v4.0.0一部変更</span></h3>
+<p>オプションは、データ属性またはJavaScriptを使用して渡すことが可能。データ属性の場合、<code>data-backdrop=""</code> のように <code>data-</code> にオプション名を追加すること。</p>
+<div class="table-responsive">
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>名前</th>
+				<th>タイプ</th>
+				<th class="text-nowrap">デフォルト</th>
+				<th>説明</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>backdrop</td>
+				<td>boolean または string <code>'static'</code></td>
+				<td>true</td>
+				<td>モーダルの背景をオーバーレイ表示にする<br><code>true</code>：有効／<code>false</code>：無効<br>または、クリック時にモーダルを閉じないようにするには <code>static</code> を指定</td>
+			</tr>
+			<tr>
+				<td>keyboard</td>
+				<td>boolean</td>
+				<td>true</td>
+				<td>escキーが押されたときにモーダルを閉じる<br><code>true</code>：有効／<code>false</code>：無効</td>
+			</tr>
+			<tr>
+				<td>focus<br><span class="text-black-50 small">v4.0.0追加</span></td>
+				<td>boolean</td>
+				<td>true</td>
+				<td>初期化時にモーダルにフォーカスを移動<br><code>true</code>：有効／<code>false</code>：無効</td>
+			</tr>
+			<tr>
+				<td>show</td>
+				<td>boolean</td>
+				<td>true</td>
+				<td>初期化時にモーダルを表示<br><code>true</code>：有効／<code>false</code>：無効</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【Bootstrap3.xとの変更箇所】</p>
+	<ul>
+		<li><code>remote</code> は、既にv3.3.0で廃止され、v4では削除</li>
+	</ul>
+</div><!-- /.alert -->
+<h3 id="methods">メソッド（Methods）</h3>
+<div class="callout callout-danger" role="alert">
+	<h5>非同期メソッドと遷移</h5>
+	<p>すべてのAPIメソッドは、<strong>非同期</strong>で<strong>遷移</strong>を開始する。それらは移行が始まるとすぐに呼び出し元に戻るが、<strong>終了する前に</strong>呼び出し元に戻る。さらに、<strong>遷移コンポーネントのメソッド呼び出しは無視される</strong>。</p>
+	<p>詳細については、<a href="../getting-started/javascript#asynchronous-functions-and-transitions">Javascriptのドキュメント</a>に記載。</p>
+</div><!-- /.callout -->
+<h4 id="modaloptions"><code>.modal(options)</code></h4>
+<p>コンテンツをモーダルとしてアクティブ化する。オプションのオプション <code>object</code> を受け入れる。</p>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').modal({
+	keyboard: false
+})</code></pre>
+<h4 id="modaltoggle"><code>.modal('toggle')</code></h4>
+<p>モーダルを手動で切り替える。<strong>モーダルが実際に表示または非表示になる前</strong>（つまり、<code>shown.bs.modal</code> または <code>hidden.bs.modal</code> イベント発動前）<strong>に呼び出し元に戻る</strong>。</p>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').modal('toggle')</code></pre>
+<h4 id="modalshow"><code>.modal('show')</code></h4>
+<p>モーダルを手動で開く。<strong>モーダルが実際に表示される前</strong>（つまり、<code>shown.bs.modal</code> イベント発動前）<strong>に呼び出し元に戻る</strong>。</p>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').modal('show')</code></pre>
+<h4 id="modalhide"><code>.modal('hide')</code></h4>
+<p>モーダルを手動で非表示にする。<strong>モーダルが実際に非表示になる前</strong>（つまり、<code>hidden.bs.modal</code> イベントが発動する前）<strong>に呼び出し元に戻る</strong>。</p>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').modal('hide')</code></pre>
+<h4 id="modalhandleUpdate"><code>.modal('handleUpdate')</code></h4>
+<p>モーダルの高さが開いているとき（つまり、スクロールバーが表示されているとき）に変更された場合は、モーダルの位置を手動で再調整する。</p>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').modal('handleUpdate')</code></pre>
+<h4 id="modaldispose"><code>.modal('dispose')</code> <span class="text-black-50 small">v4.0.0-beta.2追加</span></h4>
+<p>要素のモーダルを破棄。</p>
+<h3 id="events">イベント（Events）<a class="btn btn-bs" href="../javascript/modals/events" target="_blank" rel="noopener" role="button">サンプル</a> <span class="text-muted h5">v4.0.0一部廃止</span></h3>
+<p>Bootstrapのモーダルクラスは、モーダル機能に接続するためのいくつかのイベントを公開している。すべてのモーダルイベントはモーダル自体（つまり、<code>&lt;div class="modal"&gt;</code>）で発動。</p>
+<div class="table-responsive">
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th style="width: 150px;">イベントタイプ</th>
+				<th>説明</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>show.bs.modal</td>
+				<td>このイベントは、<code>show</code> のインスタンス・メソッドが呼び出されると直ちに発動。クリックによって発動した場合、クリックされた要素はイベントの <code>relatedTarget</code> プロパティとして使用可能。</td>
+			</tr>
+			<tr>
+				<td>shown.bs.modal</td>
+				<td>このイベントは、モーダルがユーザーに表示されたときに発動（完全にCSS遷移が完了するまで待機）。クリックによって発動した場合、クリックされた要素はイベントの <code>relatedTarget</code> プロパティとして使用可能。</td>
+			</tr>
+			<tr>
+				<td>hide.bs.modal</td>
+				<td>このイベントは、<code>hide</code> のインスタンス・メソッドが呼び出されると直ちに発動。</td>
+			</tr>
+			<tr>
+				<td>hidden.bs.modal</td>
+				<td>このイベントは、モーダルがユーザーから非表示になったときに発動（完全にCSS遷移が完了するまで待機）。</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<h5>使用例</h5>
+<pre class="highlightjs"><span class="title">JavaScript</span><code class="javascript">$('#myModal').on('hidden.bs.modal', function (e) {
+	// 何かをする...
+})</code></pre>
+<div class="alert alert-info" role="note">
+	<p class="mb-0">【Bootstrap3.xとの変更箇所】</p>
+	<ul>
+		<li><code>loaded.bs.modal</code> は <code>remote</code> の廃止（v3.3.0）に伴い廃止</li>
+	</ul>
+</div><!-- /.alert -->
+					</div><!-- /.content -->
+					<div class="clearfix"></div>
+				</div><!-- /#page_view -->
+				<div id="page_link" class="d-block d-md-none">
+					<h3 class="sr-only">ページ移動</h3>
+		<ul class="page_link row justify-content-between list-inline">
+			<li class="previous list-inline-item col border-right"><a href="https://cccabinet.jpn.org/bootstrap4/page/components/media-object" class="stretched-link"><small><i class="fas fa-caret-left fa-fw"></i>前のページ</small><br>メディアオブジェクト</a></li>
+			<li class="next list-inline-item text-right col"><a href="https://cccabinet.jpn.org/bootstrap4/page/components/navs" class="stretched-link"><small>次のページ<i class="fas fa-caret-right fa-fw"></i></small><br>ナビゲーション</a></li>
+		</ul>
+				</div>
+					<div class="mx-auto my-4">
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<ins class="adsbygoogle"
+							style="display:block"
+							data-ad-client="ca-pub-5922383921992325"
+							data-ad-slot="1683529114"
+							data-ad-format="auto"></ins>
+						<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</div>
+			</div>
+		</div><!-- /.row -->
+	</div><!-- /#content -->
+
+	<footer class="footer">
+		<div class="container">
+			<ul class="float-right list-inline text-muted my-2">
+				<li class="list-inline-item">&copy; 2018-2019 cccabinet. Coordinated by <a href="https://getbootstrap.com/">Bootstrap v4.3.1</a></li>
+				<li class="list-inline-item">Created by <a href="http://freo.jp/">freo</a>.</li>
+			</ul>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="https://cccabinet.jpn.org/bootstrap4/js/jquery.js"><\/script>')</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="https://cccabinet.jpn.org/bootstrap4/js/bootstrap.min.js"><\/script>')</script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-colorbox@1.6.4/jquery.colorbox-min.js" integrity="sha256-QbxNT+iBOdbuiav8squsceFDDYXb/8C+fI9r029M7X4=" crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="https://cccabinet.jpn.org/bootstrap4/js/jquery.colorbox.js"><\/script>')</script>
+	<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9/build/highlight.min.js"></script>
+	<script>
+		hljs.initHighlightingOnLoad();
+		hljs.configure({
+			tabReplace: '  ', // 2 spaces
+		})
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+	<script src="https://cccabinet.jpn.org/bootstrap4/js/style.js"></script>
+	<script src="https://cccabinet.jpn.org/bootstrap4/js/common.js"></script>
+	<script src="https://cccabinet.jpn.org/bootstrap4/js/bs4_default.js"></script>
+</body>
+
+</html>
