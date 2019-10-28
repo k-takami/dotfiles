@@ -1,4 +1,5 @@
 ######################################################################################
+A
 ### 構造：MODULE CONFIG HIERARCHY #####
 httpd: node.js
   conf: package.json
@@ -8,7 +9,7 @@ httpd: node.js
                       contentBase: 'dist',
                       port: 3000,
                       proxy: {
-                        
+
   bundler(=dependency management): bower
     assets-compression/installer: webpack
       conf: webpack.config.js
@@ -26,11 +27,11 @@ httpd: node.js
 
         #karmaの個別ファイル実行(全量＋個別)：
            $ karma start --reporters kjhtml
-           #visit http://localhost:9876/debug.html 
+           #visit http://localhost:9876/debug.html
            # 各ケースをｸﾘｯｸ
 
         #karmaの個別ファイル実行(指定ファイル以外はskippedになる)：
-           $ karma start &; 
+           $ karma start &;
            $ karma run -- --grep=ｱﾉﾃｰｼｮﾝやｸﾗｽ名などの検索語
 
 
@@ -66,16 +67,16 @@ httpd: node.js
     ### RHEL
       $ curl -sL https://rpm.nodesource.com/setup_6.x | bash -  #<---otherwise ERROR "Cannot read property 'latest' of undefined"
       $ yum install -y gcc-c++ make nodejs epel-release           #<---epel-releaseでnpm packagesのいろんなバージョンがenablerepoで見えるようになる
-  
+
   #uninstalation
     #####################Micrsoft Windows ##########################################
     set $node_bin = "" ; #REM "C:\Program Files (not via installer)\node-v7.3.0-win-x64"
     rmdir /S %HOMEDRIVE%\Program Files\nodejs
     rmdir /S %USERPROFILE%\AppData\Roaming\npm
     rmdir /S %USERPROFILE%\AppData\Roaming\npm-cache
-    
-    
-    
+
+
+
 
 
 
@@ -90,7 +91,7 @@ httpd: node.js
   #//1.3系統にnpmをバージョンアップ → ERROR: No compatible version foundエラーが出た場合の対処
   # $ npm install -g npm@1.3.0
 
-#prep 
+#prep
   $ sudo npm cache clean -f
   $ su -
   $ yum remove -y nodejs npm epel-release
@@ -100,7 +101,7 @@ httpd: node.js
       $ yum install -y npm --enablerepo=epel
 
   #UBUNTUa(TBD)
-  
+
 
   # root以外のﾕｰｻﾞｰにもどる
 
@@ -111,7 +112,9 @@ httpd: node.js
       $ sudo npm install -g typings@1.3.3
 
 
-        $ sudo npm install -g typescript@1.8.10
+      $  npm install -g grunt-cli
+      $ npm install -g typings
+      $ sudo npm install -g typescript@1.8.10
       $ sudo npm install -g bower@1.7.9
       $ sudo npm install -g webpack@1.15.0
 
@@ -172,7 +175,7 @@ typings install
 npm install @types/node --save-dev  #★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 npm i angularjs-slider
-npm install 
+npm install
 
 
 
@@ -213,7 +216,7 @@ cp ./src/resources/svg/shoei-dummy-bookcloud.svg ./src/resources/svg/shoei-dummy
 
 
 #清掃コンパイル？おまじない
-mv tsconfig.json tsconfig.json__; webpack; mv tsconfig.json__ tsconfig.json; webpack; 
+mv tsconfig.json tsconfig.json__; webpack; mv tsconfig.json__ tsconfig.json; webpack;
 
 
 # TS2339:  Property '***' does not exist on type '***'
@@ -225,7 +228,7 @@ mv tsconfig.json tsconfig.json__; webpack; mv tsconfig.json__ tsconfig.json; web
   in typescript 2.0.0, tsconfig knows about @types installed in the node_modules folder and you can specify types in your tsconfig to match them.
 
 
-# TS2503: Cannot find namespace 'angular'. 
+# TS2503: Cannot find namespace 'angular'.
 typings install --save --global dt~jquery
 typings install
 
@@ -419,4 +422,6 @@ gulp.task('プラグイン名',function(){});
 
 
 
+########## LEGACY grunt command ##################################
+#installation: $ gruntコマンド使えるようにする: $  npm install -g grunt-cli
 

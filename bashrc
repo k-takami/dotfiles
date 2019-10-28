@@ -43,8 +43,7 @@ alias dkhs='    eocker history';
 # |prefix + p|前のウインドウへ移動|
 alias dksch='   docker search  --no-trunc';
 alias dkisp='   docker inspect';
-# alias dk'sudo docker cp <コンテナID>:/etc/my.cnf my.cnf'
-alias dkcp='    docker cp'; #container
+alias dkcp='    docker cp'; #fromfile <コンテナID>:/
 alias dkpl='    docker login; docker pull'; #container
 alias dkat='    docker attach'; #container
 alias dkrunit=' docker run -itd'; # container, -d == detached
@@ -61,9 +60,6 @@ alias dkcud='   docker-compose up -d '
 
 function dkbash { # $1 == container_name/id
   dkpaivl; docker exec -it -u root $1 bash
-}
-function dksh { # $1 == container_name/id
-  dkpaivl; docker exec -it -u root $1 sh
 }
 
 function dkrstrails { # $1 == container_name/id
@@ -607,7 +603,7 @@ alias mytigbug='tig     --committer=k_takami --grep=正 --grep=bug.fix '
 alias tigbug='  tig                          --grep=正 --grep=bug.fix '
 
 #OSS DBMS
-alias dbimportmysql='mysql -u root -h localhost < '
+alias dbimportmysql='mysql -u root -h localhost < ' # -D databasenameをつけなきゃいけない　面倒臭いmysqimportコマンドではないのに注意。
 alias dbloginpsql='psql -U postgres'
 
 #apache
@@ -786,31 +782,21 @@ source ~/dotfiles/SI/pj-dependent.bashrc
 
 
 alias REM=' : <<"REM"' #REMで終端すること
-alias ksen-f='echo "^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^"'
-alias ksen-b='echo "================================================================================="'
 alias ksen-a='echo "/////////////////////////////////////////////////////////////////////////////////"'
-alias ksen-s='echo "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★"'
+alias ksen-b='echo "================================================================================="'
 alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"'
-alias ksen-d='echo "#################################################################################"'
-alias ksen-e='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
-alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-s'
-
-alias tmls='  tmux ls'
-alias tma='   tmux a'
-alias tmat='  tmux a -t'
-alias tmks='  tmux kill-session'
-# ~/.bash_profile
-# # 初回シェル時のみ tmux実行
-# if [ $SHLVL = 1 ]; then
-#   tmux
-# fi
-i
-
-
+alias ksen-d='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
+alias ksen-e='echo "#################################################################################"'
+alias ksen-f='echo "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★"'
+alias ksen-g='echo "﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏"'
+alias ksen-h='echo "〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜"'
+alias ksen-i='echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"'
 # alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
 # alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
 # alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
 # alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
+alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-g; ksen-h; ksen-i'
+
 function ksendebug {  #debugmessage関数 引数にrb, js
   extention=${1:-'rb'}
   if [[ $extention == 'rb' ]]; then
@@ -847,24 +833,50 @@ MSG1)
 };
 
 
+
+alias tmls='  tmux ls'
+alias tma='   tmux a'
+alias tmat='  tmux a -t'
+alias tmks='  tmux kill-session'
+# ~/.bash_profile
+# # 初回シェル時のみ tmux実行
+# if [ $SHLVL = 1 ]; then
+#   tmux
+# fi
+
+
+function dksh { # $1 == container_name/id
+  # 現在のペインIDを退避
+  local pane_id=$(tmux display -p '#{pane_id}')
+  # 接続先ホスト名に応じて背景色を切り替え
+  if [[   `echo $1 | grep 'ap_'` ]] ; then
+    tmux select-pane -P 'bg=colour150,fg=black'
+  elif [[ `echo $1 | grep 'db_'` ]] ; then
+    tmux select-pane -P 'bg=colour250,fg=black'
+  fi
+  dkpaivl; docker exec -it -u root $1 sh
+  # デフォルトの背景色に戻す
+  tmux select-pane -t $pane_id -P 'default'
+}
+
 function ssh() {
-    # tmux起動時
-    if [[ -n $(printenv TMUX) ]] ; then
-        # 現在のペインIDを退避
-        local pane_id=$(tmux display -p '#{pane_id}')
-        # 接続先ホスト名に応じて背景色を切り替え
-        if [[   `echo $1 | grep '\.202'` ]] ; then
-            tmux select-pane -P 'bg=colour52,fg=white'
-        elif [[ `echo $1 | grep '\.237'` ]] ; then
-            tmux select-pane -P 'bg=colour58,fg=white'
-        elif [[ `echo $1 | grep '\.dev\.'` ]] ; then
-            tmux select-pane -P 'bg=colour95,fg=white'
-        fi
-        # 通常通りssh続行
-        command ssh $@
-        # デフォルトの背景色に戻す
-        tmux select-pane -t $pane_id -P 'default'
-    else
-        command ssh $@
+  # tmux起動時
+  if [[ -n $(printenv TMUX) ]] ; then
+    # 現在のペインIDを退避
+    local pane_id=$(tmux display -p '#{pane_id}')
+    # 接続先ホスト名に応じて背景色を切り替え
+    if [[   `echo $1 | grep '\.202'` ]] ; then
+      tmux select-pane -P 'bg=colour52,fg=white'
+    elif [[ `echo $1 | grep '\.237'` ]] ; then
+      tmux select-pane -P 'bg=colour58,fg=white'
+    elif [[ `echo $1 | grep '\.dev\.'` ]] ; then
+      tmux select-pane -P 'bg=colour95,fg=white'
     fi
+    # 通常通りssh続行
+    command ssh $@
+    # デフォルトの背景色に戻す
+    tmux select-pane -t $pane_id -P 'default'
+  else
+    command ssh $@
+  fi
 }
