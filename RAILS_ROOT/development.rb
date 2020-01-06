@@ -8,7 +8,6 @@
     # config.public_file_server.enabled = true
     # config.public_file_server.enabled = false #rails5 画像無効化
 
-    BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
     # DOCKER ENV BEST
     # view設定
     config.action_controller.perform_caching = false #rails4-5 's defaults
@@ -18,6 +17,10 @@
     config.serve_static_assets = true #<---#rails3~4 画像無効化だがunicorn/nginxとのくみあわせではサーバー付加へらすために明示false
     config.assets.digest = false #digest-hash-appending
     config.assets.debug = false #trueにすると、application.css/jsと個別のファイルの二重読み込みがされます
+    BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+    # ENV['TRUSTED_IP'] ||= '66.68.96.220'
+    # BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP']
+
 
     # config.public_file_server.enabled = false #rails5 画像無効化
     # config.assets.compile = false #uglify 　CSS-FW 'Foundation'では必須か coffee_script scss therubyracerつかうならばtrueに

@@ -195,3 +195,26 @@ class: 'custom-select col-md-4', prompt: t('pulldown.default'),
 onchange: 'Rails.fire($(this).closest("form")[0], \'submit\')' %>
 
 
+
+// +ボタンで ボタン増設
+$(".fa-plus").on("click", function(e) {
+  var before = $(this).parents('tr').prev('tr').find('td:last');
+  var after = before.clone()
+  // リンクを書き換えてから、さしこみ
+  after.html(after.html().replace(/>Payment\d+</gm,'>PaymentXXX<').replace(/\?payment=\d+/,'?payment=XXX'));
+  after.prependTo($(this).parents('td'));
+  $(this).parents('td').css("word-break", "break-all");
+  $(".fa-plus").focus();
+});
+
+// 追加レコード作成画面を別タブで開く　jump/open in a new tab
+var href = $(this).parents('tr').prev('tr').find('td:last').find('a').attr('href')
+incremented_num = parseInt(href.match(/\d+$/).toString()) + 1
+var win = window.open(href.replace(/\d+$/gm, incremented_num), '_blank');
+if (win) {
+    win.focus();
+} else {
+    alert('Please allow popups for this website');
+}
+
+

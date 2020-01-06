@@ -195,7 +195,7 @@ function dki_loadallfromtar {
 #==== ~/.rvm/bin/rvm ==========================
 if [ -f ~/.atom ] ; then
   source ~/.rvm/scripts/rvm ; type rvm | head -n 1
-  export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
+  export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:/usr/local/bin:$PATH"
   alias rvminfo="     rvm list; rvm gemset list; gem query -an rails;" # gem list; "
   alias rvmusecreate='rvm use --create'
   alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
@@ -242,7 +242,8 @@ export DL_HOME=~/Download
 # OS detection ref: https://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
 OS="`uname`"
 platform='unknown'
-if [ $OS == 'Linux' ]; then
+# if [ $OS == 'Linux' ]; then
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
   if [ -f /etc/redhat-release ] ; then
     platform='linuxRHEL'
     alias pkgadd='            yum install'        # パッケージのインストール
@@ -273,9 +274,10 @@ if [ $OS == 'Linux' ]; then
     alias supkgsearch_chef='sudo apt-cache policy' # パッケージの検索(Ansible/Chef使用時）
     alias supkglist='sudo        dpkg -l'          # インストール済みパッケージの情報表示
     alias supkgupdate='sudo      apt-get update'   # パッケージDBの更新
-    # alias pkgcontents=''                           # パッケージ内容の表示
+    # alias pkgcontents=''                         # パッケージ内容の表示
   fi
-elif [ "$OS" == 'Darwin' ]; then
+# elif [ "$OS" == 'Darwin' ]; then
+elif [[ "$OSTYPE" == "darwin"* ]]; then
     platform='osx'
     alias pkgadd='brew install'                        # パッケージのインストール
     alias pkgrm='sudo uninstall file:///Applications/' # パッケージの削除
@@ -283,7 +285,8 @@ elif [ "$OS" == 'Darwin' ]; then
     # alias pkglist=''                                 # インストール済みパッケージの情報表示
     # alias pkgcontents=''                             # パッケージ内容の表示
     # export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
-elif [ "$OS" =~ "^MINGW" ]; then
+# elif [ "$OS" =~ "^MINGW" ]; then
+elif [[ "$OSTYPE" == "msys"* ]]; then
   platform='windows'
 fi
 if [ $platform == 'osx' ] || [ $platform == 'linuxRHEL' ] ; then

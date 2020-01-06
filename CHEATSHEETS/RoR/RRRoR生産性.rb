@@ -330,4 +330,9 @@ select_allとほぼ一緒。同じようなメソッドとしてdelete, insert�
 
 
 
-
+# Cracking
+  DB password:  ActiveRecord::Base.connection.execute("select COUNT(*) from XXXX") で多分表示される
+th_op
+~                                                                                           |  tions if: :
+~                                                                                           |  filter_date
+~

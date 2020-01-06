@@ -540,8 +540,8 @@ gem
       * 099 配列から複数の要素を一度に取得する 163
         Array#.values_at(n, m, o)
       * 100 配列のインデックスと要素のペアを取得する 164
-        ary1.each_with_index{|el| ...}
         ary1.each.with_index(n) {|el| ...}  #<---- 要素nからオフセットして反復する
+        ary1.each_with_index{|el| ...}
       * 101 同じ値で配列の要素を埋める 165
         ary1.fill(value)
         ary1.new; ary1.new(kosuu, value);
@@ -1309,7 +1309,20 @@ k
     * 017 aliasとundef(メソッド無効化) 31
       alias method-newname medhod-oldname; undef forbidden-method-name
     * 260 互換性を保ったままメソッド名を変える 417
-          alias old_method_name new_method_name
+          alias :old_method_name, t:new_method_name
+          どちらも既存のメソッドに対して別名をつけることができるものですが、下記の点が違いがあります。
+
+                                        alias alias_method
+          グローバル変数に別名をつける  可能  不可能
+          メソッド名に文字列が使える  不可能  可能
+          キーワードである              Yes No
+          メソッドである                No  Yes
+          オーバーライドできる        不可能  可能
+
+          alias_methodメソッドで別名を付ける場合、元のメソッドに対してremove_methodやundef_methodを適用することで元にメソッドを呼べないようにすることもできます。
+
+
+
     * 261 互換性を保ったまま引数の個数を変える 419
           def some_method(*args)
             case args.length
