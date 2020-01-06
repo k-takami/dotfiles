@@ -193,9 +193,10 @@ function dki_loadallfromtar {
 
 
 #==== ~/.rvm/bin/rvm ==========================
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 if [ -f ~/.atom ] ; then
   source ~/.rvm/scripts/rvm ; type rvm | head -n 1
-  export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:/usr/local/bin:$PATH"
+  export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
   alias rvminfo="     rvm list; rvm gemset list; gem query -an rails;" # gem list; "
   alias rvmusecreate='rvm use --create'
   alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
@@ -240,7 +241,7 @@ export DL_HOME=~/Download
 
 #==== OS-dependent ==========================
 # OS detection ref: https://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
-OS="`uname`"
+# OS="`uname`"
 platform='unknown'
 # if [ $OS == 'Linux' ]; then
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
