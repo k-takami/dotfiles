@@ -221,7 +221,10 @@ mysql
 ### TImeMAchine - Restoration
 # 準備：ATOM, dockerなどupdate試験
 # command+R +power をリンゴマークまで押して、リカバリーモード突入、リストア。
-# iTunes関連はスキップ。あとで設定する、を押下。
+# HDDはログイン後画面までとりはずさない。　iTunes関連はスキップ。あとで設定する、を押下。
+# which, git などシステムコマンドをチェック。
+    こわれていたらOSX再インストール。（このばあいweb接続は要るがTimemachine HDDは不要）
+                  OSX re-install ---> $ xcode-select --install
 # TimeMachine HDD直下の_docu_diffを~/Downloadに展開。
 $ cdd; git reset HEAD -- ; gico CHEATSHEETS/ ; gico SCRIPTS/; gico vim* *rc; gst ; gishsv; gplo master; gishpp
 #TimeMachineリストアで、dockerイメージとかは全部きえます；
