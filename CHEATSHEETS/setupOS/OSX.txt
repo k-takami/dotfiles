@@ -227,7 +227,12 @@ mysql
                   OSX re-install ---> $ xcode-select --install
 # TimeMachine HDD直下の_docu_diffを~/Downloadに展開。
 $ cdd; git reset HEAD -- ; gico CHEATSHEETS/ ; gico SCRIPTS/; gico vim* *rc; gst ; gishsv; gplo master; gishpp
+# gem sources -a https://rubygems.org/
+
 #TimeMachineリストアで、dockerイメージとかは全部きえます；
+  docker containerなどを全部tarからリストア : docker load < ' # *.tar name
+  dki_loadallfromtar2.txt
+
 $ myapp1; gplo develop; dkcud ; dksh apo_pms_ap_1;
   $$ rake db:drop db:create db:schema:load  db:seed_fu
 #Finder
