@@ -1,4 +1,5 @@
 # coding: utf-8
+# sudo -b  caja   #<--- file viewer of LinuxMint
 #NOTE: USAGE: -f 対象フォルダー -m zenhan(半角化モード)
 #  sudo ruby ~/.dotfiles/SCRIPTS/av_mp34_seiri.rb -f /media/sf_Downloads/XXX -m zenhan
 #NOTE: debugは $ ruby -r debug で
