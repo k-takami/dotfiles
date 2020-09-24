@@ -1,4 +1,5 @@
 # coding: utf-8
+# sudo -b  caja   #<--- file viewer of LinuxMint
 #NOTE: USAGE: -f 対象フォルダー -m zenhan(半角化モード)
 #  sudo ruby ~/.dotfiles/SCRIPTS/av_mp34_seiri.rb -f /media/sf_Downloads/XXX -m zenhan
 #NOTE: debugは $ ruby -r debug で
@@ -11,14 +12,15 @@ def process_a_folder(foldername)
     next if file =~ /OLYM\w_TB.DAT/ && FileUtils.rm(file)
     # ファイル名の整形(/^\d+ +/, '')、／重複整頓、*.cdr->*.isoに
     file         = file.gsub("//", '/')
-    new_filename = File.basename(file).sub(/^[\-\.]?\d\d?[\-\.]?\w? +/, '')
+    # new_filename = File.basename(file).sub(/^[\-\.]?\d+[\-\.]?\w? +/, '')
+    new_filename = File.basename(file).sub(/^[\-\.\d]+ +/, '')
     new_filename = new_filename.sub(/\.cdr$/, '.iso')
     new_filename = new_filename.sub(/\.m4v$/, '.mp4')
     new_filename = from_utf8_into_hankaku_utf8_with new_filename
     new_file     = File.join(File.dirname(file), new_filename)
 
     #整形ファイル名で保存 ただし、既存ならば別名_COPYをつける
-    if new_file != file 
+    if new_file != file
       give_copied_file_name_when_duplication(new_file)
       p " --------- MPx_Shaver file/new_file = #{file} ---> #{new_file}"
       File.rename file, new_file
