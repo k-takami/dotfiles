@@ -1,6 +1,6 @@
   gem 'better_errors' # エラーページの情報がリッチになる
   gem 'binding_of_caller' # エラーページでコンソールが使える
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry-byebug' # デバッグを実施(Ruby 2.0以降で動作する)
   gem 'pry-stack_explorer' # スタックをたどれる
   gem 'pry-alias' # デバッグコマンドエイリアス
+# gem 'pry-byebug' # デバッグを実施(Ruby 2.0~2.1.2で安定動作する)

@@ -92,13 +92,13 @@ function dkcbuildup {
   dkpaivl
 }
 
-function dkc_rdbmreset { #通常のbdl方法 #  == dkrst db && dkbash app ; bundle install && bin/rails db:drop db:create ridgepole:apply data:migrate db:seed && annotate --force
-  env=${1:-'app'}
+function dkc_rdbmreset { #通常のbdl方法 #  == dkrst db && dkbash app ; bundle install && bin/rails db:drop db:create ridgepole:apply db:migrate db:seed && annotate --force
+  env=${1:b-'app'}
   docker-compose run -u root $1 bundle install ;
   docker-compose run -u root $1 bundle exec yarn install #<---これがないと次のエラー： OCI runtime exec failed: exec failed: (…) executable file not found in $PATH": unknown
   # docker-compose run $1 rails db:drop db:create db:schema:load  db:seed_fu
   #eg2 $ docker-compose run $1 rails db:drop db:create db:schema:load db:seed_fu
-    #eg1 $ docker-compose run $1 db:drop db:create ridgepole:apply data:migrate db:seed
+    #eg1 $ docker-compose run $1 db:drop db:create ridgepole:apply db:migrate db:seed
     #eg2 # docker-compose run $1 rake db:drop db:create ridgepole:apply db:seed_fu #全タブreload前にログインすべき
   # docker-compose run -u root $1 bin/rake db:migrate:reset db:seed;
   # docker-compose run -u root $1 bin/rake db:reset:with_data;  #<---special
@@ -210,6 +210,10 @@ echo "GEM_HOME / GEM_PATH are :  $GEM_HOME / $GEM_PATH " # https://github.com/rv
 #export PATH="$HOME/.rbenv/bin:$PATH"
 #eval "$(rbenv init -)"
 #export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
+
+if type python > /dev/null 2>&1; then # コマンドが存在すれば
+  export PATH="$PATH:$HOME/Library/Python/2.7/bin"
+fi
 
 
 #==== node and npm ==========================
@@ -644,19 +648,20 @@ umask 002
 # ${変数/検索文字列/置換文字列} 最初にマッチしたもののみ文字列を置換
 # ${変数//検索文字列/置換文字列}  全ての文字列を置換  ${HOGE//foo/bar}
 
-function tarziprorapp { # 下層のRails.rootiフォルダーを圧縮
+function backuprorapp { # 引数である、下層のRails.rootフォルダーを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   tar zcvf $chomped1-`date '+%Y%m%d'`.tar.gz --exclude tmp --exclude "log/*log" --exclude=vendor/* --exclude=node_modules $chomped1;lat;
   #XXX --exclude node_modules
 }
 
 
-function tarzipgitonly { # 今のRails.rootフォルダー名を引数にして呼ぶ。上階に.gitを圧縮
+function backupgitonly { # 今のRails.rootフォルダー名を引数にして呼ぶ。上階に.gitを圧縮
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   cd $chomped1
   tar zcvf ../$chomped1.git-`date '+%Y%m%d_%H%M'`.tar.gz .git ; lat ..
 }
 
+#remote-branch fetch
 function gicob_remotebranch { # $1==new_branch_name , $2==origin_name
   env=${1:-'XXX'} #第1引数がなければdefault_name
   env=${2:-'origin'} #第2引数がなければorigin
@@ -666,20 +671,21 @@ function gicob_remotebranch { # $1==new_branch_name , $2==origin_name
 }
 
 
+#今いるブランチを最新化して新ブランチ作成
 function gplogicob { # $1==base_branch  optional $2==new_branch_name
   env=${2:-'fix_new'} #第2引数がなければdefault_name
   gishsv && gico $1 && gplo $1 && gico-b $env && gishpp && gibr
 }
-function tarzipgirbplodkrakeannotate { #Rails.rootで実行 引数= girreponameリモートブランチ名 docker-container名
+function backupgirbplodkrakeannotate { #Rails.rootで実行 引数= girreponameリモートブランチ名 docker-container名
   cd .. ;
-  tarzipgitonly $1;
+  backupgitonly $1;
   girbplo $2
   echo " ###TODO: bundle install &&  bin/rake db:reset:with_data && annotate --force をコンテナで実行してください"
-  echo " ###TODO: bundle install &&  bundle install && bin/rails db:drop db:create ridgepole:apply data:migrate db:seed をコンテナで実行してください"
+  echo " ###TODO: bundle install &&  bundle install && bin/rails db:drop db:create ridgepole:apply db:migrate db:seed をコンテナで実行してください"
   docker exec -it -u root $3 bash;
 }
 
-function tarzipdotfiles {  # ~/dotfilesフォルダーに移動して~に圧縮
+function backupdotfiles {  # ~/dotfilesフォルダーに移動して~に圧縮
   cdd;  mv SI ../; mv vim ../ ; mv SI.tar.zip ../ ;
   # OSX/BSD can use --exclude-vcs option below;
   tar zcvf ../dotfiles-`date '+%Y%m%d'`.tar.gz ./*  --exclude-vcs ;
