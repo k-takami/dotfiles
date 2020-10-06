@@ -1,3 +1,4 @@
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
@@ -34,6 +35,8 @@ alias dkrmv='   docker volume rm';
 alias dkcm='    docker commit';
 alias dktg='    docker tag';
 alias dkhs='    eocker history';
+# docker login; dkcm containername tagname ; dcktg [image-name:tagname] ; dkpush [image-name:tagname]
+# docker pull したものの起動：dkrunit [image-name] ; dkbash [containername]
 # |prefix + ?|キーバインド一覧|
 # |prefix + s|セッションの一覧表示|
 # |prefix + c|新規ウィンドウ作成・追加|
@@ -194,6 +197,12 @@ function dki_loadallfromtar {
 
 #==== ~/.rvm/bin/rvm ==========================
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+## rbenv
+#export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/shims:$PATH"
+#export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
+eval "$(rbenv init -)" #<--- ~/.rbenv/*** & /usr/local/bin にPATH を通してから eval
+
 if [ -f ~/.atom ] ; then
   source ~/.rvm/scripts/rvm ; type rvm | head -n 1
   export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
@@ -206,10 +215,6 @@ alias rvminstallrails='gem install rails' # -v=5.0.0.1 --no-ri --no-rdoc　な�
 #when updgraded ruby
 #export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
 echo "GEM_HOME / GEM_PATH are :  $GEM_HOME / $GEM_PATH " # https://github.com/rvm/rvm/issues/2817
-## rbenv
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
-#export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
 
 if type python > /dev/null 2>&1; then # コマンドが存在すれば
   export PATH="$PATH:$HOME/Library/Python/2.7/bin"
@@ -843,16 +848,19 @@ MSG1)
 };
 
 
+# 設定と解説は　~/dotfiles/tmux.conf で
+# 基本はctrl+q - |-spacex マウスを使ってのペイン調整
 
-alias tmls='  tmux ls'
-alias tma='   tmux a'
-alias tmat='  tmux a -t'
-alias tmks='  tmux kill-session'
 # ~/.bash_profile
 # # 初回シェル時のみ tmux実行
 # if [ $SHLVL = 1 ]; then
 #   tmux
 # fi
+alias tmls='  tmux ls'
+alias tma='   tmux a'
+alias tmat='  tmux a -t'
+alias tmks='  tmux kill-session'
+alias tmumxman=' man tmux'
 
 
 function dksh { # $1 == container_name/id
