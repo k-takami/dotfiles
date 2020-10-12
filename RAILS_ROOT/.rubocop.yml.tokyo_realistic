@@ -1,5 +1,6 @@
 # 自動生成されるものはチェック対象から外す
 AllCops:
+  TargetRubyVersion: 2.5
   Exclude:
     - 'vendor/**/*'
     - 'bin/**/*'

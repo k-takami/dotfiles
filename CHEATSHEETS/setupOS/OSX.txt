@@ -25,9 +25,12 @@ shortcut [[https://support.apple.com/ja-jp/HT201236]]
 		Dock --> hide automatically
   Mission Control ---> dashboardを操作スペースにする、overlay表示をセレクト
 
-//バッテリー使用時にsleepを休眠に sudo pmset -b hibernatemode 25
-Finderで「初期表示は~/Download」「全拡張子表示＆リスト表示」にして端末で以下コマンドでdotfiles表示；
+Finderで「初期表示は~/Download」「全拡張子表示＆リスト表示」[上にフルパス表示] にして端末で以下コマンドでdotfiles表示；
 	defaults write com.apple.finder AppleShowAllFiles TRUE
+  defaults delete com.apple.finder _FXShowPosixPathInTitle
+  # //バッテリー使用時にsleepを休眠に sudo pmset -b hibernatemode 25
+  sudo pmset -a disablesleep 1
+  killall Finder
 		*FALSE ならば非表示
 		TRUE FALSEでダメならばYES/NO引数
 	killall Finder

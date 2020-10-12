@@ -1,3 +1,3 @@
 let l:bm_file_version = 1
-let l:bm_sessions = {'default': {}}
+let l:bm_sessions = {'default': {'/Users/user/dotfiles/CHEATSHEETS/JS_Node.js_and_apps.js': [{'sign_idx': 9500, 'line_nr': 100, 'content': '      $ yum list --showduplicates | grep npm'},],}}
 let l:bm_current_session = 'default'

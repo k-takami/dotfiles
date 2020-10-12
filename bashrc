@@ -37,6 +37,30 @@ alias dktg='    docker tag';
 alias dkhs='    eocker history';
 # docker login; dkcm containername tagname ; dcktg [image-name:tagname] ; dkpush [image-name:tagname]
 # docker pull したものの起動：dkrunit [image-name] ; dkbash [containername]
+# vim installation
+  # Ubuntu系: apt-get update; apt-get install vim
+  # Centos系: yum install vim
+  # Alpine: apk update; apk add vim
+  # Busybox : パッケージ管理ツールがそもそもない？
+
+
+# Dockerfile Dockerfile に記述しておく場合は、以下のような感じ。 (apt-getの場合)
+# FROM ubuntu
+# RUN ["apt-get" "update"]
+# RUN ["apt-get" "install" "-y" "vim"]
+
+#paizaでのdockerコンテナ整備方法 # https://paiza.cloud/containers
+# #rails, mysql, phpmyadmin のボタンをおす
+# sudo systemctl enable mysql ; sudo systemctl start mysql
+# rails new sample-app --database=mysql --webpack=react
+# cd sample-app ; rake db:create ;
+# bundle exec rails webpacker:install webpacker:install:coffee
+# rails server
+# #o https://localhost/phpmyadmin
+# #o https://localhost-standarde-uni-1.paiza-user-free.cloud:3000/
+
+
+
 # |prefix + ?|キーバインド一覧|
 # |prefix + s|セッションの一覧表示|
 # |prefix + c|新規ウィンドウ作成・追加|
@@ -342,6 +366,7 @@ alias dusbh='    du -sbh  '                #count file size under some dir
 alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir:
 
 alias cdd=' cd ~/dotfiles'
+alias cdthere='cd $_'
 alias myvim='cdd; vim -S ~/sessionATOMMAN'
 alias nrnd=' --no-ri --no-rdoc '
 alias no_spec=' echo "--exclude=*spec* "'
@@ -428,7 +453,7 @@ source /usr/local/etc/bash_completion.d/git-completion.bash
 # TODO: .
 # .git/hooks/pre-commit
   # result = `mv .git/hooks/pre-commit.sample .git/hooks/pre-commit`
-  # result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; #raspell;" >> .git/hooks/pre-commit `
+  # result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; raspell;" >> .git/hooks/pre-commit `
   # ~/dotfiles/development.rb >> config/development.rb
 
 alias vimclean='rm ~/*.sw* ; cd ~/dotfiles ; git status ; cd - ;'
@@ -557,10 +582,12 @@ alias railscaf=' rails generate scaffold ' # branches　など複数形
 alias railscaf_docker='docker exec -it CONTAINERNAME bin/rails g scaffold Parent::ChildClass '
 alias railscaf_docker_destroy='docker exec -it CONTAINERNAME bin/rails d  scaffold Parent::ChildClass '
 
-alias bdl='            bundle install'
+alias bdl='            bundle exec'
+alias bdli='           bundle install'
 # オフライン環境では --local オプションを付けることでrubygems.org等を見に行かずに、vendor/cacheフォルダを見るようになります。
-alias bdllocal='       bundle install --local'
-alias bdllikerails12=' bundle install --path vendor/bundle'
+alias bdlilocal='      bundle install --local'
+alias bdlilikerails12='bundle install --path vendor/bundle'
+alias bdlupclean='     bundle update; bundle clean' #一括削除清掃
 # ローカルから普通にもどすときは
 # $ rm -rf vendor/bundle/ Gemfile.lock .bundle/config ; bdl; rails s;
 alias ror5dbdrop='DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development  rake db:drop'
@@ -604,7 +631,7 @@ alias rbprails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rail
 alias mytestsingle='ds1 bx rake spec:test RAILS_ENV=mobi-connect-test'
 alias mybugstaged=' gdicnp |grepe $REGEXP_MYBUG -C2 '
 alias mybug='       git show |grepe $REGEXP_MYBUG -C1 ; gdicnp |grepe $REGEXP_MYBUG -C1 ; gdi |grepe $REGEXP_MYBUG --exclude=development.rb --exclude=*Gemfile* -C1'
-alias raspell=' ruby ~/dotfiles/SCRIPTS/ror_02_raspell.rb'
+alias raspell=' ruby ~/dotfiles/SI/SCRIPTS/ror_02_raspell.rb'
 alias mybugallstaged='rbcrails; mybugstaged; rbwcstaged; echo "●Windows表示、スマホ表示、yarn.lockとpackage.jsonをproductionモードで動作確認"' #rbprails; #raspell;
 alias mybugall='      rbcrails; mybug      ; raspell; rbwcstaged; rbprails;'
 alias mybug_migration_yyyymmdd='find db/migrate/*create_*  |xargs -n1 git blame |grep' # add /yyyy-mm-dd?/ date to find DANGEROUS MIGRATION FILE

@@ -540,8 +540,8 @@ gem
       * 099 配列から複数の要素を一度に取得する 163
         Array#.values_at(n, m, o)
       * 100 配列のインデックスと要素のペアを取得する 164
-        ary1.each.with_index(n) {|el| ...}  #<---- 要素nからオフセットして反復する
-        ary1.each_with_index{|el| ...}
+      ary1.each.with_index(n) {|el,i| ...}  #<---- each . with_index(要素nからオフセットして反復する
+        ary1.each_with_index{|el,i| ...}
       * 101 同じ値で配列の要素を埋める 165
         ary1.fill(value)
         ary1.new; ary1.new(kosuu, value);
