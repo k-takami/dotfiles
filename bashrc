@@ -342,7 +342,7 @@ alias rm='rm -r'
 alias portps='lsof -i:' #-i:3000みたく空文字なしに入力
 alias kill9='        kill -9 '
 alias killallrails5='pkill -a thin; '
-alias myps='ps -ef  |grep -niE "\b(memcached|unicorn|ant|redis|sidekiq|rails|ruby|thin|fsevent|spring)\b" | sort -k6'
+alias myps='ps -ef  |$grepbin -n$regexopt "\b(memcached|unicorn|ant|redis|sidekiq|rails|ruby|thin|fsevent|spring)\b" | sort -k6'
 alias duck='du -ck' #kilobyte-totalを表示
 
 alias vims='  vim     -S ~/session-'
@@ -376,32 +376,36 @@ function exclnonapp { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*
 
 # ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
 
+alias fzfp="fzf --inline-info --preview 'head -100 {}'"
+grepbin="hw"  ; regexopt="iaN"
+#grepbin="grep"; regexopt="irE"
+echo "====== YOU ARE NOW USING 'hw' INSTERAD OF 'grep' by $grepbin VARIABLE NOW ======"
 # $1検索語　$2場所 regrep の$2がなければ、./*で補完
-# alias greper-pure=' grep -nirE "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
-function grepe    {                             grep     -niE   $@          ; }
-# function greper   {                             grep     -nirE  $@          ; }
-# function greperrb {                             grep     -nirE  `inclrb` `nogabage` $@ ; }
-function regreprb {     local options=${2:-*} ; grep     -nirE  `inclrb` `nogabage` $1 $options ; }
-function regrep_nosub { local options=${2:-*} ; grep     -niE   $1 $options ; }
-function regrepl  {     local options=${2:-*} ; grep     -lnirE $1 $options ; }
-function regrepl_r {    local options=${2:-*} ; grep     -lniE  $1 $options ; }
-function regrepc1 {     local options=${2:-*} ; grep -C1 -niE   $1 $options ; }
-function regrepc3 {     local options=${2:-*} ; grep -C3 -niE   $1 $options ; }
-function regrepc1_r {   local options=${2:-*} ; grep -C1 -nirE  $1 $options ; }
-function regrepc3_r {   local options=${2:-*} ; grep -C3 -nirE  $1 $options ; }
+# alias greper-pure=' $grepbin -n$regexopt "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
+# function greper   {                           $grepbin     -n$regexopt  $@          ; }
+# function greperrb {                           $grepbin     -n$regexopt  `inclrb` `nogabage` $@ ; }
+function grepe    {                             $grepbin     -ni   $@          ; }
+function regreprb {     local options=${2:-*} ; $grepbin     -n$regexopt  `inclrb` `nogabage` $1 $options ; }
+function regrepl  {     local options=${2:-*} ; $grepbin     -ln$regexopt $1 $options ; }
+function regrepc1_r {   local options=${2:-*} ; $grepbin -C1 -n$regexopt  $1 $options ; }
+function regrepc3_r {   local options=${2:-*} ; $grepbin -C3 -n$regexopt  $1 $options ; }
+function regrep_nosub { local options=${2:-*} ; $grepbin     -ni   $1 $options ; }
+function regrepl_r {    local options=${2:-*} ; $grepbin     -ln$regexopt $1 $options ; }
+function regrepc1 {     local options=${2:-*} ; $grepbin -C1 -n$regexopt  $1 $options ; }
+function regrepc3 {     local options=${2:-*} ; $grepbin -C3 -n$regexopt  $1 $options ; }
 
 function regrep {
   local options=${@:2} ;
-  grep -nirE $1 $options ;
+  $grepbin -n$regexopt $1 $options ;
 }
 function regreprb {
   local options=${@:2} ;
-  grep -nirE $1 $options `inclrb` `nogabage` ;
+  $grepbin -n$regexopt $1 $options `inclrb` `nogabage` ;
 }
 function greprc {
   local options=${@:2} ;
-  grep -niE --include=*rc $1 ~/dotfiles/*                      $options --exclude=*.htm* --exclude=*.json ;
-  grep -niE               $1 ~/dotfiles/SI/pj-dependent.bashrc $options --exclude=*.htm* --exclude=*.json ;
+  $grepbin -ni  $1 ~/dotfiles/*                      $options #--exclude=*.htm* --exclude=*.json ;--include=*rc
+  $grepbin -ni  $1 ~/dotfiles/SI/pj-dependent.bashrc $options #--exclude=*.htm* --exclude=*.json ;
 }
 function greprcrbonly { greprc `inclrb` `nogabage` $@ ; }
 # TODO function ; lat $2 にする
@@ -414,17 +418,17 @@ function greprcrbonly { greprc `inclrb` `nogabage` $@ ; }
 function grepdf {
   # ex) greprc serchword -C1 `inclrb` `nogabage`
   local options=${@:2} ;
-  grep -niE  $1 ~/dotfiles/* --include=*rc $options --exclude=*.htm* --exclude=*.json ;
-  grep -nirE $1 ~/dotfiles/SI              $options --exclude=*.htm* --exclude=*.json ;
-  grep -nirE $1 ~/dotfiles/SCRIPTS         $options --exclude=*.htm* --exclude=*.json ;
-  grep -nirE $1 ~/dotfiles/CHEATSHEETS     $options --exclude=*.htm* --exclude=*.json ;
-  grep -nirE $1 ~/dotfiles/vim/snippets    $options --exclude=*.htm* --exclude=*.json ;
-  # echo "grep -nirE $1 ~/dotfiles/vim/snippets  $options ### ";
+  $grepbin -n$regexopt  $1 ~/dotfiles/* #--include=*rc $options --exclude=*.htm* --exclude=*.json ;
+  $grepbin -n$regexopt $1 ~/dotfiles/SI              $options #--exclude=*.htm* --exclude=*.json ;
+  $grepbin -n$regexopt $1 ~/dotfiles/SCRIPTS         $options #--exclude=*.htm* --exclude=*.json ;
+  $grepbin -n$regexopt $1 ~/dotfiles/CHEATSHEETS     $options #--exclude=*.htm* --exclude=*.json ;
+  $grepbin -n$regexopt $1 ~/dotfiles/vim/snippets    $options #--exclude=*.htm* --exclude=*.json ;
+  # echo "grep -n$regexopt $1 ~/dotfiles/vim/snippets  $options ### ";
 }
 
 function greprails { # gempath内部のgrep
 local gempath=`which gem | xargs ruby -e "puts ARGV[0].gsub(/(rubies|bin.gem)/, 'gems') "` ;
-  grep -nirE "def \w*$1" $gempath ;
+  $grepbin -n$regexopt "def \w*$1" $gempath ;
 }
 
 function sshpubkey_osx {  #$1 == email@address  #, for github
@@ -451,9 +455,6 @@ source /usr/local/etc/bash_completion.d/git-completion.bash
 #export GIT_USERNAME=k_takami
 #export GIT_USERNAME=kenichi.takami
 # TODO: .
-# .git/hooks/pre-commit
-  # result = `mv .git/hooks/pre-commit.sample .git/hooks/pre-commit`
-  # result = `echo "rbcrails; mybugstaged; rbwcstaged; rbprails; raspell;" >> .git/hooks/pre-commit `
   # ~/dotfiles/development.rb >> config/development.rb
 
 alias vimclean='rm ~/*.sw* ; cd ~/dotfiles ; git status ; cd - ;'
@@ -474,12 +475,12 @@ alias gcfggettmturl=' git config --get remote.origin.url'
 
 
 #GREP everything # リモートgrep検索は gilostheir
-alias grep-hist='    history |grep -niE'
-alias grep-ps='      ps -ef  |grep -niE'
-alias grep-env='     env | grep'
-alias grep-gst='     git status |grep -niE'
-alias grep-gem='     gem list | grep'
-alias grep-pkglist=' pkglist | grep -iE '
+alias grep-hist='    history |$grepbin -n$regexopt'
+alias grep-ps='      ps -ef  |$grepbin -n$regexopt'
+alias grep-env='     env | $grepbin'
+alias grep-gst='     git status |$grepbin -n$regexopt'
+alias grep-gem='     gem list | $grepbin'
+alias grep-pkglist=' pkglist | $grepbin -$regexopt '
 
 #git/ mercurial / patchコマンド http://uguisu.skr.jp/Windows/diff_patch.html http://d.hatena.ne.jp/mrgoofy33/20101019/1287500809
 alias patchp=' patch    -p0 <' #[patch-name] to apply on
@@ -502,9 +503,9 @@ alias precommitoff='mv .git/hooks/pre-commit .git/hooks/pre-commitMAE'
 alias hgdi='      hg diff -c'
 alias gdic='     git diff --cached'
 alias gdiclas='  gdic --name-only |xargs ls -alSr'
-alias gdicgrep=' gdic --name-only |xargs grep -niE '
+alias gdicgrep=' gdic --name-only |xargs $grepbin -$regexopt  '
 alias gdilas='   gdi  --name-only |xargs ls -alSr'
-alias gdicgrep=' gdic --name-only |xargs grep -niE '
+alias gdicgrep=' gdic --name-only |xargs $grepbin -n$regexopt '
 # patch作成用  gitの場合は--no-prefixは内部的に自動付与らしい
 alias gdicnp='          git diff --cached --no-prefix'
 alias gdilight='        git diff --no-prefix --ignore-all-space --ignore-blank-lines --ignore-cr-at-eol'
@@ -604,7 +605,7 @@ alias gplobxbi='       gplo master; bxrdbm; bundle install'
 alias rrg='            ds1 bx rake routes |grep '
 alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
 #ステップ数概算
-# grep -nirE "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
+# $grepbin -n$regexopt "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
 # find . -name "*.rb" -o -name "*.yml" | xargs wc -l
 # rake stats
 # rake -T |grep ridge
@@ -737,15 +738,15 @@ function nocomments { # grep結果から-vでコメントや空行を除外
 }
 
 function grepsnippets {
-  grep -nirE $1 ~/dotfiles/vim/snippets $2;
+  $grepbin -n$regexopt $1 ~/dotfiles/vim/snippets $2;
 }
 function grepremotegems {
  echo 'gem list ***GEMNAME*** --remote --all';
 }
 
 alias ff='    find ./* | sort | less '
-alias ffgrep='find . | grep -iE '
-#  ff | grep NEW |wc -l    <--- ファイル数
+alias ffgrep='find . | $grepbin -$regexopt'
+#  ff | $grepbin NEW |wc -l    <--- ファイル数
 
 
 
@@ -756,8 +757,8 @@ alias matchcopy="| xargs -J% cp -f % "
 alias rmpatch='ffgrep "\.(rej|orig)" | xargs -n1 rm'
 function rmbak {
   ffgrep .bak |xargs -n1 rm $_ ;
-  find . | grep -E "DEV$" |xargs -n1 rm $_ ;
-  find . | grep -E "`TODAY`$" |xargs -n1 rm $_ ;
+  find . | $grepbin $regexopt "DEV$" |xargs -n1 rm $_ ;
+  find . | $grepbin $regexopt "`TODAY`$" |xargs -n1 rm $_ ;
 }
 
 #ATOM環境
@@ -800,7 +801,7 @@ function patch_back {   # $1=git commit hash, そこからの差分ファイル�
 
 function openatomfromvimsession {
   local outfile=openatomfromvimsession.sh
-  grep -E "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
+  $grepbin -$regexopt  "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
   vim $outfile; sh $outfile; rm  $outfile; lat;
 }
 #保存時に空白削除
