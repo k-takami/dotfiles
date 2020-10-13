@@ -1614,7 +1614,7 @@ build_app_list
   #
 #Rails環境変数=  Rails.application.config
 
-#rubyごろあわせ
+#ruby語呂合わせ
   escape meta blacktets :  qwrsix : str, str-ary, regexp, sym, sym-aryi, exec`` : 大文字で""のエスケープ nil->"nil"にしないようにqwは注意
 #rubyわりざん: 16.quo(27).to_f
 

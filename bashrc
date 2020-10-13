@@ -1,4 +1,3 @@
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
@@ -458,7 +457,7 @@ source /usr/local/etc/bash_completion.d/git-completion.bash
   # ~/dotfiles/development.rb >> config/development.rb
 
 alias vimclean='rm ~/*.sw* ; cd ~/dotfiles ; git status ; cd - ;'
-alias ror_snip_list='sh ~/dotfiles/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
+alias ror_snip_list='sh ~/dotfiles/SI/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
 alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
 
 alias grepvcode='   find . |grep -viE "\.(svc|git|hg)" | grep'
@@ -926,3 +925,4 @@ function ssh() {
     command ssh $@
   fi
 }
+
