@@ -2,6 +2,7 @@
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 
 # User specific aliases and functions
@@ -19,70 +20,56 @@ export POW_TIMEOUT=300
 # export POW_WORKERS=3
 # powder (config/status|restart)
 
-alias dkpaivl='  docker ps -a ; docker images;  docker volume ls';
 
+alias dkpaivl='  docker ps -a ; docker images;  docker volume ls';
 #  # リサイズや清掃；
 #    docker build --squash
 #      サイズを小さくするには、レイヤーをまとめて一階層にした新しいイメージを作る。
 # Mysql2::Error - The table 'wysiwyg_templates' is full ---> 直近変動のコンテナけす。DBのログはバイナリーじゃなければ、きえないはず
   # dkrmi $(docker volume ls -qf dangling=true) ; dkrmv $(docker image  ls -qf dangling=true) ;
+
 alias dkprunesys='docker system prune'
 alias dkpruneimg='docker images prune'
+alias dk='      docker';
 alias dkrm='    docker rm';
+function dkrmf { dk stop $1 ; dkrm $_ ; dkpaivl; }
 alias dkrmi='   docker rmi';
 alias dkrmv='   docker volume rm';
-alias dkcm='    docker commit';
+# alias dkcm='    docker commit';
+# alias dkcp='    docker cp'; #fromfile <コンテナID>:/
+# docker rename old_contena_name new_contena_name
 alias dktg='    docker tag';
-alias dkhs='    eocker history';
-# docker login; dkcm containername tagname ; dcktg [image-name:tagname] ; dkpush [image-name:tagname]
-# docker pull したものの起動：dkrunit [image-name] ; dkbash [containername]
-# vim installation
-  # Ubuntu系: apt-get update; apt-get install vim
-  # Centos系: yum install vim
-  # Alpine: apk update; apk add vim
-  # Busybox : パッケージ管理ツールがそもそもない？
+alias dkhs='    docker history';
+alias dkli='    docker login';
+alias dksch='   docker search  --no-trunc';
+alias dkisp='   docker inspect';
+alias dkpl='    docker login; docker pull'; #container
+alias dkat='    docker attach'; #container
+alias dkrunit=' docker run -itd'; # image, -d == detached
+function dkrunitname { dkrunit --name=$1 $2 ; dkpaivl; } # $1=container $2=image
+alias dkrst='   docker restart '; # container
+alias dkat='    docker attach' # container
+function dkcommitmine { dk commit $1 belltakami/$2 ; dkpaivl; } # $1=container $2=image-suffix
 
+alias dkps='    docker push' # container
+alias dksv='    docker save ' # image_name > ../*.tar name
+alias dkld='    docker load < ' # *.tar name
+alias dkh='     docker --help '
+alias dkv='     docker --version '
+alias dkdf='    docker system df -v' #DockerでのDisk使用量を調べる
+# XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定する
+alias dkcud='   docker-compose up -d '
+#TODO  docker save 771594bd57aa > ../kikan1031.tar みたいに$1$2必要
+# dkli; dk commit containername tagname ; dktg [image-name:tagname] ; dkpush [image-name:tagname]
+# docker pull したものの起動：dkrunit [image-name] ; dkbash [containername]
 
 # Dockerfile Dockerfile に記述しておく場合は、以下のような感じ。 (apt-getの場合)
 # FROM ubuntu
 # RUN ["apt-get" "update"]
 # RUN ["apt-get" "install" "-y" "vim"]
 
-#paizaでのdockerコンテナ整備方法 # https://paiza.cloud/containers
-# #rails, mysql, phpmyadmin のボタンをおす
-# sudo systemctl enable mysql ; sudo systemctl start mysql
-# rails new sample-app --database=mysql --webpack=react
-# cd sample-app ; rake db:create ;
-# bundle exec rails webpacker:install webpacker:install:coffee
-# rails server
-# #o https://localhost/phpmyadmin
-# #o https://localhost-standarde-uni-1.paiza-user-free.cloud:3000/
 
 
-
-# |prefix + ?|キーバインド一覧|
-# |prefix + s|セッションの一覧表示|
-# |prefix + c|新規ウィンドウ作成・追加|
-# |prefix + w|ウィンドウの一覧|
-# |prefix + &|ウインドウの破棄|
-# |prefix + n|次のウインドウへ移動|
-# |prefix + p|前のウインドウへ移動|
-alias dksch='   docker search  --no-trunc';
-alias dkisp='   docker inspect';
-alias dkcp='    docker cp'; #fromfile <コンテナID>:/
-alias dkpl='    docker login; docker pull'; #container
-alias dkat='    docker attach'; #container
-alias dkrunit=' docker run -itd'; # container, -d == detached
-alias dkrst='   docker restart '; # container
-alias dkat='    docker attach' # container
-alias dkps='    docker push' # container
-#TODO  docker save 771594bd57aa > ../kikan1031.tar みたいに$1$2必要
-alias dksv='    docker save ' # image_name > ../*.tar name
-alias dkld='    docker load < ' # *.tar name
-alias dkh='     docker --help '
-alias dkv='     docker --version '
-# XXX: docker-compose指揮下のrailsサービスDB設定 引数にapp やwebなどymlのサービス名を指定する
-alias dkcud='   docker-compose up -d '
 
 function dkbash { # $1 == container_name/id
   dkpaivl; docker exec -it -u root $1 bash
@@ -170,7 +157,20 @@ function dki_loadallfromtar {
   done < dki_saveall2gtar.txt
 }
 
-#migration file修正反映: gem install annotate; 　annotate --force
+
+
+
+#paizaでのdockerコンテナ整備方法 # https://paiza.cloud/containers
+# #rails, mysql, phpmyadmin のボタンをおす
+# sudo systemctl enable mysql ; sudo systemctl start mysql
+# rails new sample-app --database=mysql --webpack=react
+# cd sample-app ; rake db:create ;
+# bundle exec rails webpacker:install webpacker:install:coffee
+# rails server
+# #o https://localhost/phpmyadmin
+# #o https://localhost-standarde-uni-1.paiza-user-free.cloud:3000/
+
+
 
 # # image 削除
 #  # $ docker ps -a で消したいコンテナID/image_nameしらべて、docker コンテナ消して、それからイメージをけす；
@@ -239,10 +239,25 @@ alias rvminstallrails='gem install rails' # -v=5.0.0.1 --no-ri --no-rdoc　な�
 #export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
 echo "GEM_HOME / GEM_PATH are :  $GEM_HOME / $GEM_PATH " # https://github.com/rvm/rvm/issues/2817
 
-if type python > /dev/null 2>&1; then # コマンドが存在すれば
-  export PATH="$PATH:$HOME/Library/Python/2.7/bin"
-fi
 
+#==== python, pip, and ansible ==========================
+if type python > /dev/null 2>&1; then # コマンドが存在すれば
+  # in case of pyenv
+  # export PATH="$PATH:$HOME/Library/Python/2.7/bin"
+  # export PYENV_ROOT="$HOME/.pyenv"
+  # export PATH="$PYENV_ROOT/bin:$PATH"
+  # eval "$(pyenv init -)"
+
+  alias ansp='  ansible-playbook '
+  alias anspck='ansible-playbook --syntax-check'
+  PATH="$PATH:/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin"
+  alias py='    python3.8' # 文法チェック
+  alias pip='   pip3.8'
+  alias pdb='   py -m pdb '
+  alias pyck='  py -m py_compile' # 文法チェック
+  alias pydbg=' pudb3' # debugger
+  alias pipdelall='pip freeze > piplist.txt;sudo pip uninstall -r piplist.txt; rm piplist.txt'
+fi
 
 #==== node and npm ==========================
 if [ -f ~/.config/yarn ] ; then
@@ -279,16 +294,17 @@ platform='unknown'
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   if [ -f /etc/redhat-release ] ; then
     platform='linuxRHEL'
-    alias pkgadd='            yum install'        # パッケージのインストール
-    alias pkgrm='             yum remove'         # パッケージの削除
-    alias pkgsearch='         yum search'         # パッケージの検索
-    alias pkglist='           yum list installed' # インストール済みパッケージの情報表示
-    alias pkgcontents='       yum info'           # パッケージ内容の表示
-    alias supkgadd='sudo      yum install'        # パッケージのインストール
-    alias supkgrm='sudo       yum remove'         # パッケージの削除
-    alias supkgsearch='sudo   yum search'         # パッケージの検索
-    alias supkglist='sudo     yum list installed' # インストール済みパッケージの情報表示
-    alias supkgcontents='sudo yum info'           # パッケージ内容の表示
+    alias pkgadd='               yum install'        # パッケージのインストール
+    alias pkgrm='                yum remove'         # パッケージの削除
+    alias pkgsearch='            yum search'         # パッケージの検索
+    alias pkglist='              yum list installed' # インストール済みパッケージの情報表示
+    alias pkgcontents='          yum info'           # パッケージ内容の表示
+    alias supkgadd=' su - ;      yum install'        # パッケージのインストール
+    alias supkgrm=' su - ;       yum remove'         # パッケージの削除
+    alias supkgsearch='   su - ; yum search'         # パッケージの検索
+    alias supkglist='     su - ; yum list installed' # インストール済みパッケージの情報表示
+    alias supkgcontents=' su - ; yum info'           # パッケージ内容の表示
+    alias pkgupdate='     su - ; yum -y update'
     #centOS コマンド
     alias sr='su - root'
     alias svh=' service httpd'
@@ -313,7 +329,8 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     platform='osx'
     alias pkgadd='brew install'                        # パッケージのインストール
-    alias pkgrm='sudo uninstall file:///Applications/' # パッケージの削除
+    alias pkgrm='sudo uninstall ' # パッケージの削除
+    alias pkgupdate='brew update; brew upgrade ruby-build ' #rbenv install -l のリストを更新する
     # alias pkgsearch=''                               # パッケージの検索
     # alias pkglist=''                                 # インストール済みパッケージの情報表示
     # alias pkgcontents=''                             # パッケージ内容の表示
@@ -344,10 +361,7 @@ alias killallrails5='pkill -a thin; '
 alias myps='ps -ef  |$grepbin -n$regexopt "\b(memcached|unicorn|ant|redis|sidekiq|rails|ruby|thin|fsevent|spring)\b" | sort -k6'
 alias duck='du -ck' #kilobyte-totalを表示
 
-alias vims='  vim     -S ~/session-'
-alias vimsve='vim +VE -S ~/session-'
-alias vimve=' vim +VE '
-alias vimd='  vim -d '
+
 alias histail='history |tail -n 50'
 #line below have to be followed by url:443 like http://192.168.25.171:443/
 alias wgetssh=' wget -d --secure-protocol=SSLv3 --no-check-certificate --keep-session-cookies --save-cookies cookies.txt '
@@ -366,7 +380,6 @@ alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir:
 
 alias cdd=' cd ~/dotfiles'
 alias cdthere='cd $_'
-alias myvim='cdd; vim -S ~/sessionATOMMAN'
 alias nrnd=' --no-ri --no-rdoc '
 alias no_spec=' echo "--exclude=*spec* "'
 function inclrb { echo "--include=*rb --include=*.yml --include=*html* --include=*.*coffee --include=*.*js --include=*.*sass --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
@@ -375,7 +388,9 @@ function exclnonapp { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*
 
 # ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
 
-alias fzfp="fzf --inline-info --preview 'head -100 {}'"
+alias ffp="fzf --inline-info --preview 'head -100 {}'"
+alias ffpd="cd ~/Downloads/; ffp"
+
 grepbin="hw"  ; regexopt="iaN"
 #grepbin="grep"; regexopt="irE"
 echo "====== YOU ARE NOW USING 'hw' INSTERAD OF 'grep' by $grepbin VARIABLE NOW ======"
@@ -456,7 +471,24 @@ source /usr/local/etc/bash_completion.d/git-completion.bash
 # TODO: .
   # ~/dotfiles/development.rb >> config/development.rb
 
+
+# vim installation
+  # Ubuntu系: apt-get update; apt-get install vim
+  # Centos系: yum install vim
+  # Alpine: apk update; apk add vim
+  # Busybox : パッケージ管理ツールがそもそもない？
+alias vims='      vim -S ~/dotfiles/SI/VIM/session-'
+alias vimve='     vim +VE '
+alias vimves='    vim +VE -S ~/dotfiles/SI/VIM/session-'
+alias vimdiff='   vim -d '
 alias vimclean='rm ~/*.sw* ; cd ~/dotfiles ; git status ; cd - ;'
+alias vimman='cdd; vim -S ~/dotfiles/SI/VIM/sessionATOMMAN'
+function openatomfromvimsession {
+  local outfile=openatomfromvimsession.sh
+  $grepbin -$regexopt  "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
+  vim $outfile; sh $outfile; rm  $outfile; lat;
+}
+
 alias ror_snip_list='sh ~/dotfiles/SI/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
 alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
 
@@ -578,6 +610,7 @@ alias gicostsh0='    git checkout stash@{0}'
 alias gicostsh0lots='git checkout stash@{0} Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore ; git reset HEAD -- Gemfile Gemfile.lock config/environments/development.rb config/database.yml .gitignore;'
 
 #railsコマンド
+export EDITOR="vi" #<--- rails5.2+
 alias railscaf=' rails generate scaffold ' # branches　など複数形
 alias railscaf_docker='docker exec -it CONTAINERNAME bin/rails g scaffold Parent::ChildClass '
 alias railscaf_docker_destroy='docker exec -it CONTAINERNAME bin/rails d  scaffold Parent::ChildClass '
@@ -603,22 +636,10 @@ alias bxrdbmdown='     ds1 bx rake db:migrate:down'
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
 alias rrg='            ds1 bx rake routes |grep '
 alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
-#ステップ数概算
-# $grepbin -n$regexopt "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
-# find . -name "*.rb" -o -name "*.yml" | xargs wc -l
-# rake stats
-# rake -T |grep ridge
-# rake ridgepole:apply[rails_env]         # Apply Schemafile to the database
-# rake ridgepole:export[rails_env]        # Export the database schema to Schemafile
 
 # gemバージョン　正規表現検索
 alias gemquery="     gem query -ban "
 alias gemqueryremote="     gem query -ran "
-#rubocop
-alias rbc='         ds1 rubocop'
-alias rbca='        ds1 rubocop -a'
-# alias rbc18='       rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8'
-# alias rbca18='      rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8 -a'
 alias rbp='         rails_best_practices'
 export REGEXP_RBC_IGNORE="(app\/views|wrapper|\.xlsx|\.xls|\.js|\.coffee|\..?css|\.csv|\.tsv|\.png|\.svg|\.yml|schema.rb|structure.sql|Gemfile|.gitignore)"
 export REGEXP_MYBUG="^\+.*(\?i|i\b|binding.pry|byebug|debugger|takami)"
@@ -637,6 +658,12 @@ alias mybugall='      rbcrails; mybug      ; raspell; rbwcstaged; rbprails;'
 alias mybug_migration_yyyymmdd='find db/migrate/*create_*  |xargs -n1 git blame |grep' # add /yyyy-mm-dd?/ date to find DANGEROUS MIGRATION FILE
 #alias mybugall_and_migrationyyyymmdd='mybugall; mybug_migration_yyyymmdd'
 
+#rubocop
+alias rbc='         ds1 rubocop'
+alias rbca='        ds1 rubocop -a'
+# alias rbc18='       rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8'
+# alias rbca18='      rubocop -c ~/dotfiles/RAILS_ROOT/.rubocop.yml.tokyo_realistic_v1.8 -a'
+
 #tig
 alias mytig='   tig     --committer=k_takami'
 alias mytigbug='tig     --committer=k_takami --grep=正 --grep=bug.fix '
@@ -650,6 +677,23 @@ alias dbloginpsql='psql -U postgres'
 alias list_apachemod='sudo apachectl -M |sort'
 
 umask 002
+
+
+#1-liner
+# alias rorapp rails new example --skip-bundle && cd example && bundle install --path=vendor/bundle**
+# CSVimport      ActiveImportclass.import! (CSV.read('vendor/some.csv') )
+# #RoR " JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
+
+
+
+#ステップ数概算
+# $grepbin -n$regexopt "def \w" .  --include=**  --exclude=*.sw* --exclude=*~ --exclude=*.log > ../../GrepDef.txt
+# find . -name "*.rb" -o -name "*.yml" | xargs wc -l
+# rake stats
+# rake -T |grep ridge
+# rake ridgepole:apply[rails_env]         # Apply Schemafile to the database
+# rake ridgepole:export[rails_env]        # Export the database schema to Schemafile
+
 
 #ヘッダーフレーム修正→rail4scaf→ (routes.rb)-> モデリングとdb:migrate→　aptanaでMVCそれぞれcompare with ひながたMVC
   #@M
@@ -669,6 +713,22 @@ umask 002
   # Use callbacks to share common setup or constraints between actions.
   # def **** #インデントそろえるrubocop対策
 
+
+  # XXX: .
+  # ~/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee +22
+    # # default: 'bundle exec',
+    # default: 'docker exec -it PPetd_bqq',
+  # ~/.atom/packages/visual-rails-generator/lib/scaffold_model_view.coffeea +170
+      # command  += before_string
+    # command += " bin/rails g "
+
+  # docker snapshot taking
+  # $ docker checkpoint create dsc_app 20181228
+  # Error response from daemon: checkpoint not support on containers with tty
+
+
+  #保存時に空白削除
+  # Under your Atom Preferences go to Packages tab and search for whitespace. Click on the whitespace package and uncheck Ensure Single Trailing Newline option
 
 
 #変数展開コマンド #######################################################
@@ -716,6 +776,8 @@ function backupgirbplodkrakeannotate { #Rails.rootで実行 引数= girreponame�
   echo " ###TODO: bundle install &&  bundle install && bin/rails db:drop db:create ridgepole:apply db:migrate db:seed をコンテナで実行してください"
   docker exec -it -u root $3 bash;
 }
+#migration file修正反映: gem install annotate; 　annotate --force
+
 
 function backupdotfiles {  # ~/dotfilesフォルダーに移動して~に圧縮
   cdd;  mv SI ../; mv vim ../ ; mv SI.tar.zip ../ ;
@@ -738,6 +800,7 @@ function nocomments { # grep結果から-vでコメントや空行を除外
 
 function grepsnippets {
   $grepbin -n$regexopt $1 ~/dotfiles/vim/snippets $2;
+  $grepbin -n$regexopt $1 ~/src $2;
 }
 function grepremotegems {
  echo 'gem list ***GEMNAME*** --remote --all';
@@ -770,6 +833,7 @@ function atom_backup {
   cdd; gwr $target/ ; gst; lat  SI/$target/
   cd -
 }
+alias atomedit='atom -a'
 alias atom_restore='apm install --packages-file ~/dotfiles/SI/ATOM/packages.txt; cp ~/dotfiles/SI/ATOM/keymap.cson ~/.atom/'
 alias atomvim_sync='cdd; gishsv; gplo; gishpp; cd - ; gdinpURDPD; apm -h; echo "### ATOMでseync sessions restoreをする ###'
 function patch_back {   # $1=git commit hash, そこからの差分ファイルをコピる
@@ -785,35 +849,9 @@ function patch_back {   # $1=git commit hash, そこからの差分ファイル�
   cd -
 }
 
-# XXX: .
-# cp ~/sessionATOMMAN
-# ~/.atom/packages/visual-rails-generator/lib/visual-rails-generator.coffee +22
-  # # default: 'bundle exec',
-  # default: 'docker exec -it PPetd_bqq',
-# ~/.atom/packages/visual-rails-generator/lib/scaffold_model_view.coffeea +170
-    # command  += before_string
-  # command += " bin/rails g "
-
-# docker snapshot taking
-# $ docker checkpoint create dsc_app 20181228
-# Error response from daemon: checkpoint not support on containers with tty
-
-function openatomfromvimsession {
-  local outfile=openatomfromvimsession.sh
-  $grepbin -$regexopt  "bufexists.* | buffer " $1 |xargs -n1 echo "atom -a $_" |sort |uniq > $outfile
-  vim $outfile; sh $outfile; rm  $outfile; lat;
-}
-#保存時に空白削除
-# Under your Atom Preferences go to Packages tab and search for whitespace. Click on the whitespace package and uncheck Ensure Single Trailing Newline option
-
 
 #Google 2-Step Verification tool 'oathtool'
 alias 2stepveri='oathtool --totp -b ' #このあとにwebsiteごとのキー生成画面で表示されるbase32の文字をスペースなしで引数として入力 %s/ //  #<  sudo apt-get install oathtool
-
-#1-liner
-# alias rorapp rails new example --skip-bundle && cd example && bundle install --path=vendor/bundle**
-# CSVimport      ActiveImportclass.import! (CSV.read('vendor/some.csv') )
-# #RoR " JSONloading:    File.open("#{Rails.root}/spec/fixtures/pmsapi_mock.json"){ |file| json = JSON.load(file) }
 
 
 # ==== リハビリコマンド ==========================

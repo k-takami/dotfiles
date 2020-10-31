@@ -84,9 +84,17 @@ vim/bundle/
 .annotations.cson
 .idea/
 
-#SI
+#private
 AWSCLI/
-SI/
+#WWW_20160515/
+#SI/
 SUPPLEMENTS/
-WWW_20160515/
 YOBI/
+/public/assets/application-*
+*.zip
+*.tar
+*.gz
+*.tgz
+*.jar
+*OLD
+*BEST

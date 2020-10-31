@@ -1,0 +1,159 @@
+#websearch: https://green.search.goo.ne.jp/search?mode=0&isGreen=true&sbd=goo001&OE=UTF-8&MT=-%E8%A9%B1%E9%A1%8C+python3+pandas+Excel&from=pager_web&IE=UTF-8&FR=0
+
+# ref: https://note.nkmk.me/python-pandas-at-iat-loc-iloc/
+
+import pandas as pd
+
+#sheet_nameをNoneに設定するとすべてのシートを読み込むことができます。
+#ヘッダーがない場合には、header=Noneを指定して読み込み時にヘッダーを作ります。
+df = pd.read_excel('sales.xlsx',sheet_name =None)
+
+#2, 4, 6列目を読み込み、且つ5, 7行目は読み込まない
+pd.read_excel('yolo.xlsx', header=None, index_col=None, usecols=[2, 4, 6], skiprows=[5, 7])
+:
+
+#シート名を指定して読み込むdf = ppd.read_excel('sales.xlsx',sheet_name =['Sheet1','Sheet3'])
+#Excel では表が空白のセルに囲まれていることはよくありますが、header でヘッダー、usecols で読み込む列を指定すると問題は解決します。
+df = pd.read_excel(url, header=3, usecols=[1,2,3])
+
+# pandasでＥｘｃｅｌデータとってきたが、小数点以下が表示されてしまうので整数に
+df.astype('int64')
+
+
+
+#シート番号を指定して読み込む[0..-1]
+df = ppd.read_excel('sales.xlsx',sheet_name =1)
+#シート名とシート番号を別々に説明していましたが、これらが混在していても問題はありません。
+df = ppd.read_excel('sales.xlsx',sheet_name =[1,'Sheet1'])
+#URLも指定できる
+url = "https://atelierkobato.com/wp-content/uploads/book.xlsx"
+page = requests.get(url) # xls url
+df = pd.read_excel(page.content,engine = "xlrd")  #engine is passed
+
+
+#複数のシートを取り出した時、それぞれのシートのデータはOrderedDictの中に入っています。
+df = pd.read_excel('sales.xlsx',sheet_name =[1,'Sheet1'])
+for key in df:
+    print(df[key])
+
+#読み込んだシートの情報を1行毎取り出す
+df = pd.read_excel('sales.xlsx')
+for row in df.values:
+    print(f'{row[0]}と{row[1]}')
+
+eg1) sheet_names = df.sheet_names
+eg2) list(df.keys())
+for i, name in enumerate(sheet_names):
+    ...
+
+# 行ごとに処理
+for i, row in sheet_def.iterrows():
+    print(i, row)
+
+# 列ごとに処理
+for i, col in sheet_def.iteritems():
+    print(i, col)
+
+
+
+# 全体参照
+.values
+.keys
+.items
+
+
+#loc,ilocを繰り返す書き方は避けてatやiatを使うほうがよい。atやiatであれば元の型の要素が取得できる。
+#  at 行名（行ラベル 単独値）、 iat : 行番号(単独値)
+#locやilocで1行を取得すると、floatのpandas.Seriesとなる。intの列にあった要素はfloatに変換される。
+#  loc : 列名（列ラベル） iloc :列番号
+
+#インデックス参照df[]
+#行名・列名が一意の値になっている（重複していない）かどうかはindex.is_unique, columns.is_uniqueで確認できる。
+print(df_state.index.is_unique)
+print(df_state.columns.is_unique)
+
+#これとatまたはlocを利用して、番号とラベルの組み合わせで位置を指定できる。
+print(df.at[df.index[2], 'age'])
+print(df.loc[['Alice', 'Dave'], df.columns[1]])
+
+#obsolete?
+#シート読み込み
+sheet_df = file.parse(sheet_name, header=None)
+
+#ラベルの名前を変更（指定）して、excelやCSVのデータの一部の列を抽出する【pandas】
+df.to_excel((r’C:\sample\row5.xlsx’),index=None,header=[‘one’, ‘two’],columns=[‘time’, ‘temperture’],encoding=”utf-8-sig″)
+---
+df = pd.read_csv(“sample3.csv”,encoding=”SHIFT_JIS” )
+df.to_csv((r’C:\sample\row4.csv’),index=None,columns=[‘time’, ‘temperture’],encoding=”utf-8-sig″) #<- sep="\t" ならばTSVになる
+
+#CSVよみこみ # shift-jis のCSVファイル
+import csv # 標準モジュール csv のインポート
+with open('sample_person_sjis.csv', 'r', encoding='shift_jis') as csvfile:
+    next(csv_reader)  # ヘッダ行をスキップ
+    csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+# 起こりそうな例外をキャッチ
+except FileNotFoundError as e:
+    print(e)
+except csv.Error as e:
+    print(e)
+
+#文字コードが不明な場合 # getenc モジュールをインポート like NKF
+import getenc
+
+# XLRDError: Unsupported format, or corrupt file: Expected BOF
+from __future__ import unicode_literals
+from xlwt import Workbook
+import io
+filename = 'WEOApr2019all.xls'
+file1 = io.open(filename, "r", encoding="latin1")
+data = file1.readlines()
+xldoc = Workbook()
+sheet = xldoc.add_sheet("Sheet1", cell_overwrite_ok=True)
+for i, row in enumerate(data):
+    for j, val in enumerate(row.replace('\n', '').split('\t')):
+        sheet.write(i, j, val)
+  # ExcelWriterを使う方が破損しにくそう
+  # xldoc.save('myexcel.xls')
+writer = pd.ExcelWriter(os.path.join(DATA_DIR, 'myexcel.xls'),engine='xlsxwriter',options=options)
+
+df = pd.read_excel("myexcel.xls", sep='\t',
+                  usecols=[1,2,3,4,6,48,49,50,51,52,53],
+                  thousands=',',
+                  na_values=['n/a', '--']
+                 )
+
+df.head()
+df[df['Country']=='Japan']
+
+
+# 日付変換　「pd.to_datetime」と「dt.strftime(‘%Y/%m/%d’)」 ref: https://pyhoo.jp/datetime
+pd.to_datetime(“1899/12/30”)
+df_3['年月日（漢字）'] = df_3['日付_1'].dt.strftime('%Y年%m月%d日')
+
+#
+#  SQLiteへの書込み
+dbname = "sample_excel.sqlite"
+conn = sqlite3.connect(dbname)
+cur = conn.cursor()
+
+cur.execute("DROP TABLE IF EXISTS shouhin_ichiran")
+
+df.columns = ["商品番号","商品名","製造メーカー","卸元","単価","在庫数量","倉庫番号"]
+df.to_sql('shouhin_ichiran' , conn,   index = False)
+conn.commit()
+
+#  SQLiteの読込
+df = pd.read_sql('SELECT *FROM shouhin_ichiran',conn)
+print(df)
+conn.close()
+
+
+# concat 複数ブックの統合書き出し
+data_files = [pd.read_excel(datafile_list[i],parse_dates=[0]) for i in range(len(datafile_list))]
+all_data = pd.concat(data_files,ignore_index=True)
+
+
+
+#他に.read_csv, .to_csv, .to_excelなどある
+
+

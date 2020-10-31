@@ -2,9 +2,17 @@ shortcut [[https://support.apple.com/ja-jp/HT201236]]
 
 #Mojave
 	$ xcode-select --install
-	$ sudo gem install rubocop
   # HOmeBrew
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  # ~/.gitconfig ---> [error: There was a problem with the editor 'mate -w'.]をさけるため
+  git config --global core.editor vim
+  cat ~/.gitconfig
+
+
+#$HOME
+	 ~/.bash_profile
+		[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile`
+		if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 
 
 システム環境設定パネル
@@ -17,24 +25,37 @@ shortcut [[https://support.apple.com/ja-jp/HT201236]]
   アクセシビリティ」「ディスプレイ」「カーソルのサイズ」を最大化
                     「マウスポインタをシェイクして見つける」 check
 
-	User & Group--> 既存ユーザーにパスワード設定
-	一般-->システムブラウザー ※OSX 10.9以降
+	User & Group-->
+    既存ユーザーにパスワード設定
+	   一般-->システムブラウザー ※OSX 10.9以降
+     「ログイン項目」タブでstartupアプリを「＋ー」ボタンで加減
+
+
+
+
+アプリケーションを選択した上で「ー」をクリックすると
 	display: non-mirroring　画面を拡大
 	mouse --> right click enabling
 	CONDITIONAL
 		Dock --> hide automatically
   Mission Control ---> dashboardを操作スペースにする、overlay表示をセレクト
 
+  spotlight: システム環境設定＞SpotlightのプライバシータブでSpotlightの検索から除外する場所を指定 > Mac HDDをD&Dで追加
+
 Finderで「初期表示は~/Download」「全拡張子表示＆リスト表示」[上にフルパス表示] にして端末で以下コマンドでdotfiles表示；
 	defaults write com.apple.finder AppleShowAllFiles TRUE
   defaults delete com.apple.finder _FXShowPosixPathInTitle
-  # //バッテリー使用時にsleepを休眠に sudo pmset -b hibernatemode 25
-  sudo pmset -a disablesleep 1
+  sudo pmset -b hibernatemode 25 # //バッテリー使用時にsleepを休眠に
   killall Finder
 		*FALSE ならば非表示
 		TRUE FALSEでダメならばYES/NO引数
 	killall Finder
 	Bluetooth: menubarにひょうじする、にチェック
+
+  #VNC & SMB
+    vnc://192.168.2.101:5900 
+    smb://192.168.2.101   1/JBC
+  
 
 DOCK
 	メモ帳削除：'-の文字化けをおこすし、クラッシュでリカバリーできない。
@@ -42,14 +63,9 @@ DOCK
     「Safari」環境設定」「詳細」tab-> 一番下に「メニューバーに開発を表示」チェック-> tab 閉じる-> メニューバーに「開発」出現、 「ユーザーエージェント」-> rendering engine 選ぶ
     注意：google docs１タブで500MB使う。MS-Officeもやめたほうが良い。Dynalistのキーも受け付けない
 
-#$HOME
-	 ~/.bash_profile
-		[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile`
-		if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
-	 ~/.bashrc
-		    export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
-
 #App store -> preference -> アップデート自動確認 OFF
+
+
 
 #SVN環境のためにxcodeインストール：　$svn でインストール画面ポップアップしてくれる。
 SSH-mounted-drive
@@ -71,15 +87,6 @@ vagrant@192.168.33.10:/home/vagrant/Publus_Server on /Users/appirits_1020380/Dow
   dashboard: F12
   OSXはoption+かなやctrl+5でIME ON/OFF
   隠しファイルやフォルダの表示と非表示toggle: command + shift + .（コマンド + シフト ＋ ピリオド）
-
-# ~/.gitconfig ---> [error: There was a problem with the editor 'mate -w'.]をさけるため
-git config --global core.editor vim
-cat ~/.gitconfig
-
-
-# Draw on My Screen EZ 4+ https://apps.apple.com/jp/app/draw-on-my-screen-ez/id1082177879?mt=12
-command+alt ===> draw mode
-command+ctrl ===> erase all
 
 
 #OSX ruby環境 #sidekiq はruby 2.2.0で動作不調
@@ -152,14 +159,6 @@ command+ctrl ===> erase all
 		$ cd /Applications/Aptana\ Studio\ 3/plugins/
 OSX tune up : http://gori.me/mac/mac-tips/64719
 
-#TimeMachine backup/
-	*古いJDKはバックアップ＆リストア後に手作業で復旧
-	$ sudo cp -p phantomjs /bin/phantomjs
-  # メニューバーのTime Machineアイコンの「Time Machineに入る」を選択しても入ることができます。*/
-  # 右側のタイムラインをドラッグして、復元したい時間まで戻ります。*/
-  #                                                                                                                復元したいファイルを選択し、右下の「復元」ボタンを押すか、ツールバーの「アクション」ボタンを押し「〜を復元」コマンド実行します。ファイルは元にあった場所に復元されます。*/
-  # ファイル以外にもフォルダやハードディスク単位で復元することもできます。*/
-
 #Tethering with Android: HpRNDIS ver7 install ---> exec commands below, then instal ver8, and reboot;
 $ sudo rm -rf /System/Library/Extensions/HoRNDIS.kext
 $ sudo rm -rf /Library/Extensions/HoRNDIS.kext
@@ -221,6 +220,14 @@ mysql
 | 「Esc」                                                                                  | キャンセル                                                   |
 
 
+#TimeMachine backup/
+	*古いJDKはバックアップ＆リストア後に手作業で復旧
+	$ sudo cp -p phantomjs /bin/phantomjs
+  # メニューバーのTime Machineアイコンの「Time Machineに入る」を選択しても入ることができます。*/
+  # 右側のタイムラインをドラッグして、復元したい時間まで戻ります。*/
+  #                                                                                                                復元したいファイルを選択し、右下の「復元」ボタンを押すか、ツールバーの「アクション」ボタンを押し「〜を復元」コマンド実行します。ファイルは元にあった場所に復元されます。*/
+  # ファイル以外にもフォルダやハードディスク単位で復元することもできます。*/
+
 ### TImeMAchine - Restoration
 # 準備：ATOM, dockerなどupdate試験
 # command+R +power をリンゴマークまで押して、リカバリーモード突入、リストア。
@@ -235,10 +242,11 @@ $ cdd; git reset HEAD -- ; gico CHEATSHEETS/ ; gico SCRIPTS/; gico vim* *rc; gst
 #TimeMachineリストアで、dockerイメージとかは全部きえます；
   docker containerなどを全部tarからリストア : docker load < ' # *.tar name
   dki_loadallfromtar2.txt
+  $ myapp1; gplo develop; dkcud ; dksh apo_pms_ap_1;
+    $$ rake db:drop db:create db:schema:load  db:seed_fu
 
-$ myapp1; gplo develop; dkcud ; dksh apo_pms_ap_1;
-  $$ rake db:drop db:create db:schema:load  db:seed_fu
-#Finder
-  vnc://192.168.2.101:5900 
-  smb://192.168.2.101   1/JBC
-  
+
+# Draw on My Screen EZ 4+ https://apps.apple.com/jp/app/draw-on-my-screen-ez/id1082177879?mt=12
+command+alt ===> draw mode
+command+ctrl ===> erase all
+

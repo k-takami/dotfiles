@@ -599,6 +599,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
   " NeoBundle 'cohama/vim--endwise'
 
+" TODO: FUTURE " NeoBundle 'vim-multiple-cursors'
+
   " FUTURE: irequires native lib 'lua' : $ vim --version | grep lua
     " NeoBundle 'Shougo/neocomplete'
   NeoBundle 'Shougo/neosnippet'
@@ -876,6 +878,7 @@ NeoBundleCheck
 
 filetype plugin indent on
 " source ~/.dotfiles/vim/vimrc2
+
 
 
 " RYAN DOTFIKES COMMANDS  ----------------------------------
