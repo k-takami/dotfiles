@@ -250,6 +250,8 @@ if type python > /dev/null 2>&1; then # コマンドが存在すれば
 
   alias ansp='  ansible-playbook '
   alias anspck='ansible-playbook --syntax-check'
+  alias anspdk='ansp -i ./hosts_docker.ini hosts_docker.yml'
+
   PATH="$PATH:/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin"
   alias py='    python3.8' # 文法チェック
   alias pip='   pip3.8'

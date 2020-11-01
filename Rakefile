@@ -1,42 +1,46 @@
 # coding: utf-8
 # ruby 1.9.x # require 'debugger'
 # ruby 1.8.x # require 'rdebug'
-
 # $ sudo gem install rake -v 0.8.4
 require 'rake'
 require 'erb'
 # USAGE: rake install
-# ln -fs ~/Dotfiles/ ~/.dotfiles
+# # ln -fs ~/Dotfiles/ ~/.dotfiles
 # mkdir -p ~/.vim/bundle && git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 desc "install the dot files into user's home directory"
 
 task :uninstall do
+  # RHEL系では　su -
+  su_prefix=""
   command = "
-    sudo rm -r /.VM_HOST /.RAILS_ROOT /.tigrc /.README.md /.BACKUP /.*rc /.SCRIPTS /.SUPPLEMENTS /.gvimrc /.gitignore /git.tgz /.my_rails_root /.oh-my-zsh
     cd ~                                                                          ;
-    sudo rm -i  session*  *.diff .sw* .*rc                                        ;
-    sudo rm -i  .bash_history .rdebug_hist .irb_history .lesshst .psql_history    ;
-    sudo rm -ir .gitignore .gitconfig .rubocop.yml                                ;
-    sudo rm -ir .vim* .vim_mru_files .ve_favorite .vt_locations .NERDTreeBookmarks .vim-fuf-cache ;
-    sudo rm -ir .dotfiles .SCRIPTS .SI .BACKUP                                    ;
+    #{su_prefix} rm -rf /.VM_HOST /.RAILS_ROOT /.tigrc /.README.md /.BACKUP /.*rc /.SCRIPTS /.SUPPLEMENTS /.gvimrc /.gitignore /git.tgz /.my_rails_root /.oh-my-zsh
+    #{su_prefix} rm -rf session*  *.diff .sw* .*rc                                        ;
+    #{su_prefix} rm -rf .bash_history .rdebug_hist .irb_history .lesshst .psql_history    ;
+    #{su_prefix} rm -rf .gitignore .gitconfig .rubocop.yml                                ;
+    #{su_prefix} rm -rf .vim* .vim_mru_files .ve_favorite .vt_locations .NERDTreeBookmarks .vim-fuf-cache ;
+    #{su_prefix} rm -rf .dotfiles .SCRIPTS .SI .BACKUP                                    ;
   "
   system command
 end
 
 task :install do
+
+  autopilot=true # XXX: for ansible
+
   if os.to_s =~ /x$/ || os == :windows
     $PWD = Dir.pwd
     $HOME = ENV['HOME']
   end
   puts "#{$PWD}  ____   #{$HOME}  ____    #{ENV['HOME']} _____   #{os} ______________________"
 
-  unless os == :windows
+  unless autopilot && os != :windows
     install_oh_my_zsh
     switch_to_zsh
   end
 
-  replace_all = false
+  replace_all = autopilot ? true : false
   files = Dir['*'] - %w[
     Rakefile README.rdoc LICENSE oh-my-zsh
     ATOM AWSCLI CHEATSHEETS LICENSE RAILS_ROOT SCRIPTS SI SUPPLEMENTS VM_HOST HTML README.md vim-neosnippet.tgz win73.vimrc SI.tar.zip WWW_20160515
@@ -103,6 +107,7 @@ end
 def link_file(file)
   #TODO: be admin/root before linking/coping
   if file =~ /.erb$/
+    return if autopilot
     puts "generating ~/.#{file.sub(/\.erb$/, '')}"
     File.open(File.join(ENV['HOME'], ".#{file.sub(/\.erb$/, '')}"), 'w') do |new_file|
       new_file.write ERB.new(File.read(file)).result(binding)
