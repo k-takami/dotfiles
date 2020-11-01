@@ -27,7 +27,7 @@ end
 
 task :install do
 
-  autopilot=true # XXX: for ansible
+  @@autopilot=true # XXX: for ansible
 
   if os.to_s =~ /x$/ || os == :windows
     $PWD = Dir.pwd
@@ -35,12 +35,12 @@ task :install do
   end
   puts "#{$PWD}  ____   #{$HOME}  ____    #{ENV['HOME']} _____   #{os} ______________________"
 
-  unless autopilot && os != :windows
+  unless @@autopilot && os != :windows
     install_oh_my_zsh
     switch_to_zsh
   end
 
-  replace_all = autopilot ? true : false
+  replace_all = @@autopilot ? true : false
   files = Dir['*'] - %w[
     Rakefile README.rdoc LICENSE oh-my-zsh
     ATOM AWSCLI CHEATSHEETS LICENSE RAILS_ROOT SCRIPTS SI SUPPLEMENTS VM_HOST HTML README.md vim-neosnippet.tgz win73.vimrc SI.tar.zip WWW_20160515
@@ -107,7 +107,7 @@ end
 def link_file(file)
   #TODO: be admin/root before linking/coping
   if file =~ /.erb$/
-    return if autopilot
+    return if @@autopilot
     puts "generating ~/.#{file.sub(/\.erb$/, '')}"
     File.open(File.join(ENV['HOME'], ".#{file.sub(/\.erb$/, '')}"), 'w') do |new_file|
       new_file.write ERB.new(File.read(file)).result(binding)
