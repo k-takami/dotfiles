@@ -226,6 +226,10 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 #export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
 eval "$(rbenv init -)" #<--- ~/.rbenv/*** & /usr/local/bin にPATH を通してから eval
 
+
+
+
+
 if [ -f ~/.atom ] ; then
   source ~/.rvm/scripts/rvm ; type rvm | head -n 1
   export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
@@ -337,6 +341,17 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     # alias pkglist=''                                 # インストール済みパッケージの情報表示
     # alias pkgcontents=''                             # パッケージ内容の表示
     # export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
+    source /usr/local/etc/bash_completion.d/git-prompt.sh
+    source /usr/local/etc/bash_completion.d/git-completion.bash
+    GIT_PS1_SHOWDIRTYSTATE=true
+    export PS1='\h\[\033[00m\]:\W\[\033[31m\]$(__git_ps1 [%s])\[\033[00m\]\$ '
+
+    # git config --global color.ui true
+    #source ~/.git-prompt.sh
+    # export PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
+    #export GIT_USERNAME=k_takami
+    #export GIT_USERNAME=kenichi.takami
+
 # elif [ "$OS" =~ "^MINGW" ]; then
 elif [[ "$OSTYPE" == "msys"* ]]; then
   platform='windows'
@@ -461,17 +476,6 @@ function sshpubkey_osx {  #$1 == email@address  #, for github
   esac
 }
 
-GIT_PS1_SHOWDIRTYSTATE=true
-source /usr/local/etc/bash_completion.d/git-prompt.sh
-export PS1='\h\[\033[00m\]:\W\[\033[31m\]$(__git_ps1 [%s])\[\033[00m\]\$ '
-source /usr/local/etc/bash_completion.d/git-completion.bash
-# git config --global color.ui true
-#source ~/.git-prompt.sh
-# export PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
-#export GIT_USERNAME=k_takami
-#export GIT_USERNAME=kenichi.takami
-# TODO: .
-  # ~/dotfiles/development.rb >> config/development.rb
 
 
 # vim installation
@@ -514,6 +518,7 @@ alias grep-env='     env | $grepbin'
 alias grep-gst='     git status |$grepbin -n$regexopt'
 alias grep-gem='     gem list | $grepbin'
 alias grep-pkglist=' pkglist | $grepbin -$regexopt '
+alias grep-ansp='    ansible-doc -l | $grepbin' #<-- installed ansible plugin
 
 #git/ mercurial / patchコマンド http://uguisu.skr.jp/Windows/diff_patch.html http://d.hatena.ne.jp/mrgoofy33/20101019/1287500809
 alias patchp=' patch    -p0 <' #[patch-name] to apply on
