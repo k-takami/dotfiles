@@ -334,12 +334,13 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 # elif [ "$OS" == 'Darwin' ]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     platform='osx'
-    alias pkgadd='brew install'                        # パッケージのインストール
-    alias pkgrm='sudo uninstall ' # パッケージの削除
-    alias pkgupdate='brew update; brew upgrade ruby-build ' #rbenv install -l のリストを更新する
-    # alias pkgsearch=''                               # パッケージの検索
-    # alias pkglist=''                                 # インストール済みパッケージの情報表示
-    # alias pkgcontents=''                             # パッケージ内容の表示
+    alias pkgadd='               brew install'    # パッケージのインストール
+    alias pkgrm='                brew uninstall ' # パッケージの削除
+    alias pkgupdate='            brew update;brew upgrade ruby-build ' #rbenv install -l のリストを更新する
+    # alias pkgsearch=''         # パッケージの検索
+    alias pkglist='              brew list'       # インストール済みパッケージの情報表示
+    alias supkgsearch='          brew search'     # パッケージの検索
+    # alias pkgcontents=''       # パッケージ内容の表示
     # export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
     source /usr/local/etc/bash_completion.d/git-prompt.sh
     source /usr/local/etc/bash_completion.d/git-completion.bash
