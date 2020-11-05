@@ -305,11 +305,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pkgsearch='            yum search'         # パッケージの検索
     alias pkglist='              yum list installed' # インストール済みパッケージの情報表示
     alias pkgcontents='          yum info'           # パッケージ内容の表示
-    alias supkgadd=' su - ;      yum install'        # パッケージのインストール
-    alias supkgrm=' su - ;       yum remove'         # パッケージの削除
-    alias supkgsearch='   su - ; yum search'         # パッケージの検索
-    alias supkglist='     su - ; yum list installed' # インストール済みパッケージの情報表示
-    alias supkgcontents=' su - ; yum info'           # パッケージ内容の表示
+    alias pkgadd=' su - ;      yum install'        # パッケージのインストール
+    alias pkgrm=' su - ;       yum remove'         # パッケージの削除
+    alias pkgsearch='   su - ; yum search'         # パッケージの検索
+    alias pkglist='     su - ; yum list installed' # インストール済みパッケージの情報表示
+    alias pkgcontents=' su - ; yum info'           # パッケージ内容の表示
     alias pkgupdate='     su - ; yum -y update'
     #centOS コマンド
     alias sr='su - root'
@@ -323,12 +323,12 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pkgsearch_chef='       apt-cache policy' # パッケージの検索(Ansible/Chef使用時）
     alias pkglist='              dpkg -l'          # インストール済みパッケージの情報表示
     alias pkgupdate='            apt-get update'   # パッケージDBの更新
-    alias supkgadd='sudo         apt-get install'  # パッケージのインストール
-    alias supkgrm='sudo          apt-get remove'   # パッケージの削除
-    alias supkgsearch='sudo      apt-cache search' # パッケージの検索
-    alias supkgsearch_chef='sudo apt-cache policy' # パッケージの検索(Ansible/Chef使用時）
-    alias supkglist='sudo        dpkg -l'          # インストール済みパッケージの情報表示
-    alias supkgupdate='sudo      apt-get update'   # パッケージDBの更新
+    alias pkgadd='sudo         apt-get install'  # パッケージのインストール
+    alias pkgrm='sudo          apt-get remove'   # パッケージの削除
+    alias pkgsearch='sudo      apt-cache search' # パッケージの検索
+    alias pkgsearch_chef='sudo apt-cache policy' # パッケージの検索(Ansible/Chef使用時）
+    alias pkglist='sudo        dpkg -l'          # インストール済みパッケージの情報表示
+    alias pkgupdate='sudo      apt-get update'   # パッケージDBの更新
     # alias pkgcontents=''                         # パッケージ内容の表示
   fi
 # elif [ "$OS" == 'Darwin' ]; then
@@ -339,7 +339,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     alias pkgupdate='            brew update;brew upgrade ruby-build ' #rbenv install -l のリストを更新する
     # alias pkgsearch=''         # パッケージの検索
     alias pkglist='              brew list'       # インストール済みパッケージの情報表示
-    alias supkgsearch='          brew search'     # パッケージの検索
+    alias pkgsearch='          brew search'     # パッケージの検索
     # alias pkgcontents=''       # パッケージ内容の表示
     # export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
     source /usr/local/etc/bash_completion.d/git-prompt.sh

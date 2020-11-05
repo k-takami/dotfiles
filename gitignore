@@ -91,7 +91,7 @@ AWSCLI/
 SUPPLEMENTS/
 YOBI/
 /public/assets/application-*
-*.zip
+#*.zip
 *.tar
 *.gz
 *.tgz
