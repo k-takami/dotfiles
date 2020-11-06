@@ -1,13 +1,5 @@
 shortcut [[https://support.apple.com/ja-jp/HT201236]]
 
-#Mojave
-	$ xcode-select --install
-  # HOmeBrew
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  # ~/.gitconfig ---> [error: There was a problem with the editor 'mate -w'.]をさけるため
-  git config --global core.editor vim
-  cat ~/.gitconfig
-
 
 #$HOME
 	 ~/.bash_profile
@@ -15,56 +7,10 @@ shortcut [[https://support.apple.com/ja-jp/HT201236]]
 		if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 
 
-システム環境設定パネル
-	//(keyboard:
-		キーボートタブ右下　修飾キー→ disable caps-lock key,
-		shortcut tab--> Tabキーによるフォーカス移動
-		「フルキーボードアクセス」の項目で「すべてのコントロール」を選択
-    Command+Wを押して、システム環境設定ダイアログを閉じれば、OKです。
-
-  アクセシビリティ」「ディスプレイ」「カーソルのサイズ」を最大化
-                    「マウスポインタをシェイクして見つける」 check
-
-	User & Group-->
-    既存ユーザーにパスワード設定
-	   一般-->システムブラウザー ※OSX 10.9以降
-     「ログイン項目」タブでstartupアプリを「＋ー」ボタンで加減
-
-
-
-
-アプリケーションを選択した上で「ー」をクリックすると
-	display: non-mirroring　画面を拡大
-	mouse --> right click enabling
-	CONDITIONAL
-		Dock --> hide automatically
-  Mission Control ---> dashboardを操作スペースにする、overlay表示をセレクト
-
-  spotlight: システム環境設定＞SpotlightのプライバシータブでSpotlightの検索から除外する場所を指定 > Mac HDDをD&Dで追加
-
-Finderで「初期表示は~/Download」「全拡張子表示＆リスト表示」[上にフルパス表示] にして端末で以下コマンドでdotfiles表示；
-	defaults write com.apple.finder AppleShowAllFiles TRUE
-  defaults delete com.apple.finder _FXShowPosixPathInTitle
-  sudo pmset -b hibernatemode 25 # //バッテリー使用時にsleepを休眠に
-  killall Finder
-		*FALSE ならば非表示
-		TRUE FALSEでダメならばYES/NO引数
-	killall Finder
-	Bluetooth: menubarにひょうじする、にチェック
 
   #VNC & SMB
     vnc://192.168.2.101:5900 
     smb://192.168.2.101   1/JBC
-  
-
-DOCK
-	メモ帳削除：'-の文字化けをおこすし、クラッシュでリカバリーできない。
-	safari(IE/Edge emulator)
-    「Safari」環境設定」「詳細」tab-> 一番下に「メニューバーに開発を表示」チェック-> tab 閉じる-> メニューバーに「開発」出現、 「ユーザーエージェント」-> rendering engine 選ぶ
-    注意：google docs１タブで500MB使う。MS-Officeもやめたほうが良い。Dynalistのキーも受け付けない
-
-#App store -> preference -> アップデート自動確認 OFF
-
 
 
 #SVN環境のためにxcodeインストール：　$svn でインストール画面ポップアップしてくれる。

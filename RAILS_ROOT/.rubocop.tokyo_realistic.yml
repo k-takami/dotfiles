@@ -1,6 +1,6 @@
 # 自動生成されるものはチェック対象から外す
 AllCops:
-  TargetRubyVersion: 1.9
+  TargetRubyVersion: 2.5
   Exclude:
     - 'vendor/**/*'
     - 'bin/**/*'
@@ -29,6 +29,9 @@ Style/BlockDelimiters:
 Style/SpaceBeforeFirstArg:
   Exclude:
     - 'db/migrate/*.rb'
+# 文字列は"
+# Style/StringLiterals:
+  # EnforcedStyle: double_quotes
 # 要素数が3個以内の配列については []で宣言してもよい
 Style/WordArray:
   MinSize: 3
@@ -51,21 +54,20 @@ Style/Documentation:
     - 'db/migrate/*'
     - 'config/application.rb'
 
-
 # class/module/block/method/lineの最大行数 文字数
 Metrics/ClassLength:
   Max: 500
   Exclude:
 Metrics/ModuleLength:
   Max: 500
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*'
+
 Metrics/MethodLength:
   CountComments: false  # count full line comments?
 Metrics/LineLength:
   Max: 160
-
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
 
 #メソッドの難解さ
 Metrics/AbcSize:
@@ -105,16 +107,15 @@ Style/AsciiComments:
 # CyclomaticComplexity:
 #   Enabled: false
 
-Style/HashSyntax:
-  Enabled: false
-# 文字列は"
-Style/StringLiterals:
-  Enabled: false
-#ruby 1.8系で文法エラー
-Style/SymbolArray:
-  Enabled: false
-#Proc.newをprocニ置き換えるの規則も非現実的
-# 文字列 and return をつかいたいので && || を必ずしも推奨しない
-Style/AndOr:
-  Enabled: false
 
+#Proc.newをprocニ置き換えるの規則も非現実的
+
+# Use nested module/class definitions instead of compact style. を無視
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/RegexpLiteral:
+  Enabled: false
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+Style/AccessModifierDeclarations:
+  Enabled: false

@@ -47,8 +47,6 @@
 
 # For macOS (old)
     # Windowsと同様、Docker公式サイトからインストーラをダウンロードするか、以下を実行する。
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew install caskroom/cask/brew-cask cask # virtualbox
     brew install docker docker
     # OSX　container場所(VMsizeはpreference->Disk)：　/Users/user/Library/Containers/com.docker.docker/Data/vms/0/
     # Preference->Diskで64GBにしとくといい。
