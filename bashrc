@@ -41,12 +41,11 @@ alias dkrmv='   docker volume rm';
 alias dktg='    docker tag';
 alias dkhs='    docker history';
 alias dkli='    docker login';
-alias dksch='   docker search  --no-trunc';
 alias dkisp='   docker inspect';
 alias dkpl='    docker login; docker pull'; #container
 alias dkat='    docker attach'; #container
 alias dkrunit=' docker run -itd'; # image, -d == detached
-function dkrunitname { dkrunit --name=$1 $2 ; dkpaivl; } # $1=container $2=image
+function dkrunitname { dkrunit --name=$1 $2 ; dkpaivl; } # $1=new_name_of_container $2=image
 alias dkrst='   docker restart '; # container
 alias dkat='    docker attach' # container
 function dkcommitmine { dk commit $1 belltakami/$2 ; dkpaivl; } # $1=container $2=image-suffix
@@ -292,6 +291,10 @@ export DL_HOME=~/Download
 
 
 
+grepbin="hw"  ; regexopt="iaN"
+#grepbin="grep"; regexopt="irE"
+alias fzfp="fzf --inline-info --preview 'head -100 {}'"
+alias fzfpd="cd ~/Downloads/; ffp"
 #==== OS-dependent ==========================
 # OS detection ref: https://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
 # OS="`uname`"
@@ -302,12 +305,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     platform='linuxRHEL'
     alias pkgadd='               yum install'        # パッケージのインストール
     alias pkgrm='                yum remove'         # パッケージの削除
-    alias pkgsearch='            yum search'         # パッケージの検索
-    alias pkglist='              yum list installed' # インストール済みパッケージの情報表示
     alias pkgcontents='          yum info'           # パッケージ内容の表示
     alias pkgadd=' su - ;      yum install'        # パッケージのインストール
     alias pkgrm=' su - ;       yum remove'         # パッケージの削除
-    alias pkgsearch='   su - ; yum search'         # パッケージの検索
     alias pkglist='     su - ; yum list installed' # インストール済みパッケージの情報表示
     alias pkgcontents=' su - ; yum info'           # パッケージ内容の表示
     alias pkgupdate='     su - ; yum -y update'
@@ -317,16 +317,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias svmq='service mysql'
   elif [ -f /etc/debian_version ] ; then
     platform='linuxDebian'
-    alias pkgadd='               apt-get install'  # パッケージのインストール
-    alias pkgrm='                apt-get remove'   # パッケージの削除
-    alias pkgsearch='            apt-cache search' # パッケージの検索
-    alias pkgsearch_chef='       apt-cache policy' # パッケージの検索(Ansible/Chef使用時）
-    alias pkglist='              dpkg -l'          # インストール済みパッケージの情報表示
-    alias pkgupdate='            apt-get update'   # パッケージDBの更新
+    alias pkgadd='             apt-get install'  # パッケージのインストール
+    alias pkgrm='              apt-get remove'   # パッケージの削除
+    alias pkglist='            dpkg -l'          # インストール済みパッケージの情報表示
+    alias pkgupdate='          apt-get update'   # パッケージDBの更新
     alias pkgadd='sudo         apt-get install'  # パッケージのインストール
-    alias pkgrm='sudo          apt-get remove'   # パッケージの削除
-    alias pkgsearch='sudo      apt-cache search' # パッケージの検索
-    alias pkgsearch_chef='sudo apt-cache policy' # パッケージの検索(Ansible/Chef使用時）
     alias pkglist='sudo        dpkg -l'          # インストール済みパッケージの情報表示
     alias pkgupdate='sudo      apt-get update'   # パッケージDBの更新
     # alias pkgcontents=''                         # パッケージ内容の表示
@@ -337,9 +332,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     alias pkgadd='               brew install'    # パッケージのインストール
     alias pkgrm='                brew uninstall ' # パッケージの削除
     alias pkgupdate='            brew update;brew upgrade ruby-build ' #rbenv install -l のリストを更新する
-    # alias pkgsearch=''         # パッケージの検索
     alias pkglist='              brew list'       # インストール済みパッケージの情報表示
-    alias pkgsearch='          brew search'     # パッケージの検索
     # alias pkgcontents=''       # パッケージ内容の表示
     # export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.2.4/
     source /usr/local/etc/bash_completion.d/git-prompt.sh
@@ -406,11 +399,7 @@ function exclnonapp { echo " --exclude-dir=vendor  --exclude-dir=lib --exclude=*
 
 # ruby -rrexml/document -ryaml -e ' puts YAML.dump(REXML::Document.new(open("some/full/path.xml"  )))'
 
-alias ffp="fzf --inline-info --preview 'head -100 {}'"
-alias ffpd="cd ~/Downloads/; ffp"
 
-grepbin="hw"  ; regexopt="iaN"
-#grepbin="grep"; regexopt="irE"
 echo "====== YOU ARE NOW USING 'hw' INSTERAD OF 'grep' by $grepbin VARIABLE NOW ======"
 # $1検索語　$2場所 regrep の$2がなければ、./*で補完
 # alias greper-pure=' $grepbin -n$regexopt "錦糸町" ./* | grep -v "錦糸町支店" |grep -v ".svn"'
@@ -468,7 +457,14 @@ function sshpubkey_osx {  #$1 == email@address  #, for github
   ssh-keygen -t rsa -b 4096 -C "$1"
   ll ~/.ssh/
   cat ~/.ssh/id_rsa.pub &&  pbcopy < ~/.ssh/id_rsa.pub
-  echo "コピーしましたよ"
+  echo "公開鍵をクリップボードにコピーしました"
+  echo "参考：https://ytakeuchi.jp/?p=513 にしたがい"
+  echo "git config --local user.name 個人ユーザ名"
+  echo "git config --local user.email 個人メールアドレス"
+  echo "vim ~/.ssh/configでhostnameを追加し\n git config --local url.'hostname'.insteadOf 'git@github.com'形式にしましょう "
+  echo "設定状況確認コマンドは git config --show-origin -l"
+  echo "次の案件までに~/.sshと~/.gitconfigのdotfiles/SI化自動ln -sをしましょう"
+
   read -p "vim ~/.gitconfigでname, email, user編集しますか？(y/N): " yn
   case "$yn" in
     [yY]) vim ~/.gitconfig ;;
@@ -516,10 +512,44 @@ alias gcfggettmturl=' git config --get remote.origin.url'
 alias grep-hist='    history |$grepbin -n$regexopt'
 alias grep-ps='      ps -ef  |$grepbin -n$regexopt'
 alias grep-env='     env | $grepbin'
-alias grep-gst='     git status |$grepbin -n$regexopt'
-alias grep-gem='     gem list | $grepbin'
+#env
 alias grep-pkglist=' pkglist | $grepbin -$regexopt '
+alias grep-gem='     gem list | $grepbin'
 alias grep-ansp='    ansible-doc -l | $grepbin' #<-- installed ansible plugin
+alias grep-gst='     git status |$grepbin -n$regexopt'
+
+
+# リモートレポジトリーにある、OSネイティブなパッケージの検索
+if [[ '$OSTYPE' == 'linux-gnu' ]]; then
+  alias search_pkg='  yum  search --showduplicates'  # <---基本形　amazon linux もこれ
+  if [ -f /etc/redhat-release ] ; then
+    alias search_pkg='yum  search --showduplicates'
+  elif [ -f /etc/debian_version ] ; then
+    alias search_pkg='sudo apt search'
+    # alias search_pkg_chef=' sudo apt-cache policy'
+  fi
+elif [[ '$OSTYPE' == 'darwin'* ]]; then
+    alias search_pkg='brew search' # 途中、keychainパスワード入力が求められる
+elif [[ '$OSTYPE' == 'solaris'* ]]; then
+    alias search_pkg='pkg  search -r'
+fi
+# リモートレポジトリーにある、OS上の各種「開発用」パッケージの検索
+  alias search_dkhub='docker search  --no-trunc';
+  alias search_rbenv='rbenv install -l'
+  alias search_pyenv='pyenv install -l'
+  alias search_rvm='  rvm list known'
+  alias search_nvm='  nvm ls-remote'
+  alias search_gem='  gem query -ran '
+  alias search_npm='  npm search'
+  alias search_pip='  pip search '
+# リモートレポジトリーにある、gitブランチ全部のログをキーワード検索
+    alias search_gitrepo_log='git log --all --stat --branches=* --remotes=* -S'
+
+alias apache='apachectl'
+alias test_apache='apachectl configtest'
+alias apache_centos_gt7='service httpd'
+alias apache_centos_lte6='/etc/init.d/httpd'
+
 
 #git/ mercurial / patchコマンド http://uguisu.skr.jp/Windows/diff_patch.html http://d.hatena.ne.jp/mrgoofy33/20101019/1287500809
 alias patchp=' patch    -p0 <' #[patch-name] to apply on
@@ -583,8 +613,6 @@ alias gilos='     git log -p --full-diff -S'
 alias gilohd='    git log |head -n 50'
 alias gilono='      git log --name-only'
 #alias gilogrep
-alias gilotheir=' git log --all --stat --branches=* --remotes=* ' #followed by filename[s]
-alias gilostheir='git log --all --stat --branches=* --remotes=* -S'
 alias mygilo='    git log --committer=$GIT_USERNAME'
 alias gilosmine=' git log --committer=$GIT_USERNAME -S'
 #    コミットの中で"hogehoge"という文字列を含む行が変更されたものだけ表示 ：例  $ tig -S"hogehoge" filename
@@ -646,8 +674,6 @@ alias rrg='            ds1 bx rake routes |grep '
 alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
 
 # gemバージョン　正規表現検索
-alias gemquery="     gem query -ban "
-alias gemqueryremote="     gem query -ran "
 alias rbp='         rails_best_practices'
 export REGEXP_RBC_IGNORE="(app\/views|wrapper|\.xlsx|\.xls|\.js|\.coffee|\..?css|\.csv|\.tsv|\.png|\.svg|\.yml|schema.rb|structure.sql|Gemfile|.gitignore)"
 export REGEXP_MYBUG="^\+.*(\?i|i\b|binding.pry|byebug|debugger|takami)"
@@ -945,7 +971,7 @@ function dksh { # $1 == container_name/id
   elif [[ `echo $1 | grep 'db_'` ]] ; then
     tmux select-pane -P 'bg=colour250,fg=black'
   fi
-  dkpaivl; docker exec -it -u root $1 sh
+  dkpaivl; docker exec -it -u root $1 bash
   # デフォルトの背景色に戻す
   tmux select-pane -t $pane_id -P 'default'
 }
