@@ -143,11 +143,6 @@ options     word
   should have_and_belong_to_many(${1:table})
 #}}}
 #}}}
-# Module: Shoulda::Matchers::ActiveRecord#{{{
-snippet     accept_nested_attributes_for
-abbr        accept_nested_attributes_for(field)
-options     word
-  accept_nested_attributes_for(${1:field})${2:.allow_destroy(true)}${3:.limit(${4\})}${5:.update_only}
 
 snippet     have_db_columns
 abbr        have_db_columns(field)

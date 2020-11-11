@@ -1,0 +1,80 @@
+**# Ubuntu14 LTSインストール方法；**
+	$ vagrant box add ★任意のローカル名★ https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box
+	$ mkdir newVM; cd newVM
+	$ vagrant box list ;#<---列挙確認
+	$ vagrant init    ★任意のローカル名★
+	$ vim Vagrantfile
+		# config.vm.network "private_network", ip: "192.168.33.*" をコメントインする
+		# VMに固定IP振っているものの確認は cat ~/.ssh/config
+		
+	$ vagrant up; $ vagrant ssh
+		$ sudo apt-get install kasumi ibus-anthy #<-日本語：
+			System Setting（画面左の歯車）→TextEntry→JApanese(Anthy)えらぶ　
+			入力するときに Windowsキー + Spaceキー で切り替えられる
+			Japanese(Anthy)の設定メニューでキーレイアウトはdefault->jaに変更して、$ibus restart   で反映させる
+		$ sudo passwd ubuntu 
+		#Unity Desttop installしたければ以下も；
+			#Ubuntu desktop選択、CUI誘導にしたがってインストール
+			$ sudo aptitude update; sudo tasksel
+			exit
+	$ vagrant reload
+	$vagrant ssh
+		
+	
+	 #GUest Addon install
+		vagrant halt でCDROMドライブ追加、vagrat up
+		Device->guest addon 
+		自動マウントに失敗するはずなので、以下で手作業処理；
+		sudo mkdir --p /media/cdrom 
+sudo mount -t auto /dev/cdrom /media/cdrom/
+cd /media/cdrom/
+sudo sh VBoxLinuxAdditions.run
+
+
+
+
+vagrant ssh-config --host [myHost] >> ~/.ssh/config
+ex) vagrant ssh-config --host 192.168.33.10 >> ~/.ssh/config
+Host 192.168.33.10
+  HostName 127.0.0.1
+  User vagrant
+  Port 2222
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile /Users/appirits_1020380/Downloads/src/.vagrant/machines/default/virtualbox/private_key
+\Users\appirits_1020380\Downloads\src\.vagrant\machines\default\virtualbox\private_key
+
+  IdentitiesOnly yes
+  LogLevel FATAL
+	
+でHost 192.168.33.10 に鍵　 IdentityFile /Users/appirits_1020380/Downloads/src/.vagrant/machines/default/virtualbox/private_key でいろんなソフトからログインできる様になる。ssh-configコマンド自体が接続パラメータ生成表示コマンド
+接続：$ ssh  vagrant@127.0.0.1 -p 2222
+virtuaboxの共有フォルダーはRSpec動作低速の遠因。使うな。sshfsで代替。
+
+vagrant にssh
+	(方法1) vagrant ssh
+	(方法2) エージェント設定
+	$ vagrant ssh-config --host 192.168.33.10 >> ~/.ssh/config
+$ chmod 600 ~/.ssh/config
+$ ssh 192.168.33.10
+$ lat  /Users/appirits_1020380/.ssh/config
+    -rw-------  1 appirits_1020380  staff   294B  3  2 15:03 /Users/appirits_1020380/.ssh/config
+$ ssh 192.168.33.10
+
+	(方法Windows) WinSCP設定
+	１）上述~/.ssh/configにかいてあるprivate_keyのパスを\区切りに置き換える。
+２）その後、Putty Key Generatorを管理者権限で起動し「load」ボタンで先述privatekeyをロードし、saveボタンで保存。
+３）保存したWinSCP形式のキーをWinSCPの接続用鍵として設定、適用、接続。
+
+
+	
+buggy: shared-folder of virtualbox/vagrant 
+# config.vm.box = "fedora/23-cloud-base" config.vm.synced_folder "/Users/appirits_1020380/Downl# config.vm.synced_folder "/Users/appirits_1020380/Downloads/src/Publus_Server", "/home/vagrant/TMP/local-ci", type: "sshfs", sshfs_opts_append: "-o nonempty" , # owner => "vagrant", :group => "vagrant", :mount_options => ["dmode=775,fmode=775"]
+
+#Windows　電源ダウン後のリカバリー
+	virtualboxをvirtualboxから通常起動する
+	vagrant/vagrantでSFTP NetDriveなどからつなぐ。
+	**ログインしたら**　sh ~/.dotfiles/SCRIPTS/start.sh
+	source ~/.bashrc; rvmusesys; ; sudo /setc/init.d/httpd stop;  myps; 
+sudo kill -9 [passenger/ruby] 

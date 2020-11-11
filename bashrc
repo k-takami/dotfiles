@@ -21,6 +21,7 @@ export POW_TIMEOUT=300
 # powder (config/status|restart)
 
 
+alias dkpai='  docker ps -a ; docker images';
 alias dkpaivl='  docker ps -a ; docker images;  docker volume ls';
 #  # リサイズや清掃；
 #    docker build --squash
@@ -32,7 +33,7 @@ alias dkprunesys='docker system prune'
 alias dkpruneimg='docker images prune'
 alias dk='      docker';
 alias dkrm='    docker rm';
-function dkrmf { dk stop $1 ; dkrm $_ ; dkpaivl; }
+function dkrmf { dk stop $1 ; dkrm $_ ; dkpai; }
 alias dkrmi='   docker rmi';
 alias dkrmv='   docker volume rm';
 # alias dkcm='    docker commit';
@@ -45,10 +46,10 @@ alias dkisp='   docker inspect';
 alias dkpl='    docker login; docker pull'; #container
 alias dkat='    docker attach'; #container
 alias dkrunit=' docker run -itd'; # image, -d == detached
-function dkrunitname { dkrunit --name=$1 $2 ; dkpaivl; } # $1=new_name_of_container $2=image
+function dkrunitname { dkrunit --name=$1 $2 ; dkpai; } # $1=new_name_of_container $2=image
 alias dkrst='   docker restart '; # container
 alias dkat='    docker attach' # container
-function dkcommitmine { dk commit $1 belltakami/$2 ; dkpaivl; } # $1=container $2=image-suffix
+function dkcommitmine { dk commit $1 belltakami/$2 ; dkpai; } # $1=container $2=image-suffix
 
 alias dkps='    docker push' # container
 alias dksv='    docker save ' # image_name > ../*.tar name
@@ -71,7 +72,7 @@ alias dkcud='   docker-compose up -d '
 
 
 function dkbash { # $1 == container_name/id
-  dkpaivl; docker exec -it -u root $1 bash
+  dkpai; docker exec -it -u root $1 bash
 }
 
 function dkrstrails { # $1 == container_name/id
@@ -101,7 +102,7 @@ function dkc_rdbseed {  #通常のbdl方法
 function dkcbuildup {
   env=${1:-'app'}
   docker-compose build $1 && docker-compose up -d $1
-  dkpaivl
+  dkpai
 }
 
 function dkc_rdbmreset { #通常のbdl方法 #  == dkrst db && dkbash app ; bundle install && bin/rails db:drop db:create ridgepole:apply db:migrate db:seed && annotate --force
@@ -326,8 +327,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias pkgupdate='sudo      apt-get update'   # パッケージDBの更新
     # alias pkgcontents=''                         # パッケージ内容の表示
   fi
-# elif [ "$OS" == 'Darwin' ]; then
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+elif [[ "`uname`" == "Darwin" ]]; then
     platform='osx'
     alias pkgadd='               brew install'    # パッケージのインストール
     alias pkgrm='                brew uninstall ' # パッケージの削除
@@ -364,7 +364,7 @@ alias cp='cp -p'
 #alias mv='mv -i'
 alias ll=' ls -al'
 alias lat='ls -halt'
-alias las='ls -alSr'
+alias las='ls -Sharl'
 alias rm='rm -r'
 alias portps='lsof -i:' #-i:3000みたく空文字なしに入力
 alias kill9='        kill -9 '
@@ -461,9 +461,9 @@ function sshpubkey_osx {  #$1 == email@address  #, for github
   echo "参考：https://ytakeuchi.jp/?p=513 にしたがい"
   echo "git config --local user.name 個人ユーザ名"
   echo "git config --local user.email 個人メールアドレス"
-  echo "vim ~/.ssh/configでhostnameを追加し\n git config --local url.'hostname'.insteadOf 'git@github.com'形式にしましょう "
-  echo "設定状況確認コマンドは git config --show-origin -l"
+  echo "設定状況確認コマンドは git config --show-origin user.name; git config --show-origin user.email"
   echo "次の案件までに~/.sshと~/.gitconfigのdotfiles/SI化自動ln -sをしましょう"
+  echo "vim ~/.ssh/configでhostnameを追加し\n git config --local url.'hostname'.insteadOf 'git@github.com'形式にしましょう "
 
   read -p "vim ~/.gitconfigでname, email, user編集しますか？(y/N): " yn
   case "$yn" in
@@ -492,8 +492,6 @@ function openatomfromvimsession {
   vim $outfile; sh $outfile; rm  $outfile; lat;
 }
 
-alias ror_snip_list='sh ~/dotfiles/SI/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
-alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
 
 alias grepvcode='   find . |grep -viE "\.(svc|git|hg)" | grep'
 alias grepvr='   grep -viE "(\..?sv|\.yml|\..?css|\.js.+|\.erb|\.NEW|\.OLD|\.BAK|\/db\/migrate|development.rb|schema.rb)" | grep'
@@ -506,7 +504,9 @@ alias gdi='      git diff' #gdif
 alias gbl='      git blame' #Gblame
 alias grm='      git rm'
 alias gcfggettmturl=' git config --get remote.origin.url'
-
+alias gcfglocalname="git config --local user.name"  #repo固有ユーザ名
+alias gcfglocalmail="git config --local user.email" #repo固有メールアドレス
+alias gcfglocalck="git config --show-origin user.name; git config --show-origin user.email"
 
 #GREP everything # リモートgrep検索は gilostheir
 alias grep-hist='    history |$grepbin -n$regexopt'
@@ -528,9 +528,9 @@ if [[ '$OSTYPE' == 'linux-gnu' ]]; then
     alias search_pkg='sudo apt search'
     # alias search_pkg_chef=' sudo apt-cache policy'
   fi
-elif [[ '$OSTYPE' == 'darwin'* ]]; then
+elif [[ "`uname`" == "Darwin" ]]; then
     alias search_pkg='brew search' # 途中、keychainパスワード入力が求められる
-elif [[ '$OSTYPE' == 'solaris'* ]]; then
+elif [[ "`uname`" == "Solaris"  ]]; then
     alias search_pkg='pkg  search -r'
 fi
 # リモートレポジトリーにある、OS上の各種「開発用」パッケージの検索
@@ -659,7 +659,6 @@ alias bdlilikerails12='bundle install --path vendor/bundle'
 alias bdlupclean='     bundle update; bundle clean' #一括削除清掃
 # ローカルから普通にもどすときは
 # $ rm -rf vendor/bundle/ Gemfile.lock .bundle/config ; bdl; rails s;
-alias ror5dbdrop='DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development  rake db:drop'
 alias ds1='DISABLE_SPRING=1 '
 alias bx='             ds1 bundle exec '
 alias bxs='            ds1 bx rspec'
@@ -672,6 +671,10 @@ alias bxrdbmdown='     ds1 bx rake db:migrate:down'
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
 alias rrg='            ds1 bx rake routes |grep '
 alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
+alias ror_snip_list='sh ~/dotfiles/SI/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
+alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
+alias ror5dbdrop='DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development  rake db:drop'
+alias raspell=' ruby ~/dotfiles/SI/SCRIPTS/ror_02_raspell.rb'
 
 # gemバージョン　正規表現検索
 alias rbp='         rails_best_practices'
@@ -686,7 +689,6 @@ alias rbprails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rail
 alias mytestsingle='ds1 bx rake spec:test RAILS_ENV=mobi-connect-test'
 alias mybugstaged=' gdicnp |grepe $REGEXP_MYBUG -C2 '
 alias mybug='       git show |grepe $REGEXP_MYBUG -C1 ; gdicnp |grepe $REGEXP_MYBUG -C1 ; gdi |grepe $REGEXP_MYBUG --exclude=development.rb --exclude=*Gemfile* -C1'
-alias raspell=' ruby ~/dotfiles/SI/SCRIPTS/ror_02_raspell.rb'
 alias mybugallstaged='rbcrails; mybugstaged; rbwcstaged; echo "●Windows表示、スマホ表示、yarn.lockとpackage.jsonをproductionモードで動作確認"' #rbprails; #raspell;
 alias mybugall='      rbcrails; mybug      ; raspell; rbwcstaged; rbprails;'
 alias mybug_migration_yyyymmdd='find db/migrate/*create_*  |xargs -n1 git blame |grep' # add /yyyy-mm-dd?/ date to find DANGEROUS MIGRATION FILE
@@ -971,7 +973,7 @@ function dksh { # $1 == container_name/id
   elif [[ `echo $1 | grep 'db_'` ]] ; then
     tmux select-pane -P 'bg=colour250,fg=black'
   fi
-  dkpaivl; docker exec -it -u root $1 bash
+  dkpai; docker exec -it -u root $1 bash
   # デフォルトの背景色に戻す
   tmux select-pane -t $pane_id -P 'default'
 }

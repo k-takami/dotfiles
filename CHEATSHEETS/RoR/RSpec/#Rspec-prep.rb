@@ -1,25 +1,3 @@
-vi /opt/fix/LGDIS/config/database.ym
-	test:
-		adapter: postgresql
-		database: LGDIS_test
-		host: 127.0.0.1
-		username: dev
-		password: devdev
-		encoding: utf8
-vi ~/.rspecrc
-	--debug
-export RAILS_ENV=.
-	RAILS_ENV=test rake db:migrate:reset
-	RAILS_ENV=test rake redmine:plugins:migrate
-	RAILS_ENV=test rake redmine:load_default_data
-	RAILS_ENV=test rake db:seed
-	RAILS_ENV=test rspec /opt/fix/LGDIS/plugins/lgdis/spec/controllers/shelters_controller_spec.rb
-config
-	+++ b/spec/rails_helper.rb
-	+  config.before(:all) do
-	+    # system('bundle exec rails r -e test ConvertZokugaraCode.execute') if ZokugaraMap.count == 0
-	+    ConvertZokugaraCode.execute if ZokugaraMap.count == 0
-	+  end
 #RSpecは途中中断するとfixtureがきえたりするので元に戻す。
 $ git checkout spec/fixtures
 $ ls -alt ../*clean/spec/fixtures/files/for_kencom_files/kumiai/
@@ -74,5 +52,5 @@ end
 障害対応troubleshoot
 	to_specやGemfile.lock起因でうごかないとき：gem uninstall rspec-*** -v *** でGemfilelockにかいてない gem全部消す
 		REHL: /usr/local/lib/ruby/gems/[RUBY_VERSION]/gems
-		debian: 
+		debian:
 

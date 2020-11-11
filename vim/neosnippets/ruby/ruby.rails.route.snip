@@ -173,7 +173,7 @@ options word
 snippet shallow_do
 abbr    shallow do ... end
 options word
-  shallow do 
+  shallow do
     ${1}
   end
 #}}}
@@ -223,7 +223,7 @@ options word
 snippet namespace
 abbr    namespace :name do ... end
 options word
-  namespace :${1:name} do 
+  namespace :${1:name} do
     ${2:define_route}
   end
 
@@ -271,7 +271,7 @@ options word
 snippet collection
 abbr    collection do ... end
 options word
-  collection do 
+  collection do
     ${1}
   end
 #}}}
@@ -309,15 +309,6 @@ options word
   ActiveSupport::Inflector.inflections do |inflect|
     inflect.irregular 'tooth', 'teeth'
   end
-
-snippet as_in_nested_resources
-abbr    as option overrides the automatically-generated name for the resource in nested route helpers. For example:
-options word
-  # as option overrides the automatically-generated name for the resource in nested route helpers. For example:
-  resources :magazines do
-    resources :ads, as: 'periodical_ads'
-  end
-#}}}
 
 # ----------------------------------------
 # Root {{{

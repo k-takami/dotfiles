@@ -13,6 +13,12 @@ ActiveSupport
 	ENDOFHEARDOC
 	.from_xml(xml)
 
+#メソッド名!は例外を発生させる。!がなければオブジェクトか:nilをかえすのが通例。
+obj.find_by_name("dave")
+ret=obj.find_by_sql("select * fro xxx")
+obj.select_all
+book = Product.find_or_create_by_name_and_price('book', 2079)
+	リスト7●productsテーブルからnameが'book'，priceが2079であるようなProductオブジェクトを読み取り，存在しなかった場合はデータベースにレコードを新規作成する処理
 
 
 なければつくる

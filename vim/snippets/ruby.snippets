@@ -177,8 +177,6 @@ snippet atp
 	attr_protected :${0:attr_names}
 snippet ata
 	attr_accessible :${0:attr_names}
-snippet ana
-	accepts_nested_attributes_for :${0:association}
 # ivc == instance variable cache
 snippet ivc
 	@${1:variable_name} ||= ${0:cached_value}
@@ -600,7 +598,7 @@ snippet begin
 	end
 snippet SH
 	# coding: utf-8
-	require 'fileutils'; require 'nkf' ; 
+	require 'fileutils'; require 'nkf' ;
 	require "optparse"; option_parser = OptionParser.new;
 	# require "getoptlong"; option_parser = GetOptLong.new; #<= before ruby 1.8
 	# require 'active_record'

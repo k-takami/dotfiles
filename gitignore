@@ -93,8 +93,8 @@ YOBI/
 /public/assets/application-*
 #*.zip
 *.tar
-*.gz
-*.tgz
+#*.gz
+#*.tgz
 *.jar
 *OLD
 *BEST
