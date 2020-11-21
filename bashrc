@@ -295,7 +295,10 @@ export DL_HOME=~/Download
 grepbin="hw"  ; regexopt="iaN"
 #grepbin="grep"; regexopt="irE"
 alias fzfp="fzf --inline-info --preview 'head -100 {}'"
-alias fzfpd="cd ~/Downloads/; ffp"
+alias fzff="fzf -f" # filter mode
+function fzfpd { cd ~/Downloads/; fzfp   ; cd -; } # $1=container $2=image-suffix
+function fzffd { cd ~/Downloads/; fzff $1; cd -; } # $1=container $2=image-suffix
+
 #==== OS-dependent ==========================
 # OS detection ref: https://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
 # OS="`uname`"
@@ -602,6 +605,7 @@ alias gish='      git stash'
 alias gishcl='    git stash clear'
 alias gishls='    git stash list'
 alias gishsw='    git stash show'
+alias gishswpatch='git stash show -p' # = show precisely
 alias gishsv='    git stash save'
 alias gishpp='    git stash pop'
 alias gishdd='    git stash drop'    # スタックの一番上にある変更を削除する
@@ -675,6 +679,8 @@ alias ror_snip_list='sh ~/dotfiles/SI/SCRIPTS/list_snipets4snipmate.sh ruby rail
 alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
 alias ror5dbdrop='DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=development  rake db:drop'
 alias raspell=' ruby ~/dotfiles/SI/SCRIPTS/ror_02_raspell.rb'
+function railgun { ruby railgun.rb -t $1 ; } # $1=model name
+
 
 # gemバージョン　正規表現検索
 alias rbp='         rails_best_practices'
@@ -787,6 +793,7 @@ function backupgitonly { # 今のRails.rootフォルダー名を引数にして�
   local chomped1=${1%\/} ;  # 行末スラッシュ削除
   cd $chomped1
   tar zcvf ../$chomped1.git-`date '+%Y%m%d_%H%M'`.tar.gz .git ; lat ..
+  cd -
 }
 
 #remote-branch fetch
@@ -896,22 +903,7 @@ alias rehabilli='cat ~/dotfiles/SI/REHABILI/* |less'
 # ==== PJ-dependent unixコマンド ==========================
 source ~/dotfiles/SI/pj-dependent.bashrc
 
-
 alias REM=' : <<"REM"' #REMで終端すること
-alias ksen-a='echo "/////////////////////////////////////////////////////////////////////////////////"'
-alias ksen-b='echo "================================================================================="'
-alias ksen-c='echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"'
-alias ksen-d='echo "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"'
-alias ksen-e='echo "#################################################################################"'
-alias ksen-f='echo "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★"'
-alias ksen-g='echo "﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏"'
-alias ksen-h='echo "〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜"'
-alias ksen-i='echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"'
-# alias ksen-e='echo "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"'
-# alias ksen-e='echo "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"'
-# alias ksen-e='echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"'
-# alias ksen-e='echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"'
-alias ksen='  ksen-a; ksen-b; ksen-c; ksen-d; ksen-e; ksen-f; ksen-g; ksen-h; ksen-i'
 
 function ksendebug {  #debugmessage関数 引数にrb, js
   extention=${1:-'rb'}

@@ -17,7 +17,7 @@
     4. Root folder on the ServerのSpecified folderにチェックを入れディレクトリを指定。パスワードも適宜設定した後に[OK]押下。
        ※"/" を指定すると /root に接続されるため、これを指定したい場合は "/." などを指定する。
     5. ドライブ名を指定してし[CONNECT]ボタン押下で接続。
-    
+
     ※複数サーバをマウントする場合
     上記手順で一度設定を行うと、それぞれの接続先に対応したプロファイルが作成される。
     コマンドプロンプトからプロファイル名を指定して起動することで、多重起動が可能になる。
@@ -31,7 +31,7 @@
 
   #VMware WorkStation(VMWare Player同梱)
     ローカルPCにコピーして標準インストールすること。
-    インストーラー最後の画面の「ライセンスキー」入力画面は「スキップ」で対応。 
+    インストーラー最後の画面の「ライセンスキー」入力画面は「スキップ」で対応。
     通常作業はVMware Toolで仮想OSをひらく。
     仮想OSのバックアップ(snapshot)をとるばあいはVMware WorkStationをひらき、
      「30日間評価版をつかう」をえらびダミーの email addressを入力すれば製品版の全機能が使える。
@@ -55,7 +55,7 @@
       →BIOS menu->Security->Virtualizationとすすむ
       →Intel*****項目2箇所をenableにする。
       →Exit Saving ChangesでBIOS設定保存とPC再起動
-    
+
    #VMware仮想OSイメージをローカルPCにコピーする。(コピー元の場所は苗字が個別に指示します)
 
    #VMware Viewerで開いて仮想 OS(RedHat Linux)を起動する。
@@ -87,7 +87,7 @@
 	      例) svn checkout https://172.18.200.144/jalt_internal/J-ALERT-SOURCE/trunk/10_受信機設定管理ツール/SetupInfoManagement/lib
 
 	    svn update
-            (プログラム編集、ファイル追加など作業) 
+            (プログラム編集、ファイル追加など作業)
 	    svn add [filename1] [filename2] ...
 	    svn commit -m "活動名 コミット備忘録" [filename1] [filename2] ...
 
@@ -120,7 +120,7 @@
 　  logger.error( "params.class:#####" + params.class.to_s)
 
 
-  
+
   ■余談：仮想guestOS準備作業：
 　　　# DHCP整備
   　　　# RHEL系LinuxでDHCPによるIPアドレス取得がうまくいかないばあい
@@ -143,7 +143,7 @@
 
         <Windows>
         set http_proxy=http://172.18.200.147:8080
-        
+
         <Windows gem>
         Gemfile冒頭に書いてあるhttp*://rubygems.orgがhttpかhttpsかに応じて以下2種類のコマンドをためす
         gem install "Gemファイル名" -p http://j-alert:j-alert@172.18.200.147:8080
@@ -176,16 +176,6 @@
 
 
 
-  ■余談：Rails 3.x系でconfig/environments/[boot-mode-name].rb でAsset Pipeline処理緩和を指定する方法　※JavaScriptを可読状態にする方法
-    # Compress JavaScripts and CSS
-    #some_body switched from true to false below
-    config.assets.compress = false
-    #some_body transplanted line below from development.rb
-    # 必要に応じてproduction.rbにも以下を記述 Expands the lines which load the assets
-    config.assets.debug = true
-
-
-
 
 ================================================================================================================
 
@@ -195,7 +185,7 @@
 　　　RoR案件に限定されない LINUXコマンド　 (windows版もsourceForge.netからダウンロード可能)
 	◎ファイルツリー比較
 	　#LINUXコマンド (下記例では-xオプションで除外ファイル名パターン列記, 下記例から-qオプションをはずすと差分詳細表示)
-　	　 diff -wrtBbq  PATH1 PATH2 -x *‾ -x *.orig -x *.sw* -x *.rej -x *tem8 -x *.bak -x *.project  -x *コピー* -x *.xlsbak* 
+　	　 diff -wrtBbq  PATH1 PATH2 -x *‾ -x *.orig -x *.sw* -x *.rej -x *tem8 -x *.bak -x *.project  -x *コピー* -x *.xlsbak*
 
 
 

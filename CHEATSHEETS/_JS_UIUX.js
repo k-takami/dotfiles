@@ -1,110 +1,4 @@
 
-#jquery.narrows by monmonmon
-# NOTE: ハードコーディングにちかいので、マスター投入型GUIには不適切。
-              <div class="row px-3">
-                <label class="col-md-3 text-primary bg-primary4 py-2"> Receive Honorarium: </label>
-                <div class="form-group col-md">
-                  <select class="browser-default custom-select" id="GUI1ID" name="resource_person[receive_honorarium]">
-                    <!-- <option value="">-- Select --</option> -->
-                    <option value="GUI1OPTION1">Yes</option>
-                    <option value="GUI1OPTION12">No</option>
-                  </select>
-                </div>
-                <label class="col-md-3 text-primary bg-primary4 py-2"> (In case of NO)Reason: </label>
-                <div class="form-group col-md">
-                  <select class="browser-default custom-select" id="SOMEID" name="resource_person[reason]">
-                    <!-- <option value="">-- Select --</option> -->
-                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION1">Service Received from International Organization</option>
-                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION2">Unable to receive</option>
-                    <option data-GUI1ID="GUI1OPTION1" value="GUI2OPTION3">Not applicable</option>
-                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION4">Voluntary work</option>
-                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION5">Other</option>
-                  </select>
-                  <script type="text/javascript">
-                    window.addEventListener('load', function(){
-                      $(function(){
-                        $('#GUI1ID').narrows('#resource_person_reason', {disable_if_parent_is_null: false, allow_multiple_parent_values: true});
-                      });
-                    });
-                  </script>
-                </div>
-              </div>
-
-
-
-
-# snippet_select2
-  Gemfile & its .lock
-    gem 'select2-rails'
-
-  app/assets/javascripts/application.js
-    //= require select2
-
-  app/assets/stylesheets/application.scss
-    @import "select2";
-    @import "select2-bootstrap";
-
-
-  @V
-    <div class="row px-3">
-      <%= f.label :some_attr_name, 'SomeLabelCaption', class: "col-xl-2 col-lg-3 col-md-4 text-primary bg-primary4 py-2" %>
-      <div class="form-group col-xl-10 col-lg-9 col-md-8 mt-1">
-        <%= f.select :some_attr_name, [], { include_blank: "❎消去前のデフォルト値" }, class: "browser-default custom-select", id: "select2_1" %>
-      </div>
-    </div>
-
-    // 基本
-    $('#select2').select2({
-      width: 'style',
-      theme: 'bootstrap',
-      placeholder: '<%= '❎消去後のデフォルト値' %>',
-      allowClear: true,
-      minimumInputLength: 1,
-    });
-
-
-    // AJAX つかうばあい
-    $('[id^="select2_"]').select2({
-      width: 'style',
-      theme: 'bootstrap',
-      placeholder: '<%= '❎消去後のデフォルト値' %>',
-      allowClear: true,
-      minimumInputLength: 1,
-      // placeholder: "選択してください",
-      //
-      // ajaxでの表示値取得と placeholder+alloClearは両立困難でトリックが必要っぽい
-      // https://www.flatflag.nir87.com/remove-986#remove
-      // $(""select2-selection__clear").parant().nearest("span").removeClass; か。
-      ajax: {
-        cache: true,
-        url: "/pms/projects/1/basic/edit.json",
-        dataType: "json",
-        delay: 200,
-        data: function(params) {
-          return { "project[some_attr_name]": params.term };
-        },
-        processResults: function(data, params) {
-          return {
-            results: data.map( function(v) {
-              return { id: v.id, text: v.code + ": " + v.name };
-            })
-          };
-        }
-      }
-    });
-
-  @C
-    if request.xhr?
-      key = params[:project].keys.grep(/implementing_organization/).first
-      if key
-        json = ImplementingOrganization.where(
-          'name LIKE ? OR code LIKE ?', "%#{params[:project][key]}%", "%#{params[:project][key]}%"
-        ).select(:id, :code, :name).to_json
-      end
-      render json: json, status: :ok
-    end
-
-
 # 画面遷移：もと画面リロード（ただしrender２度るので、単純にflash messageをつかえない。sessionかなにかに保存しないとダメ）
         # render html: '<body onload="window.opener.location.reload(); window.close()"></body>'.html_safe
 
@@ -184,28 +78,11 @@
 # DataTablesと二階建てのmodal --> Dynalist
 
 
-#  確認型ボタン
-  <button type="button" class="btn btn-danger btn-sm" onClick="if (confirm('Are you sure?')) location.href='<%= request.path << '?refresh=erase' %>';">
-
-
 #rails5: turbolinks+ajax
 <%= select_tag 'filt',
 options_for_select(['A', 'B, 'C', 'D, 'E']),
 class: 'custom-select col-md-4', prompt: t('pulldown.default'),
 onchange: 'Rails.fire($(this).closest("form")[0], \'submit\')' %>
-
-
-
-// +ボタンで ボタン増設
-$(".fa-plus").on("click", function(e) {
-  var before = $(this).parents('tr').prev('tr').find('td:last');
-  var after = before.clone()
-  // リンクを書き換えてから、さしこみ
-  after.html(after.html().replace(/>Payment\d+</gm,'>PaymentXXX<').replace(/\?payment=\d+/,'?payment=XXX'));
-  after.prependTo($(this).parents('td'));
-  $(this).parents('td').css("word-break", "break-all");
-  $(".fa-plus").focus();
-});
 
 // 追加レコード作成画面を別タブで開く　jump/open in a new tab
 var href = $(this).parents('tr').prev('tr').find('td:last').find('a').attr('href')
@@ -216,5 +93,233 @@ if (win) {
 } else {
     alert('Please allow popups for this website');
 }
+
+
+#記述位置
+　関数（function）は、自分自身が記述されているscriptエレメント内及び自分よりも前
+  要するにhead内に記述しておけば、どこからでも呼び出せる訳です。
+  <html>外部は不適切
+#複数記述
+  関数を複数セットする場合はセミコロン(;)で区切る。
+    <form action="" method="post">
+        <input type="button" value="ボタン" onClick="func01(); func02(); func03()">
+    </form>
+
+
+#window.resize
+  <script>
+  </head>
+    <script type="text/javascript" language="javascript">
+      <!--
+        function sample() { window.resizeTo(600,400); }
+      // -->
+    </script>
+  </head>
+  <body>
+    <a onclick="sample()">ここをクリックすると、ウィンドウサイズが幅600、高さ400となります。</a>
+  </body>
+
+#onload
+  // ページの読み込み完了と同時に実行されるよう指定
+  function firstscript() {
+     alert('ページの読み込みが完了したよ！');
+  }
+  window.onload = firstscript;
+
+
+
+snippet_submit-technix
+	<%#= submit_tag l(:button_save), :kind => "save", :confirm => l(:button_curd_confirm) %>
+	<%= submit_tag l(:button_ticket), :kind => "ticket", :confirm => l(:button_ticket_confirm) %>
+	<%= javascript_tag do %>
+	  // form外の値をしこむ
+    $("#updating_form").submit( function(e) {
+      var form = $("#updating_form");
+      $('<input>').prop({ 'name': 'slider_toggle_checkbox', 'value': $('#slider_toggle_checkbox').prop("checked") }).appendTo(form);
+    });
+
+	  // Submitボタン切り替え
+	  $(document).ready(function() {
+      $(":submit").bind("click", function() {
+        $("#commit_kind").val($(this).attr("kind"));
+      });
+	  });
+	<% end %>
+
+
+#大項目小項目チェック連動
+    // 大項目チェックボックス整頓
+    $(document).ready(function() {
+      $("legend div .top_check_box").each(function (index) {
+        var selector = "*:checkbox[id^='f_check_" + String(index + 1) + "_']:checked"
+        if ($(this).closest('fieldset').find(selector).length == 0) {
+          $(this).prop('checked', false)
+        }
+      });
+    });
+
+
+
+#selectbox text取得　JQ
+$('#project_implementation_plan_receiving_country_id option:selected').text()
+
+
+
+### WITH COFFEE SCRIPT ###
+Chart.defaults.global.tooltips.enabled = true;
+    #suppress = do ->
+      #this.showTooltip(this.segments, true)
+      tooltipTemplate: "<%if (label){%><%=label%><%}%>",
+      onAnimationComplete: suppress,
+      tooltipEvents: [],
+      showTooltips: true,
+
+      onAnimationComplete: (->
+        if @options.showInlineValues
+          if @name == 'Bar'
+            @eachBars (bar) ->
+              tooltipPosition = bar.tooltipPosition()
+              new (Chart.Tooltip)(
+                x: Math.round(tooltipPosition.x)
+                y: if @options.centeredInllineValues then Math.round(bar.y + bar.height() / 2 + (@options.tooltipFontSize + @options.tooltipYPadding) / 2) else Math.round(tooltipPosition.y)
+                xPadding: @options.tooltipXPadding
+                yPadding: @options.tooltipYPadding
+                fillColor: @options.tooltipFillColor
+                textColor: @options.tooltipFontColor
+                fontFamily: @options.tooltipFontFamily
+                fontStyle: @options.tooltipFontStyle
+                fontSize: @options.tooltipFontSize
+                caretHeight: @options.tooltipCaretSize
+                cornerRadius: @options.tooltipCornerRadius
+                text: bar.value
+                chart: @chart).draw()
+              return
+      ),
+
+      tooltipEvents: [],
+      onAnimationComplete: (->
+        @eachBars (bar) ->
+          tooltipPosition = bar.tooltipPosition()
+          new (Chart.Tooltip)(
+            x: Math.round(tooltipPosition.x)
+            y: Math.round(tooltipPosition.y)
+            xPadding: @options.tooltipXPadding
+            yPadding: @options.tooltipYPadding
+            fillColor: @options.tooltipFillColor
+            textColor: @options.tooltipFontColor
+            fontFamily: @options.tooltipFontFamily
+            fontStyle: @options.tooltipFontStyle
+            fontSize: @options.tooltipFontSize
+            caretHeight: @options.tooltipCaretSize
+            cornerRadius: @options.tooltipCornerRadius
+            text: bar.value
+            chart: @chart).draw()
+          return
+        return
+      ),
+
+#jquery.narrows by monmonmon
+# NOTE: ハードコーディングにちかいので、マスター投入型GUIには不適切。
+              <div class="row px-3">
+                <label class="col-md-3 text-primary bg-primary4 py-2"> Receive Honorarium: </label>
+                <div class="form-group col-md">
+                  <select class="browser-default custom-select" id="GUI1ID" name="resource_person[receive_honorarium]">
+                    <!-- <option value="">-- Select --</option> -->
+                    <option value="GUI1OPTION1">Yes</option>
+                    <option value="GUI1OPTION12">No</option>
+                  </select>
+                </div>
+                <label class="col-md-3 text-primary bg-primary4 py-2"> (In case of NO)Reason: </label>
+                <div class="form-group col-md">
+                  <select class="browser-default custom-select" id="SOMEID" name="resource_person[reason]">
+                    <!-- <option value="">-- Select --</option> -->
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION1">Service Received from International Organization</option>
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION2">Unable to receive</option>
+                    <option data-GUI1ID="GUI1OPTION1" value="GUI2OPTION3">Not applicable</option>
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION4">Voluntary work</option>
+                    <option data-GUI1ID="GUI1OPTION12" value="GUI2OPTION5">Other</option>
+                  </select>
+                  <script type="text/javascript">
+                    window.addEventListener('load', function(){
+                      $(function(){
+                        $('#GUI1ID').narrows('#resource_person_reason', {disable_if_parent_is_null: false, allow_multiple_parent_values: true});
+                      });
+                    });
+                  </script>
+                </div>
+              </div>
+
+
+# snippet_select2
+  Gemfile & its .lock
+    gem 'select2-rails'
+
+  app/assets/javascripts/application.js
+    //= require select2
+
+  app/assets/stylesheets/application.scss
+    @import "select2";
+    @import "select2-bootstrap";
+
+
+  @V
+    <div class="row px-3">
+      <%= f.label :some_attr_name, 'SomeLabelCaption', class: "col-xl-2 col-lg-3 col-md-4 text-primary bg-primary4 py-2" %>
+      <div class="form-group col-xl-10 col-lg-9 col-md-8 mt-1">
+        <%= f.select :some_attr_name, [], { include_blank: "❎消去前のデフォルト値" }, class: "browser-default custom-select", id: "select2_1" %>
+      </div>
+    </div>
+
+    // 基本
+    $('#select2').select2({
+      width: 'style',
+      theme: 'bootstrap',
+      placeholder: '<%= '❎消去後のデフォルト値' %>',
+      allowClear: true,
+      minimumInputLength: 1,
+    });
+
+
+    // AJAX つかうばあい
+    $('[id^="select2_"]').select2({
+      width: 'style',
+      theme: 'bootstrap',
+      placeholder: '<%= '❎消去後のデフォルト値' %>',
+      allowClear: true,
+      minimumInputLength: 1,
+      // placeholder: "選択してください",
+      //
+      // ajaxでの表示値取得と placeholder+alloClearは両立困難でトリックが必要っぽい
+      // https://www.flatflag.nir87.com/remove-986#remove
+      // $(""select2-selection__clear").parant().nearest("span").removeClass; か。
+      ajax: {
+        cache: true,
+        url: "/pms/projects/1/basic/edit.json",
+        dataType: "json",
+        delay: 200,
+        data: function(params) {
+          return { "project[some_attr_name]": params.term };
+        },
+        processResults: function(data, params) {
+          return {
+            results: data.map( function(v) {
+              return { id: v.id, text: v.code + ": " + v.name };
+            })
+          };
+        }
+      }
+    });
+
+  @C
+    if request.xhr?
+      key = params[:project].keys.grep(/implementing_organization/).first
+      if key
+        json = ImplementingOrganization.where(
+          'name LIKE ? OR code LIKE ?', "%#{params[:project][key]}%", "%#{params[:project][key]}%"
+        ).select(:id, :code, :name).to_json
+      end
+      render json: json, status: :ok
+    end
+
 
 

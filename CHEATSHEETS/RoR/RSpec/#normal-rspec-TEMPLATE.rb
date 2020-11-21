@@ -66,7 +66,6 @@ RSpecの標準matchers(マッチャー)一覧
 		:all  (before/after)禁止。完全に挙動せず、インスタンスが後続spec.rbをあてあずれエラーにする。
 		#不要なテストコードはかかない。 処理に時間をかけたくないから。
 		#mockはさける。挙動の理解と共有がむずかしい。
-		#テストインスタンス生成にはFactoryGirlをつかおう。
 		#should禁止gem@github:　should_not, shoud_clean
 	チートシート：https://www.anchor.com.au/wp-content/uploads/rspec_cheatsheet_attributed.pdf
 
@@ -240,12 +239,6 @@ stub(NdlLibrary).find_by_code('1234'){NdlLibrary.new({
   :name => 'いくらの図書館', :repository_no => NdlRepository::NDL_OPAC_REPOSITORY_NO
 })}
 stub(NdlLibrary).find_by_code(nil){nil}
-
-	factorygirl sample
-	build_stubbed(:user)
-create(:model)
-build(:model)
-
 
 	__mocha sample__
 	__flexmock sample__

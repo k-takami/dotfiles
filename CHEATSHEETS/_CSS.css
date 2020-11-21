@@ -204,3 +204,23 @@ snippet_sransparent {border: none: border: transparent;}
   <div style="float: right; width: 50%">RRRRR</div>
 </div>
 
+
+
+## PC余白明け
+@H
+def spacer_unless_mobile(blank_line_number = 1)
+     return nil if request.smart_phone? || request.mobile? # || request.tablet?
+        raw('<br/>' * blank_line_number)
+         end
+
+＠CSS
+@media screen and (min-width: 720px) {
+  .footer address {
+     margin-left: 20%;
+  }
+}
+
+@YAML/@V
+title: 文字<br />場合によって改行する文字
+
+

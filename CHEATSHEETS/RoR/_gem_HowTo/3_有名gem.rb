@@ -527,99 +527,21 @@ gem simple_form #シンボルかモデル変数かで誤動作したはず
   = f.input :client_ids, required: true, collection: @clients, input_html: { class: "form-control multi_select", multiple: true, seleted: content.client_ids }
   = f.input :tag_ids, collection: @tags, input_html: { class: "multi_select", multiple: true, selected: product.tag_ids }
 
-#ransack
-  #
-  #
-  #
-gem ransack (似 ~R3 meta_search)
-  # Ransackで検索フォームつき一覧画面 @V
-    - content_for :inpage_js do
-    coffee:
-      $ ->
-        $('#全部選ぶ-checkbox-all').on 'change', ->
-          $('.個別-checkbox').prop('checked', $(this).prop('checked'))
-    #ransack検索from授受obj = @q
-    = search_form_for(@q, url: hoken_tantous_path) do |f|
-      .form-section
-            .input-group
-              = f.search_field :code_gteq, class: '例は~BSのform-control'
-
-    #検索結果欄のsubmitができるように第二の@form_objでくるむ
-    - unless @results.empty?
-      = form_for(@form_obj, url: some_path(request.params)) do |f|
-          table
-            thead
-              tr.thead-light
-                th
-                th= sort_link(@q, :some_column_name, '柱頭文言')
-            tbody
-               #検索結果表示本体
-              - @results.each do |torihikisaki|
-                tr
-                  td= torihikisaki.name
-    - unless @form_obj.errors.messages.blank?
-      ul.invalid-feedback
-        - @form_obj.errors.full_messages.each do |msg|
-          li= msg
-
-  # Ransackで検索フォームつき一覧画面 @C
-  def index
-    set_search_data
-    @form_obj = FormObj.new #検索結果表示欄の編集用obj
-  end
-
- def edit
-　 #検索結果表示欄の明細業から編集するためのobj
-    @form_obj = FormObj.new(strong_params)
-    @選択肢用obj = モデル.where(id: @form_obj.some_attr) # 担当者再表示に必要
-    if @form_obj.valid?
-      if @form_obj.update_モデル
-        flash[:success] = "変更しました。"
-        @form_obj = FormObj.new # フォーム初期化
-        @選択肢用obj = []
-      else
-        flash[:danger] = "変更できませんでした。"
-      end
-    end
-    set_search_data
-    render :index
-  end
-
-  def set_search_data
-    set_default_search_params
-     #RanSack検索用obj
-    @q =ModelA.includes(hoken_tantou: :master_staff).ransack(params[:q])
-    #選択肢表示obj
-    @選択肢用ob = ModelB.where(id: params[:q][:hoken_tantou_master_staff_id_eq])
-　#検索結果表示obj
-    @results = @q.result.page(params[:page])
-  end
-
-  def set_search_data
-    set_default_search_params
-    @q = RefMaster::Torihikisaki.available.hanbaitens.includes(hoken_tantou: :master_staff).ransack(params[:q])
-    @選択肢用ob = モデル.available.where(id: params[:q][:hoken_tantou_master_staff_id_eq])
-    @results = @q.result.page(params[:page])
-  end
-
-  def set_search_data
-    set_default_search_params
-   #RanSack検索用obj
-    @q = RefMaster::Torihikisaki.available.hanbaitens.includes(別モデル: :連結用カラム).ransack(params[:q])
-    @選択肢用ob = モデル.available.where(id: params[:q][:ビューで設定した何かのカラム_条件名])
-    @results = @q.result.page(params[:page])
-    params[:q] ||= {}
-      if params[:q][:チェックボックス] == "1"
-      params[:q].delete(:チェックボックス)
-    else
-      params[:q][:チェックボックス] = "0"
-    end
-  end
-  def strong_params
-    params.fetch(:モデル, {}).permit!(:属性, 配列パラメーター: []) #<---まず無条件全部許可
-    # params.fetch(:モデル, {}).permit(:属性, 配列パラメーター: [])
-  end
-end
+  ;ksen
+  /////////////////////////////////////////////////////////////////////////////////
+=================================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+#################################################################################
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏
+〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+;ksen罫線
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 

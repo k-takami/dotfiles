@@ -1,5 +1,4 @@
 
-
 note
     def create_instance(proxy_class, nillable=false)
       principal = RailsAdapter::Session::Base.current_user.context_principal
@@ -64,7 +63,7 @@ aaa
       end
     end
 
-/usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/template/resolver.rb                                
+/usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/template/resolver.rb
         @view_paths.find(*args_for_lookup(name, prefixes, partial, keys, options))
       end
       alias :find_template :find
@@ -91,7 +90,7 @@ puts "━━"
       # Adds fallbacks to the view paths. Useful in cases when you are rendering
 
 
-/usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/lookup_context.rb                                   
+/usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/lookup_context.rb
   # Third, if we DON'T find a template AND the request is a page load in a web
   # browser (technically, a non-XHR GET request for an HTML response) where
   # you reasonably expect to have rendered a template, then we raise
@@ -120,7 +119,7 @@ puts "━━━━━━━━━━━━3"
 
 
 
-/usr/local/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_controller/metal/implicit_render.rb                      
+/usr/local/lib/ruby/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_controller/metal/implicit_render.rb
 
     def find_all_with_query(query) # :nodoc:
       paths.each do |resolver|
@@ -147,7 +146,7 @@ puts "━━━━━━━━━━━━3"
         end
 
 
-/usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/path_set.rb                                         
+/usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/path_set.rb
 "/usr/local/lib/ruby/gems/2.3.0/gems/actionview-5.0.0.1/lib/action_view/lookup_context.rb" 281L, 8510C written
 scaffolding
 

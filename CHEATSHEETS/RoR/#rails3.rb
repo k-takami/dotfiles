@@ -2,7 +2,7 @@
 	#RVM
 　//required for rails3&4
 	gem install therubyracer --version=0.10.2
-//boot with ruby-debug 
+//boot with ruby-debug
 	rails server -u
 	or
 	rails s --debugger --port=80
@@ -28,4 +28,14 @@
 				:password => 'hogemogepyapypay',
 				:authentication => :login
 		}
+
+
+
+■余談：Rails 3.x系でconfig/environments/[boot-mode-name].rb でAsset Pipeline処理緩和を指定する方法　※JavaScriptを可読状態にする方法
+  # Compress JavaScripts and CSS
+  #some_body switched from true to false below
+  config.assets.compress = false
+  #some_body transplanted line below from development.rb
+  # 必要に応じてproduction.rbにも以下を記述 Expands the lines which load the assets
+  config.assets.debug = true
 

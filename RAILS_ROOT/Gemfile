@@ -1,5 +1,5 @@
-  gem 'better_errors'     # エラーページの情報がリッチになる
-  gem 'binding_of_caller' # そのエラーページでコンソールが使える
+  gem 'better_errors', group: [:development]     # エラーページの情報がリッチになる
+  gem 'binding_of_caller', group: [:development] # そのエラーページでコンソールが使える
   gem 'ruby_jard', group: [:development, :test]
     # dkbash； rails s -p 3000 -b 0.0.0.0
     # erb中は"<% jard %>"で

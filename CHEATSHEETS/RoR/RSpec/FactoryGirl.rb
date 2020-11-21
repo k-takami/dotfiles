@@ -16,36 +16,35 @@ create(:user) do |user|
   user.posts.create(attributes_for(:post))
 end
 
-before { get :action_name, param1: param.....} 
+before { get :action_name, param1: param.....}
 json = JSON.parse(response.body, symbolize_names: true)
             expect(Dir.glob(@bill_gpg_path+'*.csv').count).not_to eq(0)
             expect(response.body).to include(controller.view_context.admin_search_row(Device, nil))
 
 
-
 	user = build(:user)
-	
+
 	# インスタンスを生成（保存済み）
 		user = create(:user)
 	#引数にもDBにもなければ作る
 		wallet  = arg_wallet || Wallet.where(id: 1).first ||  FactoryGirl.create(:wallet, id: 1, name: "DUMMY")
 	has_manyな関連オブジェクトまで一気に作成
-		create(:wallet, wallet_limits: [build(:wallet_limit, limit: wallet_limit)], name: "DUMMY") 
+		create(:wallet, wallet_limits: [build(:wallet_limit, limit: wallet_limit)], name: "DUMMY")
 	関連モデル生成とid代入をしつつlet句を定義
 		let(:wallet) { create(:wallet, wallet_limits: [build(:wallet_limit, coin_limit: 1000)], clients: [create(:client)]) }
-		
+
 	# インスタンス生成に使われる属性集合を返す
 	attrs = attributes_for(:user)
-	
+
 	# スタブオブジェクトを生成
 	stub = build_stubbed(:user)
-	
+
 	# インスタンス生成のためにブロックを渡すパターン
 	create(:user) do |user|
 		user.posts.create(attributes_for(:post))
 	end
-	
-	before { get :action_name, param1: param.....} 
+
+	before { get :action_name, param1: param.....}
 	json = JSON.parse(response.body, symbolize_names: true)
 		expect(Dir.glob(@bill_gpg_path+'*.csv').count).not_to eq(0)
 		expect(response.body).to include(controller.view_context.admin_search_row(Device, nil))
@@ -119,7 +118,22 @@ mockup view result
       render :template => "upload_statuses/index.html.erb"
     end
 
-API 
+API
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+	factorygirl sample
+	build_stubbed(:user)
+create(:model)
+build(:model)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 
 

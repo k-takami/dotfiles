@@ -425,3 +425,133 @@ gulp.task('プラグイン名',function(){});
 ########## LEGACY grunt command ##################################
 #installation: $ gruntコマンド使えるようにする: $  npm install -g grunt-cli
 
+########## puppeteer ##################################
+
+次に `Dockerfile` を用意します。
+
+```Dockerfile
+FROM node:8.4.0
+
+RUN apt-get update \
+ && apt-get install -y \
+      gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+
+WORKDIR /app
+RUN npm i puppeteer
+
+COPY ./script.js .
+
+ENTRYPOINT ["node", "/app/script.js"]
+```
+
+`apt-get` コマンドでインストールするライブラリについては [Puppeteer » Troubleshooting](https://github.com/GoogleChrome/puppeteer/blob/6fcf3d914845b9271548826151199c358a25b558/docs/troubleshooting.md) の Debian Dependencies を参考にしました。このドキュメントでは前述の `puppeteer.launch()` の引数についても言及されています。
+
+あとは `docker build` ならびに `docker run` を実行すれば OK です。サンプルプログラム実行時に撮影されたスクリーンショットの画像ファイル `example.png` が `docker run` を実行したディレクトリに配置されていれば成功です :tada:
+
+```bash
+$ docker build -t puppeteer .
+$ docker run --rm -it -v $(pwd):/opt/data-volume -w /opt/data-volume puppeteer
+$ open example.png
+```
+
+### Page
+| name                           | meaning                                                |
+| ------------------------------ | ------------------------------------------------------ |
+| goto('URL')                    | URLにアクセス                                          |
+| $(selector)                    | tagやcssセレクタでの絞り込み                           |
+| focus(selector)                | tagやcssセレクタでの絞り込み(一つ目のエレメントを取得) |
+| type(selector value)           | セレクターに入力                                       |
+| click(selector)                | セレクターをクリック                                   |
+| waitForNavigation(waitOptions) | オプションのタイミングまで待つ                         |
+| screenshot({path: 'path.png'}) | path名でスクリーンショットを保存                       |
+
+# Puppeteer examples
+
+
+> Deprecation notice: We are moving our efforts to [theheadless.dev](https://github.com/checkly/theheadless.dev) a new free & open source knowledge base for Puppeteer AND Playwright. Idea is the same: practical examples and guides by the community. We — the team at Checkly — are going to pour a lot of love & care into this new project. Feel free to [contribute!](https://github.com/checkly/theheadless.dev/blob/master/CONTRIBUTING.md)
+
+Puppeteer Headless Chrome examples for real life use cases. Clone this repo and run them directy with a simple `node` command.
+
+```bash
+git clone https://github.com/checkly/puppeteer-examples
+cd puppeteer-examples
+npm i
+node 2.\ search/amazon.js
+```
+You can run these scripts in the [puppeteer sandbox](https://puppeteersandbox.com).
+
+
+## 1. basics
+The very basic on getting useful info from web page. Highlights the basic Puppeteer functions.
+### alerts
+Create an alert dialog and close it again.
+
+
+
+
+
+
+■■■雑記■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+# visudo
+# Downloading the app
+  git clone http://some_body@192.168.200.200/git/ris-front
+# node.js and npm
+  wget https://nodejs.org/download/release/v6.11.3/node-v6.11.3-linux-x86.tar.gz
+  tar zxvf node-v6.11.3-linux-x86.tar.gz
+  sudo mv node-v6.11.3-linux-x64  /usr/local/
+  wget https://registry.npmjs.org/npm/-/npm-3.10.10.tgz | tar zxvf &&  cd package && ./configure && make && make install
+  sudo ln -sf /usr/local/node-v6.11.3-linux-x86/bin/node /usr/bin/node
+  sudo ln -sf /usr/local/node-v6.11.3-linux-x86/bin/npm  /usr/bin/npm
+  npm     install
+  # node --version ; npm --version ; node_modules/bower/bin/bower --version ; node_modules/webpack/bin/webpack.js --help # <---先頭行にversion情報
+  node_modules/bower/bin/bower     install
+  node_modules/typings/dist/bin.js install
+  npm rebuild node-sass
+
+
+#webpackエラーをさけるための準備；git repositoryにあるコードのままではwebpackが成功しない。
+  #vim tsconfig.js
+    "preserveConstEnums": true,
+    + "types": [ "node" ],
+
+  # rectifing case-insensitive files so that webpack can interprete
+    cp -p ./src/ts/component/dialog/mylistEditDialog.ts ./src/ts/component/dialog/mylisteditDialog.ts
+    cp -p ./src/ts/constant/printoutLocation.ts ./src/ts/constant/PrintoutLocation.ts
+    cp -p ./src/ts/model/bib/biblioGraphy.ts ./src/ts/model/bib/bibliography.ts
+    cp -p ./src/ts/model/folderInfo.ts ./src/ts/model/folderinfo.ts
+    cp -p ./src/ts/model/responseLog.ts ./src/ts/model/ResponseLog.ts
+    cp -p ./src/resources/svg/shoei-dummy-bookcloud.svg ./src/resources/svg/shoei-dummy-bookCloud.svg
+
+sudo node_modules/webpack/bin/webpack.js # npm start # http://localhost:3000
+
+
+
+
+# OPTION: npm global modules
+  # sudo npm install -g bower@1.8.2
+  # bower   --version
+  # bower install
+  # sudo npm install -g typings@2.1.1
+  # typings install
+  # webpack --help
+  # sudo webpack
+#needless
+  # sudo npm install -g webpack@1.13.2
+  # sudo npm install -g angular@1.5.8
+  # sudo npm install -g angular-mocks@1.5.8
+
+  # sudo npm install -g typescript@2.2.2
+  # sudo npm install -g @types/angular@1.6.36
+  # sudo npm install -g @types/node --save-dev
+  # sudo npm install    @types/node --save-dev
+
+  # sudo npm install -g node-sass@3.12.1
+  # sudo ln -sf /usr/local/node-v6.11.3-linux-x86/bin/ng      /usr/bin/ng
+  # ng      --version
+  # cp -p ./dist/mylistEditDialog.html ./dist/mylisteditDialog.html
+  # cp -p ./src/view/part/dialog/mylistEditDialog.html ./src/view/part/dialog/mylisteditDialog.html
+
+
+
+
