@@ -51,5 +51,6 @@ alias rbcrails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rubo
 alias mybugstaged=' gdicnp |grepe $REGEXP_MYBUG -C2 '
 alias rbwcstaged='  gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 ruby -wc'
 alias rbprails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rails_best_practices'
-alias raspell=' ruby ~/dotfiles/SI/SCRIPTS/ror_02_raspell.rb'
+#NG alias raspell=' ruby ~/dotfiles/SI/SCRIPTS/RoR_analizer/ror_02_raspell.rb' #IDEAからはsystem-ruby v2.3あつかいされる
+# rbenv local 2.7.1
 rbcrails; mybugstaged; rbwcstaged; rbprails; raspell;

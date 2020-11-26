@@ -253,6 +253,7 @@ if type python > /dev/null 2>&1; then # コマンドが存在すれば
   # eval "$(pyenv init -)"
 
   alias ansp='  ansible-playbook '
+  alias anspv=' ansible-playbook -vvv '
   alias anspck='ansible-playbook --syntax-check'
   alias anspdk='ansp -i ./hosts_docker.ini hosts_docker.yml'
 
@@ -613,13 +614,15 @@ alias gishdi='    git diff stash@{0}' #後にfile特定の引数もつけてい�
 #git関連検索
 alias gilo='      git log '
 alias gilos_brief='git log -S'
+#    コミットの中で"hogehoge"という文字列を含む行が変更されたものだけ表示 ：例  $ tig -S"hogehoge" filename
 alias gilos='     git log -p --full-diff -S'
 alias gilohd='    git log |head -n 50'
 alias gilono='      git log --name-only'
 #alias gilogrep
 alias mygilo='    git log --committer=$GIT_USERNAME'
 alias gilosmine=' git log --committer=$GIT_USERNAME -S'
-#    コミットの中で"hogehoge"という文字列を含む行が変更されたものだけ表示 ：例  $ tig -S"hogehoge" filename
+#NG:railsgunつかえ function gilosrails { git log --name-only -S$1 |sort |uniq; } #$1= model name
+
 
 # $ git checkout master           # master ブランチへ切り替え
 # $ git pull --rebase             # 最新化(前述の設定により --rebase は省略可能)
@@ -669,9 +672,13 @@ alias bxs='            ds1 bx rspec'
 alias bxrdbm='         ds1 bx rake db:migrate'
 alias bxrdbs='         ds1 bx rake db:seed'
 alias gplombxrdbmrdbs='git pull; bxrdbm; bxrdbs'
-
+#特定ロールバック $ bundle exec rake db:migrate:down VERSION=20161215052230
+# =========================================
+#ref1: http://maeharin.hatenablog.com/entry/20130212/rails_generate
+#ref2:   config/initializers/inflections.rb:  inflect.uncountable %w( sso fish sheep )
 alias bxrdbmtest='     ds1 bx rake db:migrate RAILS_ENV=test'
 alias bxrdbmdown='     ds1 bx rake db:migrate:down'
+function bxrdbmdownv { ds1 bx rake db:migrate:down  RAILS_ENV=development VERSION=$1; }
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
 alias rrg='            ds1 bx rake routes |grep '
 alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
@@ -698,6 +705,7 @@ alias mybug='       git show |grepe $REGEXP_MYBUG -C1 ; gdicnp |grepe $REGEXP_MY
 alias mybugallstaged='rbcrails; mybugstaged; rbwcstaged; echo "●Windows表示、スマホ表示、yarn.lockとpackage.jsonをproductionモードで動作確認"' #rbprails; #raspell;
 alias mybugall='      rbcrails; mybug      ; raspell; rbwcstaged; rbprails;'
 alias mybug_migration_yyyymmdd='find db/migrate/*create_*  |xargs -n1 git blame |grep' # add /yyyy-mm-dd?/ date to find DANGEROUS MIGRATION FILE
+alias precommit="rbcrails; mybugstaged; rbwcstaged; rbprails; raspell; echo \'●@C継承確認 yarn.lockとpackage.jsonをproductionモードで動作確認 Windows表示、スマホ表示、\' "
 #alias mybugall_and_migrationyyyymmdd='mybugall; mybug_migration_yyyymmdd'
 
 #rubocop
@@ -811,6 +819,11 @@ function gplogicob { # $1==base_branch  optional $2==new_branch_name
   env=${2:-'fix_new'} #第2引数がなければdefault_name
   gishsv && gico $1 && gplo $1 && gico-b $env && gishpp && gibr
 }
+
+function newbranch { # $1==new_branch_name
+   gishsv;gico master; gplo master ;gico-b $1 ; gishpp
+}
+
 function backupgirbplodkrakeannotate { #Rails.rootで実行 引数= girreponameリモートブランチ名 docker-container名
   cd .. ;
   backupgitonly $1;
@@ -850,7 +863,7 @@ function grepremotegems {
 }
 
 alias ff='    find ./* | sort | less '
-alias ffgrep='find . | $grepbin -$regexopt'
+alias ffgrep='find . | grep '
 #  ff | $grepbin NEW |wc -l    <--- ファイル数
 
 
