@@ -640,16 +640,6 @@ Paperclip 3.0 introduces a non-backward compatible change in your attachment
   #= f.select attr, SomeModel.kubun.options, class: 'form-control'
 
 
-  #select2 + ransack + bootstrap
-  # = f.collection_select :ransack検索シンボル, Model.all, :id, :name, {}, class: 'form-control selects-area-hoken'
-  #　これに, id: 'some-id data: {placeholder: ""} などと続ける
-  #
-  #こういう略記もあり
-  #= f.collection_select field, {}, :id, :name, {}, class: 'form-control selects-staff-hoken'
-  # 別途 CSS-classクリックに反応するJSをロードしておき、そこからAJAXでの帰り値を受け取ることは業務システム常用
-  #
-
-
 
 #wikechthmlpdf + tinyMCE
   <% if controller_name == 'certificates' %>

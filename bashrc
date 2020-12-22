@@ -278,6 +278,7 @@ alias npmappclean='npm cache clean; rm -rf node_modules; rm -rf bower_components
 alias angularinstallg='npm install; bower install; typings install'
 alias angularinstall=' npm install; node_modules/bower/bin/bower install; node_modules/typings/dist/bin.js install; npm rebuild node-sass'
 alias webpacklocal='sudo node_modules/webpack/bin/webpack.js'
+alias gulpdoc="cd src && yarn install && npm run gulp"
 
 #FIXME:  export DL_HOME=~/
 export DL_HOME=~/Download
@@ -635,6 +636,7 @@ alias gimgabt='   git merge  --abort' #pull/merge abort
 alias girbihd='   git rebase -i' # to be follwed by HEAD~~ or HEAD~~~~~~回数分
 alias fixup='gicmm "tmp" ; gishsv;  girbihd HEAD~~ ; gilono ; gishpp; '
 alias gichpi='    git cherry-pick'
+alias gichpiabt=" git cherry-pick --abort"
 
 alias hgst='      hg status'
 alias hgstfile='  hg status --rev '

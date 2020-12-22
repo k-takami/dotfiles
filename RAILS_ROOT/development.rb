@@ -21,7 +21,7 @@
   # config.action_controller.permit_all_parameters = true  #webrickで:commitがrequestオブジェクトにない
   # ActiveRecord::Base.lock_optimistically = false
 
-  config.web_console.whitelisted_ips = '172.23.0.1' #docker subnet
+  config.web_console.allowed_ips = "172.23.0.1" # gem web-console and docker
   config.log_level = :info
   if Rails::VERSION::STRING >= "3.0"
     BetterErrors::Middleware.allow_ip! "0.0.0.0/0"

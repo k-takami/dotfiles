@@ -87,31 +87,6 @@ require "activerecord-import/base"
 
 
 
-		class_variable_
-CSV
-		よみこみread 最小パターン
-		        @outfile = Dir.glob(@bill_gpg_path+'*.csv').first
-        sv_file = CSV.read(
-          @outfile , headers: false, encoding: 'UTF-8:UTF-8', col_sep: ',', row_sep: :auto
-        )
-		バッチ
-
-  def create_kohai_csv_file
-    dravite_client_directory.create_file(
-      :hokensha,
-      'MEMBER-20151231000000.csv',
-      StringIO.new(
-        <<-DEFAULT_MEMBER_CSV.gsub(/^\s+/, '')
-        local_kumiai_code,hokensha_bango,hokensha_name
-        111,1234567,テストBB002健康保険組合
-        DEFAULT_MEMBER_CSV
-      )
-    )
-  end
-
-
-
-
 	main
 	  def self.convert_to_kencom_if_file(kenpo, in_csv, statuses)
     writers = {}

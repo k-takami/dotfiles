@@ -1,14 +1,16 @@
-  gem 'better_errors', group: [:development]     # エラーページの情報がリッチになる
-  gem 'binding_of_caller', group: [:development] # そのエラーページでコンソールが使える
-  gem 'ruby_jard', group: [:development, :test]
-    # dkbash； rails s -p 3000 -b 0.0.0.0
-    # erb中は"<% jard %>"で
-  # LEGACY
-  # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # gem 'pry-byebug' # デバッグを実施(Ruby 2.0~2.1.2で安定動作する)
-  # gem 'pry-stack_explorer' # スタックをたどれる
-  # gem 'pry-alias' # デバッグコマンドエイリアス
-
+  group :development, :test do
+    gem 'better_errors'
+    gem 'binding_of_caller'
+    gem 'ruby_jard'
+    # 以下のgem ２個ははじめOFFでRubyMine/intellJ上からコメントアウトして選択し
+    # Action>Install[Tools|Bundleer] で いれないとトラブルになる
+    # くみこめればjardもコンテナログイン後のrails s も不要になる
+    # ref: https://qiita.com/masaruhr/items/f6df4f5ea36a4b9af142
+    # ref: https://qiita.com/masaruhr/items/17296c49f43b140cb81a
+    gem 'debase'
+    #NG: gem 'ruby-debug-ide', git: 'https://github.com/dhanaraj0/ruby-debug-ide.git', branch: 'debug'
+    # gem 'ruby-debug-base19x'  #<- windows
+  end
 
   # INTELLIJ remote debugger くみこみ
   # [RubyMine]-[Preferences..]-[Languages & Frameworks]-[Ruby SDK & Gems]
@@ -17,20 +19,21 @@
   # から インタープリター設定ダイアログ表示し、[+]ボタンをクリック して[New remote...]を選択
   # [Docker Compose]を選択し
   #   [Service]プルダウンから、Railアプリが実行されているdocker-servicename
-  # リモートインタープリターを選択
-  # RubyMineがリモートインタープリターのファイル群に対してIndexing処理を開始　ながい
+  # リモートインタープリターを選択->apply->OK
+  # INTELLIJ/RubyMineがリモートインタープリターのファイル群に対してIndexing処理を開始　ながい
+  # toolbar--> Bundler Install で gemをコンテナに注入
 
-  # 以下のgem ２個ははじめOFFでRubyMine/intellJ上からコメントアウトして選択し
-  # Action>Install[Tools|Bundleer] で いれないとトラブルになる
-  # くみこめればjardもコンテナログイン後のrails s も不要になる
-  # ref: https://qiita.com/masaruhr/items/f6df4f5ea36a4b9af142
-  # ref: https://qiita.com/masaruhr/items/17296c49f43b140cb81a
-    # gem 'debase'         #RubyMine/IntelliJ debugger
-    # gem 'ruby-debug-ide' #RubyMine/IntelliJ debugger
   # 確認
-    # Run/Debug構成で[Development:<プロジェクト名>]を選択し「Edit Configuration」
+    # Run/Debug構成で[Development:<プロジェクト名>]を選択し「Edit Configuration
     # docker composeの設定でdocker-compose upが選択されていることを確認
     # ▶︎アイコンでノーマル確認
     # 🕷アイコンでデバック確認
+    # dkbash； rails s -p 3000 -b 0.0.0.0
+    # erb中は"<% jard %>"で
 
+  # LEGACY
+  # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # gem 'pry-byebug' # デバッグを実施(Ruby 2.0~2.1.2で安定動作する)
+  # gem 'pry-stack_explorer' # スタックをたどれる
+  # gem 'pry-alias' # デバッグコマンドエイリアス
 
