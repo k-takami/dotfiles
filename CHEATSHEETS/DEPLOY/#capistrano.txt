@@ -1,8 +1,0 @@
-#capistrano
-	#config 
-		gem install capistrano capistrano-ext capistrano_colors capistrano_rsync_with_remote_cache
-
-  #no need to sudo/su -
-    cap trunk deploy
-    cap trunk unicorn:restart
-

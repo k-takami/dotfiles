@@ -683,6 +683,7 @@ alias bxrdbmdown='     ds1 bx rake db:migrate:down'
 function bxrdbmdownv { ds1 bx rake db:migrate:down  RAILS_ENV=development VERSION=$1; }
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
 alias rrg='            ds1 bx rake routes |grep '
+alias rrg6='           ds1 bx rails routes |grep '
 alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
 alias ror_snip_list='sh ~/dotfiles/SI/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
 alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'

@@ -1,4 +1,4 @@
-confluence 
+confluence
 
   検索
 100_Management
@@ -78,7 +78,7 @@ signup.htmlの追加を例にとって解説
 1.コントローラーの作成
 対応するコンポーネントは
 platinum-dev-env\cms\app\views\mycode\components\page\signuppage\
-なので 
+なので
 docker-compose run -d web rails controller signuppage signuppgage
 でコントローラーを作る
 ※-dはwindowsの場合必要
@@ -91,7 +91,7 @@ class SignupController < GuestcontentpageController
 
 JSPの継承概念のERBでの擬似的表現方法
 ・XML内部のsling:resourceSuperTypeに書かれた継承関係をコントローラーやモデルだけでなく、ERBのrenderの（暗黙の）探索順---render呼び出し元に同名erbがあれば、そちらが優先される---を使って擬似的に表現するとこは経験豊富なメンバーに聞いてください。
-　 
+　
 3.ルーティングの設定
 platinum-dev-env\cms\config\routes.rb を編集し、
 get 'signup' => 'signup#signup' を追加する
@@ -125,34 +125,34 @@ sling:resourceType="mycode/components/content/simpleparagraph"
 ブロックをJavaスタイルからRubyスタイルに変更する
 if {
 }
-は 
+は
 if then
 end
 に変えよう
 型を指定した変数宣言をやめる
-String foo = 
+String foo =
 は
 foo =
-に変えよう 
+に変えよう
 try catchはbegin rescueに
 try {
  xxx
-} catch (e) { 
+} catch (e) {
 }
 は
 begin
 rescure => e
 end
-に変えよう 
+に変えよう
 ArrayListは[]に変えよう
 ArrayList<String> classList = new ArrayList<String>()
 は
-classList = [] 
+classList = []
 properties.getはこう変えよう
 tagName = properties.get("tagName", "p");
-は 
-tagName = properties.fetch(:tagName, "p"); 
-に変えよう 
+は
+tagName = properties.fetch(:tagName, "p");
+に変えよう
 変更の必要なし
 文字列比較はequalsではなく==
 if(str.equals("foo"))となっているところは
@@ -178,7 +178,7 @@ https://mycode.cdn-dena.com/contents --->  /contents に
 
 ノウハウ共有
 	あ
-	
+
 テンプレート内のcq:includeClientLibはscriptタグやCSSのlinkタグに置換する
 https://ksf-jp.slack.com/archives/dls/p1479727328002316
 
@@ -200,10 +200,3 @@ https://ksf-jp.slack.com/archives/dls/p1479463221002185
 
 
 
-
-
-
-
-アトラシアンConfluenceが提供5.10.4 バグ報告 Atlassian ニュース
-
-		

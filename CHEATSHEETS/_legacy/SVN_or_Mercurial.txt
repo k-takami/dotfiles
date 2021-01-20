@@ -19,11 +19,43 @@
 			global-ignores = *.sw? *.*~ *vim73
 	#svn up/down
 		svn status| grep -niE "*rb$"
-		svn list svn+ssh://svn.drecom.jp/svn/sg/bikkuri/doc/03_開発ドキュメント/ 
+		svn list svn+ssh://svn.drecom.jp/svn/sg/bikkuri/doc/03_開発ドキュメント/
 		//　SVNでbranchからco --> branchにcommit
 		svn checkout svn+ssh://***.***.***/(directory) [checkout-name --username --password ***]
 			svn list https://172.18.200.144/jalt_internal/J-ALERT-SOURCE/trunk/10_受信機設定管理ツール/SetupInfoManagement --username kaihatsu4
 		svn update
-		svn commit svn+ssh://***.***.***/(directory) [option] 
-		svn add [filename1] [filename2] ... 
-		svn commit -m "活動名 コミット備忘録" a[filename1] [filename2] ... 
+		svn commit svn+ssh://***.***.***/(directory) [option]
+		svn add [filename1] [filename2] ...
+		svn commit -m "活動名 コミット備忘録" a[filename1] [filename2] ...
+
+
+SVN-trunkのダウンロード方法
+★データ仕様書とダミーデータがあるだけ。
+  svn list svn+ssh://svn.drecom.jp/svn/sg/bikkuri/doc/03_開発ドキュメント/
+
+
+
+#SVN #Subversion
+  TortoiseSVN ダウンロード
+    http://tortoisesvn.net/downloads.html
+  eclipse ssh mount plugin
+    ●
+  #svn up/down
+    svn status
+    svn checkout svn+ssh://***.***.***/(directory) [checkout-name --username --password ***]
+      svn list https://172.18.200.144/jalt_internal/J-ALERT-SOURCE/trunk/10_受信機設定管理ツール/SetupInfoManagement --username kaihatsu4
+    svn update
+    svn commit svn+ssh://***.***.***/(directory) [option]
+    svn add [filename1] [filename2] ...
+    svn commit -m "活動名 コミット備忘録" a[filename1] [filename2] ...
+
+
+
+#svn
+ vim ~/.subversion/config
+[miscellany]
+ global-ignores = *.sw? *.*~ *vim73
+
+ ながれ
+　SVNでbranchからco --> branchにcommit
+

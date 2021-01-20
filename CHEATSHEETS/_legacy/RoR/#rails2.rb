@@ -6,7 +6,7 @@ OS: +chuser_apache
 VIM: +NeoBundle+.dotfiles drawit+
 DOTFILES
  +SCRIPTS/start.sh
- +rdebugrc+irbrc+vimrc 
+ +rdebugrc+irbrc+vimrc
 +production.rb *2
 
 +RoR 1.8.7p374@3.0.1 readlineコンパイルインストール
@@ -134,8 +134,8 @@ SRC: flower_sso_scaffolding
 		543  ruby script/server&
 #ruby/rails2 COMMAND
 	plugin remove [pluginname]  =  uninstall [pluginname]
-	To obtain a list of other [pluginname] 
-	rake tasks:  =  rake -T [pluginname]  
+	To obtain a list of other [pluginname]
+	rake tasks:  =  rake -T [pluginname]
 		you@ecolnux:~/RoRapps/2chnrg$ rake --tasks
 		(in /home/you/RoRapps/2chnrg)
 		rake adva:assets:copy                     # Copy public assets from plugins to public/
@@ -260,7 +260,7 @@ SRC: flower_sso_scaffolding
 		rake website_generate                     # Generate website files
 		rake website_upload                       # Upload website files to rubyforge
 		rake xss_terminate                        # Given MODELS=Foo,Bar,Baz find all instances in the DB and save to sanitize existing records
-	
+
 Rails2.Application.configure.config option
  ls config
 ["@allow_concurrency", "@autoload_paths", "@cache_classes", "@cache_store", "@consider_all_requests_local", "@dependency_loading", "@encoding"ssion_store", "@time_zone", "@@app_middleware", "@@generators", "@@options"]
@@ -269,7 +269,7 @@ Rails2.Application.configure.config option
 #POLYFILL
 	C
 		strong_parameter
-		before_filter :require_or_permit_params, :only => [:execute_sso, :execute_sso_no_wrappwer]  
+		before_filter :require_or_permit_params, :only => [:execute_sso, :execute_sso_no_wrappwer]
 def require_or_permit_params #<--- To be replaced by strong parameter after rails4<
     if params[:j_username].presence.nil?
       flash[:login_notice] = '認証に失敗しました'
@@ -282,5 +282,120 @@ end
 
 filter
 	before_filter :single_sign_on, :if => Proc.new{ action_name != :Logoff && !request.referer.include?('Logoff') }
-	引数つき：before_filter ( :except => [:Login, :Logout, :execute_sso]), { |this| this.パブリックメソッド名(引数) } 
-	
+	引数つき：before_filter ( :except => [:Login, :Logout, :execute_sso]), { |this| this.パブリックメソッド名(引数) }
+
+
+  #debugger for #rails2 ;
+  sudo gem1.8 install ruby-debug xmpfilter rcodetools
+    #ruby-debug #rails2 debugger
+      喜ばしいことに、Rails 2.0ではruby-debug を使ったdebuggerが正式に採用されました。 これの使い方は非常に簡単です。
+      まずは、以下のようにブレークポイントをコード中に書き込みます。
+        ???1? def some_method
+        ???2?   debugger # breakpoint
+        ???3? end
+        #@erb/rhtml       print "<% require 'ruby-debug' %>" print "<% debugger %>"
+      続いて、Webサーバをデバッグモードで実行します。
+        ???1? % ./script/server -u
+      (rdb:)  $LOADED_FEATURES
+      (rdb:2) info variables
+        info instance_variables
+      (rdb:2) info global_variables
+        :  :
+
+        #禁則
+    			#irb  : 実行結果もソースも同じコンソールに表示され、逐次実効やブレークポイントなど設定できず、不便。
+    			#ruby -rdebug [scriptname] はワーニングですぎで初心者向きじゃない。
+    		#rdebug [scriptname]
+    			(rdb:)+ help,
+    		#rdebug object tree dislay
+    			#rdebug v l : c g;  v cl; v i;  where
+    			#etc
+    			info args -- Argument variables of current stack frame
+    			info breakpoints -- Status of user-settable breakpoints
+    			info catch -- Exceptions that can be caught in the current stack frame
+    			info display -- Expressions to display when program stops
+    			info file -- Info about a particular file read in
+    			info files -- File names and timestamps of files read in
+    			info global_variables -- Global variables
+    			info instance_variables -- Instance variables of the current stack frame
+    			info line -- Line number and file name of current position in source file
+    			info locals -- Local variables of the current stack frame
+    			info program -- Execution status of the program
+    				(rdb:1) p page.root.to_plain_text.grep(/TOEIC/).each{|el| p el +"\n"  }
+    			xmpfilter "#=>" annotation embedding,
+    				F12, F9,F8, F7
+    			"require 'debugger'
+    			you@ecolnux:~/RoRapps/dev232plain$ ruby script/runner -h
+    				Usage: script/runner [options] ('Some.ruby(code)' or a filename)
+    				-e, --environment=name           Specifies the environment for the runner to operate under (test/development/production).
+    					Default: development
+    				-h, --help                       Show this help message.
+    				You can also use runner as a shebang line for your scripts like this:
+    					-------------------------------------------------------------
+    					#!/usr/bin/env /home/you/RoRapps/dev232plain/script/runner
+    					Product.find(:all).each { |p| p.price *= 2 ; p.save! }
+    					-------------------------------------------------------------
+    			/script/performance/
+    				benchmarker.rb  &  profiler.rb
+    open-IDつかいたいならば -->  sudo gem install ruby-openid (since rails2)
+    #rails2 plugins to install
+    	ruby script/plugin install http://activescaffold.googlecode.com/svn/tags/active_scaffold -r rails-2.2
+    	ruby ruby script/plugin install http://railsmyadmin.googlecode.com/svn/trunk/my_admin/
+    	ruby script/plugin install http://activescaffold.googlecode.com/svn/tags/active_scaffold
+    	ruby script/plugin install http://code.openrain.com/rails/action_mailer_tls/
+    	ruby script/plugin install http://svn.plasticrain.com/projects/plugins/mysql_backup/
+    	ruby script/plugin install http://github.com/two2twelve/onlooker.git
+    	git submodule add git://github.com/two2twelve/onlooker.git vendor/plugin_name
+    	ruby script/plugin install http://svn.robertrevans.com/gems/creator/
+    	gem install creator
+    	script/plugin install svn://rubyforge.org/var/svn/betternestedset/tags/stable/betternestedset
+    	config
+    		sudo apt-get install libxml2-dev libxslt1-dev git-core subversion
+    		sudo gem1.8 install creator
+    			sudo gem1.8 install schof-searchlogic
+    			#copy/edit config/configgb.yml
+    				sudo rake gems:install schof-searchlogic
+    			sudo gem1.8 install railroad --local
+    			sudo gem1.8 install jpmobile-0.0.4.gem --local
+    				RAILS_ROOT/config/environment.rb の Rails::Initializer.run do |config| ? end 内に
+    				config.gem "jpmobile"
+    				の行を追加する。
+    			=== pluginとしてインストールする場合
+    			リリース版:
+    				% ./script/plugin install http://jpmobile.rubyforge.org/svn/tags/rel-x.x.x/jpmobile
+    				(x.x.xはバージョン)
+    			開発版:
+    				% ./script/plugin install git://github.com/darashi/jpmobile.git
+    			sudo gem1.8 install gmailer --local
+    		[-hpricot-]
+    			sudo gem1.8 install hpricot mechanize
+    				or sudo gems1.8 install mechanize --local
+    		ruby script/plugin install http://github.com/two2twelve/onlooker
+    			git submodule add git://github.com/two2twelve/onlooker.git vendor/plugin_name
+    		action_mailer_tls プラグインを入れて config/mailer.yml に必要な情報を書いて
+    			config/initializers/smtp_gmail.rb でactionmailerにオプションをセットするという感じ。
+    			To install action_mailer_tls the plugin (the old way):
+    				1. `./script/plugin install git://github.com/openrain/action_mailer_tls.git -r 'tag v1.0.0'`
+    				2. Copy vendor/plugins/action_mailer_tls/sample/smtp_gmail.rb to config/
+    				3. Copy vendor/plugins/action_mailer_tls/sample/mailer.yml.sample to config/
+    				4. Update the configuration file with your settings
+    				To install the gem (the preferred way):
+    					1. `sudo gem install openrain-action_mailer_tls -s http://gems.github.com`
+    					2. `./script/generate action_mailer_tls`
+    					3. Copy RAILS_ROOT/config/smtp_gmail.yml.sample to RAILS_ROOT/config/smtp_gmail.yml
+    					4. Update the configuration file with your settings
+    				To (optionally) vendor this gem:
+    					1. Add the following entry to config/environment.rb
+    					* config.gem "openrain-action_mailer_tls", :lib => "smtp_tls.rb", :source => "http://gems.github.com"
+    					2. rake gems:unpack
+    				Testing it out
+    				--------------
+    					1. `./script/generate mailer Notifier hello_world`
+    					2. Add the following lines to config/environments/development.rb
+    					* config.action_mailer.raise_delivery_errors = true
+    					* config.action_mailer.perform_deliveries = true
+    					* config.action_mailer.delivery_method = :smtp
+    					3. Update the recipients and from fields in app/models/notifier.rb
+    					4. `./script/console `
+
+

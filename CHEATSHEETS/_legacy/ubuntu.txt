@@ -38,9 +38,9 @@ Ubuntu
 				$ mysql -u root -palison
 				$ exit
 			#IME
-				synaptics-> install 
+				synaptics-> install
 					iBus , ibus-anthy
-					blueman (bluetooth manager GUI) 
+					blueman (bluetooth manager GUI)
 			#multi-monitor
 				sudo apt-get install arandr
 				arandr
@@ -53,19 +53,19 @@ Ubuntu
 				wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
 				sudo apt-get update
 				sudo apt-get install virtualbox-4.3 --fix-missing
-		sudo #apt-get 
+		sudo #apt-get
 			install ruby-dev #otherwise  'mkmf (LoadError)' of RVM
 			bundle update debugger ; sudo apt-get remove nano #otherwise 'No source for ruby-1.9.3-p551 provided with debugger-ruby_core_source gem'
 		#RVM
-			
+
 		#oksales  2.2@rails4.2 with upgrading to Ruby 2.2:
 			// vi Gemfile %s/\~>/>=/gc
 			$ rvm gemset create rails4.2
 			// Gemfile.lock github revision削除
 			# 特定gemの利用可能なバージョン一覧（例えばrailsとか）
 				$ gem query -ban  "^<gem名>$"
-			$ gem install rails --no-ri --no-rdoc 
-		
+			$ gem install rails --no-ri --no-rdoc
+
 		other config
 		結局２０１４年時点で32bitPC上で軽快にうごき無線LAN再接続も快調なlubuntu系distroはない。
 mint, beanは100MBほどでうごくが、無線機能がわるい。本家ubuntu/lubuntuはunityGUIのためか、MS-win7よりもメモリーをくう。
@@ -161,7 +161,7 @@ ubuntu系は全部「全消去インストール」しかできない。
 				将来に期待のbad know-how, bad-hack。
 					Foxitreader---- 起動は三秒、Adobe reader 9 の六倍ほど。しかし、linux版マニュアル自体がpdfでかかれていたり、ubuntuには*.bz2版ではなく、*.deb版をダウンロードしてdpkg- -iでローカルインストールする必要がある。さらに、550KBしかないPDFをよみこむとクラッシュ。そもそもubuntu公式レポジトリーに登録されておらず、>ネットワークインストールできないアプリはさわるべからず、という悪例。
 						mplayer ---rm file
-		
+
 
 
 
@@ -176,10 +176,10 @@ ubuntu系は全部「全消去インストール」しかできない。
 
 #Debian config (LinuxMint17)
   #IME
-   synaptics-> install 
+   synaptics-> install
       iBus , ibus-anthy
-      blueman (bluetooth manager GUI) 
-      
+      blueman (bluetooth manager GUI)
+
   #VMwareWS 10 on LinuxMint17
     sudo su -c "apt-get install open-vm-tools open-vm-tools-dev open-vm-dkms open-vm-toolbox gcc build-essential"
     cd <vmware-downloaded-path>/VMware*10*.bundle
@@ -199,6 +199,10 @@ ubuntu系は全部「全消去インストール」しかできない。
      sudo apt-get install adobe-flashplugin
     #kakurega
      K13176 / jW5N69Eq / AUTH: MS-PEAP (=EAP-MSCHAPv2 TLS+CHAP)
+
+  #RoR5+
+  	$ sudo add-apt-repository -y ppa:brightbox/ruby-ng
+  	$ sudo apt-get update
 
 ＃Extra======================================
   #VirtualBox 4.3 on LinuxMint17

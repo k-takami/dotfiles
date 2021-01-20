@@ -21,10 +21,12 @@
   # config.action_controller.permit_all_parameters = true  #webrickで:commitがrequestオブジェクトにない
   # ActiveRecord::Base.lock_optimistically = false
 
+
+BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+#IntelliJをつかうならば以下は不要
   config.web_console.allowed_ips = "172.23.0.1" # gem web-console and docker
   config.log_level = :info
   if Rails::VERSION::STRING >= "3.0"
-    BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
     config.action_controller.perform_caching = false #rails4-5 's defaults
     if Rails::VERSION::STRING >= "3.1"
       config.action_view.cache_template_loading = false
