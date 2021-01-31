@@ -7,11 +7,13 @@ URLを実際のコードに割り振る
 Railsルーターを設定する
 リソースベースのルーティング: Railsのデフォルト
 Web上のリソース
+
 CRUD、動詞、アクション
 パスとURL用ヘルパー
 複数のリソースを同時に定義する
 単数形リソース
 コントローラの名前空間とルーティング
+
 ネストしたリソース
 ルーティングの「concern」機能
 オブジェクトからパスとURLを作成する
@@ -45,10 +47,13 @@ newセグメントやeditセグメントをオーバーライドする
 「単数形のフォーム」をオーバーライドする
 名前付きリソースで:asを使う
 名前付きルーティングのパラメータをオーバーライドする
+
 ルーティングの調査とテスト
 既存のルールを一覧表示する
 ルーティングをテストする
 RailsガイドProプラン
+
+
 1 Railsルーターの目的
 Railsのルーターは受け取ったURLを認識し、適切なコントローラ内アクションやRackアプリケーションに割り当てます。ルーターは、ビューでこれらのパスやURLを直接ハードコードすることを避けるためにパスやURLを生成することもできます。
 
@@ -1157,319 +1162,17 @@ url ヘルパの使いどころ
 
 
 
-■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 
 
-This is Cheatsheets — a collection of cheatsheets I've written.
 
-Routes
 
-Multiple resources (resources)
 
-resources :books
 
-# PhotosController:
-# index  =>    GET /photos
-# new    =>    GET /photos/new
-# create =>   POST /photos/new
-# show   =>    GET /photos/:id
-# edit   =>    GET /photos/:id/edit
-# update =>    PUT /photos/:id
-# delete => DELETE /photos/:id
-#
-# Helpers:
-# new_book_path
-# book_path(id)
-# edit_book_path(id)
 
-Custom actions
 
-resources :photos do
-  member { get 'preview' }       # /photo/1/preview
-  collection { get 'search' }    # /photos/search
 
-  get 'preview', on: :member     # (..same as the first)
-end
 
-Options
-
-resources :photos,
-  path_names: { new: 'brand_new' }    # /photos/1/brand_new
-  path: 'postings'                    # /postings
-  only: :index
-  only: [:index, :show]
-  except: :show
-  except: [:index, :show]
-
-  shallow: true                       # also generate shallow routes
-  shalow_path: 'secret'
-  shallow_prefix: 'secret'
-
-Single resource (resource)
-
-resource :coder
-
-# CodersController:
-# new    =>    GET /coder/new
-# create =>   POST /coder/new
-# show   =>    GET /coder
-# edit   =>    GET /coder/edit
-# update =>    PUT /coder
-# delete => DELETE /coder
-
-Matching (match)
-
-match 'photo/:id' => 'photos#show'  # /photo/what-is-it
-match 'photo/:id', id: /[0-9]+/     # /photo/0192
-match 'photo/:id' => 'photos#show', constraints: { id: /[0-9]+/ }
-match 'photo/:id', via: :get
-match 'photo/:id', via: [:get, :post]
-
-match 'photo/*path' => 'photos#unknown'    # /photo/what/ever
-
-# params[:format] == 'jpg'
-match 'photos/:id' => 'photos#show', :defaults => { :format => 'jpg' }
-
-Get/post
-
-get is the same as match via: :get.
-
-get 'photo/:id' => 'photos#show'
-# same as match 'photo/:id' => 'photos#show', via: :get
-
-post 'photo/:id' => 'photos#update'
-# same as match 'photo/:id' => 'photos#show', via: :post
-
-Redirection
-
-match '/stories' => redirect('/posts')
-match '/stories/:name' => redirect('/posts/%{name}')
-
-Named
-
-# logout_path
-match 'exit' => 'sessions#destroy', as: :logout
-
-Constraints
-
-match '/', constraints: { subdomain: 'admin' }
-
-# admin.site.com/admin/photos
-namespace 'admin' do
-  constraints subdomain: 'admin' do
-    resources :photos
-  end
-end
-
-Custom constraints
-
-class BlacklistConstraint
-  def initialize
-    @ips = Blacklist.retrieve_ips
-  end
-
-  def matches?(request)
-    @ips.include?(request.remote_ip)
-  end
-end
-
-TwitterClone::Application.routes.draw do
-  match "*path" => "blacklist#index",
-    :constraints => BlacklistConstraint.new
-end
-
-Scopes
-
-scope 'admin', constraints: { subdomain: 'admin' } do
-  resources ...
-end
-
-Rack middleware
-
-# Yes, Sprockets is middleware
-match '/application.js' => Sprockets
-
-Route helpers
-
-projects_path   # /projects
-projects_url    # http://site.com/projects
-
-Default help text
-
-# The priority is based upon order of creation:
-# first created -> highest priority.
-
-# Sample of regular route:
-match 'products/:id' => 'catalog#view'
-
-# Keep in mind you can assign values other than :controller and :action
-
-# Sample of named route:
-match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-
-# This route can be invoked with purchase_url(:id => product.id)
-
-# Sample resource route (maps HTTP verbs to controller actions automatically):
-resources :products
-
-# Sample resource route with options:
-resources :products do
-  member do
-    get 'short'
-    post 'toggle'
-  end
-
-  collection do
-    get 'sold'
-  end
-end
-
-# Sample resource route with sub-resources:
-resources :products do
-  resources :comments, :sales
-  resource :seller
-end
-
-# Sample resource route with more complex sub-resources
-resources :products do
-  resources :comments
-  resources :sales do
-    get 'recent', :on => :collection
-  end
-end
-
-# Sample resource route within a namespace:
-namespace :admin do
-  # Directs /admin/products/* to Admin::ProductsController
-  # (app/controllers/admin/products_controller.rb)
-  resources :products
-end
-
-# You can have the root of your site routed with "root"
-# just remember to delete public/index.html.
-root :to => 'welcome#index'
-
-# See how all your routes lay out with "rake routes"
-
-# This is a legacy wild controller route that's not recommended for RESTful applications.
-# Note: This route will make all actions in every controller accessible via GET requests.
-match ':controller(/:action(/:id(.:format)))'
-
-References
-
-    Guides/Routing
-
-    ActionDispatch::Routing::Mapper (See included modules)
-
-Cheatsheets is a collection of cheatsheets I've written over the years. Suggestions and corrections? Send them in. I'm Rico Sta. Cruz. Check out my Today I learned blog for more.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{Pentabarf}
-Search:]>
-Search
-  * Login
-  * Preferences
-  * About Trac
-  * Timeline
-  * Browse Source
-  * View Tickets
-  * Search
-  * Roadmap
-
-Context Navigation
-------------------
-  * Last Change
-  * Annotate
-  * Revision Log
-------------------------------------------------------------------------------------------------------------------------------------------------
-
-root/trunk/rails/config/routes.rb @ 6084
-
-View revision:]> 6084
-Visit:[                 ] Go!
-Revision 6084, 2.9 KB (checked in by sven, 3 months ago)
-add nicer route for xml controller
-Line
-1 ActionController::Routing::Routes.draw do |map|
-2 # The priority is based upon order of creation: first created -> highest priority.
-3
-4 # Sample of regular route:
-5 # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-6 # Keep in mind you can assign values other than :controller and :action
-7
-8 # Sample of named route:
-9 # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-10 # This route can be invoked with purchase_url(:id => product.id)
-11
-12 # You can have the root of your site routed by hooking up ''
-13 # -- just remember to delete public/index.html.
-14 map.connect '', :controller => 'pentabarf'
-15
-16 map.connect 'schedule/:conference', :controller => 'schedule', :action => 'index', :language => 'en'
-17 map.connect 'schedule/:conference/index.:language.html', :controller => 'schedule', :action => 'index'
-18 map.connect 'schedule/:conference/day/:id.:language.html', :controller => 'schedule', :action => 'day'
-19 map.connect 'schedule/:conference/speakers.:language.html', :controller => 'schedule', :action => 'speakers'
-20 map.connect 'schedule/:conference/speaker/:id.:language.html', :controller => 'schedule', :action => 'speaker'
-21 map.connect 'schedule/:conference/events.:language.html', :controller => 'schedule', :action => 'events'
-22 map.connect 'schedule/:conference/event/:id.:language.html', :controller => 'schedule', :action => 'event'
-23 map.connect 'schedule/:conference/day/:id.:language.html', :controller => 'schedule', :action => 'day'
-24 map.connect 'schedule/:conference/track/:track/index.:language.html', :controller => 'schedule', :action => 'track_events'
-25 map.connect 'schedule/:conference/track/:track/:id.:language.html', :controller => 'schedule', :action => 'track_event'
-26 map.connect 'schedule/:conference/style.css', :controller => 'schedule', :action => 'css'
-27 map.connect 'schedule/:conference/:action.:language.html',:controller => 'schedule'
-28 map.connect 'schedule/:conference/:action/:id.:language.html',:controller => 'schedule'
-29
-30 map.connect 'feedback/:conference/style.css',:controller => 'feedback', :action => 'css'
-31 map.connect 'feedback/:conference/:action/:id.:language.html',:controller => 'feedback'
-32
-33 map.connect 'submission/:conference/:action/:id', :controller => 'submission'
-34
-35 map.connect 'image/:action/:id.:size.:extension', :controller=> 'image'
-36 map.connect 'image/:action/:id.:size', :controller=> 'image'
-37
-38 map.connect 'ical/:action/:conference', :controller=> 'ical'
-39 map.connect 'xcal/:action/:conference', :controller=> 'xcal'
-40 map.connect 'xml/:action/:conference', :controller=> 'xml'
-41
-42 map.connect 'pentabarf/events_by_state/:event_state', :controller => 'pentabarf', :action => 'events_by_state'
-43 map.connect 'pentabarf/events_by_state/:event_state/:event_state_progress', :controller => 'pentabarf', :action => 'events_by_state'
-44
-45 # Install the default route as the lowest priority.
-46 map.connect ':controller/:action/:id.:format'
-47 map.connect ':controller/:action/:id'
-48 end
-
-Note: See TracBrowser for help on using the browser.
-------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-Module
-ActionController::Routing
-
-In: vendor/rails/actionpack/lib/action_controller/routing/builder.rb vendor/rails/actionpack/lib/action_controller/routing/optimisations.rb
-vendor/rails/actionpack/lib/action_controller/routing/recognition_optimisation.rb vendor/rails/actionpack/lib/action_controller/routing/route.rb
-vendor/rails/actionpack/lib/action_controller/routing/route_set.rb vendor/rails/actionpack/lib/action_controller/routing/segments.rb
-vendor/rails/actionpack/lib/action_controller/routing.rb
 
 
 
@@ -2006,4 +1709,236 @@ Ensures that routes are reloaded when Rails inflections are updated.
   380:       end
 
 <~
+
+
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+
+This is Cheatsheets — a collection of cheatsheets I've written.
+
+Routes
+
+Multiple resources (resources)
+
+resources :books
+
+# PhotosController:
+# index  =>    GET /photos
+# new    =>    GET /photos/new
+# create =>   POST /photos/new
+# show   =>    GET /photos/:id
+# edit   =>    GET /photos/:id/edit
+# update =>    PUT /photos/:id
+# delete => DELETE /photos/:id
+#
+# Helpers:
+# new_book_path
+# book_path(id)
+# edit_book_path(id)
+
+Custom actions
+
+resources :photos do
+  member { get 'preview' }       # /photo/1/preview
+  collection { get 'search' }    # /photos/search
+
+  get 'preview', on: :member     # (..same as the first)
+end
+
+Options
+
+resources :photos,
+  path_names: { new: 'brand_new' }    # /photos/1/brand_new
+  path: 'postings'                    # /postings
+  only: :index
+  only: [:index, :show]
+  except: :show
+  except: [:index, :show]
+
+  shallow: true                       # also generate shallow routes
+  shalow_path: 'secret'
+  shallow_prefix: 'secret'
+
+Single resource (resource)
+
+resource :coder
+
+# CodersController:
+# new    =>    GET /coder/new
+# create =>   POST /coder/new
+# show   =>    GET /coder
+# edit   =>    GET /coder/edit
+# update =>    PUT /coder
+# delete => DELETE /coder
+
+Matching (match)
+
+match 'photo/:id' => 'photos#show'  # /photo/what-is-it
+match 'photo/:id', id: /[0-9]+/     # /photo/0192
+match 'photo/:id' => 'photos#show', constraints: { id: /[0-9]+/ }
+match 'photo/:id', via: :get
+match 'photo/:id', via: [:get, :post]
+
+match 'photo/*path' => 'photos#unknown'    # /photo/what/ever
+
+# params[:format] == 'jpg'
+match 'photos/:id' => 'photos#show', :defaults => { :format => 'jpg' }
+
+Get/post
+
+get is the same as match via: :get.
+
+get 'photo/:id' => 'photos#show'
+# same as match 'photo/:id' => 'photos#show', via: :get
+
+post 'photo/:id' => 'photos#update'
+# same as match 'photo/:id' => 'photos#show', via: :post
+
+Redirection
+
+match '/stories' => redirect('/posts')
+match '/stories/:name' => redirect('/posts/%{name}')
+
+Named
+
+# logout_path
+match 'exit' => 'sessions#destroy', as: :logout
+
+Constraints
+
+match '/', constraints: { subdomain: 'admin' }
+
+# admin.site.com/admin/photos
+namespace 'admin' do
+  constraints subdomain: 'admin' do
+    resources :photos
+  end
+end
+
+Custom constraints
+
+class BlacklistConstraint
+  def initialize
+    @ips = Blacklist.retrieve_ips
+  end
+
+  def matches?(request)
+    @ips.include?(request.remote_ip)
+  end
+end
+
+TwitterClone::Application.routes.draw do
+  match "*path" => "blacklist#index",
+    :constraints => BlacklistConstraint.new
+end
+
+Scopes
+
+scope 'admin', constraints: { subdomain: 'admin' } do
+  resources ...
+end
+
+Rack middleware
+
+# Yes, Sprockets is middleware
+match '/application.js' => Sprockets
+
+Route helpers
+
+projects_path   # /projects
+projects_url    # http://site.com/projects
+
+Default help text
+
+# The priority is based upon order of creation:
+# first created -> highest priority.
+
+# Sample of regular route:
+match 'products/:id' => 'catalog#view'
+
+# Keep in mind you can assign values other than :controller and :action
+
+# Sample of named route:
+match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+
+# This route can be invoked with purchase_url(:id => product.id)
+
+# Sample resource route (maps HTTP verbs to controller actions automatically):
+resources :products
+
+# Sample resource route with options:
+resources :products do
+  member do
+    get 'short'
+    post 'toggle'
+  end
+
+  collection do
+    get 'sold'
+  end
+end
+
+# Sample resource route with sub-resources:
+resources :products do
+  resources :comments, :sales
+  resource :seller
+end
+
+# Sample resource route with more complex sub-resources
+resources :products do
+  resources :comments
+  resources :sales do
+    get 'recent', :on => :collection
+  end
+end
+
+# Sample resource route within a namespace:
+namespace :admin do
+  # Directs /admin/products/* to Admin::ProductsController
+  # (app/controllers/admin/products_controller.rb)
+  resources :products
+end
+
+# You can have the root of your site routed with "root"
+# just remember to delete public/index.html.
+root :to => 'welcome#index'
+
+# See how all your routes lay out with "rake routes"
+
+# This is a legacy wild controller route that's not recommended for RESTful applications.
+# Note: This route will make all actions in every controller accessible via GET requests.
+match ':controller(/:action(/:id(.:format)))'
+
+References
+
+    Guides/Routing
+
+    ActionDispatch::Routing::Mapper (See included modules)
+
+Cheatsheets is a collection of cheatsheets I've written over the years. Suggestions and corrections? Send them in. I'm Rico Sta. Cruz. Check out my Today I learned blog for more.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

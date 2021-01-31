@@ -1,4 +1,19 @@
-#ActiveScafFold
+#Active scaffold
+  #rails2.x
+    script/plugin install git://github.com/lackac/render_component.git -r rails-edge
+    cd /vendor/plugins;
+    git clone git://github.com/activescaffold/active_scaffold.git activescaffold
+    *normal motion on rails 2.2.x is suspicious. to b checked. ouhave to "git clone" & edit"config/environment.rb":
+    #NOTE: not natively compatible with Spree app.
+  #rails1.x
+    ruby script/plugin install http://activescaffold.googlecode.com/svn/tags/active_scaffold
+    ruby script/plugin install http://activescaffold.googlecode.com/svn/tags/active_scaffold -r rails-2.2
+
+
+
+
+
+
 	  rails/plugin/ActiveScaffold
 	  <http://a01.biz/wiki/index.php?plugin=related&page=rails%2Fplugin%2FActiveScaffold>
 
@@ -45,7 +60,7 @@
 			$ script/plugin install http://activescaffold.googlecode.com/svn/tags/active_scaffold
 	単純な使いかた † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#l8e6567c>
 	コントローラに宣言を追加する
-		$ vi app/controllers/admin_controller.rb 
+		$ vi app/controllers/admin_controller.rb
 		class AdminController < ApplicationController
 		  active_scaffold :user
 		  layout "activescaffold"
@@ -74,9 +89,9 @@
 
 		active_scaffold :product do |config|
 		  config.label = "商品"
-		  config.list.per_page = 2 
+		  config.list.per_page = 2
 		  config.list.sorting ={:name => :asc }
-		end 
+		end
 
 
 		ページあたりの表示数を指定 † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#k568981c>
@@ -251,10 +266,10 @@
 
 	:confirm		確認? The confirmation message for the link	if any.
 
-	:security_method		
+	:security_method
 	:crud_type		:create :read :update :destroy
 	:inline	true false	ActiveScaffold? で表示するか?
-	:page	true false	
+	:page	true false
 
 			columns † <http://a01.biz/wiki/index.php?rails%2Fplugin%2FActiveScaffold#p74d1ff1>
 	カラムの追加

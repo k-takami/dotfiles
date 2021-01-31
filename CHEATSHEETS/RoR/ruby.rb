@@ -44,6 +44,14 @@
         # 行末に二項演算子や　引数の区切がくると改行は無視され　文のおわりとはみなされない
       * 006 コメント 14
       * 007 真偽値と条件分岐 15
+        //定数展開例；　when *ITEMNAMES4SUPERVISED_APPLE_DEVICE
+
+        //form_tag　の　片側だけをif分で条件分岐生成はできない。
+        //不定HTMLtemplate変数引き渡し：　    <%= component_view_line(item, {index: local_assigns[:index].presence}) %>
+        //不定引数SQL化：　uri_variable_value = uri_variable_value.nil? ? 'NULL' : %Q('#{uri_variable_value}')
+        if ***count > 0 || **.present?  --->  if good_news.presence
+        users.each { |user| process_user(user) } --->  users.each(&method(:process_user))
+
       * 008 繰り返し 19
         break;next;retry;redo
         for i in [n..m] do ....... end
@@ -94,246 +102,25 @@
       * 016 例外処理 30
         begin [shori1] resucue [cond1] then [reigaishori1] rescue [cond2] then [reigaishori2] ... else [shori2] ensure [mandatory-shori]
         # rescue修飾子をつかう書き方
-        主処理 rescue 例外処理
+        主処理 rescue 例外処理 ensure 例外の発生にかかわらず実行される処理
       * 018 予約語 32
+        #Rails予約語　:-aで終わるロマンシュ語っぽい英語､information,policeもか?
+        # **create "rails test" add for troubleshooting such as installation of plugins.
+        # *never use "new/create/destroy/list/index/update/edit/" for controller/model/action name. otherwise Rails router get confused.
+        # *don't use "_" character for DB table/coolumn name. this way U can easily tell "_" of helper/plugin method name.
+        # *WiFI connection must check every 10 minutes before every donloading.
+        # *don't read japanese docment until you stuck into a trouble. it's waste of time.
+
+        # gem breakman予約語　 :admin :role :banned :account_id
+        # https://github.com/presidentbeef/brakeman/blob/c8dd4599cd70482613223963b353a3c5b3123895/lib/brakeman/checks/check_model_attr_accessible.rb
+
         PATH|redo
         __END__, DATA #Ruby スクリプトの終わりを表すキーワードで、これ以降はスクリプトとして読み込まれません。DATAは__END__以降の各行
         __FILE__|__LINE__|BEGIN|END|RUBYLIB|RUBYOPT|RUBYSHELL|RUBYPATH|COMSPEC
         begin|end|alias|and|break|case|class|def|defined?|do|else|elsif|ensure|false|for|if|in|module|
         next|nil|not|or|redo|rescue|retry|return|self|super|then|true|undef|unless|when|while|yield|
 
-    第2章 文字列
-      * 019 適切な文字列リテラルを選ぶ 34
-        '|%q()  ;<--- ['\]|noescape
-        "#{formula} " == %Q(#{formula})  <----escape&expand
-        %W(el2 el2)     <-----["el1","el2"]
-        %w( el1 el2)    <-----[el1,el2]
-*h 020 デフォルトの文字コードを設定する 36
-      * 021 文字コードを変換する 38
-        #推測はKconv&NKFともに 文字化けの誤動作がありがちで、やめた方が無難。
-        require 'kconv'
-          変換前コード 変換後コード  自動判定           入力文字コードを指定
-          EUC-JP       UTF-8        str.toutf8  str.kconv(Kconv::UTF8, Kconv::EUC)
-          EUC-JP       UTF-16       str.toutf16 str.kconv(Kconv::UTF16, Kconv::EUC)
-          EUC-JP       Shift_JIS    str.tosjis  str.kconv(Kconv::SJIS, Kconv::EUC)
-          EUC-JP       JIS          str.tojis   str.kconv(Kconv::JIS, Kconv::EUC)
-          Shift_JIS    EUC-JP       str.toeuc   str.kconv(Kconv::EUC, Kconv::SJIS)
-        require 'nkf'
-          JIS          UTF-8        NKF.nkf('-w', str) NKF.nkf('-J -s', str)
-          UTF-8        Shift_JIS    NKF.nkf('-s', str) NKF.nkf('-W -s', str)
-          EUC-JP       JIS          NKF.nkf('-j', str) NKF.nkf('-E -j', str)
-          Shift_JIS    EUC-JP       NKF.nkf('-e', str) NKF.nkf('-S -e', str)
-*h 022 文字コードを推測する 41
-      * 023 文字列を複製する 43
-        str1.dup　 #<---文字列だけコピーする
-        str1.clone #<---特異メソッド　.taint .freeze 情報もコピーする
-        puts str1.dup/clone.obect_id　#<---確認
-      * 024 文字列を反復する 44
-        "str" * 999
-      * 025 文字列の長さを得る 45
-        バイト数は.length, 文字数は .split(//).size
-*h 026 文字列を検索する 46
-        出現bバイト位置は、.index(正規表現または文字列) , .rindex(正規表現または文字列)
-        str1.grep(/RE/){line| line-statement }
-      * 027 正規表現が文字列の先頭・末尾にマッチするか調べる 49
-        start_with?(string) <=> end_with?(string)
-        # メタキャラクター ^ $ は行の頭尾をあらわし、文字列全体ではない \Zは最後の行末を表す
-        "文字列あたま  \A
-        "文字おわり    \z #<---改行コードふくむ
-        PHONE_NO_REGEX = /\A[-+[:digit:]]*\z/u  #add
-* 028 単語にマッチさせる 50
-      * 029 特定の文字コードで正規表現マッチを行う 52
-        /正規表現/[usen]/  : 例 EUCならば /REGEXP/e マルチバイト扱いなしならば　/REGEXP/n
-        escape sequenced literal embedding: /#{"\245"}/[usen]
-*h 030 正規表現「.」に\nをマッチさせる 54
-        /正規表現/m #<--- [usen]と排他指定
-      * 031 前回マッチした部分の続きからマッチさせる 55
-        require'strscan';scanner=SrtingScaner.new(orgstr1);until scanner.eos? { scanner.scan /regexp/ }
-      * 032 特定の文字・文字列の出現回数を調べる 57
-        str1.scan(/RE/).length;
-        count=0 ; str1.scan(/RE/){ count += 1}
-*h 033 文字の出現頻度を調べる 59
-      * 034 文字列を比較する 60
-        ==, <=, < <=
-      * 035 空白にマッチさせる 61
-        /[\t\n\r\f/ #<--- \fは改ページ記号
-      * 036 文字列が空行か調べる 62
-        /^$/      　
-      * 037 数字文字列か調べる 63
-        Integer(str）または　Float(str) #<--- ただし数字じゃないと例外。ArgumentError .to_i, .to_fはだめ。
-      * 038 文字列を数値に変換する 64
-        str1.to_i;str1.to_f; str1.hex;tr1.oct; "010101001110".to_i(2|8|1-|16|32) #<---各進数に変換
-      * 040 文字を大文字・小文字に変換する 67
-        .upcase, .downcase,
-        特定文字だけ変換ならば　"some string".tr "some", "SOME" #===> "SOME String"
-        先頭文字だけ変換ならば　.capitalize
-        大文字小文字逆転ならば  .swapcase
-        #X-Mailer, Content-Typeみたいに統一するメソッドの例；
-        def canonical_header_name(str)
-          str.split('-').map{|s| s.capitalize.join('-')}
-        end
-        #全角半角を連想配列で変換
-        TABLE = { a" => "Ａ", "b" => "Ｂ"}; "abc".gsub(/[ab]/){|ch| TABLE[ch] }
-*h 041 文字列の一部を取り出す 69
-      * 042 正規表現にマッチした部分を取り出す 71
-        str1stMatch = str1.slice(/RE(group)/, 0)
-          slice(XXX,[0..n])にはマッチしたキャラクタークラス\0..\nが格納される. .scan(/some_pattern\/(some_group)/).flatten[n]とおなじだが短文
-        retary = str1.scan(/RE/)
-        retaryCollection = str1.scan(/(grp1)(grpN)/)
-        retary = /RE(grp1)i(grp2)(grpN)/.match("line").to_a[1..-1]
-      * 043 正規表現にマッチした部分の前後の文字列を取り出す 73
-        REobj = /RE/.match(org-str); str1 = REobj.pre_match; str2 = REobj.post_match;
-*h 044 特定の文字を含む部分の長さを調べる 74
-      * 045 文字列を段落に分ける 76
-        String#.split(/REGEXP/);
-        String#.to_a;
-        #区切ごとの出力
-        "some-str\n\nanother-str".each("\n\n"){|paragraph| p paragraph }
-*h 046 文字列を行に分ける 78
-        String#.to_a;
-*h 047 文字列を単語に分ける 79
-        String#.split(nil)
-        String#.scan(/REGEXP/); String#.scan(/(?:RE|RE)/); #<---grouping は(?: ) をつかわないと.scanの挙動が保証されない
-      * 048 正規表現で文字列を分割する 81
-        require 'strscan';
-      * 049 文字列を文字ごとに処理する 83
-        String#.split(//);
-        String#.scan(/./m){|el|   };
-      * 050 文字列をバイトごとに処理する 84
-        String#.unpack(C*)
-        String#.each_byte{|el|   };
-      * 052 文字列の一部を置換する 86
-        DbyteStrReplaceOnce.sub(/RE,"ato"/); DbyteSstrReplaceMulti.gsub(/RE/,"ato")
-        DbyteStrReplaceOnce.sub(/RE/){strAry-formula}; DbyteStrReplaceeMulti.gsub(/RE/){strAry-formula};
-        1byteStr.tr("mae", "ato")
-        str1[n,m] ="charAto"
-*h 053 文字をエスケープする/エスケープを外す 88
-      * 055 行末の改行文字を取り除く 92
-        String#.chomp("\n")
-      * 056 文字列の先頭・末尾から空白などを取り除く 94
-        String#.strip
-        str1.sub(/^[\s　]+/,"").sub(/^[\s　]+$/,"")
-        ruby1.8String#.rstrip
-        ruby1.8String#.lstrip
-*h 057 タブと半角空白文字を変換する 96
-        require 'nkf' ; NKF.nkf('-m0Z1 -W -w', new_filename)
-*h 058 インデントを変更する 97
-*h 059 ヒアドキュメントの本体をインデントして書く 99
-        禁則：herecodumentはruby1.8.xでこった長文のデバッグがしづらいのでコマンドラインくみたてには使わない。
-        悪い例
-          １）
-             heredoc = <<-`CODE`
-               some-#{expandable} here
-             CODE
-           ２）
-            result = IO.popen(sso_api_query, "r+").gets
-            *ruby2 < だとrequire 'open3'とかある。
-
-        よい例
-          print << heredoc
-          print << "#{heredoc-formula}"
-          print << ('heredoc')  #<---no need to escape \
-
-      * 060 文字列の末尾に文字列を追加する 100
-        str1 << str2 << str3
-        str1.concat "apend-str";
-      * 061 文字列の一部を破壊的に削除する 102
-        str1.delete "けしたい文字列"
-        str1[from, to] = ""
-      * 062 文字列の途中に破壊的に文字列を挿入する 104
-        str1.sub(/^.{index}/){|s| s + "挿入文字列" }
-      *  063 文字と文字コードを相互変換する 106
-        "文字列".unpack("C*")
-        # "C*"は符号なし8ビット整数。逆変換はpack
-        "字"[0].chr
-        (Obsolete@ ruby 2.5) 97.chr ?97
-      * 064 文字列をn文字ずつに分割する 108
-         some_string.scan(/.{1,n}/m)
-      * 065 文字列を最大nバイトに切り詰める 109
-      * 066 文字列を最大n文字に切り詰める 111
-        str1stMatch = str1.slice(/\A.{0, n}/m)
-*h 067 文字列を最大n桁に切り詰める 112
-      * 068 文字列の一部を特定の文字で埋める 113
-        str.gsub(/(.)/ "*" * $1/length)
-      * 069 メッセージダイジェスト(MD5)を作成する 114
-          #IMAP, SMTP-AUTH, APOP
-          require 'digest/md5';
-          Digest::MD5.digest("some_string * 1024)
-          Digest::MD5.digest("some_string * 1024i + x)
-          Digest::MD5.hexdigest("some_string * 1024)
-      * 070 文字列が正規表現として正しいか調べる 116
-        Regexp.compile(ptn)
-        rescue RegexpError
-      * 071 正規表現のメタ文字をエスケープする 117
-        Regexp.quote(meta-char)
-      * 072 文字列が複数の正規表現のすべてにマッチするか調べる 118
-      * 073 正規表現を分割して記述する 120
-        /(?:ptn1)|(?:ptn2)/
-        /#{ptn1}|#{ptn2}/
-        正規表現を文字列に変換するのは /re/.source
-*h 074 正規表現集 122 #TODO: .
-      * 075 文字列を段落ごとに整形する 124
-        require 'nkf' ; NKF.nkf( "-f80 -m0", some_long_string) #<--- 80文字界行でMIMEデコードをOFFに折り返し整形する例
-*h 076 いろいろなテキストフォーマットを解析する 125
-      * 077 「,」で区切られたデータ（CSV）を処理する 128
-        require 'csv' ; CSV.parse(   filename, delimiter_string){|line | p line.to_a } #<---readming
-        require 'csv' ; CSV.generate(filename, delimiter_string){|lines| lines << some_array } #<---writing
-        変換into Hash
-           from CSV::Row   : row.to_hash.each{|k,v|puts  k ; puts v }
-
-*h 078 XMLを解析する 130
-        (1)  require 'rexml/document';require'iconv'
-        (2)  require 'hpricot'
-      * 079 YAMLを解析する 134
-        #input
-        str = << YAML
-        ---
-        key: value
-        ...
-        YAML
-        require 'yaml'; YAML.load(str)
-        #
-        #cwoutputinput
-        require 'yaml'; YAML.dump(hash)  #<--- ruby 18.8.xではデフォルト値つきのハッシュは出力できない
-
-*h 080 HTMLを処理する 136
-        require 'uri'; URI.extract(raw_html)  #<---url文字列だけ配列で取得
-*h 081 単語を補完する 139
-*h 082 有効なメールアドレスか調べる 141
-
     第3章 配列とハッシュ
-        取得    ：  hash_a.slice( keys )
-        除外取得：  hash_a.except( keys )
-        差分取得：  hash_a.diff{hash_b},
-        ハッシュ経由の特定キー名抽出　　RUN_KB_SONOTA
-          obj.to_h.select { |k| k =~ /sonota/ }.values
-
-          require 'bigdecimal'
-          BigDecimal.new(nnn)
-
-          case...when
-          & ==|x|
-          .any? --> 一個trueがあればtrue
-          .any?(&:method) --> methodが一個trueがあればtrue
-          .compact --> nil要素のぞいた要素数
-          (hash, ary)  .any?  [boolean]
-          (hash, ary)  .all?  [boolean]
-          (hash,    )  .fetch(key) == ['keystr']
-          (hash,    )  .fetch(key, defaultvalue) == ['keystr']
-        deep_merge
-        deep_symbolize_keys ; #全階層をto_sym
-        キャストcasting:
-          if some_obj.is_a?(Array)
-            some_obj.even? ? Hash[*some_obj.flatten] : Hash[*(some_obj << nil).flatten]
-          end
-        複数hashの値をﾏｰｼﾞ
-            def get_message_hash
-          # @message_hash = IB.ndl_online_locales[ja_or_en]["message"]
-          hash_ja = IB.ndl_online_locales['ja']["message"]
-          hash_en = IB.ndl_online_locales['en']["message"]
-          @message_hash = hash_ja.merge(hash_en){ |key, val_ja, val_en| "#{val_ja} (#{val_en})" }
-        end
-
         .rand, .split, .split{x| 分割条件式},
         .each_slice(要素分割単位数).to_a　= Rails.AR#.in_groups_of(要素分割単位数),
 
@@ -413,102 +200,6 @@
         require 'csv';CSV.generate_line(ary1)
       * 112 バイナリサーチを行う 176  #<= DL from RAA
         require 'bsearch'; obj1.bsearch_first|.bsearch_last{|el| el <=> cond1 }
-*h 113 ハッシュのキーになるクラスを作る 177
-      * 114 ハッシュに要素を追加する 178
-        hash1 = {}
-          hash1["x"] = y
-          hash1 = { "x" => y, "x1" => y1, ... }
-      * 115 ハッシュ内にキーが存在するか調べる 179
-        hash1.key? ("x")
-      * 116 ハッシュの要素を削除する 180
-        hash1.delete("x")
-        filteredHash = hash1.reject!{ |key, value| key/value-condition }
-        hash1.reject!{ |key, value| key/value-condition }
-        hash1.clear  #<= all
-        snippet_non_blank_and_mapped_array: 空白値を除去して変換
-          some_array = some_array.uniq.map(&:to_s).reject(&:empty?).map!{|i| SomeObj.some_method(i)}
-
-      * 117 ハッシュの内容を表示する 181
-        hash1.inspect  #<= into strngs
-        hash1.each{ |key, value|
-          command "#{key} #{value}"
-          command key value
-        }
-#* 118 ハッシュの要素を挿入した順に取り出す 182
-        require "pseudohash"; hash1["x", true] = y  #<= DL from RAA
-#      * 124 デフォルト値を設定する 191
-        ary1 = Array.new(要素数){|i| デフォルト値}
-        hash1 = Hash.new{|h, key| h[key] = デフォルト値}
-
-        ## 2次元 # 初期化
-          hash = Hash.new { |h,k| h[k] = {} }
-
-          hash["a"]["b"] = 1
-          p hash # => {"a"=>{"b"=>1}}
-          ```
-
-          ちなみに `hash = Hash.new( {} )` という書き方は期待した動きになりません。 この書き方だとHash#defaultに設定されてしまうからです。[^1]
-
-          hash = Hash.new( {} )
-          hash["a"]["b"] = 1
-          p hash # => {}
-          p hash.default # => {"b"=>1}
-
-
-          ## 3次元以上 # 初期化
-          hash = Hash.new { |h,k| h[k] = Hash.new(&h.default_proc) }
-
-          ## Arrayとの組み合わせ # 初期化
-          hash = Hash.new { |h, k| h[k] = [] }
-          hash["a"].push(1); hash["a"].push(2)
-          p hash # => {"a"=>[1, 2]}
-          こちらも `hash = Hash.new( [] )` だと期待した動きになりません。[^2]
-
-
-k
-      * 119 1つのキーに複数の値が対応するハッシュを作る 185
-        ruby1.8hash1 = Hash.new{|hash1, key| hash1[key] = []};
-        ruby1.8hash1["x"] << y; ruby1.8hash1["x"] << y1  ...
-*h 120 ハッシュのキーと値を入れ替える 186
-        .invert
-      * 122 配列やハッシュやActiveRecordをソートする  = sort_by, sort 187 snippet_sort
-        sortedAry =  ary1.sort
-        sortedAry =  ary1.sort{|a,b| a.to_f <=> b.to_f } #<= convert into float
-        #以下はキー順ソート、値順ソート、キーで第一値で第二ソートする書き方
-        sortedHash =  Hash.sort_by{|key,value| key}
-        sortedHash =  Hash.sort_by{|key,value| value}
-#        sortedHash =  Hash.sort_by{|key,value| [key,value]}
-        # Rails 別のname配列出現順でソート
-          aryX = MemberCountry.pluck(:name)[5..-1]
-          collection = collection.sort_by{|x|
-            pos = aryX.index x.value;
-            [(pos.nil? ? collection.count : pos), x.another_sortkey1, x.another_sortkey2, ...]
-          }# 配列内での値出現index順, ほかのソートキーなどを配列化してブロックでわたす
-
-          collection = collection.sort_by do |x|
-            emergence_position = names_of_countries.index x.resource_person.country_of_residence
-            [(emergence_position.nil? ? collection.count : emergence_position), x.full_name]
-        end
-
-
-        #Rails 別テーブルでORMソート
-          scope :ordered, -> { includes(:availabilities).order('availabilities.price') }
-
-
-      * 122 ハッシュをマージする 189
-        hash1.update(hash2)
-#        #値の大きい方を勇戦してマージするブロック月記述例
-        hash1.merge(hash2){|key, val1, val2| val1 > val2 ? val1 : val2 }
-#      * 123 2つのハッシュの両方にあるキー/一方にしかないキーを見つける 190
-        #shared keys
-        hash1.keys & hash2.keys
-        #different keys
-        (hash1.keys | hash2.keys) - (hash1.keys & hash2.keys)
-*h 126 コレクションのような性質をもつクラスを作る 193
-        配列やハッシュを継承または移譲する
-      * 127 スタックやキューを使う 194
-        aryOrHash.push; aryOrHash.pop    #<= removing-get from earlier element
-        aryOrHash.push; aryOrHash.shift    #<= removing-get from last element
     第5章 入出力
       * 150 (~展開なしのパスで)ファイルを開く 232
         File.open("filename"){|f| ...... }
@@ -673,98 +364,6 @@ k
         有理数：require'rational' #<---ruby 1.8
         Rational(1, 5)
         数.(to_r|quo)
-
-    第7章 日付と時刻
-        Time.now**.strftime('%Y-%m-%d_%H:%M:%S')**
-        .yesterday, .tomorrow, .ago, .since, .last_***, .gininning_of_***, , .local,
-        *rails 1.2互換にするときは。.to_time <=> to_datetime
-        時計上の時間で検索したい場合は
-          Time.parse("2012-09-20 22:35").gmtime
-          といったようにやる。 MySQL上での時間データは、時差を加味しない時間が保存されているため、gmtimeで調整する/
-
-      * 193 現在の日時を調べる 298
-        Time.now.[getutc|localtime]
-        Date.today.to_s
-        DateTime.now.to_s
-      * 194 日時から月や曜日を取り出す 300
-        Time.now.[year|month|day|hour|min|sec|wday|yday|dst?|utc_offset|zone|usec]
-      * 195 日時とエポック秒(=19700101 0:00:00)を相互に変換する 301
-        Time.now.to_i / .to_f <---> Time.at(epoc-seconds)
-      * 196 2つの日時の差を求める 303
-        Time.at(nnnnn1)- Time.at(nnnnn2)
-      * 197 日時をフォーマットする 304
-        require"date";DateTime.[now].strftime("%[AaBcdHIjMmpSUWwXxYyZz%]")
-          フォーマット	説明
-          %C: 世紀 (2009年であれば 20)
-          %Y	西暦を表す数
-          %y	西暦の下2桁(00-99)
-          %m	月を表す数字(01-12)
-          %B	月の名称(January, February, March, April, May, June, July, August, September, October, November, December)
-          %b	月の省略名(Jan, Feb, Mar, Aprm May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
-            %e: 日。一桁の場合、半角空白で埋める ( 1..31)
-
-          %d	日(01-31)
-          %a	曜日の省略名(Sun, Mon, Tue, Wed, Thu, Fri, Sat)
-          %A	曜日の名称(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
-          %w	曜日を表す数。日曜日が0(0-6)
-            %P: 午前または午後(am,pm)
-            %p: 午前または午後(AM,PM)
-            %R: 24時間制の時刻。%H:%M と同等。
-            %r: 12時間制の時刻。%I:%M:%S %p と同等。
-
-          %H	24時間制の時(00-23)
-          %I	12時間制の時(01-12)
-          %M	分(00-59)
-          %S	秒(00-60) (60はうるう秒)
-            %N: 秒の小数点以下。桁の指定がない場合は9桁 (ナノ秒)、%6N: マイクロ秒 (6桁)、%3N: ミリ秒 (3桁)
-
-
-          %X	時刻
-            %L: ミリ秒 (000.999)
-            %Z: タイムゾーン
-            %z: タイムゾーン。UTCからのオフセット (例 +0900)
-            %:z: タイムゾーン。コロンが入ったUTCからのオフセット (例 +09:00)
-            %::z: タイムゾーン。コロンが入った秒まで含むUTCからのオフセット (例 +09:00:00)
-
-          %U	週を表す数。最初の日曜日が第1週の始まり(00-53)
-          %W	週を表す数。最初の月曜日が第1週の始まり(00-53)
-          %V: ISO 8601形式の暦週 (01..53)
-
-          %j	年中の通算日(001-366)
-          %s: 1970-01-01 00:00:00 UTC からの経過秒
-
-          %%	パーセント文字
-            %n: 改行 (\n)
-            %t: タブ文字 (\t)
-            %v: VMS形式の日付 (%e-%b-%Y)
-
-          %x  日付 = %d/%m/%Y
-          %D: 日付 = %m/%d/%y
-
-          %F: %Y-%m-%d と同等 (ISO 8601の日付フォーマット)
-          %c  日付と時刻  eg) "Fri Nov  2 00:00:00 2012"
-            %X: 時刻
-          %T: 24時間制の時刻。%H:%M:%S と同等。
-
-
-      * 198 文字列を日時に変換する 306
-        require"time";Time.parse("str1")
-        require"date";Date.parse("str1")
-        require"date";DateTime.parse("str1")
-      * 199 1月1日からの通算日を求める 307
-        Time.now.yday   /  (Time.now.yday-1)/7
-        require"date";DateTime.[now].strftime("%U").to_i)
-      * 200 うるう年を判定する 308
-        require"date";Date.new(2010).leap?  <----reutrns true/false
-      * 201 月末の日付を求める 309
-        当月  require"date";Date.new(year, month, -nOffSetNum).day
-        前月  require"date";((Date.new(year, month, 1) >> 1) -1).day # Date#>>で一ヶ月ずらしてー１
-* 202 休日を判定する 310
-        require"date"; require"date/holiday"; Date.new(2010, 12,25 ).national_holiday?  <----reutrns true/false
-        #download "date2(date/holiday) 3rd party lib
-* 203 「今月の第3月曜日」の日付を求める 311
-        require"date"; require"date/holiday"; Date.nth_kday(yearObj,monthObj, 週番号,星期幾）
-        #download "date2(date/holiday) 3rd party lib
 
     第8章 環境とのかかわり
       * 204 Rubyスクリプトをコマンドにする 314
@@ -942,26 +541,6 @@ k
       exposed_obj.each{i| 処理 }
       #ref:  dRubyによる分散・Webプログラミング、オーム社
 
-  第10章 CGI
-    * 229 フォームから入力された値を取り出す 366
-    * 230 クエリ文字列を取り出す 368
-    * 231 セッションを使用する 369
-    *** 232 クッキーを処理する 371**
-    * 233 メタ変数を参照する 373
-      require'cgi'; metvaar=CGI.new.referrer
-    * 234 HTTPヘッダを出力する 374
-    * 235 URLをエンコードする/デコードする 375
-      require'cgi'
-      CGI.escape(str)
-      CGI.unescape(str)
-      cf: "str".html_safe === raw "str"
-    * 236 HTMLをエスケープする/エスケープを外す 376
-      require'cgi';CGI.escapeHTML(str)
-      require'cgi';CGI.unescapeHTML(str)
-    * 237 汚染モード（taintモード）を使う 378
-    * 238 クロスサイトスクリプティングを防ぐ 380
-    * 239 HTMLにRubyのスクリプトを埋め込む 382
-    * 240 ファイルをアップロードする 383
   第11章 オブジェクト
 * 241 オブジェクトが同じか(=object ID the same ?)調べる 通常は代入で同一オブジェクトの参照点ができる 386
       obj1 == obj2;
@@ -1152,10 +731,6 @@ k
       ENDOFHEARDOC
       .from_xml(xml)
 
-    時間
-      .yesterday, .tomorrow, .ago, .since, .last_***, .gininning_of_***, , .local,
-      *rails 1.2互換にするときは。.to_time <=> to_datetime
-
     JSON
       *rails 1系をrails2互換にする時は .attributes.to_json
       hash変換: JSON.decode(***)
@@ -1172,10 +747,6 @@ k
     ModelA.find(:all).index_by( hash_keys_array)
     ModelA.find(:all).index_by( &:attribute_name_of_model_A)
 
-    Hash
-    取得    ：  hash_a.slice( keys )
-    除外取得：  hash_a.except( keys )
-    差分取得：  hash_a.diff{hash_b},
 
     単数複数 ActiveSupport::CoreExtentions::String::Inflections
       str1.pluralize  <---> strs1.singularize
@@ -1197,20 +768,41 @@ k
     each_with_objectの場合は、resultは常にeach_with_objectの引数として渡されたオブジェクトを指す
     .map.with_index
     未整理
-正規表現にマッチしているときだけ 切り取ってキーにしてハッシュ代入　：　@generated_job_info_links[uid] = str if (uid = str.match(/uid=\w+/).to_s[4..-1])
- Rubyではfalseとnilがfalse、それ以外の値がすべてtrueと評価されます。
- シンボルを使うと以下のようなメリットがあります。
 
- { key: value } のように簡潔なリテラルで書ける。
 
- 文字列よりも速い。
 
-文字列よりもメモリの使用効率が良い。
- 参考： Why use symbols as hash keys in Ruby? - Stack Overflow
- 基本的に配列だが、nilが渡される場合もある変数を処理する場合、Array()（Kernel#Array）castを使うと条件分岐を無くせます。
- if users
- users.each{|user| send_direct_mail(user) }
- end
+
+
+Hash
+取得    ：  hash_a.slice( keys )
+除外取得：  hash_a.except( keys )
+差分取得：  hash_a.diff{hash_b},
+
+def httpz_elements_of(collective_object)
+  collective_object.select{|k, _v| k[0..5] == "HTTP_Z" }
+end
+
+def to_hash_even_from_arrayish(target_obj)
+  if target_obj.is_a?(Array)
+    target_obj << nil if target_obj.size.odd?
+    target_obj = Hash[*target_obj.flatten]
+  end
+  target_obj ||= {}
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ↓
  Array(users).each{|user| send_direct_mail(user) }
  最初の見つかった要素のインデックスを返す場合はfind_index。
@@ -1281,21 +873,14 @@ end
 
  新しいメソッドは xxx_with_xxx という名前で定義する必要がある。
 
-正規表現にマッチしているときだけ 切り取ってキーにしてハッシュ代入　：　@generated_job_info_links[uid] = str if (uid = str.match(/uid=\w+/).to_s[4..-1])
-Rubyではfalseとnilがfalse、それ以外の値がすべてtrueと評価されます。
-シンボルを使うと以下のようなメリットがあります。
 
-{ key: value } のように簡潔なリテラルで書ける。
 
-文字列よりも速い。
 
-文字列よりもメモリの使用効率が良い。
-参考： Why use symbols as hash keys in Ruby? - Stack Overflow
-基本的に配列だが、nilが渡される場合もある変数を処理する場合、Array()（Kernel#Array）castを使うと条件分岐を無くせます。
-if users
- users.each{|user| send_direct_mail(user) }
-end
-↓
+
+
+
+
+
 Array(users).each{|user| send_direct_mail(user) }
 最初の見つかった要素のインデックスを返す場合はfind_index。
 users.count(&:admin?) #条件に合う要素の数を返す
@@ -1368,6 +953,20 @@ build_app_list
   escape meta blacktets :  qwrsix : str, str-ary, regexp, sym, sym-aryi, exec`` : 大文字で""のエスケープ nil->"nil"にしないようにqwは注意
 #rubyわりざん: 16.quo(27).to_f
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Rubyコーディングスタイル
   // then 省略
   // .blank? .present?をつかう｡　.nil? .empty?はつかわない｡
@@ -1393,6 +992,15 @@ build_app_list
 イテレーション
 	基本：10.times { p "#"} ;            1.upto(10) {|i| p i}
 	区切ってインデックス付き：arr.each_slice(2).with_index { |(a, b), i| puts "#{i} - #{a}, #{b}" }
+
+
+
+
+
+
+
+
+
 
 
 [MD]
