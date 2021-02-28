@@ -231,7 +231,7 @@ eval "$(rbenv init -)" #<--- ~/.rbenv/*** & /usr/local/bin にPATH を通して�
 
 
 
-if [ -f ~/.atom ] ; then
+if [ -f ~/.rvm ] ; then
   source ~/.rvm/scripts/rvm ; type rvm | head -n 1
   export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
 fi
