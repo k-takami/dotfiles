@@ -14,8 +14,11 @@
 /config/database.yml
 /config/newrelic.yml
 /config/secrets.yml
-/coverage
 /doc
+# simplecov
+/coverage
+# schemaspy (run on java... cf DBeaver)
+/output
 
 /public/assets/*
 # /public/javascripts/translations.js
@@ -83,6 +86,7 @@ vim/bundle/
 .git-*.tgz
 .annotations.cson
 .idea/
+.vscode/
 
 #private
 AWSCLI/

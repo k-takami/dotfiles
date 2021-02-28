@@ -16,6 +16,11 @@
 
 == インストール
 
+sudo gem1.8 install jpmobile-0.0.4.gem --local
+  RAILS_ROOT/config/environment.rb の Rails::Initializer.run do |config| ? end 内に
+	config.gem "jpmobile"
+	の行を追加する。
+
 === pluginとしてインストールする場合
 
 リリース版:
@@ -283,7 +288,7 @@ http://jpmobile.rubyforge.org/
 2. こうするばあいリンクはどう記述すればいいのでしょうか。
 
 jpmobileはコントローラのapplication.rbに
-class ApplicationController < ActionController::Base  
+class ApplicationController < ActionController::Base
   transit_sid
 end
 

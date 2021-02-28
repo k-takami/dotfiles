@@ -200,67 +200,8 @@ PaaS
 				\h  help
 				\q  quit
 				status
-			mysql> select * from users ;
-				+----+------------+-----------+----------------------+----------+-------+-----------+------------------------------------------+------------------------------------------+------+-------+---------+-------------+-----------+------------------+-----------+---------------------+---------------------+---------------------+------------+
-				| id | first_name | last_name | email                | homepage | about | signature | password_hash                            | password_salt                            | ip   | agent | referer | remember_me | token_key | token_expiration | anonymous | created_at          | updated_at          | verified_at         | deleted_at |
-				| +----+------------+-----------+----------------------+----------+-------+-----------+------------------------------------------+------------------------------------------+------+-------+---------+-------------+-----------+------------------+-----------+---------------------+---------------------+---------------------+------------+
-				| |  1 | some_body | NULL      | some_body@gmail.com | NULL     | NULL  | NULL      | d9e778c53529bcf488846230be0f6bf6f3a922d4 | 9ee11fa50003a673b6c783263a61770f37254b55 | NULL | NULL  | NULL    | NULL        | NULL      | NULL             |         0 | 2009-07-25 09:19:17 | 2009-07-25 09:19:17 | 2009-07-25 09:19:16 | NULL       |
-				| +----+------------+-----------+----------------------+----------+-------+-----------+------------------------------------------+------------------------------------------+------+-------+---------+-------------+-----------+------------------+-----------+---------------------+---------------------+---------------------+------------+
-				| 1 row in set (0.00 sec)
-				|
-				MySQL インポートとエクスポート（テキストデータ） Submitted by sasaki on 月曜, 2007-01-15 15:44
-					#erace all existing rows
-						mysql -u root -p
-						use r2chnn;
-						delete from kokuekis;
-					全部バックアップ：$ mysqldump -A -hlocalhost -uroot >mysqldumpAll_local_root.sql
-						http://qiita.com/PlanetMeron/items/3a41e14607a65bc9b60c
-					■テキストTAB形式でのエクスポート
-						データベースmydbのempテーブルからタブ区切りのテキストデータでエクスポートする。
-							$ sudo mysql -B --skip-column-names -D mydb -e 'select * from emp;' -u tanaka -p > out.txt
-							$ sudo mysql -B --skip-column-names -D r2chnn -e 'select * from kokuekis;' -u root -p > test.txt
-						--skip-column-namesを削除して実行すれば、カラム名も出力されるので便利。
-					#vi replace mysq-export&import
-						%s/】\t\t/】\t\t2009\//gc
-						%s/】\t\t2009\/03/】\t\t2010\/03/gc
-						%s/】\t\t2009\/02/】\t\t2010\/02/gc
-						%s/】\t\t2009\/01/】\t\t2010\/01/gc
-							#置換もれがあるのでvi上でチェック
-						#文字化け対策
-						■テキストデータのインポート mysqlimport編
-							データベースmydbのempテーブルにテキストデータをインポートする。
-								tar cvf tbl.tar *tbl.*; #<----sftp with binmode
-								SHOW VARIABLES LIKE 'character_set%';
-									SHOW VARIABLES LIKE 'character_set%';
-									+--------------------------+----------------------------+
-									| Variable_name            | Value                      |
-									| +--------------------------+----------------------------+
-									| | character_set_client     | latin1                     |
-									| | character_set_connection | latin1                     |
-									| | character_set_database   | utf8                       |
-									| | character_set_filesystem | binary                     |
-									| | character_set_results    | latin1                     |
-									| | character_set_server     | latin1                     |
-									| | character_set_system     | utf8                       |
-									| | character_sets_dir       | /usr/share/mysql/charsets/ |
-									| +--------------------------+----------------------------+
-									• 解決方法その3 root になれるなら MySQL のデフォルト文字コードを UTF-8 に変更する。 /etc/my.cnf か /etc/mysql/my.cnf を開き（ない場合は mysql が起動するときの設定ファイルを探す）、MySQLのデフォルト文字コードを UTF-8 に変更する。
-									# vi /etc/my.cnf
-									[mysqld]
-									default-character-set = utf8
-									[mysql]
-									default-character-set = utf8
-									[mysqldump]
-									default-character-set = utf8
-								$ sudo mysqlimport --local mydb emp.txt -u root -p
-								$ sudo mysqlimport --local r2chnn kokuekis.tbl.tsv -u root -p
-								select * from kokuekis where sbm > 900;
-							mydb：　データベース名
-							emp.sql：　テーブル名.sql（中身はテキストタブのデータ）
-							テキストエディタやExcel等で、TEXT-TAB形式で書き出した後、「テーブル名.txt」へ変更する
-							--localを指定しないと、「Access denied」エラーが発生する。
 
-	  ##Linode  sudo ssh 74.207.240.145
+  ##Linode  sudo ssh 74.207.240.145
   ##Linode  apt-get update  #update package-list
   ##Linode  sudo apt-get install gcc make language-pack-ja cron
   #instllation of ruby, rails, and other related tools

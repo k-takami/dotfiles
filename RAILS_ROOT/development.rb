@@ -32,7 +32,9 @@ BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
       config.action_view.cache_template_loading = false
       config.cache_classes=false
       config.reload_classes_only_on_change = false #false=毎回リロード　trueならば変更検出時にリロード
-      config.assets.compress = false #*.gz化
+      config.assets.compress = false #*.gz化 uglifier無効化
+      # 必要に応じてproduction.rbにも以下を記述 Expands the lines which load the assets
+      # config.assets.debug = true
       config.assets.digest = false #digest-hash-appending
       config.assets.debug = false #trueにすると、application.css/jsと個別のファイルの二重読み込みがされます。
     end

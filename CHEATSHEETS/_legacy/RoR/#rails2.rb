@@ -265,3 +265,16 @@ filter
     				benchmarker.rb  &  profiler.rb
     open-IDつかいたいならば -->  sudo gem install ruby-openid (since rails2)
 
+
+
+
+#rails2 debugger:NG?
+	gem install debugger
+	vi RAils.root/plugin/Gemfile
+		gem 'debugger'
+
+	#NG
+	gem install ruby-debug19
+	gem install linecache19
+	gem install ruby-debug-base19x --pre
+	gem install ruby-debug-ide --pre

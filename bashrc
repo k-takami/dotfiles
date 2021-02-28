@@ -74,6 +74,7 @@ alias dkcud='   docker-compose up -d '
 function dkbash { # $1 == container_name/id
   dkpai; docker exec -it -u root $1 bash
 }
+function rorodocker { dkrunitname $1 $2 ; dkbash $1; } # $1=new_name_of_container $2=image
 
 function dkrstrails { # $1 == container_name/id
   docker exec -it -u root $1 bundle install
@@ -233,7 +234,7 @@ eval "$(rbenv init -)" #<--- ~/.rbenv/*** & /usr/local/bin にPATH を通して�
 if [ -f ~/.atom ] ; then
   source ~/.rvm/scripts/rvm ; type rvm | head -n 1
   export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
-  alias rvminfo="     rvm list; rvm gemset list; gem query -an rails;" # gem list; "
+  alias rvminfo="     rvm list; rvm gemset list; gem search -an rails;" # gem list; "
   alias rvmusecreate='rvm use --create'
   alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
   alias rvmusemine='  rvm use 2.4@5.0.1; ruby -v; '
@@ -336,6 +337,7 @@ elif [[ "`uname`" == "Darwin" ]]; then
     platform='osx'
     alias pkgadd='               brew install'    # パッケージのインストール
     alias pkgrm='                brew uninstall ' # パッケージの削除
+    alias pkgcontents='          brew info'       # パッケージ内容の表示
     alias pkgupdate='            brew update;brew upgrade ruby-build ' #rbenv install -l のリストを更新する
     alias pkglist='              brew list'       # インストール済みパッケージの情報表示
     # alias pkgcontents=''       # パッケージ内容の表示
@@ -446,7 +448,7 @@ function grepdf {
   local options=${@:2} ;
   $grepbin -n$regexopt  $1 ~/dotfiles/* #--include=*rc $options --exclude=*.htm* --exclude=*.json ;
   $grepbin -n$regexopt $1 ~/dotfiles/SI              $options #--exclude=*.htm* --exclude=*.json ;
-  $grepbin -n$regexopt $1 ~/dotfiles/SCRIPTS         $options #--exclude=*.htm* --exclude=*.json ;
+  $grepbin -n$regexopt $1 ~/dotfiles/SI/SCRIPTS         $options #--exclude=*.htm* --exclude=*.json ;
   $grepbin -n$regexopt $1 ~/dotfiles/CHEATSHEETS     $options #--exclude=*.htm* --exclude=*.json ;
   $grepbin -n$regexopt $1 ~/dotfiles/vim/snippets    $options #--exclude=*.htm* --exclude=*.json ;
   # echo "grep -n$regexopt $1 ~/dotfiles/vim/snippets  $options ### ";
@@ -526,17 +528,18 @@ alias grep-gst='     git status |$grepbin -n$regexopt'
 
 # リモートレポジトリーにある、OSネイティブなパッケージの検索
 if [[ '$OSTYPE' == 'linux-gnu' ]]; then
-  alias search_pkg='  yum  search --showduplicates'  # <---基本形　amazon linux もこれ
+  alias  pkgsearch='  yum  search --showduplicates'  # <---基本形　amazon linux もこれ
   if [ -f /etc/redhat-release ] ; then
-    alias search_pkg='yum  search --showduplicates'
+    alias  pkgsearch='yum  search --showduplicates'
   elif [ -f /etc/debian_version ] ; then
-    alias search_pkg='sudo apt search'
-    # alias search_pkg_chef=' sudo apt-cache policy'
+    alias  pkgsearch='sudo apt search'
+    # alias  pkgsearch_chef=' sudo apt-cache policy'
   fi
 elif [[ "`uname`" == "Darwin" ]]; then
-    alias search_pkg='brew search' # 途中、keychainパスワード入力が求められる
+    alias  pkgsearch='brew search' # 途中、keychainパスワード入力が求められる
+    # TODO: 古いバージョンをみつけるときは　brew search versions/$1
 elif [[ "`uname`" == "Solaris"  ]]; then
-    alias search_pkg='pkg  search -r'
+    alias  pkgsearch='pkg  search -r'
 fi
 # リモートレポジトリーにある、OS上の各種「開発用」パッケージの検索
   alias search_dkhub='docker search  --no-trunc';
@@ -544,7 +547,7 @@ fi
   alias search_pyenv='pyenv install -l'
   alias search_rvm='  rvm list known'
   alias search_nvm='  nvm ls-remote'
-  alias search_gem='  gem query -ran '
+  alias search_gem='  gem search -ra'
   alias search_npm='  npm search'
   alias search_pip='  pip search '
 # リモートレポジトリーにある、gitブランチ全部のログをキーワード検索
