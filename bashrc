@@ -234,11 +234,11 @@ eval "$(rbenv init -)" #<--- ~/.rbenv/*** & /usr/local/bin にPATH を通して�
 if [ -f ~/.atom ] ; then
   source ~/.rvm/scripts/rvm ; type rvm | head -n 1
   export PATH="$HOME/.rvm/bin:$HOME/.rvm/scripts/rvm:$PATH"
-  alias rvminfo="     rvm list; rvm gemset list; gem search -an rails;" # gem list; "
-  alias rvmusecreate='rvm use --create'
-  alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
-  alias rvmusemine='  rvm use 2.4@5.0.1; ruby -v; '
 fi
+alias rvminfo="     rvm list; rvm gemset list; gem search -an rails;" # gem list; "
+alias rvmusecreate='rvm use --create'
+alias rvmusesys='   rvm use system   ; ruby -v; rails -v'
+alias rvmusemine='  rvm use 2.4@5.0.1; ruby -v; '
 alias rvminstallrails='gem install rails' # -v=5.0.0.1 --no-ri --no-rdoc　など・・・
 #when updgraded ruby
 #export GEM_PATH=$GEM_PATH:/Library/Ruby/Gems/2.0.0/
