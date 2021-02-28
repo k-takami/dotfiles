@@ -401,6 +401,7 @@ alias ls1wcl='ls -1 ./ | wc -l ' #count files in current dir:
 alias cdd=' cd ~/dotfiles'
 alias cdthere='cd $_'
 alias nrnd=' --no-ri --no-rdoc '
+alias gemnrnd="gem install --no-document"
 alias no_spec=' echo "--exclude=*spec* "'
 function inclrb { echo "--include=*rb --include=*.yml --include=*html* --include=*.*coffee --include=*.*js --include=*.*sass --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
 function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak "; }
@@ -549,7 +550,9 @@ fi
   alias search_pyenv='pyenv install -l'
   alias search_rvm='  rvm list known'
   alias search_nvm='  nvm ls-remote'
-  alias search_gem='  gem search -ra'
+  alias search_gem='  gem search -ra '
+  # function search_gem { gem search -ra $1 ; grep -E $1 ; } # $1=model name
+
   alias search_npm='  npm search'
   alias search_pip='  pip search '
 # リモートレポジトリーにある、gitブランチ全部のログをキーワード検索
