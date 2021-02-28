@@ -222,7 +222,9 @@ function dki_loadallfromtar {
 #==== ~/.rvm/bin/rvm ==========================
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 ## rbenv
-#export PATH="$HOME/.rbenv/bin:$PATH"
+if [[ "`uname`" == "Darwin" ]]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+fi
 export PATH="$HOME/.rbenv/shims:$PATH"
 #export PATH="$PATH:$DL_HOME/redis-3.0.7/src"
 eval "$(rbenv init -)" #<--- ~/.rbenv/*** & /usr/local/bin にPATH を通してから eval
