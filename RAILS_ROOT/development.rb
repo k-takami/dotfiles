@@ -44,7 +44,8 @@ BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
     #NG config.assets.enabled = false #NG: slaggish for NDL
     #NG:ほぼ必須 config.assets.compile = false #uglify 　CSS-FW 'Foundation'では必須か coffee_script scss therubyracerつかうならばtrueに
   end
-  if Rails::VERSION::STRING >= "5"
+  if Rails::VERSION::STRING >= "5" &&  Rails::VERSION::STRING =< "6"
     config.file_watcher = ActiveSupport::FileUpdateChecker
+    # config.assets.export_concurrent = false #rails5+でwebpacker外す時
     # config.public_file_server.enabled = false #rails5 画像無効化
   end

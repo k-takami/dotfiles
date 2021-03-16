@@ -1,39 +1,201 @@
-  group :development, :test do
-    gem 'better_errors'
-    gem 'binding_of_caller'
-    gem 'ruby_jard'
-    # 以下のgem ２個ははじめOFFでRubyMine/intellJ上からコメントアウトして選択し
-    # Action>Install[Tools|Bundleer] で いれないとトラブルになる
-    # くみこめればjardもコンテナログイン後のrails s も不要になる
-    # ref: https://qiita.com/masaruhr/items/f6df4f5ea36a4b9af142
-    # ref: https://qiita.com/masaruhr/items/17296c49f43b140cb81a
-    gem 'debase'
-    #NG: gem 'ruby-debug-ide', git: 'https://github.com/dhanaraj0/ruby-debug-ide.git', branch: 'debug'
-    # gem 'ruby-debug-base19x'  #<- windows
-  end
+### DB DRIVERS
+# gem 'sqlite3', '~> 1.3.1'
+# gem 'pg'
+gem 'mysql2', '~> 0.4.4'
 
-  # INTELLIJ remote debugger くみこみ
-  # [RubyMine]-[Preferences..]-[Languages & Frameworks]-[Ruby SDK & Gems]
-  # [File]-[Project Structure...]-[Project Settings]-[Project]のProject SDKの[New...]ボタン
-  # [File]-[Project Structure...]-[Project Settings]-[Modules]のRuby SDK and Gemsの[+]ボタン
-  # から インタープリター設定ダイアログ表示し、[+]ボタンをクリック して[New remote...]を選択
-  # [Docker Compose]を選択し
-  #   [Service]プルダウンから、Railアプリが実行されているdocker-servicename
-  # リモートインタープリターを選択->apply->OK
-  # INTELLIJ/RubyMineがリモートインタープリターのファイル群に対してIndexing処理を開始　ながい
-  # toolbar--> Bundler Install で gemをコンテナに注入
+group :development, :test do
+  gem 'better_errors'         # エラーページの情報がリッチになる
+  gem 'binding_of_caller'     # エラーページでコンソールが使える
+  gem 'rails_admin', '~> 2.0' # ありがちな管理画面を実現する
+  gem 'seed_dumper'           # 使用例: $ rake db:seed:dump; cat db/seeds/* > db/seeds.rb ; rm db/seeds/*
+  gem 'pry'                   # CUIベースのデバッガー。デフォルトのbyebuとはちがう観察ができる
+  gem 'debase'
+  ### LINTERS
+  gem 'bullet' # support check n+1, sqlinjection, syntab with best practice
+  gem 'rubocop'
+  gem "erb_lint", "~> 0.0.35", require: false
+  # gem "rubocop-rails", "~> 2.9", require: false
+  # gem "rubocop-rspec", "~> 1.44", require: false
+  # gem "active_record_doctor"
+  # gem "database_consistency", require: false
+  # gem "rubocop-performance", "~>1.9.0", require: false
+  # gem 'rails-route-checker', require: false
+end
 
-  # 確認
-    # Run/Debug構成で[Development:<プロジェクト名>]を選択し「Edit Configuration
-    # docker composeの設定でdocker-compose upが選択されていることを確認
-    # ▶︎アイコンでノーマル確認
-    # 🕷アイコンでデバック確認
-    # dkbash； rails s -p 3000 -b 0.0.0.0
-    # erb中は"<% jard %>"で
+### 東京のRails案件で出現頻度の高いライブラリー一覧。他社も高確率でつかっていると思って間違いなし。
+# gem 'kaminari'                    # for pagination
+# gem "rubocop"                     # 構文チェックgem。Railsで制作する組織ならば8割ほどの案件で使われるlinterです。
+# gem "devise"                      # ログイン認証
+# gem 'devise-i18n'
+# gem 'devise-i18n-views'
+# gem "seed-fu"                     # マスターテーブル用データなどの初期データ投入
+# gem 'whenever', :require => false # スケジューラー
+# gem "cancancan"                   # アクセス権一元管理.punditというモデル単位の権限設定gemを好む人もいるが、設定の一元管理と設定状況一覧に適しているとは思えない
+# gem "discard"                     # discarded_atカラムを自動的に論理削除として判定をしてくれるgem(acts_as_paranoid改良系)
+# gem "ransack"                     # for searching form
+# gem 'enumerize'                   # 動的変更の少ない固定的選択肢などを　Enum型で定義できるgem. 値を和文で定義できる。Rails5+~標準のEnumでは値をローマ字と和文のペアでYAMLで定義する手間がかかり、定義が分散する。
+# gem 'ridgepole' # , path: 'vendor/ridgepole'                                                                          # チームでの開発効率を上げるgem
+# gem 'simple_form'                 # サーバー側バリデーションエラーをフロント側バリデーション的に表示してくれる
 
-  # LEGACY
-  # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # gem 'pry-byebug' # デバッグを実施(Ruby 2.0~2.1.2で安定動作する)
-  # gem 'pry-stack_explorer' # スタックをたどれる
-  # gem 'pry-alias' # デバッグコマンドエイリアス
+# gem "rolify"                      # ロール設定
+# gem "operator_recordable"         # 更新ユーザー、登録ユーザーを自動記録するgem
+# gem 'fiscali'                     # 各国の会計年度関連の判定
+# gem 'era_ja'                      # 和暦変換。漢数字表示にも対応
+# gem "paper_trail"                 # 自動的に履歴作成するgem RailsのActiveRecordの保存動作と連動
+# gem 'diffy'                       # テキスト差分w色分け表示
+# gem 'browser'                     # 卓上マシン から携帯ゲーム機まで多様なウェブブラウザーの判別
+# gem 'request_store'
+# gem 'administrable', github: 'hiroshi-yamazaki/administrable', tag: "v0.2.1"
 
+
+### Windows対策
+platforms :mingw, :mswin, :x64_mingw, :jruby do
+  # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+  gem 'tzinfo-data' #, platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+  gem 'ruby-debug-base19x'
+end
+
+
+# INTELLIJ remote debugger くみこみ
+# [RubyMine]-[Preferences..]-[Languages & Frameworks]-[Ruby SDK & Gems]
+# [File]-[Project Structure...]-[Project Settings]-[Project]のProject SDKの[New...]ボタン
+# [File]-[Project Structure...]-[Project Settings]-[Modules]のRuby SDK and Gemsの[+]ボタン
+# から インタープリター設定ダイアログ表示し、[+]ボタンをクリック して[New remote...]を選択
+# [Docker Compose]を選択し
+#   [Service]プルダウンから、Railアプリが実行されているdocker-servicename
+# リモートインタープリターを選択->apply->OK
+# INTELLIJ/RubyMineがリモートインタープリターのファイル群に対してIndexing処理を開始　ながい
+# toolbar--> Bundler Install で gemをコンテナに注入
+# 確認
+  # Run/Debug構成で[Development:<プロジェクト名>]を選択し「Edit Configuration
+  # docker composeの設定でdocker-compose upが選択されていることを確認
+  # ▶︎アイコンでノーマル確認
+  # 🕷アイコンでデバック確認
+  # dkbash； rails s -p 3000 -b 0.0.0.0
+  # erb中は"<% jard %>"で
+
+
+=begin
+
+group :development do
+  ### DEBUGGERS
+  # gem 'ruby_jard'
+  # gem 'debase'
+  # gem 'ruby-debug-ide', git: 'https://github.com/dhanaraj0/ruby-debug-ide.git', branch: 'debug'
+  # ~ruby 2.x: gem 'ruby_jard'
+  #NG: gem 'ruby-debug-ide', git: 'https://github.com/dhanaraj0/ruby-debug-ide.git', branch: 'debug'
+  # LEGACY DEBUGGERS
+    # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+    # gem 'pry-byebug' # デバッグを実施(Ruby 2.0~2.1.2で安定動作する)
+    # gem 'pry-stack_explorer' # スタックをたどれる
+    # gem 'pry-alias' # デバッグコマンドエイリアス
+
+
+  # 以下のgem ２個ははじめOFFでRubyMine/intellJ上からコメントアウトして選択し
+  # Action>Install[Tools|Bundleer] で いれないとトラブルになる
+  # くみこめればjardもコンテナログイン後のrails s も不要になる
+  # ref: https://qiita.com/masaruhr/items/f6df4f5ea36a4b9af142
+  # ref: https://qiita.com/masaruhr/items/17296c49f43b140cb81a
+
+  # security
+  gem "brakeman", "~> 4.10"
+  gem "bundler-audit", "~> 0.7" # Gemの脆弱性の有無をチェック
+
+  # gem 'listen', '>= 3.0.5', '< 3.2'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'rspec-rails'
+  # # gem 'spring-commands-rspec' # Rspecのspring 高速化
+  gem 'shoulda-matchers'  #ORMやコールバックのテストを1行でかける
+  # gem 'simplecov', require: false
+  # gem 'parallel_tests'
+  # gem 'faker' # for dummy data of minitest
+  gem 'factory_bot_rails'
+
+  # Adds support for Capybara system testing and selenium driver
+  # gem 'capybara', '>= 2.15'
+  # gem 'selenium-webdriver'
+  # Easy installation and use of chromedriver to run system tests with Chrome
+  # gem 'chromedriver-helper'
+end
+
+
+### EVENTS AND WORKFLOW
+# gem "statesman"
+# gem "event_machine"
+# gem "workflow"
+
+
+### FRONTEND
+gem 'jquery-rails'
+gem 'jquery-ui-rails'                     # D&D, datepicker, slider, spinner, tabs, progressbar, etc.
+gem 'bootstrap'
+gem 'select2-rails'
+gem 'momentjs-rails'                      # 時刻フォーマット
+gem 'ajax-datatables-rails'
+gem 'acts_as_list'                        # drag&dropでレコードの並び順をかえるときに https://www.ruby-toolbox.com/categories/Active_Record_Sortables
+gem 'breadcrumbs_on_rails'                # or gem 'gretel' https://www.ruby-toolbox.com/categories/Breadcrumb_Builders
+gem 'font-awesome-rails'                  # Webアイコンフォント "Font Awesome"(無料アイコン1600種類)ドライバー
+# gem 'coffee-rails', '~> 4.2'              # Use CoffeeScript for .coffee assets and views
+# gem 'coffee-script-source', '~> 1.12.0'   # CoffeeScriptコンパイルエラー対策
+# gem 'slim-rails'
+
+
+gem "sentry-raven"
+gem 'mojinizer'
+gem 'cocoon'
+gem 'scenic'
+gem 'henkei'
+gem 'iconv', require: false
+
+
+### FILE I/O
+gem 'file_validators'              # ~rails5: アップロードされたファイルのバリデーションいろいろ
+# gem 'active_storage_validations' # ~rails5.2~ アップロードされたファイルのバリデーションいろいろ
+# gem 'csv', '> 1.0.1'             # ruby標準のCSVは　Rails5時期にbugがあった
+# gem 'htmltoword'
+# gem 'sablon'                     # Word docx files bridge
+# gem 'wkhtmltopdf-binary'
+# gem 'rubyXL'                     # Excel 2003+以降形式(*.xlsx)を読み書きするためのgem
+# gem 'spreadsheet'                # Excel 2003+以前形式(*.xls)を読み書きするためのgem
+# gem 'wicked_pdf'
+# gem 'tinymce-rails'
+# gem 'tinymce-rails-langs'
+# gem 'tinymce-rails-imageupload', github: 'PerfectlyNormal/tinymce-rails-imageupload'
+# gem 'rubyzip'                    # ~ror4.x: Windows-compatible ZIP encoding
+
+
+### MESSAGING
+# gem "letter_opener", "~> 1.7"
+# gem "letter_opener_web", "~> 1.4"
+# gem 'exception_notification'     # Rackアプリ層で例外が起きたら各種通信媒体で通知する
+
+
+### AWS
+# gem 'aws-sdk-core'
+# gem 'aws-sdk-sns', '~> 1.5'      # Simple Notification Service (like push, SMS, and email)
+# gem 'aws-sdk-s3'
+# gem 'aws-sdk-ec2', '~> 1'
+# gem 'aws-sdk-ses'                # emailing
+
+### PRODUCTION AND DEPLOY
+# gem 'unicorn'
+# gem 'capistrano', '~> 3.0'
+# gem 'capistrano-nails'
+# gem 'capistrano3-puma'
+# gem 'capistrano-bundler'
+# gem 'capistrano-rbenv'
+
+
+# DOCUMENTATION
+# gem "webrick"
+  # gem "schemard"                 # Editable ERD rendrer on webbrowser.
+# gem 'sdoc', group: :doc          # bundle exec rake doc:rails generates the API under doc/api.
+# gem 'yard'
+
+# プログラミングマニアむけ:
+# gem 'validates_timeliness'       # ActiveModelにバリデーション追加
+# gem 'active_decorator'           # Javaっぽさの追求道具
+=end

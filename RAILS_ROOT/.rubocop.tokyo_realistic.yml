@@ -1,3 +1,9 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-thread_safety
+
 # 自動生成されるものはチェック対象から外す
 AllCops:
   TargetRubyVersion: 2.5

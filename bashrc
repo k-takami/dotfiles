@@ -402,6 +402,7 @@ alias cdd=' cd ~/dotfiles'
 alias cdthere='cd $_'
 alias nrnd=' --no-ri --no-rdoc '
 alias gemnrnd="gem install --no-document"
+alias gemdelall='gem uninstall -I -a -x --user-install --force ; gem list'
 alias no_spec=' echo "--exclude=*spec* "'
 function inclrb { echo "--include=*rb --include=*.yml --include=*html* --include=*.*coffee --include=*.*js --include=*.*sass --include=*.*css --exclude-dir=vendor --exclude-dir=tmp/* --exclude-dir=node_module "; }
 function nogabage { echo "--exclude=*.sw* --exclude=*.log --exclude=*.dev --exclude=*.*201* --exclude=*.*rev* --exclude=*.*-* --exclude=*.lock --exclude=*.org --exclude=*DEV --exclude=*BAK  --exclude=*.bak "; }
@@ -670,6 +671,10 @@ alias railscaf_docker_destroy='docker exec -it CONTAINERNAME bin/rails d  scaffo
 
 alias bdl='            bundle exec'
 alias bdli='           bundle install'
+# rails6 w/o webpacker ≒ 95MB,
+alias bdliportable='   bundle install --path vendor/bundle'
+
+alias threadsafecheck='rubocop -r rubocop-thread_safety --only ThreadSafety,Style/GlobalVars,Style/ClassVars,Style/MutableConstant'
 # オフライン環境では --local オプションを付けることでrubygems.org等を見に行かずに、vendor/cacheフォルダを見るようになります。
 alias bdlilocal='      bundle install --local'
 alias bdlilikerails12='bundle install --path vendor/bundle'

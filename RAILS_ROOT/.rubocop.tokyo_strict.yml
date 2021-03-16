@@ -1,3 +1,9 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-thread_safety
+
 AllCops:
   TargetRubyVersion: 2.5
   Rails: true
