@@ -22,38 +22,35 @@ group :development, :test do
   # gem 'rails-route-checker', require: false
 end
 
-### 東京のRails案件で出現頻度の高いライブラリー一覧。他社も高確率でつかっていると思って間違いなし。
-# gem 'kaminari'                    # for pagination
-# gem "rubocop"                     # 構文チェックgem。Railsで制作する組織ならば8割ほどの案件で使われるlinterです。
-# gem "devise"                      # ログイン認証
-# gem 'devise-i18n'
-# gem 'devise-i18n-views'
-# gem "seed-fu"                     # マスターテーブル用データなどの初期データ投入
-# gem 'whenever', :require => false # スケジューラー
-# gem "cancancan"                   # アクセス権一元管理.punditというモデル単位の権限設定gemを好む人もいるが、設定の一元管理と設定状況一覧に適しているとは思えない
-# gem "discard"                     # discarded_atカラムを自動的に論理削除として判定をしてくれるgem(acts_as_paranoid改良系)
-# gem "ransack"                     # for searching form
-# gem 'enumerize'                   # 動的変更の少ない固定的選択肢などを　Enum型で定義できるgem. 値を和文で定義できる。Rails5+~標準のEnumでは値をローマ字と和文のペアでYAMLで定義する手間がかかり、定義が分散する。
-# gem 'ridgepole' # , path: 'vendor/ridgepole'                                                                          # チームでの開発効率を上げるgem
-# gem 'simple_form'                 # サーバー側バリデーションエラーをフロント側バリデーション的に表示してくれる
-
-# gem "rolify"                      # ロール設定
-# gem "operator_recordable"         # 更新ユーザー、登録ユーザーを自動記録するgem
-# gem 'fiscali'                     # 各国の会計年度関連の判定
-# gem 'era_ja'                      # 和暦変換。漢数字表示にも対応
-# gem "paper_trail"                 # 自動的に履歴作成するgem RailsのActiveRecordの保存動作と連動
-# gem 'diffy'                       # テキスト差分w色分け表示
-# gem 'browser'                     # 卓上マシン から携帯ゲーム機まで多様なウェブブラウザーの判別
-# gem 'request_store'
-# gem 'administrable', github: 'hiroshi-yamazaki/administrable', tag: "v0.2.1"
-
-
 ### Windows対策
 platforms :mingw, :mswin, :x64_mingw, :jruby do
   # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
   gem 'tzinfo-data' #, platforms: [:mingw, :mswin, :x64_mingw, :jruby]
   gem 'ruby-debug-base19x'
 end
+
+### 東京のRails案件で出現頻度の高いライブラリー一覧。他社も高確率でつかっていると思って間違いなし。
+
+# 設定ファイル簡便化 Settingslogic後継gem
+# 将来もしも不調が起きたらgem 'configurative'か本家gem install settingslogic
+# におきかえること。それらは中身が1ファイル程度なので切り取ってもいい.
+# gem "easy_settings"
+# gem "seed-fu"                     # マスターテーブル用データなどの初期データ投入
+# gem 'ridgepole' , path: 'vendor/ridgepole' # チームでの開発効率を上げるgem
+
+### 認証。認可、権限関連と　履歴記録、論理削除関連
+gem "devise"                      # ログイン認証
+gem 'devise-security'             # 上述gem の拡張パック
+# gem 'devise-i18n'
+# gem 'devise-i18n-views'
+gem "discard"                     # discarded_atカラムを自動的に論理削除として判定をしてくれるgem(acts_as_paranoid改良系)
+gem 'timeliness'
+gem 'active_storage_validations'
+# gem 'rack-attack'                 # ipベースの不正アクセス制限
+# gem "cancancan"                   # アクセス権一元管理.punditというモデル単位の権限設定gemを好む人もいるが、設定の一元管理と設定状況一覧に適しているとは思えない
+# gem "rolify"                      # ロール設定
+# gem "operator_recordable"         # 更新ユーザー、登録ユーザーを自動記録するgem
+# gem "paper_trail"                 # 自動的に履歴作成するgem RailsのActiveRecordの保存動作と連動
 
 
 # INTELLIJ remote debugger くみこみ
@@ -128,26 +125,42 @@ end
 # gem "workflow"
 
 
-### FRONTEND
-gem 'jquery-rails'
-gem 'jquery-ui-rails'                     # D&D, datepicker, slider, spinner, tabs, progressbar, etc.
-gem 'bootstrap'
-gem 'select2-rails'
-gem 'momentjs-rails'                      # 時刻フォーマット
-gem 'ajax-datatables-rails'
-gem 'acts_as_list'                        # drag&dropでレコードの並び順をかえるときに https://www.ruby-toolbox.com/categories/Active_Record_Sortables
-gem 'breadcrumbs_on_rails'                # or gem 'gretel' https://www.ruby-toolbox.com/categories/Breadcrumb_Builders
-gem 'font-awesome-rails'                  # Webアイコンフォント "Font Awesome"(無料アイコン1600種類)ドライバー
+### 画面SSR関連
+gem 'kaminari'                    # for pagination
+gem "ransack"                     # for searching form
+gem 'cocoon' # <-- nested ORM CRUDing
+# gem 'simple_form'                 # サーバー側バリデーションエラーをフロント側バリデーション的に表示してくれる
+# gem 'fiscali'                     # 各国の会計年度関連の判定
+# gem 'era_ja'                      # 和暦変換。漢数字表示にも対応
+# gem 'diffy'                       # テキスト差分w色分け表示
 # gem 'coffee-rails', '~> 4.2'              # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-script-source', '~> 1.12.0'   # CoffeeScriptコンパイルエラー対策
 # gem 'slim-rails'
+group :development do
+  gem 'rails_admin', path: 'vendor/rails_admin'    # ありがちなCRUD画面を実現する
+  gem 'administrate', path: 'vendor/administrate'  # ありがちな管理画面制作の下書き補助補助補助
+  gem 'letter_opener_web'                          # メール配信プレビュー確認画面
+end
+
+### FRONTEND
+gem 'uglifier'
+gem 'bootstrap'
+gem 'kaminari-bootstrap'
+gem "bootstrap_form"                 # サーバー側バリデーションエラーをフロント側バリデーション的に表示してくれる
+# gem 'jquery-rails'
+# gem 'jquery-ui-rails'              # D&D, datepicker, slider, spinner, tabs, progressbar, etc.
+# gem 'select2-rails'
+# gem 'momentjs-rails'               # 時刻フォーマット
+# gem 'ajax-datatables-rails'
+# gem 'acts_as_list'                 # drag&dropでレコードの並び順をかえるときに https://www.ruby-toolbox.com/categories/Active_Record_Sortables
+# gem 'breadcrumbs_on_rails'         # or gem 'gretel' https://www.ruby-toolbox.com/categories/Breadcrumb_Builders
+# gem 'font-awesome-rails'           # Webアイコンフォント "Font Awesome"(無料アイコン1600種類)ドライバー
+
 
 
 gem "sentry-raven"
 gem 'mojinizer'
-gem 'cocoon'
 gem 'scenic'
-gem 'henkei'
 gem 'iconv', require: false
 
 

@@ -35,7 +35,6 @@ BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
       config.assets.compress = false #*.gz化 uglifier無効化
       # 必要に応じてproduction.rbにも以下を記述 Expands the lines which load the assets
       # config.assets.debug = true
-      config.assets.digest = false #digest-hash-appending
       config.assets.debug = false #trueにすると、application.css/jsと個別のファイルの二重読み込みがされます。
     end
     if Rails::VERSION::STRING <= "4.1"

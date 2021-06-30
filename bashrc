@@ -1,3 +1,5 @@
+
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
@@ -677,7 +679,7 @@ alias bdliportable='   bundle install --path vendor/bundle'
 alias threadsafecheck='rubocop -r rubocop-thread_safety --only ThreadSafety,Style/GlobalVars,Style/ClassVars,Style/MutableConstant'
 # オフライン環境では --local オプションを付けることでrubygems.org等を見に行かずに、vendor/cacheフォルダを見るようになります。
 alias bdlilocal='      bundle install --local'
-alias bdlilikerails12='bundle install --path vendor/bundle'
+alias bdlilikerails12='bundle install --path vendor'
 alias bdlupclean='     bundle update; bundle clean' #一括削除清掃
 # ローカルから普通にもどすときは
 # $ rm -rf vendor/bundle/ Gemfile.lock .bundle/config ; bdl; rails s;
@@ -696,7 +698,7 @@ alias bxrdbmdown='     ds1 bx rake db:migrate:down'
 function bxrdbmdownv { ds1 bx rake db:migrate:down  RAILS_ENV=development VERSION=$1; }
 alias gplobxbi='       gplo master; bxrdbm; bundle install'
 alias rrg='            ds1 bx rake routes |grep '
-alias rrg6='           ds1 bx rails routes |grep '
+alias rrg6='           ds1 bx bin/rails routes |grep '
 alias asset_cleancomplie="RAILS_ENV=development rake assets:clean assets:precompile"
 alias ror_snip_list='sh ~/dotfiles/SI/SCRIPTS/list_snipets4snipmate.sh ruby rails erb javascript'
 alias ror_lns_gitignore='ln -s ~/dotfiles/gitignore .gitignore'
@@ -712,8 +714,11 @@ export REGEXP_MYBUG="^\+.*(\?i|i\b|binding.pry|byebug|debugger|takami)"
 alias rbwc='ruby -wc'
 alias rbwcstaged='  gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 ruby -wc'
 alias rbwcdev='     gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 ruby -wc'
-alias rbcrails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rubocop '
-alias rbcrailsauto='gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rubocop -a '
+alias gdicrbc='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rubocop '
+alias gdicrbcauto='gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rubocop -a '
+alias gdicerblint='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 erblint '
+alias gdicerblintauto='gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs -n1 erblint -a '
+
 alias rbprails='    gdic --name-only |grep -v -E $REGEXP_RBC_IGNORE | xargs rails_best_practices'
 alias mytestsingle='ds1 bx rake spec:test RAILS_ENV=mobi-connect-test'
 alias mybugstaged=' gdicnp |grepe $REGEXP_MYBUG -C2 '
