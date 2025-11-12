@@ -1,5 +1,5 @@
 // 成功を示すグローバルオブジェクトを定義
-window.MyRequiredModule = {
+window.MyObserver = {
     isLoaded: true,
     version: '1.0',
     function_to_loop: function() { 
@@ -15,7 +15,7 @@ window.MyRequiredModule = {
         initFilter();  //window.addEventListener('load', initFilter); //DD: <---不要に見える
     }
 };
-console.log('----------GM Module loaded');  // デバッグ用
+console.log('----------GM DOM Observer Module loaded');  // デバッグ用
 
 // (function() {
 // })();
