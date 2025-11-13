@@ -36,3 +36,27 @@ function jq_yymmdd_wday(element) {
     //console.log('展開日付:', formattedDate); // 出力例: "25-11-08(土)"
     return formattedDate;
 }
+
+
+// 汎用：jQuery要素(x)をセレクターで探索しサニタイズし(y)、正規表現マッチ結果(z)を得る
+function jq_scrape_and_get_match_obj(jq_element, selector,regexp){
+    var html = jq_element.find(selector);
+    var tmp = sanitize(html.text());
+    var matched_obj =  tmp.match(regexp);
+    return [html, tmp, matched_obj];
+}
+// 労働時間を抽出（日付後の時間部分、例: "08:30～17:00"）
+function jq_scrape_time_slot(jq_element, selector) {
+    var [x,y,z] = jq_scrape_and_get_match_obj(
+        jq_element, selector, /(\d{1,2}):(\d{2})[～\-\s]+(\d{1,2}):(\d{2})/
+    )
+    return [x,z];
+}
+// 給与文言抽出（数字部分のみ、例: "11,000"）
+function jq_scrape_wage(jq_element, selector) {
+    var [x,y,z] = jq_scrape_and_get_match_obj(
+        jq_element, selector, /(\d{1,3}(?:,\d{3})*)円/i
+    )
+    return z;
+}
+
