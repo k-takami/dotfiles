@@ -6,8 +6,27 @@ function jump_with_datetime_get_param() {
 // 🟦全角/半角空白、タブ、改行を除去
 function sanitize(str) { return str.replace(/[\s\u3000\t\n\r]+/g, '').trim() }
 
-// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝　以下はjQuery依存関数　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝　タイムアンドマネー関数　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+function time_regexp_to_hour(matched_obj){
+    var startHour = parseInt(matched_obj[1]), startMin = parseInt(matched_obj[2]);
+    var endHour = parseInt(matched_obj[3]), endMin = parseInt(matched_obj[4]);
+    // 分に変換・validation
+    var startMinutes = startHour * 60 + startMin;
+    var endMinutes = endHour * 60 + endMin;
+    var totalMinutes = endMinutes - startMinutes;
+    if (totalMinutes <= 0) return;
+    return totalMinutes / 60;
+}
 
+function monetary_selector_to_2wages(jq_element, selector, actualHours){
+    var salaryMatch = jq_scrape_wage(jq_element, selector);
+    if (!salaryMatch) return; // 日給が見つからない場合スキップ
+    var dailyPay = parseInt(salaryMatch[1].replace(/,/g, '')); // コンマ除去
+    var hourlyPay = Math.round(dailyPay / actualHours);
+    return [dailyPay, hourlyPay];
+}
+
+// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝　以下はjQuery依存関数　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 
 function jq_any(ary, str) { return $.inArray(str, ary) !== -1 }
 // 🟦年月日文字から曜日つけたして返す
