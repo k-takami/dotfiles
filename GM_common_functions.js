@@ -6,6 +6,18 @@ function jump_with_datetime_get_param() {
 // 🟦全角/半角空白、タブ、改行を除去
 function sanitize(str) { return str.replace(/[\s\u3000\t\n\r]+/g, '').trim() }
 
+// 🟦 DOM
+function doc__qS__set_attr_style_by(val, selector) {
+    var node = document.querySelector(selector);
+    if (node) node.setAttribute("style",val);
+}
+
+function hide_elements_with_indices(nodes, indices = [0], style = 'display: none;') {
+    if (nodes.length === 0) {return;}
+    indices.forEach(i => { nodes[i].setAttribute('style', style); })
+}
+
+
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝　タイムアンドマネー関数　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 function time_regexp_to_hour(matched_obj){
     var startHour = parseInt(matched_obj[1]), startMin = parseInt(matched_obj[2]);
