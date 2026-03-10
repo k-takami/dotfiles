@@ -14,7 +14,7 @@ function doc__qS__set_attr_style_by(val, selector) {
 
 function hide_elements_with_indices(nodes, indices = [0], style = 'display: none;') {
     if (nodes.length === 0) {return;}
-    indices.forEach(i => { nodes[i].setAttribute('style', style); })
+    indices.forEach(i => { nodes[i]?.setAttribute('style', style); })
 }
 
 
