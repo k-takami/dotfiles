@@ -74,6 +74,7 @@ function jq_scrape_and_get_match_obj(jq_element, selector,regexp){
     var html = jq_element.find(selector);
     var tmp = sanitize(html.text());
     var matched_obj =  tmp.match(regexp);
+    if (!matched_obj){matched_obj = ["",""]};
     return [html, tmp, matched_obj];
 }
 // 労働時間を抽出（日付後の時間部分、例: "08:30～17:00"）
@@ -86,8 +87,7 @@ function jq_scrape_time_slot(jq_element, selector) {
 // 給与文言抽出（数字部分のみ、例: "11,000"）
 function jq_scrape_wage(jq_element, selector) {
     var [x,y,z] = jq_scrape_and_get_match_obj(
-        jq_element, selector, /(\d{1,3}(?:,\d{3})*)円/i
+        jq_element, selector, /(\d{1,3}(?:,\d{3})*)円.日/i
     )
     return z;
 }
-
